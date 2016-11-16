@@ -1,0 +1,31 @@
+{
+    "classrooms": [
+        {
+            "name": "200",
+            "capacity": 20,
+            "type": "LESSON"
+        },
+        {
+            "name": "201",
+            "capacity": 34,
+            "type": "PRACTICE"
+        },
+        {
+            "name": "215",
+            "capacity": 14,
+            "type": "LAB"
+        },
+        {
+            "name": "202",
+            "capacity": 80,
+            "type": "LESSON"
+        },
+        {
+            "name": "140",
+            "capacity": 23,
+            "type": "SEMINAR"
+        }
+
+    ]
+
+}

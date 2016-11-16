@@ -4,6 +4,7 @@ public class Subject {
 	private String name;
 	private Type type;
 	private int courseN;
+	private long studentsAmount;
 
 	public Subject() {
 		super();
@@ -31,5 +32,13 @@ public class Subject {
 
 	public void setCourseN(int courseN) {
 		this.courseN = courseN;
+	}
+
+	public long getStudentsAmount() {
+		return studentsAmount;
+	}
+
+	public void setStudentsAmount(long studentsAmount) {
+		this.studentsAmount = studentsAmount;
 	}
 }
