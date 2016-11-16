@@ -5,6 +5,9 @@ import java.util.List;
 
 public class Group {
 
+	private static final String ERROR_MESSAGE_ADD_SUBJECT = "This subject has already existed!";
+	private static final String ERROR_MESSAGE_DELETE_SUBJECT = "Subject has no existed!";
+
 	private String groupName;
 	private int groupAmount;
 	private List<Subject> subjects;
@@ -33,10 +36,6 @@ public class Group {
 
 	public List<Subject> getSubjects() {
 		return subjects;
-	}
-
-	public void setSubjects(List<Subject> subjects) {
-		this.subjects = subjects;
 	}
 
 	public List<Group> getAllSubgroups(Subject subject) {
@@ -70,6 +69,32 @@ public class Group {
 		}
 
 		return groups;
+	}
+
+	public void addAllSubjects(List<Subject> subjectList) {
+		if (subjectList != null) {
+			for (Subject subject : subjectList) {
+				if (!subjects.contains(subject)) {
+					subjects.add(subject);
+				}
+			}
+		}
+	}
+
+	public void addSubject(Subject subject) {
+		if (subject != null && !subjects.contains(subject)) {
+			subjects.add(subject);
+		} else {
+			throw new IllegalArgumentException(ERROR_MESSAGE_ADD_SUBJECT);
+		}
+	}
+
+	public void deleteSubject(Subject subject) {
+		if (subject != null && subjects.contains(subject)) {
+			subjects.remove(subject);
+		} else {
+			throw new IllegalArgumentException(ERROR_MESSAGE_DELETE_SUBJECT);
+		}
 	}
 
 	@Override

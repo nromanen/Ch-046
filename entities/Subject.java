@@ -2,8 +2,6 @@ package com.ss.schedule.model;
 
 public class Subject {
 
-	private static final String ERROR_MESSAGE_COURSE_NUMBER = "Wrong course number";
-
 	private String subjectName;
 	private int courseNumber;
 	private SubjectType subjectType;
@@ -15,19 +13,11 @@ public class Subject {
 	}
 
 	public String getSubjectName() {
-		return subjectName.substring(1);
+		return subjectName;
 	}
 
-	public int getCourseNumber() {
-		return subjectName.codePointAt(0) - '0';
-	}
-
-	public void setSubjectName(String subjectName, int courseNumber) {
-		if (courseNumber == 0 || courseNumber > 5) {
-			throw new IllegalStateException(ERROR_MESSAGE_COURSE_NUMBER);
-		}
-
-		this.subjectName = courseNumber + subjectName;
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
 	}
 
 	public SubjectType getSubjectType() {
@@ -36,6 +26,14 @@ public class Subject {
 
 	public void setSubjectType(SubjectType subjectType) {
 		this.subjectType = subjectType;
+	}
+
+	public int getCourseNumber() {
+		return courseNumber;
+	}
+
+	public void setCourseNumber(int courseNumber) {
+		this.courseNumber = courseNumber;
 	}
 
 	@Override
