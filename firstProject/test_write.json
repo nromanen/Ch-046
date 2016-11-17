@@ -1,0 +1,43 @@
+{
+  "rooms" : [ {
+    "name" : "15",
+    "capacity" : 10,
+    "types" : [ "LAB" ],
+    "description" : null
+  }, {
+    "name" : "32",
+    "capacity" : 14,
+    "types" : [ "PR" ],
+    "description" : null
+  }, {
+    "name" : "3",
+    "capacity" : 30,
+    "types" : [ "LEC", "PR" ],
+    "description" : null
+  }, {
+    "name" : "24",
+    "capacity" : 30,
+    "types" : [ "LEC", "PR" ],
+    "description" : null
+  }, {
+    "name" : "25",
+    "capacity" : 30,
+    "types" : [ "LEC", "PR" ],
+    "description" : null
+  }, {
+    "name" : "39",
+    "capacity" : 150,
+    "types" : [ "LEC" ],
+    "description" : "with proector"
+  }, {
+    "name" : "8",
+    "capacity" : 150,
+    "types" : [ "LEC", "PR" ],
+    "description" : null
+  }, {
+    "name" : "102",
+    "capacity" : 12,
+    "types" : [ "LAB" ],
+    "description" : null
+  } ]
+}

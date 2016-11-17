@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Rooms>
+    <rooms>
+        <capacity>10</capacity>
+        <name>15</name>
+        <types>LAB</types>
+    </rooms>
+    <rooms>
+        <capacity>14</capacity>
+        <name>32</name>
+        <types>PR</types>
+    </rooms>
+    <rooms>
+        <capacity>30</capacity>
+        <name>3</name>
+        <types>LEC</types>
+        <types>PR</types>
+    </rooms>
+    <rooms>
+        <capacity>30</capacity>
+        <name>24</name>
+        <types>LEC</types>
+        <types>PR</types>
+    </rooms>
+    <rooms>
+        <capacity>30</capacity>
+        <name>25</name>
+        <types>LEC</types>
+        <types>PR</types>
+    </rooms>
+    <rooms>
+        <capacity>150</capacity>
+        <description>with proector</description>
+        <name>39</name>
+        <types>LEC</types>
+    </rooms>
+    <rooms>
+        <capacity>150</capacity>
+        <name>8</name>
+        <types>LEC</types>
+        <types>PR</types>
+    </rooms>
+</Rooms>
