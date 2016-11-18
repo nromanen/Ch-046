@@ -13,30 +13,10 @@ import java.util.List;
  */
 public class JsonSerializable implements MySerializable<Classroom> {
 
-    private static class Rooms {
-
-        private List<Classroom> rooms;
-
-        public Rooms() {
-
-        }
-
-        public List<Classroom> getRooms() {
-            return rooms;
-        }
-
-        public void setRooms(List<Classroom> rooms) {
-            this.rooms = rooms;
-        }
-    }
-
 
     // write list of rooms to JSON file
     @Override
     public boolean write (List<Classroom> classrooms, String fileName) {
-
-        Rooms rooms = new Rooms();
-        rooms.setRooms(classrooms);
 
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -59,8 +39,7 @@ public class JsonSerializable implements MySerializable<Classroom> {
     // read list of rooms from JSON file
     @Override
     public List<Classroom> read(String fileName){
-
-        Rooms rooms = null;
+        
         ObjectMapper mapper = new ObjectMapper();
         try {
             return  (List) mapper.readValue(new File(fileName), new TypeReference<List<Classroom>>(){});
