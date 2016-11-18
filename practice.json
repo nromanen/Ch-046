@@ -1,0 +1,65 @@
+[ {
+  "name" : "Algebra",
+  "type" : "PRACTICAL",
+  "course" : 0
+}, {
+  "name" : "Algebra",
+  "type" : "LAB",
+  "course" : 0
+}, {
+  "name" : "Algebra",
+  "type" : "LECTURE",
+  "course" : 0
+}, {
+  "name" : "Algebra",
+  "type" : "SEMINAR",
+  "course" : 0
+}, {
+  "name" : "Geometry",
+  "type" : "PRACTICAL",
+  "course" : 0
+}, {
+  "name" : "Geometry",
+  "type" : "LAB",
+  "course" : 0
+}, {
+  "name" : "Geometry",
+  "type" : "LECTURE",
+  "course" : 0
+}, {
+  "name" : "Geometry",
+  "type" : "SEMINAR",
+  "course" : 0
+}, {
+  "name" : "Programming",
+  "type" : "PRACTICAL",
+  "course" : 0
+}, {
+  "name" : "Programming",
+  "type" : "LAB",
+  "course" : 0
+}, {
+  "name" : "Programming",
+  "type" : "LECTURE",
+  "course" : 0
+}, {
+  "name" : "Programming",
+  "type" : "SEMINAR",
+  "course" : 0
+}, {
+  "name" : "Mathematics",
+  "type" : "PRACTICAL",
+  "course" : 0
+}, {
+  "name" : "Mathematics",
+  "type" : "LAB",
+  "course" : 0
+}, {
+  "name" : "Mathematics",
+  "type" : "LECTURE",
+  "course" : 0
+}, {
+  "name" : "Mathematics",
+  "type" : "SEMINAR",
+  "course" : 0
+} ]

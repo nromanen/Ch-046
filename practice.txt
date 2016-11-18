@@ -1,0 +1,16 @@
+Algebra (PRACTICAL),0;
+Algebra (LAB),0;
+Algebra (LECTURE),0;
+Algebra (SEMINAR),0;
+Geometry (PRACTICAL),0;
+Geometry (LAB),0;
+Geometry (LECTURE),0;
+Geometry (SEMINAR),0;
+Programming (PRACTICAL),0;
+Programming (LAB),0;
+Programming (LECTURE),0;
+Programming (SEMINAR),0;
+Mathematics (PRACTICAL),0;
+Mathematics (LAB),0;
+Mathematics (LECTURE),0;
+Mathematics (SEMINAR),0;
