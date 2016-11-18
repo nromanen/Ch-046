@@ -13,35 +13,17 @@ public class Main {
 
         JsonSerializable jsonSerializable = new JsonSerializable();
 
-        List<Classroom> rooms = jsonSerializable.read("room.json");
+        List<Classroom> rooms = jsonSerializable.read("test_write.json");
         Collections.sort(rooms);
+//
+//        for (Classroom room : rooms) {
+//            System.out.println(room);
+//        }
 
-        for (Classroom room : rooms) {
-            System.out.println(room);
-        }
 
 
-//        Classroom c1 = new Classroom();
-//        c1.setName("101");
-//        c1.setCapacity(25);
-//
-//        List<Type> type = new ArrayList<>();
-//        type.add(Type.LEC);
-//        type.add(Type.PR);
-//
-//
-//        c1.setTypes(type);
-//        c1.setDescription("without proector");
-//
-//        Classroom c2 = new Classroom();
-//        c2.setName("102");
-//        c2.setCapacity(12);
-//        List<Type> type1 = new ArrayList<>();
-//        type1.add(Type.LAB);
-//        c2.setTypes(type1);
-//        rooms.add(c2);
-//
-//        util.write(rooms, "test_write.json");
+
+      //  jsonSerializable.write(rooms, "test_write.json");
 
 //        Subject subject = new Subject();
 //        subject.setName("Java");
@@ -65,10 +47,10 @@ public class Main {
 //                classrooms) {
 //            System.out.println(c);
 //        }
-
-        XmlSerializable xmlSerializable = new XmlSerializable();
-
-        xmlSerializable.write(rooms, "room.xml");
+//
+//        XmlSerializable xmlSerializable = new XmlSerializable();
+//
+//        xmlSerializable.write(rooms, "room.xml");
 
 //        List<Classroom> classrooms = xmlSerializable.read("room.xml");
 //
@@ -76,6 +58,16 @@ public class Main {
 //                classrooms) {
 //            System.out.println(c);
 //        }
+
+        MySerializable myUtil = new MySerializableUtil();
+
+        //myUtil.write(rooms,"test.txt");
+        List<Classroom> list = myUtil.read("test.txt");
+
+        for (Classroom room: list){
+            System.out.println(room);
+        }
+
 
 
     }

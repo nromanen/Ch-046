@@ -1,5 +1,6 @@
 package util;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Classroom;
 
@@ -40,7 +41,10 @@ public class JsonSerializable implements MySerializable<Classroom> {
         ObjectMapper mapper = new ObjectMapper();
         try {
             try {
-                mapper.writerWithDefaultPrettyPrinter().writeValue(new File(fileName), rooms);
+
+                mapper.writerWithDefaultPrettyPrinter().writeValue(new File(fileName),classrooms);
+
+               //
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -59,12 +63,13 @@ public class JsonSerializable implements MySerializable<Classroom> {
         Rooms rooms = null;
         ObjectMapper mapper = new ObjectMapper();
         try {
-            rooms = mapper.readValue(new File(fileName), Rooms.class);
+            return  (List) mapper.readValue(new File(fileName), new TypeReference<List<Classroom>>(){});
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return rooms.getRooms();
+        return null;
     }
 
 

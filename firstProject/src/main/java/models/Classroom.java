@@ -48,12 +48,7 @@ public class Classroom implements Comparable<Classroom>{
 
 	@Override
 	public String toString() {
-		return "Classroom{" +
-				"name='" + name + '\'' +
-				", capacity=" + capacity +
-				", types=" + types + (description==null? "" : ", description='" + description + '\'')
-				  +
-				'}';
+		return name + " " + types + ", " + capacity + (description==null? "" : ", \"" + description + "\"") +	";";
 	}
 
 	@Override
