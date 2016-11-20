@@ -1,20 +1,19 @@
 package model;
 
 import java.io.Serializable;
-
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name="TimeTable")
-@XmlType(propOrder = {"subject","pair","oddnessOfWeek","day","teacher","group"})
+@XmlRootElement(name = "TimeTable")
+@XmlType(propOrder = { "subject", "pair", "teacher", "group", "day", "oddnessOfWeek", })
 @SuppressWarnings("serial")
 public class TimeTable implements Serializable {
 	private Subject subject;
+	private Pair pair;
 	private Teacher teacher;
 	private Group group;
-	private Pair pair;
-	private OddnessOfWeek oddnessOfWeek;
 	private DayOfWeek day;
+	private OddnessOfWeek oddnessOfWeek;
 
 	public Subject getSubject() {
 		return subject;
@@ -66,8 +65,8 @@ public class TimeTable implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TimeTable [subject=" + subject.getName() + ", teacher= " + teacher.getLastName() + ", group= "
-				+ group.getName() + ", pair=" + pair + ", oddnessOfWeek=" + oddnessOfWeek + ", day=" + day + "]";
+		return subject.getName() + "(" + subject.getType() + ")" + ", " + pair + ", [" + teacher.getFirstName() + ", "
+				+ teacher.getLastName() + "], " + group.getName() + ", " + day + ", " + oddnessOfWeek;
 	}
 
 }

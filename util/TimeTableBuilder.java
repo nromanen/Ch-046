@@ -1,6 +1,6 @@
 package util;
 
-import java.util.Arrays;
+import java.util.List;
 
 import model.DayOfWeek;
 import model.Group;
@@ -12,14 +12,22 @@ import model.TimeTable;
 
 public class TimeTableBuilder {
 	private Subject subject;
+	private Pair pair;
 	private Teacher teacher;
 	private Group group;
-	private Pair pair;
-	private OddnessOfWeek oddnessOfWeek;
 	private DayOfWeek day;
-	private Pair[] restriction;
+	private OddnessOfWeek oddnessOfWeek;
+	private List<Pair> restriction;
 
-	public TimeTableBuilder(Pair[] restriction) {
+	public List<Pair> getRestriction() {
+		return restriction;
+	}
+
+	public void setRestriction(List<Pair> restriction) {
+		this.restriction = restriction;
+	}
+	
+	public TimeTableBuilder(List<Pair> restriction) {
 		this.restriction = restriction;
 	}
 
@@ -56,13 +64,17 @@ public class TimeTableBuilder {
 	TimeTable build() {
 		TimeTable timeTable = new TimeTable();
 		timeTable.setSubject(subject);
+		timeTable.setPair(pair);
+		if (!restriction.contains(pair))
+			throw new IllegalStateException("Lesson " + pair + " is not in the range.. ");
 		timeTable.setTeacher(teacher);
 		timeTable.setGroup(group);
-		timeTable.setPair(pair);
-		if (!Arrays.asList(restriction).contains(pair))
-			throw new IllegalStateException("Lesson " + pair + " is not in the range.. ");
-		timeTable.setOddnessOfWeek(oddnessOfWeek);
 		timeTable.setDay(day);
+		if (this.oddnessOfWeek == null) {
+			timeTable.setOddnessOfWeek(OddnessOfWeek.All);
+		} else {
+			timeTable.setOddnessOfWeek(oddnessOfWeek);
+		}
 		return timeTable;
 	}
 }

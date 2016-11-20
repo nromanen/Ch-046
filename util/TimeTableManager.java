@@ -1,25 +1,13 @@
 package util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.DayOfWeek;
 import model.OddnessOfWeek;
@@ -83,88 +71,14 @@ public class TimeTableManager implements Serializable {
 		return tempList;
 	}
 
-	public void writeObjToFileJson(TimeTableManager manager, String filePath) {
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			mapper.writeValue(new File(filePath), manager);
-		} catch (Exception e) {
-			e.printStackTrace();
+	public static Comparator<TimeTable> TimeTableComparator = new Comparator<TimeTable>() {
+
+		public int compare(TimeTable n1, TimeTable n2) {
+			Pair pair1 = n1.getPair();
+			Pair pair2 = n2.getPair();
+			return pair1.compareTo(pair2);
+
 		}
-	}
-
-	public List<TimeTable> readObjFromFileJson(String filePath) {
-		List<TimeTable> temp = new ArrayList<>();
-		ObjectMapper mapper = new ObjectMapper();
-		TimeTableManager manager = null;
-		try {
-			manager = mapper.readValue(new File("timeTable.json"), TimeTableManager.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		temp = manager.getTimeTable();
-		return temp;
-	}
-
-	public void writeObjectToFile(String filePath) {
-		try {
-			FileOutputStream fos = new FileOutputStream(filePath);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(timeTable);
-			oos.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<TimeTable> readObjectFromFile(String filePath) {
-		List<TimeTable> tempWorkersList = new ArrayList<TimeTable>();
-		try {
-			FileInputStream fis = new FileInputStream(filePath);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			tempWorkersList = (List<TimeTable>) ois.readObject();
-			ois.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return tempWorkersList;
-	}
-
-	public void jaxbObjectToXML(TimeTableManager manager, String filePath) {
-		try {
-			JAXBContext context = JAXBContext.newInstance(TimeTableManager.class);
-			Marshaller m = context.createMarshaller();
-			// for pretty-print XML in JAXB
-			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
-			// Write to System.out for debugging
-			// m.marshal(emp, System.out);
-
-			// Write to File
-			m.marshal(manager, new File(filePath));
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public List<TimeTable> jaxbXMLToObject(String filePATH) {
-		try {
-			JAXBContext context = JAXBContext.newInstance(TimeTableManager.class);
-			Unmarshaller un = context.createUnmarshaller();
-			TimeTableManager ttm = (TimeTableManager) un.unmarshal(new File(filePATH));
-			List<TimeTable> list = new ArrayList<>();
-			list = ttm.getTimeTable();
-			return list;
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+	};
 
 }

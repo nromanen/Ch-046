@@ -1,15 +1,22 @@
 package model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @SuppressWarnings("serial")
 public class Subject implements Serializable {
 	private String name;
 	private Type type;
+	@XmlTransient
+	@JsonIgnore
 	private int courseN;
-	private List<Subject> list = new ArrayList<>();
+	@XmlTransient
+	@JsonIgnore
+	private List<Subject> list;
 
 	public Subject() {
 		super();

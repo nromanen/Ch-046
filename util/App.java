@@ -1,5 +1,6 @@
 package util;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +14,16 @@ import model.TimeTable;
 import model.Type;
 
 public class App {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		TimeTableManager manager = new TimeTableManager();
-		Pair[] range = new Pair[] { Pair.FIRST, Pair.SECOND, Pair.THIRD, Pair.FORTH, Pair.FIFTH, Pair.SIXTH,
-				Pair.SEVENTH };
-
+		List <Pair> restriction = new ArrayList<>();
+		restriction.add(Pair.FIRST);
+		restriction.add(Pair.SECOND);
+		restriction.add(Pair.THIRD);
+		restriction.add(Pair.FORTH);
+		restriction.add(Pair.FIFTH);
+		restriction.add(Pair.SIXTH);
+		restriction.add(Pair.SEVENTH);
 		List<TimeTable> list = new ArrayList<>();
 
 		// set teachers
@@ -49,7 +55,7 @@ public class App {
 		// set subjects
 		Subject subject1 = new Subject();
 		subject1.setName("Algebra");
-		subject1.setType(Type.LESSON);
+		subject1.setType(Type.PRACTICE);
 		subject1.setCourseN(1);
 
 		Subject subject2 = new Subject();
@@ -64,7 +70,7 @@ public class App {
 
 		Subject subject4 = new Subject();
 		subject4.setName("Philosophy");
-		subject4.setType(Type.LESSON);
+		subject4.setType(Type.LECTURE);
 		subject4.setCourseN(1);
 
 		Subject subject5 = new Subject();
@@ -73,57 +79,111 @@ public class App {
 		subject5.setCourseN(1);
 
 		// set tables
-		TimeTable table1 = new TimeTableBuilder(range).buildSubject(subject1).buildTeacher(teacher1).buildGroup(group1)
-				.buildPair(Pair.FIRST).buildOddnessOfWeek(OddnessOfWeek.ODD).buildDayOfWeek(DayOfWeek.MONDAY).build();
-
-		TimeTable table2 = new TimeTableBuilder(range).buildSubject(subject2).buildTeacher(teacher2).buildGroup(group1)
-				.buildPair(Pair.THIRD).buildOddnessOfWeek(OddnessOfWeek.ODD).buildDayOfWeek(DayOfWeek.MONDAY).build();
-
-		TimeTable table3 = new TimeTableBuilder(range).buildSubject(subject3).buildTeacher(teacher3).buildGroup(group1)
-				.buildPair(Pair.FIFTH).buildOddnessOfWeek(OddnessOfWeek.ODD).buildDayOfWeek(DayOfWeek.MONDAY).build();
-
-		TimeTable table4 = new TimeTableBuilder(range).buildSubject(subject4).buildTeacher(teacher4).buildGroup(group1)
-				.buildPair(Pair.SECOND).buildOddnessOfWeek(OddnessOfWeek.ODD).buildDayOfWeek(DayOfWeek.TUESDAY).build();
-
-		TimeTable table5 = new TimeTableBuilder(range).buildSubject(subject5).buildTeacher(teacher5).buildGroup(group1)
-				.buildPair(Pair.FORTH).buildOddnessOfWeek(OddnessOfWeek.ODD).buildDayOfWeek(DayOfWeek.TUESDAY).build();
-
-		TimeTable table6 = new TimeTableBuilder(range).buildSubject(subject1).buildTeacher(teacher1).buildGroup(group1)
-				.buildPair(Pair.SEVENTH).buildOddnessOfWeek(OddnessOfWeek.ODD).buildDayOfWeek(DayOfWeek.TUESDAY)
+		TimeTable table1 = new TimeTableBuilder(restriction)
+				.buildSubject(subject1)
+				.buildPair(Pair.FIRST)
+				.buildTeacher(teacher1)
+				.buildGroup(group1)
+				.buildDayOfWeek(DayOfWeek.MONDAY)
 				.build();
 
+		TimeTable table2 = new TimeTableBuilder(restriction)
+				.buildSubject(subject2)
+				.buildPair(Pair.FIFTH)
+				.buildTeacher(teacher2)
+				.buildGroup(group1)			
+				.buildDayOfWeek(DayOfWeek.MONDAY)
+				.buildOddnessOfWeek(OddnessOfWeek.ODD)
+				.build();
+
+		TimeTable table3 = new TimeTableBuilder(restriction)
+				.buildSubject(subject3)
+				.buildPair(Pair.THIRD)
+				.buildTeacher(teacher3)
+				.buildGroup(group1)
+				.buildDayOfWeek(DayOfWeek.MONDAY)
+				.buildOddnessOfWeek(OddnessOfWeek.ODD)
+				.build();
+
+		TimeTable table4 = new TimeTableBuilder(restriction)
+				.buildSubject(subject4)
+				.buildPair(Pair.SECOND)
+				.buildTeacher(teacher4)
+				.buildGroup(group1)
+				.buildDayOfWeek(DayOfWeek.TUESDAY)
+				.buildOddnessOfWeek(OddnessOfWeek.ODD)
+				.build();
+
+		TimeTable table5 = new TimeTableBuilder(restriction)
+				.buildSubject(subject5)
+				.buildPair(Pair.FORTH)
+				.buildTeacher(teacher5)
+				.buildGroup(group1)
+				.buildDayOfWeek(DayOfWeek.TUESDAY)
+				.buildOddnessOfWeek(OddnessOfWeek.ODD)
+				.build();
+
+		TimeTable table6 = new TimeTableBuilder(restriction)
+				.buildSubject(subject1)
+				.buildPair(Pair.SEVENTH)
+				.buildTeacher(teacher1)
+				.buildGroup(group1)
+				.buildDayOfWeek(DayOfWeek.TUESDAY)
+				.buildOddnessOfWeek(OddnessOfWeek.ODD)
+				.build();
+		
+		//add to List<TimeTable>
 		list.add(table1);
 		list.add(table2);
 		list.add(table3);
 		list.add(table4);
 		list.add(table5);
 		list.add(table6);
-
+		
+		
+		//Collections.sort(list, TimeTableManager.TimeTableComparator);
 		// set List
 		manager.setTimeTable(list);
-		System.out.println(manager.getTimeTable());
-
-		// write obj to file json
-		manager.writeObjToFileJson(manager, "timeTable.json");
-		// read obj from file json
-		List<TimeTable> list1 = new ArrayList<>();
-		list1 = manager.readObjFromFileJson("timeTable.json");
-		System.out.println(list1);
-
-		// write obj to file txt
-		manager.writeObjectToFile("file.txt");
-		// read obj from file txt
-		List<TimeTable> list2 = new ArrayList<>();
-		list2 = manager.readObjectFromFile("file.txt");
-		System.out.println(list2);
-
-		// write obj to filexml
-		manager.jaxbObjectToXML(manager, "filexml");
-		// read obj from filexml
-		List<TimeTable> list3 = new ArrayList<>();
-		list3 = manager.jaxbXMLToObject("filexml");
-		System.out.println(list3);
-
+		System.out.println("Set list: "+manager.getTimeTable());
+		
+		//method getFreePairs
+		List <Pair> freePairs = new ArrayList<>();
+		freePairs=manager.getFreePairs(DayOfWeek.MONDAY);
+		System.out.println("Free pairs of day "+DayOfWeek.MONDAY+" are: "+freePairs);
+		
+		//get Lessons by day and odnessOfweek
+		List <TimeTable> lessons = new ArrayList<>();
+		lessons=manager.getLessonsByDayAndWeek(OddnessOfWeek.ODD, DayOfWeek.MONDAY);
+		System.out.println("Lessons of day "+DayOfWeek.MONDAY+" are: "+lessons);
+		
+		
+		System.out.println("Checking JsonConverter methods: ");
+		JsonConverter json = new JsonConverter();
+		json.writeToFile(list, "jsonFile.json");
+		List <TimeTable> jsonList = new ArrayList<>();
+		jsonList=json.readFromFile("jsonFile.json");
+		System.out.println(jsonList);
+		
+		System.out.println("Cheking JsonConverterWithTimeTableManager: ");
+		JsonConverterWithTimeTableManager jsonttm = new JsonConverterWithTimeTableManager();
+		jsonttm.writeToFile(list, "jsonttmFile.json");
+		List <TimeTable> jsonttmList = new ArrayList<>();
+		jsonttmList=jsonttm.readFromFile("jsonttmFile.json");
+		System.out.println(jsonttmList);
+		
+		System.out.println("Cheking XmlConverter methods: ");
+		XmlConverter xml = new XmlConverter();
+		xml.writeToFile(list, "xmlFile.xml");
+		List <TimeTable> xmlList = new ArrayList<>();
+		xmlList=xml.readFromFile("xmlFile.xml");
+		System.out.println(xmlList);
+		
+		System.out.println("Cheking TxtConverter methods: ");
+		TxtConverter txt = new TxtConverter();
+		txt.writeToFile(list, "linefile.txt");
+		List <TimeTable> txtList = new ArrayList<>();
+		txtList=txt.readFromFile("linefile.txt");
+		System.out.println(txtList);
 	}
 
 }
