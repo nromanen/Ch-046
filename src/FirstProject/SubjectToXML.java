@@ -11,11 +11,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 
-public class ObjectToXML implements InputOutput<Subject>{
+public class SubjectToXML implements InputOutput<Subject>{
 	@XmlRootElement(name = "subjects")
 	@XmlAccessorType(XmlAccessType.FIELD)
     private static class Subjects {

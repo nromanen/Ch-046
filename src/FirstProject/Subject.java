@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "subzero")
-@XmlType(propOrder = {"name", "type","course"})
+@XmlRootElement(name = "Subjects")
+@XmlType(propOrder = { "name", "type", "course" })
 
 public class Subject {
 	private String name;
-	private LessonType type;
+	private SubjectType type;
 	private int course;
 
 	public int getCourse() {
@@ -25,9 +25,15 @@ public class Subject {
 
 	}
 
-	public Subject(String name, LessonType type) {
+	public Subject(String name, SubjectType type) {
 		this.name = name;
 		this.type = type;
+	}
+
+	public Subject(String name, SubjectType type, int course) {
+		this.name = name;
+		this.type = type;
+		this.course = course;
 	}
 
 	@Override
@@ -69,11 +75,11 @@ public class Subject {
 		this.name = name;
 	}
 
-	public LessonType getType() {
+	public SubjectType getType() {
 		return type;
 	}
 
-	public void setType(LessonType type) {
+	public void setType(SubjectType type) {
 		this.type = type;
 	}
 

@@ -6,17 +6,16 @@ import java.util.Comparator;
 public class Teacher {
 	private String firstName;
 	private String lastName;
-	private Qualification qualification;
 	private ArrayList<Subject> subjects = new ArrayList<>();
 
 	public Teacher() {
 
 	}
 
-	public Teacher(String firstName, String lastName, Qualification qualification) {
+	public Teacher(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.qualification = qualification;
+		
 	}
 
 	public String getFirstName() {
@@ -33,14 +32,6 @@ public class Teacher {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public Qualification getQualification() {
-		return qualification;
-	}
-
-	public void setQualification(Qualification qualification) {
-		this.qualification = qualification;
 	}
 
 	@Override

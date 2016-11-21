@@ -12,7 +12,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ObjectTotxt implements InputOutput {
+public class SubjectTotxt implements InputOutput {
 
 	@Override
 	public List<Subject> read(String filePath) {
@@ -34,7 +34,7 @@ public class ObjectTotxt implements InputOutput {
 			int course = Integer.parseInt(matcher.group(3));
 			Subject ss = new Subject();
 			ss.setName(name);
-			ss.setType(LessonType.valueOf(type));
+			ss.setType(SubjectType.valueOf(type));
 			ss.setCourse(course);
 			newList.add(ss);
 

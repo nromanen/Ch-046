@@ -8,7 +8,7 @@ import java.util.List;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ObjectToJson implements InputOutput<Subject> {
+public class SubjectToJson implements InputOutput<Subject> {
 	
 	
 	// read objects from file

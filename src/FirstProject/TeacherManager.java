@@ -6,6 +6,10 @@ import java.util.Comparator;
 public class TeacherManager {
 	private Teacher teacher;
 
+	public TeacherManager(Teacher teacher) {
+		this.teacher = teacher;
+	}
+
 	public ArrayList<Subject> addSubject(Subject lesson) {
 		teacher.getList().add(lesson);
 		return teacher.getList();
@@ -21,9 +25,10 @@ public class TeacherManager {
 		}
 	}
 
-	public ArrayList<Subject> getSubjectsByType(LessonType type) {
+	public ArrayList<Subject> getSubjectsByType( SubjectType type) {
 		ArrayList<Subject> listByLessonType = new ArrayList<>();
-		for (Subject les : teacher.getList()) {
+		ArrayList<Subject> list = teacher.getList();
+		for (Subject les : list) {
 			if (les.getType().equals(type))
 				listByLessonType.add(les);
 		}
@@ -38,38 +43,28 @@ public class TeacherManager {
 		}
 	};
 
-	public ArrayList<Subject> getOnlyLectures(ArrayList<Subject> fullListofLessons) {
+	public ArrayList<Subject> getOnlyLectures(Teacher teacher) {
+		ArrayList<Subject> result = new ArrayList<>();
+
 		ArrayList<Subject> list = teacher.getList();
-		ArrayList<Subject> listOnlyLectures = new ArrayList<>();
-		for (Subject lesson : fullListofLessons) {
-			for (Subject les : list) {
-				if (lesson.getName().equals(les.getName())) {
-					if (!lesson.getType().equals(les.getType()))
-						listOnlyLectures.add(lesson);
+		for (Subject lecture : list) {
+			if (lecture.getType().equals(SubjectType.LECTURE)) {
+				String name = lecture.getName();
+				int course = lecture.getCourse();
+				boolean onlyLecture = true;
+				for (Subject subject : list) {
+					if (subject.getName().equals(name) && !subject.getType().equals(SubjectType.LECTURE)
+							&& subject.getCourse() == course) {
+						onlyLecture = false;
+						break;
+					}
+				}
+				if (onlyLecture) {
+					result.add(lecture);
 				}
 			}
 		}
-		for (int i = 0; i < listOnlyLectures.size(); i++) {
-			for (Subject les : list) {
-				if (listOnlyLectures.get(i).getName().equals(les.getName())
-						&& listOnlyLectures.get(i).getType().equals(les.getType())) {
-					listOnlyLectures.remove(i);
-					i = 0;
-				}
-			}
-		}
-		for (int i = 0; i < listOnlyLectures.size(); i++) {
-			int pair = 0;
-			for (int j = 0; j < listOnlyLectures.size(); j++) {
-				if (listOnlyLectures.get(i).equals(listOnlyLectures.get(j))) {
-					pair++;
-				}
-				if (pair == 2) {
-					listOnlyLectures.remove(j);
-					pair = 0;
-				}
-			}
-		}
-		return listOnlyLectures;
+
+		return result;
 	}
 }

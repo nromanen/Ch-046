@@ -1,5 +1,5 @@
 package FirstProject;
 
-public enum LessonType {
+public enum SubjectType {
 LECTURE,SEMINAR,PRACTICAL,LAB
 }
