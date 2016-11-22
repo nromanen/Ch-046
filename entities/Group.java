@@ -1,100 +1,54 @@
 package com.ss.schedule.model;
 
-import java.util.ArrayList;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 import java.util.List;
 
+@JacksonXmlRootElement(localName = "group")
 public class Group {
 
-	private static final String ERROR_MESSAGE_ADD_SUBJECT = "This subject has already existed!";
-	private static final String ERROR_MESSAGE_DELETE_SUBJECT = "Subject has no existed!";
+	@JacksonXmlProperty
+	private String name;
 
-	private String groupName;
-	private int groupAmount;
+	@JacksonXmlProperty
+	private int count;
+
+	@JacksonXmlElementWrapper(localName = "subjects")
+	@JacksonXmlProperty(localName = "subject")
 	private List<Subject> subjects;
 
-	public Group(String groupName, int groupAmount, List<Subject> subjects) {
-		this.groupName = groupName;
-		this.groupAmount = groupAmount;
+	public Group() {}
+
+	public Group(String name, int count, List<Subject> subjects) {
+		this.name = name;
+		this.count = count;
 		this.subjects = subjects;
 	}
 
-	public String getGroupName() {
-		return groupName;
+	public String getName() {
+		return name;
 	}
 
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public int getGroupAmount() {
-		return groupAmount;
+	public int getCount() {
+		return count;
 	}
 
-	public void setGroupAmount(int groupAmount) {
-		this.groupAmount = groupAmount;
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 	public List<Subject> getSubjects() {
 		return subjects;
 	}
 
-	public List<Group> getAllSubgroups(Subject subject) {
-		if (subject.getSubjectType().getMaxStudentAmount() >= groupAmount) {
-			List<Group> groups = new ArrayList<>();
-			groups.add(this);
-			return groups;
-		}
-
-		return createSubGroups(subject);
-	}
-
-	private List<Group> createSubGroups(Subject subject) {
-		int maxStudentAmount = subject.getSubjectType().getMaxStudentAmount();
-		List<Group> groups = new ArrayList<>();
-
-		for (int i = 2; ; i++) {
-			if ((i * maxStudentAmount) >= groupAmount) {
-				String subGroupName;
-				for (int j = 1; j < i; j++) {
-					subGroupName = groupName + "-" + j;
-					int subGroupAmount = groupAmount / i;
-					groups.add(new Group(subGroupName, subGroupAmount, subjects));
-				}
-				subGroupName = groupName + "-" + i;
-				int remainStudentAmount = groupAmount - ((groupAmount / i) * (i - 1));
-				groups.add(new Group(subGroupName, remainStudentAmount, subjects));
-
-				break;
-			}
-		}
-
-		return groups;
-	}
-
-	public void addAllSubjects(List<Subject> subjectList) {
-		if (subjectList != null) {
-			for (Subject subject : subjectList) {
-				if (!subjects.contains(subject)) {
-					subjects.add(subject);
-				}
-			}
-		}
-	}
-
-	public void addSubject(Subject subject) {
-		if (subject != null && !subjects.contains(subject)) {
-			subjects.add(subject);
-		} else {
-			throw new IllegalArgumentException(ERROR_MESSAGE_ADD_SUBJECT);
-		}
-	}
-
-	public void deleteSubject(Subject subject) {
-		if (subject != null && subjects.contains(subject)) {
-			subjects.remove(subject);
-		} else {
-			throw new IllegalArgumentException(ERROR_MESSAGE_DELETE_SUBJECT);
-		}
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
 	}
 
 	@Override
@@ -104,12 +58,12 @@ public class Group {
 
 		Group group = (Group) o;
 
-		return groupName != null ? groupName.equals(group.groupName) : group.groupName == null;
+		return name != null ? name.equals(group.name) : group.name == null;
 
 	}
 
 	@Override
 	public int hashCode() {
-		return groupName != null ? groupName.hashCode() : 0;
+		return name != null ? name.hashCode() : 0;
 	}
 }

@@ -1,39 +1,48 @@
 package com.ss.schedule.model;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
+@JacksonXmlRootElement(localName = "subject")
 public class Subject {
 
-	private String subjectName;
-	private int courseNumber;
-	private SubjectType subjectType;
+	@JacksonXmlProperty
+	private String name;
+	@JacksonXmlProperty
+	private int course;
+	@JacksonXmlProperty
+	private SubjectType type;
 
-	public Subject(String subjectName, int courseNumber, SubjectType subjectType) {
-		this.subjectName = subjectName;
-		this.courseNumber = courseNumber;
-		this.subjectType = subjectType;
+	public Subject() {}
+
+	public Subject(String name, int courseNumber, SubjectType type) {
+		this.name = name;
+		this.course = courseNumber;
+		this.type = type;
 	}
 
-	public String getSubjectName() {
-		return subjectName;
+	public String getName() {
+		return name;
 	}
 
-	public void setSubjectName(String subjectName) {
-		this.subjectName = subjectName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public SubjectType getSubjectType() {
-		return subjectType;
+	public SubjectType getType() {
+		return type;
 	}
 
-	public void setSubjectType(SubjectType subjectType) {
-		this.subjectType = subjectType;
+	public void setType(SubjectType type) {
+		this.type = type;
 	}
 
-	public int getCourseNumber() {
-		return courseNumber;
+	public int getCourse() {
+		return course;
 	}
 
-	public void setCourseNumber(int courseNumber) {
-		this.courseNumber = courseNumber;
+	public void setCourse(int course) {
+		this.course = course;
 	}
 
 	@Override
@@ -43,17 +52,17 @@ public class Subject {
 
 		Subject subject = (Subject) o;
 
-		if (courseNumber != subject.courseNumber) return false;
-		if (subjectName != null ? !subjectName.equals(subject.subjectName) : subject.subjectName != null) return false;
-		return subjectType == subject.subjectType;
+		if (course != subject.course) return false;
+		if (name != null ? !name.equals(subject.name) : subject.name != null) return false;
+		return type == subject.type;
 
 	}
 
 	@Override
 	public int hashCode() {
-		int result = subjectName != null ? subjectName.hashCode() : 0;
-		result = 31 * result + courseNumber;
-		result = 31 * result + (subjectType != null ? subjectType.hashCode() : 0);
+		int result = name != null ? name.hashCode() : 0;
+		result = 31 * result + course;
+		result = 31 * result + (type != null ? type.hashCode() : 0);
 		return result;
 	}
 }
