@@ -1,6 +1,0 @@
-Algebra(PRACTICE), FIRST, [Ann, Parkinson], 101, MONDAY, All
-Geometria(SEMINAR), FIFTH, [Ben, Alington], 101, MONDAY, ODD
-Physics(LAB), THIRD, [Peter, Jason], 101, MONDAY, ODD
-Philosophy(LECTURE), SECOND, [Kate, Peterson], 101, TUESDAY, ODD
-English(PRACTICE), FORTH, [Poll, Anderson], 101, TUESDAY, ODD
-Algebra(PRACTICE), SEVENTH, [Ann, Parkinson], 101, TUESDAY, ODD
