@@ -1,14 +1,21 @@
-package entities;
+package FirstProject;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Teacher {
 	private String firstName;
 	private String lastName;
-	List<Subject> listOfSubject;
+	private ArrayList<Subject> subjects = new ArrayList<>();
 
 	public Teacher() {
-		super();
+
+	}
+
+	public Teacher(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		
 	}
 
 	public String getFirstName() {
@@ -27,4 +34,16 @@ public class Teacher {
 		this.lastName = lastName;
 	}
 
+	@Override
+	public String toString() {
+		return "Teacher name " + getLastName() + " " + getFirstName();
+	}
+
+	public ArrayList<Subject> getList() {
+		return subjects;
+	}
+
+	public void setList(ArrayList<Subject> listofLessons) {
+		this.subjects = listofLessons;
+	}
 }
