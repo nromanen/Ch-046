@@ -2,7 +2,6 @@ package com.ss.schedule.io;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import java.io.File;
@@ -34,9 +33,7 @@ public class InputOutputXml<E> implements InputOutput<E> {
 	public void writeToFile(File file, E objects) {
 		try {
 			ObjectMapper mapper = new XmlMapper();
-			String rootName = "groups";
-			ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter().withRootName(rootName);
-			objectWriter.writeValue(file, objects);
+			mapper.writeValue(file, objects);
 		} catch (IOException ex) {
 			// TODO
 			ex.printStackTrace();
