@@ -2,7 +2,7 @@ package FirstProject;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-
+// author Maks
 public class TeacherManager {
 	private Teacher teacher;
 	
