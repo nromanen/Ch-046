@@ -1,0 +1,13 @@
+/.idea/*
+/.gradle/*
+/build/*
+/bin/*
+
+*.iml
+*.ipr
+*.iws
+
+.classpath
+.project
+
+.gradletasknamecash
