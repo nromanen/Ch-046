@@ -3,6 +3,7 @@ package com.ss.schedule.institute;
 import com.ss.schedule.model.Group;
 import com.ss.schedule.model.Subject;
 import com.ss.schedule.model.Teacher;
+import com.ss.schedule.model.Classroom;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class Faculty {
 	private List<Group> groups;
 	private List<Subject> subjects;
 	private List<Teacher> teachers;
+	private List<Classroom> classrooms;
 
 	public Faculty(String name, List<Group> groups, List<Subject> subjects, List<Teacher> teachers) {
 		this.name = name;
@@ -56,6 +58,14 @@ public class Faculty {
 
 	public void setTeachers(List<Teacher> teachers) {
 		this.teachers = teachers;
+	}
+
+	public List<Classroom> getClassrooms() {
+		return classrooms;
+	}
+
+	public void setClassrooms(List<Classroom> classrooms) {
+		this.classrooms = classrooms;
 	}
 
 	public HashMap<Subject, List<Group>> getGroupsSubgroupsStreams() {
