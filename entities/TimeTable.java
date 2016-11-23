@@ -27,6 +27,7 @@ public class TimeTable implements Serializable {
 	private Group group;
 	private DayOfWeek day;
 	private OddnessOfWeek oddnessOfWeek;
+	private Classroom room;
 
 	public Subject getSubject() {
 		return subject;
@@ -74,6 +75,15 @@ public class TimeTable implements Serializable {
 
 	public void setDay(DayOfWeek day) {
 		this.day = day;
+	}
+
+	
+	public Classroom getRoom() {
+		return room;
+	}
+
+	public void setRoom(Classroom room) {
+		this.room = room;
 	}
 
 	@Override
