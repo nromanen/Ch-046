@@ -17,7 +17,7 @@ public class Main {
                 new TypeReference<ArrayList<Classroom>>() {
                 });
 
-        ArrayList<Classroom> classrooms = classroomManager.readFromFile("room.testfiles");
+        ArrayList<Classroom> classrooms = classroomManager.readFromFile("room.json");
 
         System.out.println(classrooms);
     }
