@@ -25,7 +25,7 @@ public class TeacherManager {
 		}
 	}
 
-	public ArrayList<Subject> getSubjectsByType( SubjectType type) {
+	public ArrayList<Subject> getSubjectsByType(SubjectType type) {
 		ArrayList<Subject> listByLessonType = new ArrayList<>();
 		ArrayList<Subject> list = teacher.getList();
 		for (Subject les : list) {
@@ -66,5 +66,19 @@ public class TeacherManager {
 		}
 
 		return result;
+	}
+
+	public ArrayList<Subject> noTeacherSubjects(Teacher teacher, ArrayList<Subject> fullList) {
+		ArrayList<Subject> teacherList = teacher.getList();
+		for (int i = 0; i < fullList.size(); i++) {
+			for (int j = 0; j < teacherList.size(); j++) {
+				if (fullList.get(i).equals(teacherList.get(j))) {
+					fullList.remove(i);
+					i=0;
+					j=0;
+				}
+			}
+		}
+		return fullList;
 	}
 }
