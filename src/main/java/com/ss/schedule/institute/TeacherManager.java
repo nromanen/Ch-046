@@ -1,17 +1,10 @@
-package com.ss.schedule.institute;
-
-import com.ss.schedule.model.Subject;
-import com.ss.schedule.model.SubjectType;
-import com.ss.schedule.model.Teacher;
+package FirstProject;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
-// author Maksym Maksymenko last commit 23.11 18:02
-
 public class TeacherManager {
 	private Teacher teacher;
-	
 
 	public Teacher getTeacher() {
 		return teacher;
@@ -26,8 +19,9 @@ public class TeacherManager {
 	}
 
 	public ArrayList<Subject> addSubject(Subject lesson) {
-		if(!teacher.getList().contains(lesson)){
-		teacher.getList().add(lesson);}
+		if (!teacher.getList().contains(lesson)) {
+			teacher.getList().add(lesson);
+		}
 		return teacher.getList();
 	}
 
@@ -40,8 +34,9 @@ public class TeacherManager {
 			}
 		}
 	}
-
-	public ArrayList<Subject> getSubjectsByType( SubjectType type) {
+	
+// returns list with selected type of subjects 
+	public ArrayList<Subject> getSubjectsByType(SubjectType type) {
 		ArrayList<Subject> listByLessonType = new ArrayList<>();
 		ArrayList<Subject> list = teacher.getList();
 		for (Subject les : list) {
@@ -58,7 +53,8 @@ public class TeacherManager {
 			return l1.getType().compareTo(l2.getType());
 		}
 	};
-
+	
+// returns subjects where teacher has only lectures(and  has not PR||Lab||Seminar)
 	public ArrayList<Subject> getOnlyLectures(Teacher teacher) {
 		ArrayList<Subject> result = new ArrayList<>();
 
@@ -82,5 +78,17 @@ public class TeacherManager {
 		}
 
 		return result;
+	}
+	
+//returns list of subjects except teachers subjects
+	public ArrayList<Subject> noTeacherSubjects( ArrayList<Subject> fullList) {  
+		ArrayList<Subject> teacherList = teacher.getList();
+		ArrayList<Subject> noTeacherSubjects = new ArrayList<Subject>();
+		for(Subject subject:fullList)
+		{
+			if(!teacherList.contains(subject))
+				noTeacherSubjects.add(subject);
+		}
+		return noTeacherSubjects;
 	}
 }
