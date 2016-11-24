@@ -19,7 +19,7 @@ public class Faculty {
 	private List<Group> groups;
 	private List<Subject> subjects;
 	private List<Teacher> teachers;
-	private List<Classroom> classrooms;
+	private static List<Classroom> classrooms;
 
 	public Faculty() {
 
@@ -64,12 +64,13 @@ public class Faculty {
 		this.teachers = teachers;
 	}
 
-	public List<Classroom> getClassrooms() {
+
+	public static List<Classroom> getClassrooms() {
 		return classrooms;
 	}
 
-	public void setClassrooms(List<Classroom> classrooms) {
-		this.classrooms = classrooms;
+	public static void setClassrooms(List<Classroom> classrooms) {
+		Faculty.classrooms = classrooms;
 	}
 
 	public HashMap<Subject, List<Group>> getGroupsSubgroupsStreams() {

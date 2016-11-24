@@ -1,4 +1,8 @@
-package FirstProject;
+package com.ss.schedule.institute;
+
+import com.ss.schedule.model.Subject;
+import com.ss.schedule.model.SubjectType;
+import com.ss.schedule.model.Teacher;
 
 import java.util.ArrayList;
 import java.util.Comparator;

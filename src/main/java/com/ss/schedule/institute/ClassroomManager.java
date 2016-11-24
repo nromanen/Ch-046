@@ -17,9 +17,8 @@ public class ClassroomManager {
     public List<Classroom> getListOfAvailableRooms(Subject subject, Group group){
 
         List<Classroom> availableClassrooms = new ArrayList<>();
-        Faculty faculty = new Faculty();
 
-        for (Classroom room: faculty.getClassrooms()) {
+        for (Classroom room: Faculty.getClassrooms()) {
                 if (room.getCapacity() >= group.getCount() && room.getTypes().contains(subject.getType())){
                     availableClassrooms.add(room);
             }

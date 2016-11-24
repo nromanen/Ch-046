@@ -19,9 +19,19 @@ public class Classroom implements Comparable<Classroom>{
 	private String description;
 
 
-
 	public Classroom() {
 		super();
+	}
+
+	public Classroom(String name, int capacity, List<SubjectType> types) {
+		this.name = name;
+		this.capacity = capacity;
+		this.types = types;
+	}
+
+	public Classroom(String name, int capacity, List<SubjectType> types, String description) {
+		this(name, capacity, types);
+		this.description = description;
 	}
 
 	public String getName() {
