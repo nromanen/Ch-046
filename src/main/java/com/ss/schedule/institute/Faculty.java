@@ -191,7 +191,8 @@ public class Faculty {
 			throw new IllegalArgumentException(ERROR_MESSAGE_DELETE_SUBJECT);
 		}
 	}
-
+	
+// subjects which are not used in groups
 	public List<Subject> getUnusedSubjects() {
 		List<Subject> subjectsThatDoNotUse = new ArrayList<>();
 
@@ -212,5 +213,23 @@ public class Faculty {
 		}
 
 		return subjectsThatDoNotUse;
+	}
+	
+	// method returns list of subjects where teacher is not defined
+	public ArrayList<Subject> unusedSubjects( ArrayList<Subject> fullList) {  
+		ArrayList<Subject> subjectsList = new ArrayList<>();
+		ArrayList<Subject> unusedSubjects = new ArrayList<Subject>();
+		
+		for(Teacher teacher:getTeachers())
+		{
+			subjectsList.addAll(teacher.getList()); 
+		}
+		
+		for(Subject subject:fullList)
+		{
+			if(!subjectsList.contains(subject))
+				unusedSubjects.add(subject);
+		}
+		return unusedSubjects;
 	}
 }
