@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,10 +17,10 @@ import java.util.List;
  */
 public class ClassroomManagerTest {
 
-    ClassroomManager classroomManager = new ClassroomManager();
-    Group group = new Group();
-    Subject subject = new Subject();
-    List<Classroom> exspectedList = new ArrayList<>();
+    private ClassroomManager classroomManager = new ClassroomManager();
+    private Group group = new Group();
+    private Subject subject = new Subject();
+    private List<Classroom> exspectedList = new ArrayList<>();
 
     @BeforeMethod
     public void setUp() throws Exception {
@@ -32,11 +33,10 @@ public class ClassroomManagerTest {
         types2.add(SubjectType.PRACTICE);
 
         List<SubjectType> types3 = new ArrayList<>();
-        types2.add(SubjectType.SEMINAR);
-        types2.add(SubjectType.PRACTICE);
+        types3.add(SubjectType.LECTURE);
 
         Classroom classroom1 = new Classroom("001", 15, types1);
-        Classroom classroom2 = new Classroom("002", 150, types2, "with proector");
+        Classroom classroom2 = new Classroom("002", 150, types2, "with proektor");
         Classroom classroom3 = new Classroom("003", 30, types3);
 
         List<Classroom> classrooms= new ArrayList<>();
@@ -46,9 +46,12 @@ public class ClassroomManagerTest {
 
         Faculty.setClassrooms(classrooms);
 
-        group.setCount(15);
-        subject.setType(SubjectType.LAB);
-        exspectedList.add(classroom1);
+        group.setCount(25);
+        subject.setType(SubjectType.LECTURE);
+        exspectedList.add(classroom2);
+        exspectedList.add(classroom3);
+
+        Collections.sort(exspectedList);
     }
 
     @Test
