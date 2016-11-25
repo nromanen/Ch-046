@@ -9,13 +9,18 @@ public class Subject {
 	@JacksonXmlProperty
 	private String name;
 	@JacksonXmlProperty
-	private int course;
-	@JacksonXmlProperty
 	private SubjectType type;
+	@JacksonXmlProperty
+	private int course;
 
 	public Subject() {}
 
-	public Subject(String name, int courseNumber, SubjectType type) {
+	public Subject(String name, SubjectType type) {
+		this.name = name;
+		this.type = type;
+	}
+
+	public Subject(String name, SubjectType type, int courseNumber) {
 		this.name = name;
 		this.course = courseNumber;
 		this.type = type;
