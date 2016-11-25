@@ -16,10 +16,8 @@ public class GroupDependenciesCreator {
 	private HashMap<Group, List<Group>> groupsDependencies;
 	private Set<Group> groupSet;
 
-	private Pattern groupPattern;
 	private Pattern subgroupPattern;
 	private Pattern streamPattern;
-	private Matcher groupMatcher;
 	private Matcher subgroupMatcher;
 	private Matcher streamMatcher;
 
@@ -47,7 +45,7 @@ public class GroupDependenciesCreator {
 	}
 
 	private void findAllGroupsSubgroupsStreams() {
-		groupSet = new TreeSet<>();
+		groupSet = new HashSet<>();
 		Collection<List<Group>> groupsFromMap = groupsSubgroupsStreams.values();
 		for (List<Group> groupList : groupsFromMap) {
 			groupSet.addAll(groupList);
@@ -55,32 +53,21 @@ public class GroupDependenciesCreator {
 	}
 
 	private List<Group> getGroupDependencies(String groupName) {
-		groupPattern = Pattern.compile(groupName);
 		subgroupPattern = Pattern.compile(createSubgroupPattern(groupName));
 		streamPattern = Pattern.compile(createStreamPattern(groupName));
 		List<Group> foundGroups = new ArrayList<>();
 
 		for (Group groupFromSet : groupSet) {
-			groupMatcher = groupPattern.matcher(groupFromSet.getName());
 			subgroupMatcher = subgroupPattern.matcher(groupFromSet.getName());
 			streamMatcher = streamPattern.matcher(groupFromSet.getName());
 			
-			if (groupMatcher.find() || subgroupMatcher.find() || streamMatcher.find() && 
+			if (groupFromSet.getName().equals(groupName) || subgroupMatcher.find() || streamMatcher.find() &&
 					!foundGroups.contains(groupFromSet)) {
 				foundGroups.add(groupFromSet);
 			}
 		}
 
 		return foundGroups;
-	}
-
-	private String createStreamPattern(String groupName) {
-		StringBuilder pattern = new StringBuilder();
-		pattern.append("(.*\\d{2}_").append(groupName).append("_\\d{2}.*)|")
-				.append("(").append(groupName).append("_\\d{2}.*)|")
-				.append("(.*\\d{2}_").append(groupName).append(")");
-
-		return pattern.toString();
 	}
 
 	private String createSubgroupPattern(String groupName) {
@@ -88,26 +75,6 @@ public class GroupDependenciesCreator {
 		pattern.append(groupName).append("-\\d");
 
 		return pattern.toString();
-	}
-
-	private List<Group> getSubgroupDependencies(String subGroupName) {
-		groupPattern = Pattern.compile(subGroupName.substring(0, 2));
-		subgroupPattern = Pattern.compile(subGroupName);
-		streamPattern = Pattern.compile(createStreamPattern(subGroupName.substring(0, 2)));
-		List<Group> foundGroups = new ArrayList<>();
-
-		for (Group groupFromSet : groupSet) {
-			groupMatcher = groupPattern.matcher(groupFromSet.getName());
-			subgroupMatcher = subgroupPattern.matcher(groupFromSet.getName());
-			streamMatcher = streamPattern.matcher(groupFromSet.getName());
-
-			if (groupMatcher.find() || subgroupMatcher.find() || streamMatcher.find() &&
-					!foundGroups.contains(groupFromSet)) {
-				foundGroups.add(groupFromSet);
-			}
-		}
-
-		return foundGroups;
 	}
 
 	private List<Group> getStreamDependencies(String streamName) {
@@ -125,5 +92,31 @@ public class GroupDependenciesCreator {
 		return foundGroups;
 	}
 
+	private List<Group> getSubgroupDependencies(String subGroupName) {
+		subgroupPattern = Pattern.compile(subGroupName);
+		streamPattern = Pattern.compile(createStreamPattern(subGroupName.substring(0, 2)));
+		String groupName = subGroupName.substring(0, 2);
+		List<Group> foundGroups = new ArrayList<>();
 
+		for (Group groupFromSet : groupSet) {
+			subgroupMatcher = subgroupPattern.matcher(groupFromSet.getName());
+			streamMatcher = streamPattern.matcher(groupFromSet.getName());
+
+			if ((groupFromSet.getName().equals(groupName) || subgroupMatcher.find() || streamMatcher.find()) &&
+					!foundGroups.contains(groupFromSet)) {
+				foundGroups.add(groupFromSet);
+			}
+		}
+
+		return foundGroups;
+	}
+
+	private String createStreamPattern(String groupName) {
+		StringBuilder pattern = new StringBuilder();
+		pattern.append("(.*\\d{2}_").append(groupName).append("_\\d{2}.*)|")
+				.append("(").append(groupName).append("_\\d{2}.*)|")
+				.append("(.*\\d{2}_").append(groupName).append(")");
+
+		return pattern.toString();
+	}
 }

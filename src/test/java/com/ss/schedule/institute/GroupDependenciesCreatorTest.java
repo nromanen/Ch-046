@@ -36,7 +36,13 @@ public class GroupDependenciesCreatorTest {
 		GroupDependenciesCreator groupDependenciesCreator = new GroupDependenciesCreator(subgroupsStreams);
 		HashMap<Group, List<Group>> groupDependencies = groupDependenciesCreator.getGroupsDependencies();
 
-		System.out.println(groupDependencies);
+		for (Group group : groupDependencies.keySet()) {
+			System.out.print(group.getName() + "\t\t");
+			for (Group group1 : groupDependencies.get(group)) {
+				System.out.print(group1.getName() + "\t");
+			}
+			System.out.println();
+		}
 	}
 
 }
