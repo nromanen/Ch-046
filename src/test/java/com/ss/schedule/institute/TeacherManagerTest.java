@@ -6,10 +6,10 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.ss.schedule.institute.Subject;
-import com.ss.schedule.institute.SubjectType;
-import com.ss.schedule.institute.Teacher;
-import com.ss.schedule.institute.TeacherManager;
+import com.ss.schedule.model.Subject;
+import com.ss.schedule.model.SubjectType;
+import com.ss.schedule.model.Teacher;
+import com.ss.schedule.model.TeacherManager;
 
 public class TeacherManagerTest {
 	Teacher teacher0;
@@ -25,7 +25,7 @@ public class TeacherManagerTest {
 		manage.addSubject(new Subject("Algebra", SubjectType.LECTURE));
 		manage.addSubject(new Subject("Geometry", SubjectType.LECTURE));
 		manage.addSubject(new Subject("Programming", SubjectType.LECTURE, 2));
-		manage.addSubject(new Subject("Programming", SubjectType.PRACTICAL, 2));
+		manage.addSubject(new Subject("Programming", SubjectType.PRACTICE, 2));
 		manage.addSubject(new Subject("Geometry", SubjectType.LECTURE, 3));
 		manage.addSubject(new Subject("Geometry", SubjectType.PRACTICAL, 3));
 		manage.addSubject(new Subject("Geometry", SubjectType.LECTURE, 4));
@@ -63,10 +63,10 @@ public class TeacherManagerTest {
 	@Test
 	public void getSubjectsByTypeTest() {
 		ArrayList<Subject> expectedList = new ArrayList<>();
-		expectedList.add(new Subject("Programming", SubjectType.PRACTICAL, 2));
-		expectedList.add(new Subject("Geometry", SubjectType.PRACTICAL, 3));
+		expectedList.add(new Subject("Programming", SubjectType.PRACTICE, 2));
+		expectedList.add(new Subject("Geometry", SubjectType.PRACTICE, 3));
 		
-		ArrayList<Subject> actualList = manage.getSubjectsByType(SubjectType.PRACTICAL);
+		ArrayList<Subject> actualList = manage.getSubjectsByType(SubjectType.PRACTICE);
 		Assert.assertEquals(actualList, expectedList);
 	}
 
