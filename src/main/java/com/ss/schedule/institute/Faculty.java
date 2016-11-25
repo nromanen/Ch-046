@@ -73,7 +73,7 @@ public class Faculty {
 		Faculty.classrooms = classrooms;
 	}
 
-	public HashMap<Subject, List<Group>> getGroupsSubgroupsStreams() {
+	public HashMap<Subject, List<Group>> getGroupsSubgroupsStreamsBySubject() {
 		HashMap<Subject, List<Group>> groupsSubgroupsStreams = new HashMap<>();
 		for (Subject subject : subjects) {
 			List<Group> groups;

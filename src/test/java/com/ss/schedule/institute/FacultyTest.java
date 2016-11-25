@@ -25,14 +25,14 @@ public class FacultyTest {
 		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {});
 
 		Faculty faculty = new Faculty("Programmers", groups, subjects, new ArrayList<>());
-		HashMap<Subject, List<Group>> subgroupsStreams = faculty.getGroupsSubgroupsStreams();
+		HashMap<Subject, List<Group>> subgroupsStreams = faculty.getGroupsSubgroupsStreamsBySubject();
 
 		assertEquals(subgroupsStreams.size(), 20);
 
-		Subject subjectPythonLec = new Subject("Python", 0, SubjectType.LECTURE);
-		Subject subjectAlgebraPractice = new Subject("Algebra", 1, SubjectType.PRACTICE);
-		Subject subjectMaLac = new Subject("MA", 1, SubjectType.LECTURE);
-		Subject subjectMaPractice = new Subject("MA", 1, SubjectType.PRACTICE);
+		Subject subjectPythonLec = new Subject("Python", SubjectType.LECTURE);
+		Subject subjectAlgebraPractice = new Subject("Algebra", SubjectType.PRACTICE, 1);
+		Subject subjectMaLac = new Subject("MA", SubjectType.LECTURE, 1);
+		Subject subjectMaPractice = new Subject("MA", SubjectType.PRACTICE, 1);
 
 		List<Group> expectedGroups = subgroupsStreams.get(subjectPythonLec);
 		assertEquals(subgroupsStreams.get(subjectPythonLec).size(), 1);
@@ -73,14 +73,14 @@ public class FacultyTest {
 
 		assertEquals(faculty.getSubjects().size(), 20);
 
-		subjects.add(new Subject("Admin", 1, SubjectType.LECTURE));
-		subjects.add(new Subject("Admin", 1, SubjectType.LAB));
-		subjects.add(new Subject("Admin", 1, SubjectType.LECTURE));
-		subjects.add(new Subject("Admin", 1, SubjectType.LAB));
-		subjects.add(new Subject("Admin", 1, SubjectType.PRACTICE));
-		subjects.add(new Subject("QA", 2, SubjectType.LECTURE));
-		subjects.add(new Subject("QA", 2, SubjectType.PRACTICE));
-		subjects.add(new Subject("QA", 2, SubjectType.LECTURE));
+		subjects.add(new Subject("Admin", SubjectType.LECTURE, 1));
+		subjects.add(new Subject("Admin", SubjectType.LAB, 1));
+		subjects.add(new Subject("Admin", SubjectType.LECTURE, 1));
+		subjects.add(new Subject("Admin", SubjectType.LAB, 1));
+		subjects.add(new Subject("Admin", SubjectType.PRACTICE, 1));
+		subjects.add(new Subject("QA", SubjectType.LECTURE, 2));
+		subjects.add(new Subject("QA", SubjectType.PRACTICE, 2));
+		subjects.add(new Subject("QA", SubjectType.LECTURE, 2));
 
 		int actualAddedSubjectsAmount = faculty.addListOfSubjects(subjects);
 
@@ -97,9 +97,9 @@ public class FacultyTest {
 
 		assertEquals(faculty.getSubjects().size(), 20);
 
-		Subject subject1 = new Subject("Admin", 1, SubjectType.LECTURE);
-		Subject subject2 = new Subject("Admin", 1, SubjectType.LAB);
-		Subject subject3 = new Subject("QA", 2, SubjectType.PRACTICE);
+		Subject subject1 = new Subject("Admin", SubjectType.LECTURE, 1);
+		Subject subject2 = new Subject("Admin", SubjectType.LAB, 1);
+		Subject subject3 = new Subject("QA", SubjectType.PRACTICE, 2);
 
 		faculty.addSubject(subject1);
 		assertEquals(faculty.getSubjects().size(), 21);
@@ -117,10 +117,10 @@ public class FacultyTest {
 
 		assertEquals(faculty.getSubjects().size(), 20);
 
-		Subject subject1 = new Subject("Admin", 1, SubjectType.LECTURE);
-		Subject subject2 = new Subject("Admin", 1, SubjectType.LAB);
-		Subject subject3 = new Subject("QA", 2, SubjectType.PRACTICE);
-		Subject subject4 = new Subject("Admin", 1, SubjectType.LAB);
+		Subject subject1 = new Subject("Admin", SubjectType.LECTURE, 1);
+		Subject subject2 = new Subject("Admin", SubjectType.LAB, 1);
+		Subject subject3 = new Subject("QA", SubjectType.PRACTICE, 2);
+		Subject subject4 = new Subject("Admin", SubjectType.LAB, 1);
 
 		faculty.addSubject(subject1);
 		assertEquals(faculty.getSubjects().size(), 21);
@@ -157,7 +157,7 @@ public class FacultyTest {
 
 		assertEquals(faculty.getSubjects().size(), 20);
 
-		Subject subject = new Subject("QA", 2, SubjectType.LECTURE);
+		Subject subject = new Subject("QA", SubjectType.LECTURE, 2);
 		faculty.deleteSubject(subject);
 	}
 

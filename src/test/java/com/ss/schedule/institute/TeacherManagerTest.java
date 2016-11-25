@@ -1,15 +1,13 @@
 package com.ss.schedule.institute;
 
-import java.util.ArrayList;
-
+import com.ss.schedule.model.Subject;
+import com.ss.schedule.model.SubjectType;
+import com.ss.schedule.model.Teacher;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.ss.schedule.model.Subject;
-import com.ss.schedule.model.SubjectType;
-import com.ss.schedule.model.Teacher;
-import com.ss.schedule.model.TeacherManager;
+import java.util.ArrayList;
 
 public class TeacherManagerTest {
 	Teacher teacher0;
@@ -27,7 +25,7 @@ public class TeacherManagerTest {
 		manage.addSubject(new Subject("Programming", SubjectType.LECTURE, 2));
 		manage.addSubject(new Subject("Programming", SubjectType.PRACTICE, 2));
 		manage.addSubject(new Subject("Geometry", SubjectType.LECTURE, 3));
-		manage.addSubject(new Subject("Geometry", SubjectType.PRACTICAL, 3));
+		manage.addSubject(new Subject("Geometry", SubjectType.PRACTICE, 3));
 		manage.addSubject(new Subject("Geometry", SubjectType.LECTURE, 4));
 	}
 
