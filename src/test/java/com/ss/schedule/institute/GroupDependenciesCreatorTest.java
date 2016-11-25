@@ -29,20 +29,19 @@ public class GroupDependenciesCreatorTest {
 		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {});
 
 		Faculty faculty = new Faculty("Programmers", groups, subjects, new ArrayList<>());
-		HashMap<Subject, List<Group>> subgroupsStreams = faculty.getGroupsSubgroupsStreams();
+		HashMap<Subject, List<Group>> subgroupsStreams = faculty.getGroupsSubgroupsStreamsBySubject();
 
 		assertEquals(subgroupsStreams.size(), 20);
 
 		GroupDependenciesCreator groupDependenciesCreator = new GroupDependenciesCreator(subgroupsStreams);
 		HashMap<Group, List<Group>> groupDependencies = groupDependenciesCreator.getGroupsDependencies();
 
-		for (Group group : groupDependencies.keySet()) {
-			System.out.print(group.getName() + "\t\t");
-			for (Group group1 : groupDependencies.get(group)) {
-				System.out.print(group1.getName() + "\t");
-			}
-			System.out.println();
-		}
-	}
+		assertEquals(groupDependencies.keySet().size(), 22);
 
+		assertEquals(groupDependencies.get(groups.get(6)).size(), 2);
+		assertEquals(groupDependencies.get(groups.get(5)).size(), 4);
+		assertEquals(groupDependencies.get(groups.get(3)).size(), 2);
+		assertEquals(groupDependencies.get(groups.get(11)).size(), 1);
+		assertEquals(groupDependencies.get(groups.get(4)).size(), 4);
+	}
 }

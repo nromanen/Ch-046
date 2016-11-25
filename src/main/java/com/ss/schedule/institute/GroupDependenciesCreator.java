@@ -18,14 +18,16 @@ public class GroupDependenciesCreator {
 
 	private Pattern subgroupPattern;
 	private Pattern streamPattern;
-	private Matcher subgroupMatcher;
-	private Matcher streamMatcher;
 
 	public GroupDependenciesCreator(HashMap<Subject, List<Group>> groupsSubgroupsStreams) {
 		this.groupsSubgroupsStreams = groupsSubgroupsStreams;
 		this.groupsDependencies = new HashMap<>();
 	}
 
+	/*
+	 * String length equal 2, 4, 5 if main Group name consists of 2 symbols.
+	 * If main Group name length will have changed, this parameters must be changed too
+	 * */
 	public HashMap<Group, List<Group>> getGroupsDependencies() {
 		findAllGroupsSubgroupsStreams();
 		
@@ -55,12 +57,27 @@ public class GroupDependenciesCreator {
 	private List<Group> getGroupDependencies(String groupName) {
 		subgroupPattern = Pattern.compile(createSubgroupPattern(groupName));
 		streamPattern = Pattern.compile(createStreamPattern(groupName));
+
+		return findDependencies(groupName);
+	}
+
+	private List<Group> getSubgroupDependencies(String subGroupName) {
+		subgroupPattern = Pattern.compile(subGroupName);
+		streamPattern = Pattern.compile(createStreamPattern(subGroupName.substring(0, 2)));
+		String groupName = subGroupName.substring(0, 2);
+
+		return findDependencies(groupName);
+	}
+
+	private List<Group> findDependencies(String groupName) {
+		Matcher subgroupMatcher;
+		Matcher streamMatcher;
 		List<Group> foundGroups = new ArrayList<>();
 
 		for (Group groupFromSet : groupSet) {
 			subgroupMatcher = subgroupPattern.matcher(groupFromSet.getName());
 			streamMatcher = streamPattern.matcher(groupFromSet.getName());
-			
+
 			if (groupFromSet.getName().equals(groupName) || subgroupMatcher.find() || streamMatcher.find() &&
 					!foundGroups.contains(groupFromSet)) {
 				foundGroups.add(groupFromSet);
@@ -68,13 +85,6 @@ public class GroupDependenciesCreator {
 		}
 
 		return foundGroups;
-	}
-
-	private String createSubgroupPattern(String groupName) {
-		StringBuilder pattern = new StringBuilder();
-		pattern.append(groupName).append("-\\d");
-
-		return pattern.toString();
 	}
 
 	private List<Group> getStreamDependencies(String streamName) {
@@ -92,23 +102,11 @@ public class GroupDependenciesCreator {
 		return foundGroups;
 	}
 
-	private List<Group> getSubgroupDependencies(String subGroupName) {
-		subgroupPattern = Pattern.compile(subGroupName);
-		streamPattern = Pattern.compile(createStreamPattern(subGroupName.substring(0, 2)));
-		String groupName = subGroupName.substring(0, 2);
-		List<Group> foundGroups = new ArrayList<>();
+	private String createSubgroupPattern(String groupName) {
+		StringBuilder pattern = new StringBuilder();
+		pattern.append(groupName).append("-\\d");
 
-		for (Group groupFromSet : groupSet) {
-			subgroupMatcher = subgroupPattern.matcher(groupFromSet.getName());
-			streamMatcher = streamPattern.matcher(groupFromSet.getName());
-
-			if ((groupFromSet.getName().equals(groupName) || subgroupMatcher.find() || streamMatcher.find()) &&
-					!foundGroups.contains(groupFromSet)) {
-				foundGroups.add(groupFromSet);
-			}
-		}
-
-		return foundGroups;
+		return pattern.toString();
 	}
 
 	private String createStreamPattern(String groupName) {
