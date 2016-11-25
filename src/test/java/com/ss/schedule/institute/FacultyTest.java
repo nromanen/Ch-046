@@ -17,7 +17,9 @@ import static org.testng.Assert.assertTrue;
 
 public class FacultyTest {
 
-	private File groupJson = new File("src/test/resources/testfiles/groups.json");
+	private final File groupJson = new File("src/test/resources/testfiles/groups.json");
+	private final File subjectJson = new File("src/test/resources/testfiles/subjects.json");
+
 	@Test
 	public void testCreateSubgroupsAndStreams() throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
@@ -62,8 +64,6 @@ public class FacultyTest {
 		expectedGroups = subgroupsStreams.get(subjectMaPractice);
 		assertEquals(expectedGroups.size(), 0);
 	}
-
-	private File subjectJson = new File("src/test/resources/testfiles/subjects.json");
 
 	@Test
 	public void testAddListOfSubjects() throws Exception {
