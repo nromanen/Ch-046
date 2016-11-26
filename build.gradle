@@ -3,7 +3,20 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.8
+task fatJar(type: Jar) {
+  manifest {
+      attributes 'Main-Class': 'Main'
+  }
+ 
+  from {
+      configurations.compile.collect {
+          it.isDirectory() ? it : zipTree(it)
+      }
+  }
+  with jar
+}
+
+sourceCompatibility = 1.7
 
 repositories {
     mavenCentral()
