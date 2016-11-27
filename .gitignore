@@ -2,7 +2,7 @@
 /.gradle/*
 /build/*
 /bin/*
-**/io/*
+
 
 *.iml
 *.ipr
