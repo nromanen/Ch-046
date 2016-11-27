@@ -1,0 +1,56 @@
+Group 11 (20):
+Algebra(LECTURE), 1
+Algebra(PRACTICE), 1
+Philosophy(LECTURE)
+Philosophy(SEMINAR)
+
+Group 12 (22):
+Algebra(LECTURE), 1
+Algebra(PRACTICE), 1
+Philosophy(LECTURE)
+Philosophy(SEMINAR)
+
+Group 13 (5):
+Algebra(LECTURE), 1
+Algebra(PRACTICE), 1
+Philosophy(LECTURE)
+Philosophy(SEMINAR)
+
+Group 14 (7):
+Algebra(LECTURE), 1
+Algebra(PRACTICE), 1
+Philosophy(LECTURE)
+Philosophy(SEMINAR)
+
+Group 21 (10):
+Python(LECTURE)
+Python(LAB)
+Python(PRACTICE)
+
+Group 22 (9):
+Python(LECTURE)
+Python(LAB)
+Python(PRACTICE)
+
+Group 23 (5):
+Algebra(LECTURE), 2
+Algebra(PRACTICE), 2
+
+Group 24 (4):
+Algebra(LECTURE), 2
+Algebra(PRACTICE), 2
+
+Group 31 (12):
+.Net(LECTURE)
+.Net(PRACTICE)
+
+Group 32 (7):
+.Net(LECTURE)
+.Net(PRACTICE)
+
+Group 33 (6):
+Transformation(SEMINAR)
+
+Group 34 (7):
+MA(PRACTICE), 3
+
