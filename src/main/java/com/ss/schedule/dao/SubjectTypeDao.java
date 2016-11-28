@@ -49,7 +49,6 @@ public class SubjectTypeDao extends AbstractDao<SubjectType, Integer>{
 
                 while (rs.next()){
                     subjectTypes.add(SubjectType.valueOf(rs.getString("name")));
-                    System.out.println(rs.getString("name"));
                 }
             }
 

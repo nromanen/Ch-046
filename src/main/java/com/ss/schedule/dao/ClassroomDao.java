@@ -25,8 +25,8 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
             createClassroomsTable();
         }
         if (!DBUtil.tableExist(connection, "subject_types")){
-            createClassroomTypesTable();
-            fillClassroomTypesTable();
+            createSubjectTypesTable();
+            fillSubjectTypesTable();
         }
         if (!DBUtil.tableExist(connection, "classrooms_subject_types")){
             createClassroomsClassroomTypesTable();
@@ -69,7 +69,11 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
     @Override
     public boolean create(Classroom entity) {
 
-        PreparedStatement ps = getPrepareStatement("Insert into classrooms (name, capacity, description) values (?, ?, ?)");
+        String sql = "INSERT INTO classrooms " +
+                "(name, capacity, description) " +
+                "VALUES (?, ?, ?)";
+
+        PreparedStatement ps = getPrepareStatement(sql);
         try {
             ps.setString(1, entity.getName());
             ps.setInt(2, entity.getCapacity());
@@ -142,7 +146,7 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
         }
     }
 
-    private void createClassroomTypesTable(){
+    private void createSubjectTypesTable(){
         try {
             Statement statment = connection.createStatement();
 
@@ -158,7 +162,7 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
         }
     }
 
-    private void fillClassroomTypesTable() {
+    private void fillSubjectTypesTable() {
         PreparedStatement ps = getPrepareStatement("Insert into subject_types (name, maxStudentAmount) values (?, ?)");
         try {
             ps.setString(1, "LECTURE");
