@@ -21,16 +21,20 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
     }
 
     private void initClassroomTable() {
+
         if (!DBUtil.tableExist(connection, "classrooms")){
             createClassroomsTable();
         }
-        if (!DBUtil.tableExist(connection, "subject_types")){
+
+        if (!DBUtil.tableExist(connection, "subjectTypes")){
             createSubjectTypesTable();
             fillSubjectTypesTable();
         }
-        if (!DBUtil.tableExist(connection, "classrooms_subject_types")){
+        if (!DBUtil.tableExist(connection, "classrooms_subjectTypes")){
             createClassroomsClassroomTypesTable();
         }
+
+
 
     }
 
@@ -142,7 +146,7 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
             stmt.executeUpdate(sql);
             System.out.println("Table classrooms created!");
         } catch (SQLException e){
-            System.out.println("ERROR! Table classroom did not add!");
+            System.out.println("ERROR! Table classroom did not created!");
         }
     }
 
@@ -150,20 +154,20 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
         try {
             Statement statment = connection.createStatement();
 
-            String sql = "CREATE TABLE subject_types " +
+            String sql = "CREATE TABLE subjectTypes " +
                     "(id SERIAL, " +
                     " name VARCHAR(30), "+
                     " maxStudentAmount INTEGER, " +
                     "PRIMARY KEY (id)) ";
             statment.executeUpdate(sql);
-            System.out.println("Table subject_types created!");
+            System.out.println("Table subjectTypes created!");
         } catch (SQLException e){
-            System.out.println("ERROR! Table subject_types did not add!");
+            System.out.println("ERROR! Table subjectTypes did not create!");
         }
     }
 
     private void fillSubjectTypesTable() {
-        PreparedStatement ps = getPrepareStatement("Insert into subject_types (name, maxStudentAmount) values (?, ?)");
+        PreparedStatement ps = getPrepareStatement("Insert into subjectTypes (name, maxStudentAmount) values (?, ?)");
         try {
             ps.setString(1, "LECTURE");
             ps.setInt(2, 0);
@@ -187,15 +191,15 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
         try {
             Statement stmt = connection.createStatement();
 
-            String sql = "add table classrooms_subject_types " +
+            String sql = "create table classrooms_subjectTypes " +
                     "(id serial, " +
                     "classroom_id integer references classrooms(id), " +
-                    "subject_types_id integer references subject_types(id))";
+                    "subject_types_id integer references subjectTypes(id))";
 
             stmt.executeUpdate(sql);
             System.out.println("Table classrooms_subject_types created!");
         } catch (SQLException e){
-            System.out.println("ERROR! Table classrooms_subject_types did not add!");
+            System.out.println("ERROR! Table classrooms_subject_types did not create!");
         }
 
 

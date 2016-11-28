@@ -1,41 +1,34 @@
 [ {
-  "id" : 16,
   "name" : "39",
   "capacity" : 150,
   "types" : [ "LECTURE" ],
   "description" : "with proector"
 }, {
-  "id" : 17,
   "name" : "8",
   "capacity" : 150,
   "types" : [ "LECTURE", "PRACTICE" ],
   "description" : null
 }, {
-  "id" : 18,
   "name" : "3",
   "capacity" : 30,
   "types" : [ "LECTURE", "PRACTICE" ],
   "description" : null
 }, {
-  "id" : 19,
   "name" : "32",
   "capacity" : 14,
   "types" : [ "PRACTICE" ],
   "description" : null
 }, {
-  "id" : 20,
   "name" : "24",
   "capacity" : 30,
   "types" : [ "LECTURE", "PRACTICE" ],
   "description" : null
 }, {
-  "id" : 21,
   "name" : "25",
   "capacity" : 30,
   "types" : [ "LECTURE", "PRACTICE" ],
   "description" : null
 }, {
-  "id" : 22,
   "name" : "15",
   "capacity" : 10,
   "types" : [ "LAB" ],

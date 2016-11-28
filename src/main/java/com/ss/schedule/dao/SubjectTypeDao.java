@@ -41,15 +41,15 @@ public class SubjectTypeDao extends AbstractDao<SubjectType, Integer>{
         ClassroomsSubjectTypeDao cDao = new ClassroomsSubjectTypeDao();
         List<SubjectType> subjectTypes = new ArrayList<>();
         try {
-            for (Integer typesId: cDao.getSubjectTypesIdByClassroomId(id) ) {
-                PreparedStatement ps = getPrepareStatement("SELECT * FROM subject_types WHERE id = ?");
-                ps.setInt(1, typesId);
+
+                PreparedStatement ps = getPrepareStatement("select name from subjecttypes join classrooms_subjecttypes on classroom_id = ? and subject_types_id = subjecttypes.id");
+                ps.setInt(1, id);
 
                 ResultSet rs = ps.executeQuery();
 
                 while (rs.next()){
                     subjectTypes.add(SubjectType.valueOf(rs.getString("name")));
-                }
+
             }
 
         } catch (SQLException e) {
@@ -60,7 +60,7 @@ public class SubjectTypeDao extends AbstractDao<SubjectType, Integer>{
 
     public int getEntityIdByName(String name) {
         try {
-            PreparedStatement ps = getPrepareStatement("SELECT id FROM subject_types WHERE name = ?");
+            PreparedStatement ps = getPrepareStatement("SELECT id FROM subjectTypes WHERE name = ?");
             ps.setString(1, name);
 
             ResultSet rs = ps.executeQuery();
