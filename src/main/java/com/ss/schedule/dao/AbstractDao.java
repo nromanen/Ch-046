@@ -22,13 +22,13 @@ public abstract class AbstractDao<E, K> {
     // get all entitis from DB
     public abstract List<E> getAll();
     // get entity from DB bty id
-    public abstract E getEntityById(K id);
+    public abstract E getById(K id);
     // update entity in DB
     public abstract E update(E entity);
     // delete entity from DB
     public abstract boolean delete(K id);
-    // create new entity in DB
-    public abstract boolean create(E entity);
+    // add new entity in DB
+    public abstract boolean add(E entity);
 
 
     public Statement getStatement() {

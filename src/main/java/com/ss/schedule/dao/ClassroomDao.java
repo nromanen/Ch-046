@@ -52,7 +52,7 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
     }
 
     @Override
-    public Classroom getEntityById(Integer id) {
+    public Classroom getById(Integer id) {
         return null;
     }
 
@@ -67,7 +67,7 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
     }
 
     @Override
-    public boolean create(Classroom entity) {
+    public boolean add(Classroom entity) {
 
         String sql = "INSERT INTO classrooms " +
                 "(name, capacity, description) " +
@@ -142,7 +142,7 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
             stmt.executeUpdate(sql);
             System.out.println("Table classrooms created!");
         } catch (SQLException e){
-            System.out.println("ERROR! Table classroom did not create!");
+            System.out.println("ERROR! Table classroom did not add!");
         }
     }
 
@@ -158,7 +158,7 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
             statment.executeUpdate(sql);
             System.out.println("Table subject_types created!");
         } catch (SQLException e){
-            System.out.println("ERROR! Table subject_types did not create!");
+            System.out.println("ERROR! Table subject_types did not add!");
         }
     }
 
@@ -187,7 +187,7 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
         try {
             Statement stmt = connection.createStatement();
 
-            String sql = "create table classrooms_subject_types " +
+            String sql = "add table classrooms_subject_types " +
                     "(id serial, " +
                     "classroom_id integer references classrooms(id), " +
                     "subject_types_id integer references subject_types(id))";
@@ -195,7 +195,7 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
             stmt.executeUpdate(sql);
             System.out.println("Table classrooms_subject_types created!");
         } catch (SQLException e){
-            System.out.println("ERROR! Table classrooms_subject_types did not create!");
+            System.out.println("ERROR! Table classrooms_subject_types did not add!");
         }
 
 

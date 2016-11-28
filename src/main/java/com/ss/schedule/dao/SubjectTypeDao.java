@@ -20,7 +20,7 @@ public class SubjectTypeDao extends AbstractDao<SubjectType, Integer>{
     }
 
     @Override
-    public SubjectType getEntityById(Integer id) {
+    public SubjectType getById(Integer id) {
         try {
             PreparedStatement ps = getPrepareStatement("SELECT * FROM subject_types WHERE id = ?");
             ps.setInt(1, id);
@@ -85,7 +85,7 @@ public class SubjectTypeDao extends AbstractDao<SubjectType, Integer>{
     }
 
     @Override
-    public boolean create(SubjectType entity) {
+    public boolean add(SubjectType entity) {
         return false;
     }
 }

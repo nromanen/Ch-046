@@ -8,11 +8,11 @@ import java.sql.SQLException;
  * Created by rmochetc on 27.11.16.
  */
 public class DBConnector {
-    private static Connection connection = null;
+    private static final String DBURL = "jdbc:postgresql://127.0.0.1:5432/institute";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
 
-    private static final String url = "jdbc:postgresql://127.0.0.1:5432/schedule";
-    private static final String user = "postgres";
-    private static final String password = "1123581321";
+    private static Connection connection = null;
 
     public static Connection getConnection() {
         if (connection != null)
@@ -20,8 +20,7 @@ public class DBConnector {
         else {
             try {
                 Class.forName("org.postgresql.Driver");
-                connection = DriverManager.getConnection(url, user, password);
-                System.out.println("Success!");
+                connection = DriverManager.getConnection(DBURL, USER, PASSWORD);
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
             }

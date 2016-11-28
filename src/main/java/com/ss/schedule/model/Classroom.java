@@ -1,14 +1,18 @@
 package com.ss.schedule.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 
 @JacksonXmlRootElement(localName = "classroom")
 public class Classroom implements Comparable<Classroom>{
 
+	@XmlTransient
+	@JsonIgnore
 	private int id;
 	@JacksonXmlProperty
 	private String name;

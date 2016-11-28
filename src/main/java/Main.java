@@ -1,12 +1,8 @@
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.ss.schedule.dao.ClassroomDao;
-import com.ss.schedule.dao.ClassroomsSubjectTypeDao;
-import com.ss.schedule.dbutil.DBConnector;
 import com.ss.schedule.io.InputOutputJson;
 import com.ss.schedule.model.Classroom;
-import com.ss.schedule.model.SubjectType;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +30,7 @@ public class Main {
         ClassroomDao classroomDao = new ClassroomDao();
 
         for (Classroom room :   classrooms) {
-            classroomDao.create(room);
+            classroomDao.add(room);
         }
 
         List<Classroom> classroomList = classroomDao.getAll();
