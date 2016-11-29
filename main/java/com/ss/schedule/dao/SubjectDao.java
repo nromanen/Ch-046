@@ -8,57 +8,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.ss.schedule.io.InputOutput;
 import com.ss.schedule.io.InputOutputJson;
 import com.ss.schedule.io.InputOutputSubjectTxt;
 import com.ss.schedule.io.InputOutputXml;
 import com.ss.schedule.model.Subject;
 import com.ss.schedule.model.SubjectType;
 
-public class SubjectDao extends AbstractDao<Subject, Integer> {
+public class SubjectDao extends AbstractDao<Subject> {
 
 	public void createTable() {
 		String sql = "CREATE TABLE IF NOT EXISTS SUBJECTS " + "(ID SERIAL NOT NULL PRIMARY KEY,"
 				+ " NAME TEXT NOT NULL, " + " SUBJECT_TYPE TEXT NOT NULL, " + " COURSE INT NOT NULL)";
 		try {
-			Statement create = getStatement();
+			Statement create = connection.createStatement();
 			create.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public List<Subject> populateSubjectsFromJson(String filePath) {
-		InputOutputJson<ArrayList<Subject>> reader = new InputOutputJson<>(new TypeReference<ArrayList<Subject>>() {
-		});
+	/**
+	 * @param 
+	 * @param format present the suitable type: json, xml, custom txt format
+	 * @return
+	 */
+	public List<Subject> populateSubjects(String filePath, String format) {
+		InputOutput<ArrayList<Subject>> reader = null;
 		ArrayList<Subject> listOfSubjects = new ArrayList<>();
+		if (format.equals("json")) {
+			reader = new InputOutputJson<>(new TypeReference<ArrayList<Subject>>() {
+			});
+		}
+		if (format.equals("xml")) {
+			reader = new InputOutputXml<>(new TypeReference<ArrayList<Subject>>() {
+			});
+		}
+		if (format.equals("txt")) {
+			reader = new InputOutputSubjectTxt<>();
+		}
 		listOfSubjects = reader.readFromFile(filePath);
 		return listOfSubjects;
 	}
 
-	public List<Subject> populateSubjectFromXml(String filePath) {
-		InputOutputXml<ArrayList<Subject>> reader = new InputOutputXml<>(new TypeReference<ArrayList<Subject>>() {
-		});
-		ArrayList<Subject> listOfSubjects = new ArrayList<>();
-		listOfSubjects = reader.readFromFile(filePath);
-		return listOfSubjects;
-	}
-
-	public List<Subject> populateSubjectsFromTxt(String filePath) {
-		InputOutputSubjectTxt<ArrayList<Subject>> reader = new InputOutputSubjectTxt<>();
-		ArrayList<Subject> listOfSubjects = new ArrayList<>();
-		listOfSubjects = reader.readFromFile(filePath);
-		return listOfSubjects;
-	}
-
-	public void setAllSubjects(ArrayList<Subject> listOfSubjects) {
+	public void addAll(ArrayList<Subject> listOfSubjects) {
 		for (int i = 0; i < listOfSubjects.size(); i++) {
-			PreparedStatement s = getPrepareStatement(
-					"INSERT INTO SUBJECTS (NAME, SUBJECT_TYPE, COURSE) VALUES(?,?,?)");
 			try {
-				s.setString(1, listOfSubjects.get(i).getName());
-				s.setString(2, listOfSubjects.get(i).getType().toString());
-				s.setInt(3, listOfSubjects.get(i).getCourse());
-				s.executeUpdate();
+				PreparedStatement ps = connection
+						.prepareStatement("INSERT INTO SUBJECTS (NAME, SUBJECT_TYPE, COURSE) VALUES(?,?,?)");
+
+				ps.setString(1, listOfSubjects.get(i).getName());
+				ps.setString(2, listOfSubjects.get(i).getType().toString());
+				ps.setInt(3, listOfSubjects.get(i).getCourse());
+				ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -66,16 +68,33 @@ public class SubjectDao extends AbstractDao<Subject, Integer> {
 	}
 
 	@Override
+	public Subject add(Subject entity) {
+		try {
+			PreparedStatement s = connection
+					.prepareStatement("INSERT INTO SUBJECTS (NAME, SUBJECT_TYPE, COURSE) VALUES(?,?,?)");
+			s.setString(1, entity.getName());
+			s.setString(2, entity.getType().toString());
+			s.setInt(3, entity.getCourse());
+			s.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return entity;
+	}
+
+	@Override
 	public List<Subject> getAll() {
-		List<Subject> subjects = new ArrayList<>();
+		ArrayList<Subject> subjects = new ArrayList<>();
 		ResultSet rs = null;
 		try {
-			rs = getStatement().executeQuery("SELECT NAME, SUBJECT_TYPE, COURSE FROM SUBJECTS");
+			rs = connection.createStatement().executeQuery("SELECT ID, NAME, SUBJECT_TYPE, COURSE FROM SUBJECTS");
 			while (rs.next()) {
+				int subjectID = rs.getInt("ID");
 				String subjectName = rs.getString("NAME");
 				String subjectType = rs.getString("SUBJECT_TYPE");
 				int subjectCourse = rs.getInt("COURSE");
 				Subject subject = new Subject();
+				subject.setID(subjectID);
 				subject.setName(subjectName);
 				subject.setType(SubjectType.valueOf(subjectType));
 				subject.setCourse(subjectCourse);
@@ -88,16 +107,18 @@ public class SubjectDao extends AbstractDao<Subject, Integer> {
 	}
 
 	@Override
-	public Subject getById(Integer id) {
+	public Subject getById(long id) {
 		Subject subject = new Subject();
 		try {
-			PreparedStatement ps = getPrepareStatement("SELECT NAME, SUBJECT_TYPE, COURSE FROM SUBJECTS WHERE ID=?");
-			ps.setInt(1, id);
+			PreparedStatement ps = connection
+					.prepareStatement("SELECT NAME, SUBJECT_TYPE, COURSE FROM SUBJECTS WHERE ID=?");
+			ps.setLong(1, id);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				String subjectName = rs.getString("NAME");
 				String subjectType = rs.getString("SUBJECT_TYPE");
 				int subjectCourse = rs.getInt("COURSE");
+				subject.setID((int) id);
 				subject.setName(subjectName);
 				subject.setType(SubjectType.valueOf(subjectType));
 				subject.setCourse(subjectCourse);
@@ -110,8 +131,9 @@ public class SubjectDao extends AbstractDao<Subject, Integer> {
 
 	@Override
 	public Subject update(Subject entity) {
-		PreparedStatement ps = getPrepareStatement("UPDATE SUBJECTS SET NAME=?, SUBJECT_TYPE=?, COURSE=? WHERE ID=?");
 		try {
+			PreparedStatement ps = connection
+					.prepareStatement("UPDATE SUBJECTS SET NAME=?, SUBJECT_TYPE=?, COURSE=? WHERE ID=?");
 			ps.setString(1, entity.getName());
 			ps.setString(2, entity.getType().toString());
 			ps.setInt(3, entity.getCourse());
@@ -124,26 +146,12 @@ public class SubjectDao extends AbstractDao<Subject, Integer> {
 	}
 
 	@Override
-	public boolean delete(Integer id) {
-		Statement stmt = getStatement();
-		String sql = "DELETE FROM SUBJECTS WHERE ID=" + id;
+	public boolean delete(long id) {
+		String sql = "DELETE FROM SUBJECTS WHERE ID=?";
 		try {
-			stmt.executeUpdate(sql);
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	@Override
-	public boolean add(Subject entity) {
-		PreparedStatement s = getPrepareStatement("INSERT INTO SUBJECTS (NAME, SUBJECT_TYPE, COURSE) VALUES(?,?,?)");
-		try {
-			s.setString(1, entity.getName());
-			s.setString(2, entity.getType().toString());
-			s.setInt(3, entity.getCourse());
-			s.executeUpdate();
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setLong(1, id);
+			ps.executeUpdate(sql);
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
