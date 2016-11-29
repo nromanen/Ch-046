@@ -17,26 +17,23 @@ import java.util.List;
 public class ClassroomsSubjectTypeDao {
 
     private Connection connection = DBConnector.getConnection();
-    SubjectTypeDao subjecttypeDao = new SubjectTypeDao();
+    private SubjectTypeDao subjecttypeDao = new SubjectTypeDao();
 
-    public void add(int classroomId, int subjectTypeId){
+    public void add(long classroomId, long subjectTypeId){
 
-        try {
-            PreparedStatement ps = connection.prepareStatement("Insert into classrooms_subjectTypes (classroom_id, subject_types_id) values (?, ?)");
-            ps.setInt(1,classroomId );
-            ps.setInt(2, subjectTypeId);
-
+        try (PreparedStatement ps = connection.prepareStatement("Insert into classrooms_subjectTypes (classroom_id, subject_types_id) values (?, ?)");){
+            ps.setLong(1,classroomId );
+            ps.setLong(2, subjectTypeId);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void createClassroomsClassroomTypesTableIfNotExist() {
+    public void createClassroomsSubjectTypesTableIfNotExist() {
         if (!DBUtil.tableExist(connection, "classrooms_subjecttypes")) {
 
-            try {
-                Statement stmt = connection.createStatement();
+            try( Statement stmt = connection.createStatement()) {
 
                 String sql = "create table classrooms_subjectTypes " +
                         "(id serial, " +
@@ -51,11 +48,10 @@ public class ClassroomsSubjectTypeDao {
         }
     }
 
-    public boolean deleteByClassroomId(int id) {
+    public boolean deleteByClassroomId(long id) {
 
-        try {
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM classrooms_subjecttypes WHERE classroom_id = ?");
-            ps.setInt(1, id);
+        try(PreparedStatement ps = connection.prepareStatement("DELETE FROM classrooms_subjecttypes WHERE classroom_id = ?")) {
+            ps.setLong(1, id);
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -64,7 +60,7 @@ public class ClassroomsSubjectTypeDao {
         }
     }
 
-    public boolean update(int classroom_id, List<SubjectType> types) {
+    public boolean update(long classroom_id, List<SubjectType> types) {
 
         deleteByClassroomId(classroom_id);
         for (SubjectType type : types) {

@@ -16,7 +16,7 @@ public abstract class AbstractDao<E> {
         connection = DBConnector.getConnection();
     }
 
-    // get all entitis from DB
+    // get all entities from DB
     public abstract List<E> getAll();
     // get entity from DB bty id
     public abstract E getById(long id);

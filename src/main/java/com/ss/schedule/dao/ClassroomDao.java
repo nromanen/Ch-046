@@ -26,14 +26,15 @@ public class ClassroomDao extends AbstractDao<Classroom> {
     private void initDBForWorkWithClassrooms() {
         createClassroomsTableIfNotExist();
         subjectTypeDao.createSubjectTypesTableIfNotExist();
-        classroomsSubjectTypeDao.createClassroomsClassroomTypesTableIfNotExist();
+        classroomsSubjectTypeDao.createClassroomsSubjectTypesTableIfNotExist();
     }
 
     @Override
     public List<Classroom> getAll() {
         List <Classroom> list = new ArrayList<>();
-        try {
-            ResultSet rs = getStatement().executeQuery("SELECT * FROM classrooms order by capacity");
+        String sql = "SELECT * FROM classrooms order by capacity";
+        try(Statement statement = connection.createStatement()) {
+            ResultSet rs = statement.executeQuery(sql);
             while (rs.next()){
                 list.add(getClassroom(rs));
             }
@@ -44,14 +45,14 @@ public class ClassroomDao extends AbstractDao<Classroom> {
     }
 
     @Override
-    public Classroom getById(int id) {
+    public Classroom getById(long id) {
 
         Classroom classroom = null;
+        String sql = "SELECT * FROM classrooms WHERE id = ?";
 
-        try {
-            PreparedStatement ps = getPrepareStatement("SELECT * FROM classrooms WHERE id = ?");
-            ps.setInt(1, id);
+        try(PreparedStatement ps = connection.prepareStatement(sql)) {
 
+            ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 classroom = getClassroom(rs);
@@ -63,33 +64,31 @@ public class ClassroomDao extends AbstractDao<Classroom> {
     }
 
     @Override
-    public boolean update(Classroom entity) {
-
-
-        PreparedStatement ps = getPrepareStatement("UPDATE classrooms SET name = ?, capacity = ?, description = ? where id = ?");
-        try {
+    public Classroom update(Classroom entity) {
+        String sql = "UPDATE classrooms SET name = ?, capacity = ?, description = ? where id = ?";
+        try(PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, entity.getName());
             ps.setInt(2, entity.getCapacity());
             ps.setString(3, entity.getDescription());
-            ps.setInt(4, entity.getId());
+            ps.setLong(4, entity.getId());
             ps.executeUpdate();
 
             classroomsSubjectTypeDao.update(entity.getId(), entity.getTypes());
-            return true;
+            return entity;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(long id) {
 
-        PreparedStatement ps = getPrepareStatement("DELETE FROM classrooms WHERE id = ?");
-        try {
+        String sql = "DELETE FROM classrooms WHERE id = ?";
+        try(PreparedStatement ps = connection.prepareStatement(sql);) {
             classroomsSubjectTypeDao.deleteByClassroomId(id);
-            ps.setInt(1, id);
+            ps.setLong(1, id);
             ps.executeUpdate();
 
             return true;
@@ -100,7 +99,7 @@ public class ClassroomDao extends AbstractDao<Classroom> {
     }
 
     @Override
-    public boolean add(Classroom entity) {
+    public Classroom add(Classroom entity) {
 
         List<Classroom> classrooms = getAll();
         if (!classrooms.contains(entity)) {
@@ -109,37 +108,36 @@ public class ClassroomDao extends AbstractDao<Classroom> {
                     "(name, capacity, description) " +
                     "VALUES (?, ?, ?)";
 
-            PreparedStatement ps = getPrepareStatement(sql);
-            try {
+            try( PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1, entity.getName());
                 ps.setInt(2, entity.getCapacity());
                 ps.setString(3, entity.getDescription());
 
                 ps.executeUpdate();
 
-                int classroomId = getEntityIdByName(entity.getName());
+                long classroomId = getEntityIdByName(entity.getName());
 
                 for (SubjectType st :  entity.getTypes()) {
                     classroomsSubjectTypeDao.add(classroomId, subjectTypeDao.getEntityIdByName(st.toString()));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-                return false;
             }
-            return true;
+            return getById(getEntityIdByName(entity.getName()));
         }
-        return false;
+        return null;
     }
 
-    public int getEntityIdByName(String name) {
-        try {
-            PreparedStatement ps = getPrepareStatement("SELECT id FROM classrooms WHERE name = ?");
+    public long getEntityIdByName(String name) {
+        String sql = "SELECT id FROM classrooms WHERE name = ?";
+        try(PreparedStatement ps = connection.prepareStatement(sql)) {
+
             ps.setString(1, name);
 
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()){
-                return rs.getInt("id");
+                return rs.getLong("id");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -155,7 +153,7 @@ public class ClassroomDao extends AbstractDao<Classroom> {
         classroom.setCapacity(rs.getInt("capacity"));
         classroom.setDescription(rs.getString("description"));
 
-        classroom.setTypes(subjectTypeDao.getEntitiesByClassroomId(rs.getInt("id")));
+        classroom.setTypes(subjectTypeDao.getEntitiesByClassroomId(rs.getLong("id")));
 
         return classroom;
     }

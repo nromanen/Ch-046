@@ -23,7 +23,9 @@ public class SubjectTypeDao extends AbstractDao<SubjectType>{
 
     @Override
     public SubjectType getById(long id) {
-        try(PreparedStatement ps = connection.prepareStatement("SELECT * FROM subject_types WHERE id = ?")) {
+
+        String sql = "SELECT * FROM subject_types WHERE id = ?";
+        try(PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setLong(1, id);
 
@@ -40,17 +42,14 @@ public class SubjectTypeDao extends AbstractDao<SubjectType>{
 
     public List<SubjectType> getEntitiesByClassroomId(Long id) {
 
-        ClassroomsSubjectTypeDao cDao = new ClassroomsSubjectTypeDao();
         List<SubjectType> subjectTypes = new ArrayList<>();
-        try(PreparedStatement ps = connection.prepareStatement("select name from subjecttypes join classrooms_subjecttypes on classroom_id = ? and subject_types_id = subjecttypes.id")) {
+        String sql = "select name from subjecttypes join classrooms_subjecttypes on classroom_id = ? and subject_types_id = subjecttypes.id";
+        try(PreparedStatement ps = connection.prepareStatement(sql)) {
 
-                ps.setLong(1, id);
-
+            ps.setLong(1, id);
                 ResultSet rs = ps.executeQuery();
-
                 while (rs.next()){
                     subjectTypes.add(SubjectType.valueOf(rs.getString("name")));
-
             }
 
         } catch (SQLException e) {
@@ -59,15 +58,15 @@ public class SubjectTypeDao extends AbstractDao<SubjectType>{
         return subjectTypes;
     }
 
-    public int getEntityIdByName(String name) {
-        try {
-            PreparedStatement ps = getPrepareStatement("SELECT id FROM subjectTypes WHERE name = ?");
-            ps.setString(1, name);
+    public long getEntityIdByName(String name) {
+        String sql = "SELECT id FROM subjectTypes WHERE name = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
+            ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()){
-                return rs.getInt("id");
+                return rs.getLong("id");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,24 +86,21 @@ public class SubjectTypeDao extends AbstractDao<SubjectType>{
 
     @Override
     public SubjectType add(SubjectType entity) {
-        PreparedStatement ps = getPrepareStatement("Insert into subjectTypes (name, maxStudentAmount) values (?, ?)");
-        try {
+        String sql = "Insert into subjectTypes (name, maxStudentAmount) values (?, ?)";
+        try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1, entity.toString());
                 ps.setInt(2, entity.getMaxStudentAmount());
                 ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return getEntityIdByName(entity.toString());
+        return entity;
     }
 
 
     public void createSubjectTypesTableIfNotExist(){
         if (!DBUtil.tableExist(connection, "subjecttypes")) {
-            try {
-                Statement statement = getStatement();
-
+            try(Statement statement = connection.createStatement()) {
                 String sql = "CREATE TABLE subjectTypes " +
                         "(id SERIAL, " +
                         " name VARCHAR(30), " +
@@ -121,10 +117,11 @@ public class SubjectTypeDao extends AbstractDao<SubjectType>{
     }
 
     public void fillSubjectTypesTable() {
+        String sql = "Insert into subjectTypes (name, maxStudentAmount) values (?, ?)";
+        try(PreparedStatement ps = connection.prepareStatement(sql)) {
 
-        try {
-
-            for (SubjectType subjectType : SubjectType.values()) {
+            SubjectType[] types = SubjectType.values();
+            for (SubjectType subjectType : types) {
                 ps.setString(1, subjectType.toString());
                 ps.setInt(2, subjectType.getMaxStudentAmount());
                 ps.executeUpdate();

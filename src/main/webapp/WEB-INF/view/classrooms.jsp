@@ -1,88 +1,105 @@
-<%--&lt;%&ndash;--%>
-  <%--Created by IntelliJ IDEA.--%>
-  <%--User: Admin--%>
-  <%--Date: 06.11.16--%>
-  <%--Time: 0:50--%>
-  <%--To change this template use File | Settings | File Templates.--%>
-<%--&ndash;%&gt;--%>
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>--%>
-<%--<%@ taglib tagdir="/WEB-INF/tags/page" prefix="page" %>--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%--<html>--%>
-<%--<head>--%>
-    <%--<title>${message}</title>--%>
-    <%--<page:css></page:css>--%>
-<%--</head>--%>
-<%--<body>--%>
+<html>
+<head>
+    <title>Schedule maker</title>
 
-<%--<page:header department="${data}"/>--%>
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-<%--<div class="container">--%>
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-    <%--<c:if test="${isResult == 1}">--%>
+<link rel="stylesheet" href="../../../assets/css/main.css">
+</head>
+<body>
 
-    <%--<h1 style="text-align: center">${message}</h1>--%>
-    <%--<hr>--%>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Brand</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<h1>SCHEDULE MAKER</h1>
+<h3>Subject</h3>
+<select class="form-control">
+  <option>1</option>
+  <option>2</option>
+  <option>3</option>
+  <option>4</option>
+  <option>5</option>
+</select>
+
+<h3>Group</h3>
+
+<button type = "Submit">
 
 
-    <%--<table class="table table-striped">--%>
-        <%--<thead>--%>
-        <%--<tr>--%>
-            <%--<th>Firstname</th>--%>
-            <%--<th>Lastname</th>--%>
-            <%--<th>Position</th>--%>
-            <%--<th>Department</th>--%>
-            <%--<th>Action</th>--%>
-            <%--<th></th>--%>
-        <%--</tr>--%>
-        <%--</thead>--%>
-        <%--<tbody>--%>
-
-        <%--<c:forEach var="employee" items="${employeeList}">--%>
-            <%--<tr>--%>
-                <%--<td> ${employee.firstName}</td>--%>
-                <%--<td> ${employee.lastName}</td>--%>
-                <%--<td> ${employee.position} </td>--%>
-                <%--<td> <a <c:if test="${employee.department.depId == 1}">style="color: black; pointer-events: none; cursor: default;" </c:if> href="/department?&pk=${employee.department.depId}" >${employee.department}</a></td>--%>
-                <%--<td>--%>
-
-                    <%--<a href="/employee?pk=${employee.emId}" class="btn btn-default btn-sm" role="button">Detail</a>--%>
-                    <%--</td>--%>
-                <%--<td>--%>
-                    <%--<a href="/employeeUpdate?pk=${employee.emId}" class="btn btn-info btn-sm">--%>
-                        <%--<span class="glyphicon glyphicon-pencil"></span> Edit--%>
-                    <%--</a>--%>
-                <%--</td>--%>
-                <%--<td>--%>
-
-                    <%--<form method="post" action="/employee">--%>
-                        <%--<input type="number" hidden name="pk" value="${employee.emId}">--%>
-
-                        <%--<input type="submit" name="submit" value="Remove" class="btn btn-danger btn-sm">--%>
-
-
-                    <%--</form>--%>
-
-
-                <%--</td>--%>
-            <%--</tr>--%>
-        <%--</c:forEach>--%>
-    <%--</table>--%>
-    <%--</c:if>--%>
-    <%--<c:if test="${isResult == 0}">--%>
-        <%--<h1 style="text-align: center">No results</h1>--%>
-        <%--<hr>--%>
-    <%--</c:if>--%>
-<%--</div>--%>
 
 
 
-<%--<page:footer/>--%>
-<%--<page:js/>--%>
-
-<%--</body>--%>
-<%--</html>--%>
 
 
-<h1>CLASSROOMS.JSP</h1>
+
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</body>
+</html>
+
+

@@ -13,7 +13,7 @@ public class Classroom implements Comparable<Classroom>{
 
 	@XmlTransient
 	@JsonIgnore
-	private int id;
+	private long id;
 	@JacksonXmlProperty
 	private String name;
 	@JacksonXmlProperty
@@ -71,18 +71,18 @@ public class Classroom implements Comparable<Classroom>{
 		this.description = description;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
 	@Override
 	public String toString() {
-		return "Classroom{" +
-				"name='" + name + '\'' +
+		return "Classroom{id = "+ id +
+				", name='" + name + '\'' +
 				", capacity=" + capacity +
 				", types=" + types +
 				", description='" + description + '\'' +

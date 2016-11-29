@@ -28,5 +28,5 @@ public class DBUtil {
         return tExists;
     }
 
-    public static boolean writeClassrooms
+    //public static boolean writeClassrooms
 }
