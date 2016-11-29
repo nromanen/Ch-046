@@ -14,8 +14,9 @@ public class DBUtil {
         try (ResultSet rs = conn.getMetaData().getTables(null, null, tableName, null)) {
             while (rs.next()) {
                 String tName = rs.getString("TABLE_NAME");
+                System.out.println("Table " + tName + " exist");
 
-                if (tName != null && tName.equalsIgnoreCase(tableName)) {
+                if (tName != null && tName.equals(tableName)) {
                     tExists = true;
                     break;
                 }

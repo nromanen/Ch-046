@@ -14,38 +14,26 @@ import java.util.List;
 /**
  * Created by Admin on 27.11.16.
  */
-public class ClassroomDao extends AbstractDao<Classroom, Integer> {
+public class ClassroomDao extends AbstractDao<Classroom> {
+
+    private ClassroomsSubjectTypeDao classroomsSubjectTypeDao = new ClassroomsSubjectTypeDao();
+    private SubjectTypeDao subjectTypeDao = new SubjectTypeDao();
 
     public ClassroomDao() {
-        initClassroomTable();
+        initDBForWorkWithClassrooms();
     }
 
-    private void initClassroomTable() {
-
-        if (!DBUtil.tableExist(connection, "classrooms")){
-            createClassroomsTable();
-        }
-
-        if (!DBUtil.tableExist(connection, "subjectTypes")){
-            createSubjectTypesTable();
-            fillSubjectTypesTable();
-        }
-        if (!DBUtil.tableExist(connection, "classrooms_subjectTypes")){
-            createClassroomsClassroomTypesTable();
-        }
-
-
-
+    private void initDBForWorkWithClassrooms() {
+        createClassroomsTableIfNotExist();
+        subjectTypeDao.createSubjectTypesTableIfNotExist();
+        classroomsSubjectTypeDao.createClassroomsClassroomTypesTableIfNotExist();
     }
-
 
     @Override
     public List<Classroom> getAll() {
-
         List <Classroom> list = new ArrayList<>();
-
         try {
-            ResultSet rs = getStatement().executeQuery("SELECT * FROM classrooms");
+            ResultSet rs = getStatement().executeQuery("SELECT * FROM classrooms order by capacity");
             while (rs.next()){
                 list.add(getClassroom(rs));
             }
@@ -56,50 +44,91 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
     }
 
     @Override
-    public Classroom getById(Integer id) {
-        return null;
+    public Classroom getById(int id) {
+
+        Classroom classroom = null;
+
+        try {
+            PreparedStatement ps = getPrepareStatement("SELECT * FROM classrooms WHERE id = ?");
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                classroom = getClassroom(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return classroom;
     }
 
     @Override
-    public Classroom update(Classroom entity) {
-        return null;
-    }
+    public boolean update(Classroom entity) {
 
-    @Override
-    public boolean delete(Integer id) {
+
+        PreparedStatement ps = getPrepareStatement("UPDATE classrooms SET name = ?, capacity = ?, description = ? where id = ?");
+        try {
+            ps.setString(1, entity.getName());
+            ps.setInt(2, entity.getCapacity());
+            ps.setString(3, entity.getDescription());
+            ps.setInt(4, entity.getId());
+            ps.executeUpdate();
+
+            classroomsSubjectTypeDao.update(entity.getId(), entity.getTypes());
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
+    }
+
+    @Override
+    public boolean delete(int id) {
+
+        PreparedStatement ps = getPrepareStatement("DELETE FROM classrooms WHERE id = ?");
+        try {
+            classroomsSubjectTypeDao.deleteByClassroomId(id);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException("Classroom was not deleted!");
     }
 
     @Override
     public boolean add(Classroom entity) {
 
-        String sql = "INSERT INTO classrooms " +
-                "(name, capacity, description) " +
-                "VALUES (?, ?, ?)";
+        List<Classroom> classrooms = getAll();
+        if (!classrooms.contains(entity)) {
 
-        PreparedStatement ps = getPrepareStatement(sql);
-        try {
-            ps.setString(1, entity.getName());
-            ps.setInt(2, entity.getCapacity());
-            ps.setString(3, entity.getDescription());
+            String sql = "INSERT INTO classrooms " +
+                    "(name, capacity, description) " +
+                    "VALUES (?, ?, ?)";
 
-            ps.executeUpdate();
+            PreparedStatement ps = getPrepareStatement(sql);
+            try {
+                ps.setString(1, entity.getName());
+                ps.setInt(2, entity.getCapacity());
+                ps.setString(3, entity.getDescription());
 
-            int classroomId = getEntityIdByName(entity.getName());
-            ClassroomsSubjectTypeDao cDao = new ClassroomsSubjectTypeDao();
-            SubjectTypeDao sDao = new SubjectTypeDao();
+                ps.executeUpdate();
 
-            for (SubjectType st :
-                    entity.getTypes()) {
-                cDao.create(classroomId, sDao.getEntityIdByName(st.toString()));
+                int classroomId = getEntityIdByName(entity.getName());
+
+                for (SubjectType st :  entity.getTypes()) {
+                    classroomsSubjectTypeDao.add(classroomId, subjectTypeDao.getEntityIdByName(st.toString()));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return true;
         }
-
-        return true;
-
-
+        return false;
     }
 
     public int getEntityIdByName(String name) {
@@ -120,89 +149,34 @@ public class ClassroomDao extends AbstractDao<Classroom, Integer> {
 
     private Classroom getClassroom (ResultSet rs) throws SQLException{
 
-        SubjectTypeDao sDao = new SubjectTypeDao();
         Classroom classroom = new Classroom();
         classroom.setId(rs.getInt("id"));
         classroom.setName(rs.getString("name"));
         classroom.setCapacity(rs.getInt("capacity"));
         classroom.setDescription(rs.getString("description"));
 
-        classroom.setTypes(sDao.getEntitiesByClassroomId(rs.getInt("id")));
+        classroom.setTypes(subjectTypeDao.getEntitiesByClassroomId(rs.getInt("id")));
 
         return classroom;
     }
 
-    private void createClassroomsTable(){
-        try {
-            Statement stmt = connection.createStatement();
+    private void createClassroomsTableIfNotExist() {
+        if (!DBUtil.tableExist(connection, "classrooms")) {
+            try {
+                Statement stmt = connection.createStatement();
 
-            String sql = "CREATE TABLE CLASSROOMS " +
-                    "(id SERIAL, " +
-                    " name VARCHAR(30), " +
-                    " capacity INTEGER, " +
-                    " description VARCHAR(255), " +
-                    " PRIMARY KEY ( id ))";
+                String sql = "CREATE TABLE CLASSROOMS " +
+                        "(id SERIAL, " +
+                        " name VARCHAR(30), " +
+                        " capacity INTEGER, " +
+                        " description VARCHAR(255), " +
+                        " PRIMARY KEY ( id ))";
 
-            stmt.executeUpdate(sql);
-            System.out.println("Table classrooms created!");
-        } catch (SQLException e){
-            System.out.println("ERROR! Table classroom did not created!");
+                stmt.executeUpdate(sql);
+                System.out.println("Table classrooms created!");
+            } catch (SQLException e) {
+                System.out.println("ERROR! Table classroom did not created!");
+            }
         }
     }
-
-    private void createSubjectTypesTable(){
-        try {
-            Statement statment = connection.createStatement();
-
-            String sql = "CREATE TABLE subjectTypes " +
-                    "(id SERIAL, " +
-                    " name VARCHAR(30), "+
-                    " maxStudentAmount INTEGER, " +
-                    "PRIMARY KEY (id)) ";
-            statment.executeUpdate(sql);
-            System.out.println("Table subjectTypes created!");
-        } catch (SQLException e){
-            System.out.println("ERROR! Table subjectTypes did not create!");
-        }
-    }
-
-    private void fillSubjectTypesTable() {
-        PreparedStatement ps = getPrepareStatement("Insert into subjectTypes (name, maxStudentAmount) values (?, ?)");
-        try {
-            ps.setString(1, "LECTURE");
-            ps.setInt(2, 0);
-            ps.executeUpdate();
-            ps.setString(1, "SEMINAR");
-            ps.setInt(2, 0);
-            ps.executeUpdate();
-            ps.setString(1, "PRACTICE");
-            ps.setInt(2, 15);
-            ps.executeUpdate();
-            ps.setString(1, "LAB");
-            ps.setInt(2, 7);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void createClassroomsClassroomTypesTable() {
-
-        try {
-            Statement stmt = connection.createStatement();
-
-            String sql = "create table classrooms_subjectTypes " +
-                    "(id serial, " +
-                    "classroom_id integer references classrooms(id), " +
-                    "subject_types_id integer references subjectTypes(id))";
-
-            stmt.executeUpdate(sql);
-            System.out.println("Table classrooms_subject_types created!");
-        } catch (SQLException e){
-            System.out.println("ERROR! Table classrooms_subject_types did not create!");
-        }
-
-
-    }
-
 }

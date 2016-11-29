@@ -2,6 +2,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.ss.schedule.dao.ClassroomDao;
 import com.ss.schedule.io.InputOutputJson;
 import com.ss.schedule.model.Classroom;
+import com.ss.schedule.model.SubjectType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,6 @@ public class Main {
 
         System.out.println("=================================");
 
-
-        //Connection con = DBConnector.getConnection();
-
         ClassroomDao classroomDao = new ClassroomDao();
 
         for (Classroom room :   classrooms) {
@@ -38,6 +36,23 @@ public class Main {
         System.out.println(classroomList);
 
         classroomManager.writeToFile("rooms.json", classroomList);
+
+        classroomDao.delete(classroomList.get(0).getId());
+
+        Classroom c = classroomList.get(1);
+        List<SubjectType> types = new ArrayList<>();
+        types.add(SubjectType.LAB);
+        types.add(SubjectType.SEMINAR);
+        c.setTypes(types);
+
+        classroomDao.update(c);
+
+        System.out.println("====================");
+
+        classroomList = classroomDao.getAll();
+
+        System.out.println(classroomList);
+
 
     }
 }

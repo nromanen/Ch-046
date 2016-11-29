@@ -1,17 +1,19 @@
 package com.ss.schedule.dao;
 
+import com.ss.schedule.dbutil.DBUtil;
 import com.ss.schedule.model.SubjectType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Admin on 27.11.16.
  */
-public class SubjectTypeDao extends AbstractDao<SubjectType, Integer>{
+public class SubjectTypeDao extends AbstractDao<SubjectType>{
 
     @Override
     public List<SubjectType> getAll() {
@@ -20,7 +22,7 @@ public class SubjectTypeDao extends AbstractDao<SubjectType, Integer>{
     }
 
     @Override
-    public SubjectType getById(Integer id) {
+    public SubjectType getById(int id) {
         try {
             PreparedStatement ps = getPrepareStatement("SELECT * FROM subject_types WHERE id = ?");
             ps.setInt(1, id);
@@ -75,17 +77,53 @@ public class SubjectTypeDao extends AbstractDao<SubjectType, Integer>{
     }
 
     @Override
-    public SubjectType update(SubjectType entity) {
-        return null;
+    public boolean update(SubjectType entity) {
+        return false;
     }
 
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(int id) {
         return false;
     }
 
     @Override
     public boolean add(SubjectType entity) {
         return false;
+    }
+
+
+    public void createSubjectTypesTableIfNotExist(){
+        if (!DBUtil.tableExist(connection, "subjecttypes")) {
+            try {
+                Statement statement = connection.createStatement();
+
+                String sql = "CREATE TABLE subjectTypes " +
+                        "(id SERIAL, " +
+                        " name VARCHAR(30), " +
+                        " maxStudentAmount INTEGER, " +
+                        "PRIMARY KEY (id)) ";
+                statement.executeUpdate(sql);
+                fillSubjectTypesTable();
+                System.out.println("Table subjectTypes created!");
+            } catch (SQLException e) {
+                System.out.println("ERROR! Table subjectTypes did not add!");
+            }
+
+        }
+    }
+
+    public void fillSubjectTypesTable() {
+        PreparedStatement ps = getPrepareStatement("Insert into subjectTypes (name, maxStudentAmount) values (?, ?)");
+        try {
+
+            SubjectType[] types = SubjectType.values();
+            for (SubjectType subjectType : types) {
+                ps.setString(1, subjectType.toString());
+                ps.setInt(2, subjectType.getMaxStudentAmount());
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

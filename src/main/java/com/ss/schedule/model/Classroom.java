@@ -103,8 +103,7 @@ public class Classroom implements Comparable<Classroom>{
 
 		if (capacity != classroom.capacity) return false;
 		if (name != null ? !name.equals(classroom.name) : classroom.name != null) return false;
-		if (types != null ? !types.equals(classroom.types) : classroom.types != null) return false;
-		return description != null ? description.equals(classroom.description) : classroom.description == null;
+		return types != null ? types.equals(classroom.types) : classroom.types == null;
 
 	}
 
@@ -113,7 +112,6 @@ public class Classroom implements Comparable<Classroom>{
 		int result = name != null ? name.hashCode() : 0;
 		result = 31 * result + capacity;
 		result = 31 * result + (types != null ? types.hashCode() : 0);
-		result = 31 * result + (description != null ? description.hashCode() : 0);
 		return result;
 	}
 }

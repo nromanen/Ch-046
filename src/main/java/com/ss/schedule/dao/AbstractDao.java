@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Admin on 05.11.16.
  */
-public abstract class AbstractDao<E, K> {
+public abstract class AbstractDao<E> {
 
     protected Connection connection;
 
@@ -22,11 +22,11 @@ public abstract class AbstractDao<E, K> {
     // get all entitis from DB
     public abstract List<E> getAll();
     // get entity from DB bty id
-    public abstract E getById(K id);
+    public abstract E getById(int id);
     // update entity in DB
-    public abstract E update(E entity);
+    public abstract boolean update(E entity);
     // delete entity from DB
-    public abstract boolean delete(K id);
+    public abstract boolean delete(int id);
     // add new entity in DB
     public abstract boolean add(E entity);
 
