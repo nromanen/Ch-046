@@ -53,6 +53,15 @@ public class Group {
 	}
 
 	@Override
+	public String toString() {
+		return "Group{" +
+				"name='" + name + '\'' +
+				", count=" + count +
+				", subjects=" + subjects +
+				'}';
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Group)) return false;

@@ -1,22 +1,15 @@
 <!DOCTYPE html>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>.
+<%@ taglib tagdir="/WEB-INF/tags/page" prefix="page" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
 <html>
 <head>
   <title>Schedule maker</title>
+<page:css></page:css>
 
-  <link rel="stylesheet" href="test.css">
-
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-  <link rel="stylesheet" href="../../../assets/css/main.css">
 </head>
 <body>
 <div class="conteiner">
@@ -75,6 +68,9 @@
   </nav>
   <c:if test = "${isResult  == false}">
     <h1>SCHEDULE MAKER</h1>
+
+<h2>${groups}</h2>
+
 
     <form method="post" action="/classrooms">
       <table width="50%" border="0" cellspacing="0" cellpadding="5">
@@ -184,15 +180,7 @@
 
 
 
-
-
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+<page:js/>
 <script>
   $( document ).ready(function(){
 
@@ -216,6 +204,9 @@
   });
 
 </script>
+
+<page:footer/>
+
 
 </body>
 </html>
