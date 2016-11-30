@@ -14,18 +14,18 @@ public class Main {
 
         ClassroomDao classroomDao = new ClassroomDao();
 
-        List<Classroom> classroomList = classroomDao.getAll();
+//        List<Classroom> classroomList = classroomDao.getAll();
+//
+//        for (Classroom c: classroomList){
+////            c.setCapacity(1000 + c.getCapacity());
+////            c.setDescription("Test_desc");
+//            List<SubjectType> s = new ArrayList<>();
+//            s.add(SubjectType.SEMINAR);
+//            c.setTypes(s);
+//            classroomDao.update(c);
+//        }
 
-        for (Classroom c: classroomList){
-//            c.setCapacity(1000 + c.getCapacity());
-//            c.setDescription("Test_desc");
-            List<SubjectType> s = new ArrayList<>();
-            s.add(SubjectType.SEMINAR);
-            c.setTypes(s);
-            classroomDao.update(c);
-        }
-
-        classroomList = classroomDao.getAll();
+        List<Classroom> classroomList = classroomDao.getByTypeAndCapacity(SubjectType.LECTURE, 100);
         System.out.println(classroomList);
 
     }

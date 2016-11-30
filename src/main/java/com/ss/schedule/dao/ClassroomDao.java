@@ -29,6 +29,27 @@ public class ClassroomDao extends AbstractDao<Classroom> {
         classroomsSubjectTypeDao.createClassroomsSubjectTypesTableIfNotExist();
     }
 
+    public List<Classroom> getByTypeAndCapacity(SubjectType type, int capacity){
+        List <Classroom> list = new ArrayList<>();
+        long TypeInt = subjectTypeDao.getEntityIdByName(type.toString());
+        String sql = "select classrooms.id, name, capacity, description from classrooms " +
+                "join classrooms_subjecttypes " +
+                "on subject_types_id = ? and classrooms.id = classroom_id " +
+                "where capacity >= ? group by classrooms.id, name, capacity, description  order by capacity";
+        try(PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setLong(1, TypeInt);
+            ps.setLong(2, capacity);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                list.add(getClassroom(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     @Override
     public List<Classroom> getAll() {
         List <Classroom> list = new ArrayList<>();
