@@ -160,7 +160,7 @@ public class Faculty {
 	* @return number of subjects that have been added to the main list of subjects.
 	* Subjects that have not been added already exist in the list
 	* */
-	public int addListOfSubjects(List<Subject> subjectList) {
+	public int addSubjects(List<Subject> subjectList) {
 		int addedSubjectCount = 0;
 		if (subjectList.size() != 0) {
 			for (Subject subject : subjectList) {

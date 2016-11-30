@@ -10,6 +10,12 @@ import java.util.List;
 @JacksonXmlRootElement(localName = "group")
 public class Group {
 
+	private static final String ERROR_MESSAGE_EMPTY_LIST = "[ERROR] List is empty!";
+	private static final String ERROR_MESSAGE_ADD_SUBJECT = "[ERROR] This subject has already existed!";
+
+	@JacksonXmlProperty
+	private long id;
+
 	@JacksonXmlProperty
 	private String name;
 
@@ -26,6 +32,14 @@ public class Group {
 		this.name = name;
 		this.count = count;
 		this.subjects = subjects;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -50,6 +64,29 @@ public class Group {
 
 	public void setSubjects(List<Subject> subjects) {
 		this.subjects = subjects;
+	}
+
+	public int addSubjects(List<Subject> subjectList) {
+		int addedSubjectCount = 0;
+		if (subjectList.size() != 0) {
+			for (Subject subject : subjectList) {
+				if (!subjects.contains(subject)) {
+					addedSubjectCount++;
+					subjects.add(subject);
+				}
+			}
+		} else {
+			throw new IllegalArgumentException(ERROR_MESSAGE_EMPTY_LIST);
+		}
+		return addedSubjectCount;
+	}
+
+	public void addSubject(Subject subject) {
+		if (!subjects.contains(subject)) {
+			subjects.add(subject);
+		} else {
+			throw new IllegalArgumentException(ERROR_MESSAGE_ADD_SUBJECT);
+		}
 	}
 
 	@Override

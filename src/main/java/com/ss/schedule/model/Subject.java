@@ -7,6 +7,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 public class Subject {
 
 	@JacksonXmlProperty
+	private long id;
+
+	@JacksonXmlProperty
 	private String name;
 	@JacksonXmlProperty
 	private SubjectType type;
@@ -24,6 +27,14 @@ public class Subject {
 		this.name = name;
 		this.course = courseNumber;
 		this.type = type;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getName() {

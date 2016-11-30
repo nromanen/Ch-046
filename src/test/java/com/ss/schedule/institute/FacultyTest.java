@@ -82,7 +82,7 @@ public class FacultyTest {
 		subjects.add(new Subject("QA", SubjectType.PRACTICE, 2));
 		subjects.add(new Subject("QA", SubjectType.LECTURE, 2));
 
-		int actualAddedSubjectsAmount = faculty.addListOfSubjects(subjects);
+		int actualAddedSubjectsAmount = faculty.addSubjects(subjects);
 
 		assertEquals(actualAddedSubjectsAmount, 5);
 		assertEquals(faculty.getSubjects().size(), 25);

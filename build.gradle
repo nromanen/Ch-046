@@ -7,11 +7,13 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven { url "https://clojars.org/repo" }
 }
 
 dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.4'
-    testCompile group: 'org.testng', name: 'testng', version: '6.9.13.6'
+    compile group: 'postgresql', name: 'postgresql', version: '9.3-1102.jdbc41'
     compile group: 'com.fasterxml', name: 'jackson-xml-databind', version: '0.6.2'
     compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.8.5'
+    testCompile group: 'org.testng', name: 'testng', version: '6.9.13.6'
 }
