@@ -1,0 +1,128 @@
+ <!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" href="test.css">
+</head>
+<body>
+<form id="formname" name="formname" method="post" action="submitform.asp" >
+		<table width="50%" border="0" cellspacing="0" cellpadding="5">
+			<tr>
+				<td width="41%" align="right" valign="middle">Group :</td>
+				<td width="59%" align="left" valign="middle">
+					<select name="group" id="group">
+						<option value="">Select Group</option>
+						<option value="11">Grpop 11</option>
+						<option value="12">Grpop 12</option>
+						<option value="13">Grpop 13</option>
+						<option value="14">Grpop 14</option>
+						<option value="21">Grpop 21</option>
+						<option value="22">Grpop 22</option>
+						<option value="23">Grpop 23</option>
+						<option value="24">Grpop 24</option>
+						<option value="31">Grpop 31</option>
+						<option value="32">Grpop 32</option>
+						<option value="33">Grpop 33</option>
+						<option value="34">Grpop 34</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="right" valign="middle">Subject:</td>
+				<td align="left" valign="middle">
+					<select disabled="disabled" id="subject" name="subject">
+						<option value>Select Subject</option>
+						<!-- Grpop 11 -->
+						<option rel="11" value="LECTURE">Algebra(LECTURE)</option>
+                        <option rel="11" value="PRACTICE">Algebra(PRACTICE)</option>
+						<option rel="11" value="LECTURE">Philosophy(LECTURE)</option>
+						<option rel="11" value="SEMINAR">Philosophy(SEMINAR)</option>
+						
+						<!-- Grpop 12 -->
+						<option rel="12" value="LECTURE">Algebra(LECTURE)</option>
+                        <option rel="12" value="PRACTICE">Algebra(PRACTICE)</option>
+						<option rel="12" value="LECTURE">Philosophy(LECTURE)</option>
+						<option rel="12" value="SEMINAR">Philosophy(SEMINAR)</option>
+						
+						<!-- Grpop 13 -->
+						<option rel="13" value="LECTURE">Algebra(LECTURE)</option>
+                        <option rel="13" value="PRACTICE">Algebra(PRACTICE)</option>
+						<option rel="13" value="LECTURE">Philosophy(LECTURE)</option>
+						<option rel="13" value="SEMINAR">Philosophy(SEMINAR)</option>
+						
+						<!-- Grpop 14 -->
+						<option rel="14" value="LECTURE">Algebra(LECTURE)</option>
+                        <option rel="14" value="PRACTICE">Algebra(PRACTICE)</option>
+						<option rel="14" value="LECTURE">Philosophy(LECTURE)</option>
+						<option rel="14" value="SEMINAR">Philosophy(SEMINAR)</option>
+						
+						<!-- Grpop 21 -->
+						<option rel="21" value="LECTURE">Python(LECTURE)</option>
+						<option rel="21" value="LAB">Python(LAB)</option>
+                        <option rel="21" value="PRACTICE">Python(PRACTICE)</option>
+						
+						<!-- Grpop 22 -->
+						<option rel="22" value="LECTURE">Python(LECTURE)</option>
+						<option rel="22" value="LAB">Python(LAB)</option>
+                        <option rel="22" value="PRACTICE">Python(PRACTICE)</option>
+						
+						<!-- Grpop 23 -->
+						<option rel="23" value="LECTURE">Algebra(LECTURE)</option>
+                        <option rel="23" value="PRACTICE">Algebra(PRACTICE)</option>
+						
+						<!-- Grpop 24 -->
+						<option rel="24" value="LECTURE">Algebra(LECTURE)</option>
+                        <option rel="24" value="PRACTICE">Algebra(PRACTICE)</option>
+						
+						<!-- Grpop 31 -->
+						<option rel="31" value="LECTURE">.NET(LECTURE)</option>
+                        <option rel="31" value="PRACTICE">.NET(PRACTICE)</option>
+						
+						<!-- Grpop 32 -->
+						<option rel="32" value="LECTURE">.NET(LECTURE)</option>
+                        <option rel="32" value="PRACTICE">.NET(PRACTICE)</option>
+						
+						<!-- Grpop 33 -->
+						<option rel="33" value="SEMINAR">Transformation(SEMINAR)</option>
+						
+						<!-- Grpop 33 -->
+						<option rel="34" value="PRACTICE">MA(PRACTICE)</option>
+              
+					</select>
+				</td>
+			</tr>
+		</table>
+	</form>
+
+	
+
+	
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script>
+		$( document ).ready(function(){
+
+    console.log('work');
+
+    var $cat = $("#group"),
+        $subcat = $("#subject");
+
+    $cat.on("change",function(){
+        var _rel = $(this).val();
+        console.log(_rel);
+        $subcat.find("option").attr("style","");
+        $subcat.val("");
+        if(!_rel) return $subcat.prop("disabled",true);
+        $subcat.find("[rel="+_rel+"]").show();
+
+        $subcat.prop("disabled",false);
+    });
+
+});
+</script>
+
+</body>
+</html>
+
+
+
+
