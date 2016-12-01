@@ -7,6 +7,7 @@ import com.ss.schedule.model.Subject;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,10 +24,12 @@ public class GroupDependenciesCreatorTest {
 
 
 	@Test
-	public void testGetGroupsDependencies() throws Exception {
+	public void testGetGroupsDependencies() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		List<Group> groups = mapper.readValue(groupJson, new TypeReference<List<Group>>() {});
-		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {});
+		List<Group> groups = mapper.readValue(groupJson, new TypeReference<List<Group>>() {
+		});
+		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {
+		});
 
 		Faculty faculty = new Faculty("Programmers", groups, subjects, new ArrayList<>());
 		HashMap<Subject, List<Group>> subgroupsStreams = faculty.getGroupsSubgroupsStreamsBySubject();

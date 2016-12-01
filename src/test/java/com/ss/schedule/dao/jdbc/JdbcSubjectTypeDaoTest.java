@@ -1,10 +1,10 @@
 package com.ss.schedule.dao.jdbc;
 
-import com.ss.schedule.dao.AbstractDao;
 import com.ss.schedule.dao.DBManager;
 import com.ss.schedule.dbutil.DBConnector;
 import com.ss.schedule.model.SubjectType;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -24,25 +24,29 @@ import static org.testng.Assert.assertTrue;
 public class JdbcSubjectTypeDaoTest {
 
 	private Connection connection;
-	private AbstractDao<SubjectType> subjectTypeDao;
+	private JdbcSubjectTypeDao subjectTypeDao;
+	private final String propertiesFilePath = "test_db_connection.properties";
+
+	@BeforeClass
+	public void setUpClass() throws SQLException {
+		subjectTypeDao = new JdbcSubjectTypeDao(propertiesFilePath);
+	}
 
 	@BeforeMethod
-	public void setUp() throws Exception {
-		DBManager.createTablesInDataBase();
-		connection = DBConnector.getConnection();
+	public void setUp() throws SQLException {
+		DBManager.createTablesInDataBase(propertiesFilePath);
+		connection = DBConnector.getConnection(propertiesFilePath);
 	}
 
 	@AfterMethod
-	public void tearDown() throws Exception {
-		DBManager.dropAllTables();
+	public void tearDown() throws SQLException {
+		DBManager.dropAllTables(propertiesFilePath);
 		connection.close();
 	}
 
 	@Test
-	public void testAddSubjectType() throws Exception {
+	public void testAddSubjectType() throws SQLException {
 		assertEquals(countTableRows(), 0);
-
-		subjectTypeDao = new JdbcSubjectTypeDao();
 
 		assertTrue(SubjectType.LAB.equals(subjectTypeDao.add(SubjectType.LAB)));
 		assertTrue(SubjectType.LECTURE.equals(subjectTypeDao.add(SubjectType.LECTURE)));
@@ -52,7 +56,7 @@ public class JdbcSubjectTypeDaoTest {
 
 	private int countTableRows() throws SQLException {
 		String request = "SELECT COUNT(*) FROM subject_types";
-		connection = DBConnector.getConnection();
+		connection = DBConnector.getConnection(propertiesFilePath);
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery(request);
 		rs.next();
@@ -60,8 +64,7 @@ public class JdbcSubjectTypeDaoTest {
 	}
 
 	@Test
-	public void testUpdateSubjectType() throws Exception {
-		subjectTypeDao = new JdbcSubjectTypeDao();
+	public void testUpdateSubjectType() throws SQLException {
 		SubjectType type1 = subjectTypeDao.add(SubjectType.LAB);
 		SubjectType type2 = subjectTypeDao.add(SubjectType.SEMINAR);
 
@@ -77,10 +80,9 @@ public class JdbcSubjectTypeDaoTest {
 	}
 
 	@Test
-	public void testDeleteSubjectType() throws Exception {
+	public void testDeleteSubjectType() throws SQLException {
 		SubjectType subjectType1 = SubjectType.LAB;
 		SubjectType subjectType2 = SubjectType.PRACTICE;
-		subjectTypeDao = new JdbcSubjectTypeDao();
 
 		SubjectType addedSubjectType1 = subjectTypeDao.add(subjectType1);
 		subjectTypeDao.add(subjectType2);
@@ -90,10 +92,9 @@ public class JdbcSubjectTypeDaoTest {
 	}
 
 	@Test
-	public void testGetSubjectTypeById() throws Exception {
+	public void testGetSubjectTypeById() throws SQLException {
 		SubjectType subjectType1 = SubjectType.LAB;
 		SubjectType subjectType2 = SubjectType.LECTURE;
-		subjectTypeDao = new JdbcSubjectTypeDao();
 		SubjectType addedSubjectType1 = subjectTypeDao.add(subjectType1);
 		SubjectType addedSubjectType2 = subjectTypeDao.add(subjectType2);
 
@@ -108,10 +109,9 @@ public class JdbcSubjectTypeDaoTest {
 	}
 
 	@Test
-	public void testGetAllSubjectTypes() throws Exception {
+	public void testGetAllSubjectTypes() throws SQLException {
 		SubjectType subjectType1 = SubjectType.LAB;
 		SubjectType subjectType2 = SubjectType.LECTURE;
-		subjectTypeDao = new JdbcSubjectTypeDao();
 		List<SubjectType> subjectTypes = new ArrayList<>();
 		subjectTypes.add(subjectTypeDao.add(subjectType1));
 		subjectTypes.add(subjectTypeDao.add(subjectType2));

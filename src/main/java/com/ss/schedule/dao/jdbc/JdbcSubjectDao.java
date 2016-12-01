@@ -16,10 +16,13 @@ import java.util.List;
  */
 public class JdbcSubjectDao extends AbstractDao<Subject> {
 
-	public JdbcSubjectDao() throws SQLException {}
+	public JdbcSubjectDao(String propertiesFilePath) throws SQLException {
+		super(propertiesFilePath);
+	}
 
 	@Override
 	public Subject add(Subject subject) throws SQLException {
+		getConnection();
 		String request = "INSERT INTO subjects (name, type_id, course) VALUES (?, ?, ?)";
 		PreparedStatement preparedStatement = connection.prepareStatement(request);
 		preparedStatement.setString(1, subject.getName());
@@ -43,6 +46,7 @@ public class JdbcSubjectDao extends AbstractDao<Subject> {
 
 	@Override
 	public Subject update(Subject subject) throws SQLException {
+		getConnection();
 		String request = "UPDATE subjects SET name = ?, type_id = ?, course = ? WHERE id = ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(request);
 		preparedStatement.setString(1, subject.getName());
@@ -55,6 +59,7 @@ public class JdbcSubjectDao extends AbstractDao<Subject> {
 
 	@Override
 	public boolean delete(long id) throws SQLException {
+		getConnection();
 		String request = "DELETE FROM subjects WHERE id = ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(request);
 		preparedStatement.setLong(1, id);
@@ -63,6 +68,7 @@ public class JdbcSubjectDao extends AbstractDao<Subject> {
 
 	@Override
 	public Subject getById(long id) throws SQLException {
+		getConnection();
 		String request = "SELECT s.id, s.name, t.name, s.course FROM subjects AS s " +
 				"JOIN subject_types AS t " +
 				"ON s.type_id = t.id " +
@@ -76,12 +82,32 @@ public class JdbcSubjectDao extends AbstractDao<Subject> {
 
 	@Override
 	public List<Subject> getAll() throws SQLException {
+		getConnection();
 		String request = "SELECT s.id, s.name, t.name, s.course FROM subjects AS s " +
 				"JOIN subject_types AS t " +
 				"ON s.type_id = t.id " +
 				"ORDER BY s.id ASC";
 		Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		ResultSet rs = statement.executeQuery(request);
+
+		List<Subject> subjects = new ArrayList<>();
+		while (rs.next()) {
+			subjects.add(createSubject(rs));
+		}
+
+		return subjects;
+	}
+
+	public List<Subject> getSubjectsByGroupId(long groupId) throws SQLException {
+		getConnection();
+		String request = "SELECT s.id, s.name, t.name, s.course " +
+				"FROM subjects AS s " +
+				"JOIN group_subject_map AS map ON s.id = map.subject_id " +
+				"JOIN subject_types AS t ON s.type_id = t.id " +
+				"WHERE map.group_id = ?";
+		PreparedStatement preparedStatement = connection.prepareStatement(request);
+		preparedStatement.setLong(1, groupId);
+		ResultSet rs = preparedStatement.executeQuery();
 
 		List<Subject> subjects = new ArrayList<>();
 		while (rs.next()) {

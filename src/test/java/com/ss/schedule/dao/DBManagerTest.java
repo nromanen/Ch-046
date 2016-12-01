@@ -17,28 +17,30 @@ import static org.testng.Assert.assertEquals;
  */
 public class DBManagerTest {
 
+	private final String propertiesFilePath = "test_db_connection.properties";
+
 	@BeforeMethod
 	public void setUp() throws SQLException {
-		DBManager.dropAllTables();
+		DBManager.dropAllTables(propertiesFilePath);
 	}
 
 	@AfterMethod
 	public void tearDown() throws SQLException {
-		DBManager.dropAllTables();
+		DBManager.dropAllTables(propertiesFilePath);
 	}
 
 	@Test
-	public void testCreateTablesInDataBase() throws Exception {
+	public void testCreateTablesInDataBase() throws SQLException {
 		assertEquals(countTables(), 0);
 
-		DBManager.createTablesInDataBase();
+		DBManager.createTablesInDataBase(propertiesFilePath);
 
 		assertEquals(countTables(), 4);
 	}
 
 	private int countTables() throws SQLException {
 		String request = "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public'";
-		Connection connection = DBConnector.getConnection();
+		Connection connection = DBConnector.getConnection(propertiesFilePath);
 		Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		ResultSet rs = statement.executeQuery(request);
 		rs.next();
@@ -46,13 +48,13 @@ public class DBManagerTest {
 	}
 
 	@Test
-	public void testDropAllTables() throws Exception {
+	public void testDropAllTables() throws SQLException {
 		assertEquals(countTables(), 0);
 
-		DBManager.createTablesInDataBase();
+		DBManager.createTablesInDataBase(propertiesFilePath);
 		assertEquals(countTables(), 4);
 
-		DBManager.dropAllTables();
+		DBManager.dropAllTables(propertiesFilePath);
 		assertEquals(countTables(), 0);
 	}
 

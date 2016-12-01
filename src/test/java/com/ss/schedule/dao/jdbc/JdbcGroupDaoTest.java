@@ -1,10 +1,11 @@
 package com.ss.schedule.dao.jdbc;
 
-import com.ss.schedule.dao.AbstractDao;
 import com.ss.schedule.dao.DBManager;
+import com.ss.schedule.dao.DataBaseTestData;
 import com.ss.schedule.dbutil.DBConnector;
 import com.ss.schedule.model.Group;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -24,40 +25,45 @@ import static org.testng.Assert.assertTrue;
 public class JdbcGroupDaoTest {
 
 	private Connection connection;
-	private AbstractDao<Group> groupDao;
+	private JdbcGroupDao groupDao;
+	private final String propertiesFilePath = "test_db_connection.properties";
+
+	@BeforeClass
+	public void setUpClass() throws SQLException {
+		groupDao = new JdbcGroupDao(propertiesFilePath);
+	}
 
 	@BeforeMethod
-	public void setUp() throws Exception {
-		DBManager.createTablesInDataBase();
-		connection = DBConnector.getConnection();
+	public void setUp() throws SQLException {
+		DBManager.dropAllTables(propertiesFilePath);
+		DBManager.createTablesInDataBase(propertiesFilePath);
+		DataBaseTestData.fillDataBaseWithTestData(propertiesFilePath);
+		connection = DBConnector.getConnection(propertiesFilePath);
 	}
 
 	@AfterMethod
-	public void tearDown() throws Exception {
-		DBManager.dropAllTables();
+	public void tearDown() throws SQLException {
+		DBManager.dropAllTables(propertiesFilePath);
 		connection.close();
 	}
 
 	@Test
 	public void testAddGroupIntoDB() throws SQLException {
-		assertEquals(countTableRows(), 0);
+		assertEquals(countTableRows(), 12);
 
-		Group group1 = new Group("11", 22, new ArrayList<>());
-		Group group2 = new Group("13", 7, new ArrayList<>());
-		groupDao = new JdbcGroupDao();
+		Group group1 = new Group("68", 22, new ArrayList<>());
+		Group group2 = new Group("73", 7, new ArrayList<>());
 		Group addedGroup1 = groupDao.add(group1);
 		Group addedGroup2 = groupDao.add(group2);
 
 		assertTrue(group1.equals(addedGroup1));
 		assertTrue(group2.equals(addedGroup2));
-		assertEquals(group1.getId(), 1);
-		assertEquals(group2.getId(), 2);
-		assertEquals(countTableRows(), 2);
+		assertEquals(countTableRows(), 14);
 	}
 
 	private int countTableRows() throws SQLException {
 		String request = "SELECT COUNT(*) FROM groups";
-		connection = DBConnector.getConnection();
+		connection = DBConnector.getConnection(propertiesFilePath);
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery(request);
 		rs.next();
@@ -65,17 +71,17 @@ public class JdbcGroupDaoTest {
 	}
 
 	@Test
-	public void testUpdateGroup() throws SQLException {
-		Group group1 = new Group("11", 22, new ArrayList<>());
-		Group group2 = new Group("13", 7, new ArrayList<>());
-		groupDao = new JdbcGroupDao();
+	public void testUpdateGroupMainInformation() throws SQLException {
+		Group group1 = new Group("68", 22, new ArrayList<>());
+		Group group2 = new Group("73", 7, new ArrayList<>());
 		Group addedGroup1 = groupDao.add(group1);
 		Group addedGroup2 = groupDao.add(group2);
+		assertEquals(countTableRows(), 14);
 
-		addedGroup1.setName("18");
+		addedGroup1.setName("88");
 		addedGroup1.setCount(15);
 
-		addedGroup2.setName("21");
+		addedGroup2.setName("95");
 		addedGroup2.setCount(13);
 
 		Group updatedGroup1 = groupDao.update(addedGroup1);
@@ -83,26 +89,23 @@ public class JdbcGroupDaoTest {
 
 		assertTrue(addedGroup1.equals(updatedGroup1));
 		assertTrue(addedGroup2.equals(updatedGroup2));
-		assertEquals(countTableRows(), 2);
+		assertEquals(countTableRows(), 14);
 	}
 
 	@Test
 	public void testDeleteGroup() throws SQLException {
-		Group group1 = new Group("11", 22, new ArrayList<>());
-		Group group2 = new Group("13", 7, new ArrayList<>());
-		groupDao = new JdbcGroupDao();
+		Group group1 = new Group("38", 22, new ArrayList<>());
 		Group addedGroup1 = groupDao.add(group1);
-		groupDao.add(group2);
+		assertEquals(countTableRows(), 13);
 
 		assertTrue(groupDao.delete(addedGroup1.getId()));
-		assertEquals(countTableRows(), 1);
+		assertEquals(countTableRows(), 12);
 	}
 
 	@Test
 	public void testGetGroupById() throws SQLException {
-		Group group1 = new Group("11", 22, new ArrayList<>());
-		Group group2 = new Group("13", 7, new ArrayList<>());
-		groupDao = new JdbcGroupDao();
+		Group group1 = new Group("68", 22, new ArrayList<>());
+		Group group2 = new Group("73", 7, new ArrayList<>());
 		Group addedGroup1 = groupDao.add(group1);
 		Group addedGroup2 = groupDao.add(group2);
 
@@ -118,16 +121,8 @@ public class JdbcGroupDaoTest {
 
 	@Test
 	public void testGetAllGroups() throws SQLException {
-		Group group1 = new Group("11", 22, new ArrayList<>());
-		Group group2 = new Group("13", 7, new ArrayList<>());
-		groupDao = new JdbcGroupDao();
-		List<Group> groups = new ArrayList<>();
-		groups.add(groupDao.add(group1));
-		groups.add(groupDao.add(group2));
-
 		List<Group> groupsFromDB = groupDao.getAll();
 
-		assertEquals(groupsFromDB.size(), 2);
-		assertTrue(groups.equals(groupsFromDB));
+		assertEquals(groupsFromDB.size(), 12);
 	}
 }

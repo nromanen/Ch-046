@@ -12,9 +12,11 @@ import java.util.List;
 public abstract class AbstractDao<E> {
 
 	protected Connection connection;
+	private final String propertiesFilePath;
 
-	public AbstractDao() throws SQLException {
-		connection = DBConnector.getConnection();
+	public AbstractDao(String propertiesFilePath) throws SQLException {
+		this.propertiesFilePath = propertiesFilePath;
+		connection = DBConnector.getConnection(propertiesFilePath);
 	}
 
 	public abstract E add(E entity) throws SQLException;
@@ -26,4 +28,8 @@ public abstract class AbstractDao<E> {
 	public abstract E getById(long id) throws SQLException;
 
 	public abstract List<E> getAll() throws SQLException;
+
+	protected void getConnection() throws SQLException {
+		connection = DBConnector.getConnection(propertiesFilePath);
+	}
 }

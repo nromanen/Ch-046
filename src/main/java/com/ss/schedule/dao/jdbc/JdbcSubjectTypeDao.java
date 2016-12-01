@@ -15,10 +15,13 @@ import java.util.List;
  */
 public class JdbcSubjectTypeDao extends AbstractDao<SubjectType> {
 
-	public JdbcSubjectTypeDao() throws SQLException {}
+	public JdbcSubjectTypeDao(String propertiesFilePath) throws SQLException {
+		super(propertiesFilePath);
+	}
 
 	@Override
 	public SubjectType add(SubjectType subjectType) throws SQLException {
+		getConnection();
 		String request = "INSERT INTO subject_types (name, amount) VALUES (?, ?)";
 		PreparedStatement preparedStatement = connection.prepareStatement(request);
 		preparedStatement.setString(1, subjectType.toString());
@@ -39,6 +42,7 @@ public class JdbcSubjectTypeDao extends AbstractDao<SubjectType> {
 
 	@Override
 	public SubjectType update(SubjectType subjectType) throws SQLException {
+		getConnection();
 		String request = "UPDATE subject_types SET name = ?, amount = ? WHERE id = ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(request);
 		preparedStatement.setString(1, subjectType.toString());
@@ -50,6 +54,7 @@ public class JdbcSubjectTypeDao extends AbstractDao<SubjectType> {
 
 	@Override
 	public boolean delete(long id) throws SQLException {
+		getConnection();
 		String request = "DELETE FROM subject_types WHERE id = ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(request);
 		preparedStatement.setLong(1, id);
@@ -58,6 +63,7 @@ public class JdbcSubjectTypeDao extends AbstractDao<SubjectType> {
 
 	@Override
 	public SubjectType getById(long id) throws SQLException {
+		getConnection();
 		String request = "SELECT * FROM subject_types WHERE id = ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(request);
 		preparedStatement.setLong(1, id);
@@ -68,6 +74,7 @@ public class JdbcSubjectTypeDao extends AbstractDao<SubjectType> {
 
 	@Override
 	public List<SubjectType> getAll() throws SQLException {
+		getConnection();
 		String request = "SELECT * FROM subject_types ORDER BY id ASC";
 		Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		ResultSet rs = statement.executeQuery(request);

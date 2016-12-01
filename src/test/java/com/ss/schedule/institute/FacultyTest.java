@@ -8,6 +8,7 @@ import com.ss.schedule.model.SubjectType;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,10 +22,12 @@ public class FacultyTest {
 	private final File subjectJson = new File("src/test/resources/testfiles/subjects.json");
 
 	@Test
-	public void testCreateSubgroupsAndStreams() throws Exception {
+	public void testCreateSubgroupsAndStreams() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		List<Group> groups = mapper.readValue(groupJson, new TypeReference<List<Group>>() {});
-		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {});
+		List<Group> groups = mapper.readValue(groupJson, new TypeReference<List<Group>>() {
+		});
+		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {
+		});
 
 		Faculty faculty = new Faculty("Programmers", groups, subjects, new ArrayList<>());
 		HashMap<Subject, List<Group>> subgroupsStreams = faculty.getGroupsSubgroupsStreamsBySubject();
@@ -66,9 +69,10 @@ public class FacultyTest {
 	}
 
 	@Test
-	public void testAddListOfSubjects() throws Exception {
+	public void testAddListOfSubjects() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {});
+		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {
+		});
 		Faculty faculty = new Faculty("Faculty", new ArrayList<>(), new ArrayList<>(subjects), new ArrayList<>());
 
 		assertEquals(faculty.getSubjects().size(), 20);
@@ -89,7 +93,7 @@ public class FacultyTest {
 	}
 
 	@Test
-	public void testAddNewSubject() throws Exception {
+	public void testAddNewSubject() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {
 		});
@@ -110,9 +114,10 @@ public class FacultyTest {
 	}
 
 	@Test(expectedExceptions = IllegalArgumentException.class)
-	public void testAddSubjectThatHasAlreadyExisted() throws Exception {
+	public void testAddSubjectThatHasAlreadyExisted() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {	});
+		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {
+		});
 		Faculty faculty = new Faculty("Faculty", new ArrayList<>(), new ArrayList<>(subjects), new ArrayList<>());
 
 		assertEquals(faculty.getSubjects().size(), 20);
@@ -132,13 +137,14 @@ public class FacultyTest {
 	}
 
 	@Test
-	public void testDeleteExistentSubject() throws Exception {
+	public void testDeleteExistentSubject() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {	});
+		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {
+		});
 		Faculty faculty = new Faculty("Faculty", new ArrayList<>(), new ArrayList<>(subjects), new ArrayList<>());
 
 		assertEquals(faculty.getSubjects().size(), 20);
-		
+
 		faculty.deleteSubject(subjects.get(0));
 		assertEquals(faculty.getSubjects().size(), 19);
 		faculty.deleteSubject(subjects.get(1));
@@ -150,9 +156,10 @@ public class FacultyTest {
 	}
 
 	@Test(expectedExceptions = IllegalArgumentException.class)
-	public void testDeleteDoesNotExistentSubject() throws Exception {
+	public void testDeleteDoesNotExistentSubject() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {	});
+		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {
+		});
 		Faculty faculty = new Faculty("Faculty", new ArrayList<>(), new ArrayList<>(subjects), new ArrayList<>());
 
 		assertEquals(faculty.getSubjects().size(), 20);
@@ -162,10 +169,12 @@ public class FacultyTest {
 	}
 
 	@Test
-	public void testGetUnusedSubjects() throws Exception {
+	public void testGetUnusedSubjects() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		List<Group> groups = mapper.readValue(groupJson, new TypeReference<List<Group>>() {});
-		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {});
+		List<Group> groups = mapper.readValue(groupJson, new TypeReference<List<Group>>() {
+		});
+		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {
+		});
 
 		Faculty faculty = new Faculty("Faculty", new ArrayList<>(groups), new ArrayList<>(subjects), new ArrayList<>());
 

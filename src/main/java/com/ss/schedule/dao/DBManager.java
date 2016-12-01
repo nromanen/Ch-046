@@ -18,8 +18,8 @@ public class DBManager {
 
 	private static Connection connection;
 
-	public static void createTablesInDataBase() throws SQLException {
-		connection = DBConnector.getConnection();
+	public static void createTablesInDataBase(String propertiesFilePath) throws SQLException {
+		connection = DBConnector.getConnection(propertiesFilePath);
 		createGroupTable();
 		createSubjectTypeTable();
 		createSubjectTable();
@@ -73,8 +73,8 @@ public class DBManager {
 		statement.close();
 	}
 
-	public static void dropAllTables() throws SQLException {
-		connection = DBConnector.getConnection();
+	public static void dropAllTables(String propertiesFilePath) throws SQLException {
+		connection = DBConnector.getConnection(propertiesFilePath);
 		String request = "SELECT table_name FROM information_schema.tables WHERE table_schema='public'";
 		Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		ResultSet rs = statement.executeQuery(request);

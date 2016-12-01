@@ -17,7 +17,7 @@ public class RegularExpressionExperimentsTest {
 	private final String exampleSubject3 = ".Net-C++(LAB)\n";
 
 	@Test
-	public void testSplitOnlySpaces() throws Exception {
+	public void testSplitOnlySpaces() {
 		String string = "Group 11";
 		String pattern = "(\\s+)";
 
@@ -30,7 +30,7 @@ public class RegularExpressionExperimentsTest {
 	}
 
 	@Test
-	public void testSpacesAndBraces() throws Exception {
+	public void testSpacesAndBraces() {
 		String string = "Group (11)";
 		String pattern = "([\\s()]+)";
 
@@ -43,7 +43,7 @@ public class RegularExpressionExperimentsTest {
 	}
 
 	@Test
-	public void testSpacesBracesComasNewLine() throws Exception {
+	public void testSpacesBracesComasNewLine() {
 		String string = "Group 23 (5):" +
 				"C++(LECTURE), 2\n" +
 				"Algebra(PRACTICE), 0";
@@ -54,7 +54,7 @@ public class RegularExpressionExperimentsTest {
 	}
 
 	@Test
-	public void testFindGroup() throws Exception {
+	public void testFindGroup() {
 		String regexGroupLine = "^Group";
 		Pattern pattern = Pattern.compile(regexGroupLine);
 		Matcher matcher = pattern.matcher(exampleGroup1);
@@ -62,7 +62,7 @@ public class RegularExpressionExperimentsTest {
 	}
 
 	@Test
-	public void testFindGroupNumberWithoutSubgroups() throws Exception {
+	public void testFindGroupNumberWithoutSubgroups() {
 		String regexGroupLine = "\\d{2}";
 		Pattern pattern = Pattern.compile(regexGroupLine);
 		Matcher matcher = pattern.matcher(exampleGroup1);
@@ -70,7 +70,7 @@ public class RegularExpressionExperimentsTest {
 	}
 
 	@Test
-	public void testFindGroupNumberWithSubgroups() throws Exception {
+	public void testFindGroupNumberWithSubgroups() {
 		String regexGroupLine = "\\d{2}-\\d";
 		Pattern pattern = Pattern.compile(regexGroupLine);
 		Matcher matcher = pattern.matcher(exampleGroup2);
@@ -78,7 +78,7 @@ public class RegularExpressionExperimentsTest {
 	}
 
 	@Test
-	public void testFindGroupNumberWithOrWithoutSubgroups() throws Exception {
+	public void testFindGroupNumberWithOrWithoutSubgroups() {
 		String regexGroupLine = "((\\d{2})|(\\d{2}-\\d))";
 		Pattern pattern = Pattern.compile(regexGroupLine);
 		Matcher matcher = pattern.matcher(exampleGroup2);
@@ -88,7 +88,7 @@ public class RegularExpressionExperimentsTest {
 	}
 
 	@Test
-	public void testFindGroupAndGroupNumberWithOrWithoutSubgroups() throws Exception {
+	public void testFindGroupAndGroupNumberWithOrWithoutSubgroups() {
 		String regexGroupLine = "^Group\\s+((\\d{2})|(\\d{2}-\\d))\\s+";
 		Pattern pattern = Pattern.compile(regexGroupLine);
 		Matcher matcher = pattern.matcher(exampleGroup2);
@@ -98,7 +98,7 @@ public class RegularExpressionExperimentsTest {
 	}
 
 	@Test
-	public void testFindStudentAmount() throws Exception {
+	public void testFindStudentAmount() {
 		String regexGroupLine = "\\(\\d{0,2}\\)";
 		Pattern pattern = Pattern.compile(regexGroupLine);
 		Matcher matcher = pattern.matcher(exampleGroup2);
@@ -108,7 +108,7 @@ public class RegularExpressionExperimentsTest {
 	}
 
 	@Test
-	public void testSearchGroupPattern() throws Exception {
+	public void testSearchGroupPattern() {
 		String regexGroupLine = "^Group\\s+((\\d{2})|(\\d{2}-\\d))\\s+\\(\\d{0,2}\\):\\s*\\n";
 		Pattern pattern = Pattern.compile(regexGroupLine);
 		Matcher matcher = pattern.matcher(exampleGroup1);
@@ -116,7 +116,7 @@ public class RegularExpressionExperimentsTest {
 	}
 
 	@Test
-	public void testReadGroupNumber() throws Exception {
+	public void testReadGroupNumber() {
 		String regexGroupLine = "^Group\\s+((\\d{2})|(\\d{2}-\\d))\\s+\\((\\d{0,2})\\):\\s*\\n";
 		Pattern pattern = Pattern.compile(regexGroupLine);
 		Matcher matcher = pattern.matcher(exampleGroup2);
@@ -131,7 +131,7 @@ public class RegularExpressionExperimentsTest {
 	}
 
 	@Test
-	public void testReadGroupAmount() throws Exception {
+	public void testReadGroupAmount() {
 		String regexGroupLine = "^Group\\s+((\\d{2})|(\\d{2}\\-\\d))\\s+\\((\\d{0,2})\\):\\s*\\n";
 		Pattern pattern = Pattern.compile(regexGroupLine);
 		Matcher matcher = pattern.matcher(exampleGroup2);
@@ -150,7 +150,7 @@ public class RegularExpressionExperimentsTest {
 	}
 
 	@Test
-	public void testSearchSubjectPattern() throws Exception {
+	public void testSearchSubjectPattern() {
 		String regexGroupLine = "^([A-Za-z\\.\\-\\+#]+)\\(([A-Z]*)\\)\\s*((,\\s*(\\d)\\s*\\n)|(\\n))";
 		Pattern pattern = Pattern.compile(regexGroupLine);
 		Matcher matcher = pattern.matcher(exampleSubject1);
@@ -162,7 +162,7 @@ public class RegularExpressionExperimentsTest {
 	}
 
 	@Test
-	public void testReadSubjectNameAndType() throws Exception {
+	public void testReadSubjectNameAndType() {
 		String regexGroupLine = "^([A-Za-z\\.\\-\\+#]+)\\(([A-Z]*)\\)\\s*((,\\s*(\\d)\\s*\\n)|(\\n))";
 		Pattern pattern = Pattern.compile(regexGroupLine);
 		Matcher matcher = pattern.matcher(exampleSubject1);
@@ -188,7 +188,7 @@ public class RegularExpressionExperimentsTest {
 	}
 
 	@Test
-	public void testReadSubjectCourse() throws Exception {
+	public void testReadSubjectCourse() {
 		String regexGroupLine = "^([A-Za-z\\.\\-\\+#]+)\\(([A-Z]*)\\)\\s*((,\\s*(\\d)\\s*\\n)|(\\n))";
 		Pattern pattern = Pattern.compile(regexGroupLine);
 		Matcher matcher = pattern.matcher(exampleSubject1);
