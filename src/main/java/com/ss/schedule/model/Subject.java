@@ -6,6 +6,8 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 @JacksonXmlRootElement(localName = "subject")
 public class Subject {
 
+	private long id;
+
 	@JacksonXmlProperty
 	private String name;
 	@JacksonXmlProperty
@@ -21,9 +23,18 @@ public class Subject {
 	}
 
 	public Subject(String name, SubjectType type, int courseNumber) {
-		this.name = name;
+		this(name, type);
 		this.course = courseNumber;
-		this.type = type;
+	}
+
+	public Subject(long id, String name, SubjectType type, int course) {
+		this(name, type, course);
+		this.id = id;
+	}
+
+	public Subject(long id, String name, SubjectType type) {
+		this(name, type);
+		this.id = id;
 	}
 
 	public String getName() {
@@ -50,6 +61,14 @@ public class Subject {
 		this.course = course;
 	}
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -74,9 +93,10 @@ public class Subject {
 	@Override
 	public String toString() {
 		return "Subject{" +
-				"name='" + name + '\'' +
-				", course=" + course +
+				"id=" + id +
+				", name='" + name + '\'' +
 				", type=" + type +
+				", course=" + course +
 				'}';
 	}
 }

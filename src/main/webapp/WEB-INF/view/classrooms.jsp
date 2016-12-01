@@ -1,212 +1,153 @@
-<!DOCTYPE html>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>.
-<%@ taglib tagdir="/WEB-INF/tags/page" prefix="page" %>
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib tagdir="/WEB-INF/tags/page" prefix="page" %>
 
 
 <html>
 <head>
-  <title>Schedule maker</title>
-<page:css></page:css>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/assets/css/main.css">
 
 </head>
 <body>
-<div class="conteiner">
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
+
+<div class="container">
+
+  <nav class="navbar navbar-default navbar-inverse" style="border-radius:0px !important; margin-bottom:0px;">
+    <div class="container">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Brand</a>
+        <a class="navbar-brand" href="/classrooms">UNIVERSITY</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-          <li><a href="#">Link</a></li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
+              <li><a href="/employee?action=getAll">All Groups</a></li>
+              <li><a href="/employee?action=getAll">All classrooms</a></li>
+              <li><a href="/employee?action=getAll">All Subjects</a></li>
+
+              <li><a href="/newEmployee">Add new classroom</a></li>
+              <li><a href="/newEmployee">Add new Group</a></li>
+              <li><a href="/newEmployee">Add new Subject</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="#">Separated link</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">One more separated link</a></li>
+              <li><a href="/employee?action=getAll">Schedule</a></li>
             </ul>
           </li>
+          <%--<li><a href="#">News</a></li>--%>
+          <li><a href="contact.jsp">Contact</a></li>
         </ul>
-        <form class="navbar-form navbar-left">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search">
-          </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Link</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Separated link</a></li>
-            </ul>
-          </li>
+          <form class="navbar-form navbar-left" role="search" method="get" action="/search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search employee" name="search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
+
   <c:if test = "${isResult  == false}">
-    <h1>SCHEDULE MAKER</h1>
-
-<h2>${groups}</h2>
-
-
-    <form method="post" action="/classrooms">
-      <table width="50%" border="0" cellspacing="0" cellpadding="5">
-        <tr>
-          <td width="41%" align="right" valign="middle">Group :</td>
-          <td width="59%" align="left" valign="middle">
-            <select name="group" id="group">
-              <option value="">Select Group</option>
-              <option value="11">Grpop 11</option>
-              <option value="12">Grpop 12</option>
-              <option value="13">Grpop 13</option>
-              <option value="14">Grpop 14</option>
-              <option value="21">Grpop 21</option>
-              <option value="22">Grpop 22</option>
-              <option value="23">Grpop 23</option>
-              <option value="24">Grpop 24</option>
-              <option value="31">Grpop 31</option>
-              <option value="32">Grpop 32</option>
-              <option value="33">Grpop 33</option>
-              <option value="34">Grpop 34</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td align="right" valign="middle">Subject:</td>
-          <td align="left" valign="middle">
-            <select disabled="disabled" id="subject" name="subject">
-              <option value>Select Subject</option>
-              <!-- Grpop 11 -->
-              <option rel="11" value="LECTURE">Algebra(LECTURE)</option>
-              <option rel="11" value="PRACTICE">Algebra(PRACTICE)</option>
-              <option rel="11" value="LECTURE">Philosophy(LECTURE)</option>
-              <option rel="11" value="SEMINAR">Philosophy(SEMINAR)</option>
-
-              <!-- Grpop 12 -->
-              <option rel="12" value="LECTURE">Algebra(LECTURE)</option>
-              <option rel="12" value="PRACTICE">Algebra(PRACTICE)</option>
-              <option rel="12" value="LECTURE">Philosophy(LECTURE)</option>
-              <option rel="12" value="SEMINAR">Philosophy(SEMINAR)</option>
-
-              <!-- Grpop 13 -->
-              <option rel="13" value="LECTURE">Algebra(LECTURE)</option>
-              <option rel="13" value="PRACTICE">Algebra(PRACTICE)</option>
-              <option rel="13" value="LECTURE">Philosophy(LECTURE)</option>
-              <option rel="13" value="SEMINAR">Philosophy(SEMINAR)</option>
-
-              <!-- Grpop 14 -->
-              <option rel="14" value="LECTURE">Algebra(LECTURE)</option>
-              <option rel="14" value="PRACTICE">Algebra(PRACTICE)</option>
-              <option rel="14" value="LECTURE">Philosophy(LECTURE)</option>
-              <option rel="14" value="SEMINAR">Philosophy(SEMINAR)</option>
-
-              <!-- Grpop 21 -->
-              <option rel="21" value="LECTURE">Python(LECTURE)</option>
-              <option rel="21" value="LAB">Python(LAB)</option>
-              <option rel="21" value="PRACTICE">Python(PRACTICE)</option>
-
-              <!-- Grpop 22 -->
-              <option rel="22" value="LECTURE">Python(LECTURE)</option>
-              <option rel="22" value="LAB">Python(LAB)</option>
-              <option rel="22" value="PRACTICE">Python(PRACTICE)</option>
-
-              <!-- Grpop 23 -->
-              <option rel="23" value="LECTURE">Algebra(LECTURE)</option>
-              <option rel="23" value="PRACTICE">Algebra(PRACTICE)</option>
-
-              <!-- Grpop 24 -->
-              <option rel="24" value="LECTURE">Algebra(LECTURE)</option>
-              <option rel="24" value="PRACTICE">Algebra(PRACTICE)</option>
-
-              <!-- Grpop 31 -->
-              <option rel="31" value="LECTURE">.NET(LECTURE)</option>
-              <option rel="31" value="PRACTICE">.NET(PRACTICE)</option>
-
-              <!-- Grpop 32 -->
-              <option rel="32" value="LECTURE">.NET(LECTURE)</option>
-              <option rel="32" value="PRACTICE">.NET(PRACTICE)</option>
-
-              <!-- Grpop 33 -->
-              <option rel="33" value="SEMINAR">Transformation(SEMINAR)</option>
-
-              <!-- Grpop 33 -->
-              <option rel="34" value="PRACTICE">MA(PRACTICE)</option>
-
-            </select>
-          </td>
-        </tr>
-      </table>
-
-      <div class="col-md-12">
-        <input type="submit" name="submit" value="Submit" class="btn btn-info " id="submitDepartment">
+    <h1  class="text-center" >SCHEDULE MAKER</h1>
+    <form class="form-horizontal" action="/classrooms" method="post">
+      <div class="form-group form-group-lg">
+        <label class="col-sm-2 control-label" for="group">Group </label>
+        <div class="col-sm-10">
+          <select name="group" id="group" class="form-control">
+            <option value="">Select Group</option>
+            <c:forEach var="group" items="${groups}">
+              <option value="${group.id}">Group ${group.name}</option>
+            </c:forEach>
+          </select>
+        </div>
       </div>
-
+      <div class="form-group form-group-lg">
+        <label class="col-sm-2 control-label" for="subject">Subject </label>
+        <div class="col-sm-10">
+          <select disabled="disabled" id="subject" name="subject" class="form-control">
+            <option value>Select Subject</option>
+            <c:forEach var="group" items="${groups}">
+              <c:forEach var="subject" items="${group.subjects}">
+                <option rel="${group.id}" value="${subject.id}" >${subject.name}(${subject.type})</option>
+              </c:forEach>
+            </c:forEach>
+          </select>
+        </div>
+      </div>
+      <div class="form-group form-group-lg">
+        <div class="col-sm-2 control-label" >
+          <input type="submit" name="submit" value="Submit" class="btn btn-info " id="submitDepartment">
+        </div>
+      </div>
     </form>
+
 
   </c:if>
 
   <c:if test = "${isResult  == true}">
-    <h2>Available classroom(s) for  ${group} and ${subject}</h2>
+    <h2>Available classroom(s) for Group-${group.name}(${group.count} students) and ${subject.name}(${subject.type})</h2>
 
-    ${classrooms}
-
+<table class="table table-striped">
+  <tr>
+  <td>Name</td>
+  <td>Capacity</td>
+  <td>Type</td>
+  <td>Description</td>
+  </tr>
+  <c:forEach var="room" items="${classrooms}">
+       <tr>
+           <td>Classroom ${room.name}</td>
+           <td>${room.capacity}</td>
+           <td>${subject.type}</td>
+           <td>${room.description}</td>
+         </tr>
+   </c:forEach>
+</table>
   </c:if>
 
-
-</div>
-
+  ${capacity}
 
 
-<page:js/>
-<script>
-  $( document ).ready(function(){
+  <page:js/>
+  <script>
+    $( document ).ready(function(){
 
-    console.log('work');
+      console.log('work');
 
-    var $cat = $("#group"),
-            $subcat = $("#subject");
+      var $cat = $("#group"),
+              $subcat = $("#subject");
 
-    $cat.on("change",function(){
-      var _rel = $(this).val();
-      console.log(_rel);
-      $subcat.find("option").attr("style","");
-      $subcat.val("");
-      if(!_rel) return $subcat.prop("disabled",true);
+      $cat.on("change",function(){
+        var _rel = $(this).val();
+        console.log(_rel);
+        $subcat.find("option").attr("style","");
+        $subcat.val("");
+        if(!_rel) return $subcat.prop("disabled",true);
 
-      $subcat.find("[rel="+_rel+"]").show();
+        $subcat.find("[rel="+_rel+"]").show();
 
-      $subcat.prop("disabled",false);
+        $subcat.prop("disabled",false);
+      });
+
     });
 
-  });
+  </script>
 
-</script>
-
-<page:footer/>
-
+  <page:footer/>
+</div>
 
 </body>
 </html>

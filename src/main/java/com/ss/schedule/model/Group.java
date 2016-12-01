@@ -10,6 +10,8 @@ import java.util.List;
 @JacksonXmlRootElement(localName = "group")
 public class Group {
 
+	private long id;
+
 	@JacksonXmlProperty
 	private String name;
 
@@ -26,6 +28,11 @@ public class Group {
 		this.name = name;
 		this.count = count;
 		this.subjects = subjects;
+	}
+
+	public Group(long id, String name, int count, List<Subject> subjects) {
+		this(name, count, subjects);
+		this.id = id;
 	}
 
 	public String getName() {
@@ -52,10 +59,19 @@ public class Group {
 		this.subjects = subjects;
 	}
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
 		return "Group{" +
-				"name='" + name + '\'' +
+				"id=" + id +
+				", name='" + name + '\'' +
 				", count=" + count +
 				", subjects=" + subjects +
 				'}';

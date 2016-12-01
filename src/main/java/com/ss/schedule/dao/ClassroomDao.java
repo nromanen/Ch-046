@@ -29,8 +29,9 @@ public class ClassroomDao extends AbstractDao<Classroom> {
         classroomsSubjectTypeDao.createClassroomsSubjectTypesTableIfNotExist();
     }
 
-    public List<Classroom> getByTypeAndCapacity(SubjectType type, int capacity){
+    public List<Classroom> getByTypeAndCapacity(SubjectType type, long capacity){
         List <Classroom> list = new ArrayList<>();
+        System.out.println(type);
         long TypeInt = subjectTypeDao.getEntityIdByName(type.toString());
         String sql = "select classrooms.id, name, capacity, description from classrooms " +
                 "join classrooms_subjecttypes " +
