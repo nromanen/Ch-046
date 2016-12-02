@@ -1,14 +1,19 @@
 package com.ss.schedule.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 
 @JacksonXmlRootElement(localName = "classroom")
 public class Classroom implements Comparable<Classroom>{
 
+	@XmlTransient
+	@JsonIgnore
+	private long id;
 	@JacksonXmlProperty
 	private String name;
 	@JacksonXmlProperty
@@ -19,9 +24,23 @@ public class Classroom implements Comparable<Classroom>{
 	private String description;
 
 
-
 	public Classroom() {
 		super();
+	}
+
+	public Classroom(String name) {
+		this.name = name;
+	}
+
+	public Classroom(String name, int capacity, List<SubjectType> types) {
+		this.name = name;
+		this.capacity = capacity;
+		this.types = types;
+	}
+
+	public Classroom(String name, int capacity, List<SubjectType> types, String description) {
+		this(name, capacity, types);
+		this.description = description;
 	}
 
 	public String getName() {
@@ -56,10 +75,18 @@ public class Classroom implements Comparable<Classroom>{
 		this.description = description;
 	}
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
-		return "Classroom{" +
-				"name='" + name + '\'' +
+		return "Classroom{id = "+ id +
+				", name='" + name + '\'' +
 				", capacity=" + capacity +
 				", types=" + types +
 				", description='" + description + '\'' +
@@ -80,8 +107,7 @@ public class Classroom implements Comparable<Classroom>{
 
 		if (capacity != classroom.capacity) return false;
 		if (name != null ? !name.equals(classroom.name) : classroom.name != null) return false;
-		if (types != null ? !types.equals(classroom.types) : classroom.types != null) return false;
-		return description != null ? description.equals(classroom.description) : classroom.description == null;
+		return types != null ? types.equals(classroom.types) : classroom.types == null;
 
 	}
 
@@ -90,7 +116,6 @@ public class Classroom implements Comparable<Classroom>{
 		int result = name != null ? name.hashCode() : 0;
 		result = 31 * result + capacity;
 		result = 31 * result + (types != null ? types.hashCode() : 0);
-		result = 31 * result + (description != null ? description.hashCode() : 0);
 		return result;
 	}
 }

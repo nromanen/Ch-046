@@ -14,17 +14,24 @@ import java.util.List;
 public class ClassroomManager {
 
     //return list of rooms that are available for subject(have the same type) and groups (have equals or more capacity)
-    public List<Classroom> getListOfAvailableRooms(Subject subject, Group group){
+    public List<Classroom> getListOfAvailableRooms(Subject subject, List<Group> groups){
 
         List<Classroom> availableClassrooms = new ArrayList<>();
         Faculty faculty = new Faculty();
+        int counter=0;
+        for (Group group:groups)
+            counter+=group.getCount();
 
         for (Classroom room: faculty.getClassrooms()) {
-                if (room.getCapacity() >= group.getCount() && room.getTypes().contains(subject.getType())){
+                if (room.getCapacity() >= counter && room.getTypes().contains(subject.getType())){
                     availableClassrooms.add(room);
             }
         }
         Collections.sort(availableClassrooms);
         return availableClassrooms;
     }
+
+
+
+
 }

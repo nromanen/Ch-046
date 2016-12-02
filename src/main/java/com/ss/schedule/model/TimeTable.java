@@ -3,9 +3,10 @@ package com.ss.schedule.model;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
+import java.util.List;
 
 @XmlRootElement(name = "TimeTable")
-@XmlType(propOrder = { "subject", "pair", "teacher", "group", "day", "oddnessOfWeek", })
+@XmlType(propOrder = { "subject", "pair", "teacher", "day", "oddnessOfWeek", })
 @SuppressWarnings("serial")
 public class TimeTable implements Serializable {
 	/* Example: Algebra(LAB), FIRST, [Ann, Parkinson], 101, MONDAY, All */
@@ -24,16 +25,26 @@ public class TimeTable implements Serializable {
 	private Subject subject;
 	private Pair pair;
 	private Teacher teacher;
-	private Group group;
-	private DayOfWeek day;
+	private StudentCommunity studentCommunity;
+    private DayOfWeek day;
 	private OddnessOfWeek oddnessOfWeek;
+	private Classroom classroom;
 
-	public Subject getSubject() {
+    public Classroom getClassroom() {
+        return classroom;
+    }
+
+    public void setClassroom(Classroom classroom) {
+        this.classroom = classroom;
+    }
+
+    public Subject getSubject() {
 		return subject;
 	}
 
 	public void setSubject(Subject subject) {
 		this.subject = subject;
+//		groupsSubgroupsStreams.get(subjectsKeySet[1]).remove(0);
 	}
 
 	public Teacher getTeacher() {
@@ -42,14 +53,6 @@ public class TimeTable implements Serializable {
 
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
-	}
-
-	public Group getGroup() {
-		return group;
-	}
-
-	public void setGroup(Group group) {
-		this.group = group;
 	}
 
 	public Pair getPair() {
@@ -76,56 +79,47 @@ public class TimeTable implements Serializable {
 		this.day = day;
 	}
 
+	public StudentCommunity getStudentCommunity() {
+		return studentCommunity;
+	}
+
+	public void setStudentCommunity(StudentCommunity studentCommunity) {
+		this.studentCommunity = studentCommunity;
+	}
+
 	@Override
 	public String toString() {
 		return subject.getName() + "(" + subject.getType() + ")" + ", " + pair + ", [" + teacher.getFirstName() + ", "
-				+ teacher.getLastName() + "], " + group.getName() + ", " + day + ", " + oddnessOfWeek;
+				+ teacher.getLastName() + "], " + /*getGroup().getName() +*/ ", " + day + ", " + oddnessOfWeek;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof TimeTable)) return false;
+
+		TimeTable timeTable = (TimeTable) o;
+
+		if (subject != null ? !subject.equals(timeTable.subject) : timeTable.subject != null) return false;
+		if (pair != timeTable.pair) return false;
+		if (teacher != null ? !teacher.equals(timeTable.teacher) : timeTable.teacher != null) return false;
+		if (studentCommunity != null ? !studentCommunity.equals(timeTable.studentCommunity) : timeTable.studentCommunity != null)
+			return false;
+		if (day != timeTable.day) return false;
+		if (oddnessOfWeek != timeTable.oddnessOfWeek) return false;
+		return classroom != null ? classroom.equals(timeTable.classroom) : timeTable.classroom == null;
+
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((day == null) ? 0 : day.hashCode());
-		result = prime * result + ((group == null) ? 0 : group.hashCode());
-		result = prime * result + ((oddnessOfWeek == null) ? 0 : oddnessOfWeek.hashCode());
-		result = prime * result + ((pair == null) ? 0 : pair.hashCode());
-		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
-		result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
+		int result = subject != null ? subject.hashCode() : 0;
+		result = 31 * result + (pair != null ? pair.hashCode() : 0);
+		result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
+		result = 31 * result + (studentCommunity != null ? studentCommunity.hashCode() : 0);
+		result = 31 * result + (day != null ? day.hashCode() : 0);
+		result = 31 * result + (oddnessOfWeek != null ? oddnessOfWeek.hashCode() : 0);
+		result = 31 * result + (classroom != null ? classroom.hashCode() : 0);
 		return result;
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		TimeTable other = (TimeTable) obj;
-		if (day != other.day)
-			return false;
-		if (group == null) {
-			if (other.group != null)
-				return false;
-		} else if (!group.equals(other.group))
-			return false;
-		if (oddnessOfWeek != other.oddnessOfWeek)
-			return false;
-		if (pair != other.pair)
-			return false;
-		if (subject == null) {
-			if (other.subject != null)
-				return false;
-		} else if (!subject.equals(other.subject))
-			return false;
-		if (teacher == null) {
-			if (other.teacher != null)
-				return false;
-		} else if (!teacher.equals(other.teacher))
-			return false;
-		return true;
-	}
-
 }

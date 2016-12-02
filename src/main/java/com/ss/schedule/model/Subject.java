@@ -1,5 +1,8 @@
 package com.ss.schedule.model;
 
+import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
@@ -9,13 +12,21 @@ public class Subject {
 	@JacksonXmlProperty
 	private String name;
 	@JacksonXmlProperty
-	private int course;
-	@JacksonXmlProperty
 	private SubjectType type;
+	@JacksonXmlProperty
+	private int course;
+	@XmlTransient
+	@JsonIgnore
+	private int id;
 
 	public Subject() {}
 
-	public Subject(String name, int courseNumber, SubjectType type) {
+	public Subject(String name, SubjectType type) {
+		this.name = name;
+		this.type = type;
+	}
+
+	public Subject(String name,  int courseNumber,SubjectType type) {
 		this.name = name;
 		this.course = courseNumber;
 		this.type = type;
@@ -43,6 +54,14 @@ public class Subject {
 
 	public void setCourse(int course) {
 		this.course = course;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setID(int id) {
+		this.id = id;
 	}
 
 	@Override
@@ -74,4 +93,5 @@ public class Subject {
 				", type=" + type +
 				'}';
 	}
+
 }
