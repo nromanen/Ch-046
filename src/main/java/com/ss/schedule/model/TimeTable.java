@@ -27,6 +27,7 @@ public class TimeTable implements Serializable {
 	private Group group;
 	private DayOfWeek day;
 	private OddnessOfWeek oddnessOfWeek;
+	private Classroom classroom;
 
 	public Subject getSubject() {
 		return subject;
@@ -76,10 +77,31 @@ public class TimeTable implements Serializable {
 		this.day = day;
 	}
 
+	public Classroom getClassroom() {
+		return classroom;
+	}
+
+	public void setClassroom(Classroom classroom) {
+		this.classroom = classroom;
+	}
+
+//	@Override
+//	public String toString() {
+//		return subject.getName() + "(" + subject.getType() + ")" + ", " + pair + ", [" + teacher.getFirstName() + ", "
+//				+ teacher.getLastName() + "], " + group.getName() + ", " + day + ", " + oddnessOfWeek;
+//	}
+
+
 	@Override
 	public String toString() {
-		return subject.getName() + "(" + subject.getType() + ")" + ", " + pair + ", [" + teacher.getFirstName() + ", "
-				+ teacher.getLastName() + "], " + group.getName() + ", " + day + ", " + oddnessOfWeek;
+		return "TimeTable{" +
+				"subject=" + subject +
+				", pair=" + pair +
+				", group=" + group +
+				", day=" + day +
+				", oddnessOfWeek=" + oddnessOfWeek +
+				", classroom=" + classroom +
+				'}';
 	}
 
 	@Override
