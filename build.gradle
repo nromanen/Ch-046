@@ -2,19 +2,9 @@ group 'firstProject'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'war'
 
 sourceCompatibility = 1.8
-
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src/main/java']
-        }
-        resources {
-            srcDirs = ['src/main/resources']
-        }
-    }
-}
 
 repositories {
     mavenCentral()
@@ -26,5 +16,9 @@ dependencies {
     compile group: 'postgresql', name: 'postgresql', version: '9.3-1102.jdbc41'
     compile group: 'com.fasterxml', name: 'jackson-xml-databind', version: '0.6.2'
     compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.8.5'
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+    compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+    compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.21'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
     testCompile group: 'org.testng', name: 'testng', version: '6.9.13.6'
 }
