@@ -22,6 +22,7 @@ public class ClassroomsController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
+        req.setAttribute("isMessage", false);
         List<Classroom> classrooms = classroomDao.getAll();
         req.setAttribute("classrooms", classrooms);
         req.getRequestDispatcher("/WEB-INF/view/classrooms.jsp").forward(req, resp);
@@ -30,12 +31,14 @@ public class ClassroomsController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        System.out.println("Do");
-        String[] filePath = req.getParameterValues("filePath");
-
-        System.out.println(filePath[0]);
-
-
+        long id = Long.parseLong(req.getParameter("id"));
+        String name = classroomDao.getById(id).getName();
+        classroomDao.delete(id);
+        req.setAttribute("isMessage", true);
+        req.setAttribute("message", "Classroom " + name + " deleted successfully!");
+        List<Classroom> classrooms = classroomDao.getAll();
+        req.setAttribute("classrooms", classrooms);
+        req.getRequestDispatcher("/WEB-INF/view/classrooms.jsp").forward(req, resp);
 
     }
 }

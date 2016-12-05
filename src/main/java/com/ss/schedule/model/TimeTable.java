@@ -85,23 +85,10 @@ public class TimeTable implements Serializable {
 		this.classroom = classroom;
 	}
 
-//	@Override
-//	public String toString() {
-//		return subject.getName() + "(" + subject.getType() + ")" + ", " + pair + ", [" + teacher.getFirstName() + ", "
-//				+ teacher.getLastName() + "], " + group.getName() + ", " + day + ", " + oddnessOfWeek;
-//	}
-
-
 	@Override
 	public String toString() {
-		return "TimeTable{" +
-				"subject=" + subject +
-				", pair=" + pair +
-				", group=" + group +
-				", day=" + day +
-				", oddnessOfWeek=" + oddnessOfWeek +
-				", classroom=" + classroom +
-				'}';
+		return subject.getName() + "(" + subject.getType() + ")" + ", " + pair + ", [" + teacher.getFirstName() + ", "
+				+ teacher.getLastName() + "], " + group.getName() + ", " + day + ", " + oddnessOfWeek;
 	}
 
 	@Override

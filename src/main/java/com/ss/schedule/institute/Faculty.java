@@ -222,7 +222,7 @@ public class Faculty {
 		
 		for(Teacher teacher:getTeachers())
 		{
-			subjectsList.addAll(teacher.getList()); 
+			subjectsList.addAll(teacher.getSubjects());
 		}
 		
 		for(Subject subject:fullList)

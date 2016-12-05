@@ -6,6 +6,7 @@ import com.ss.schedule.model.Teacher;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class TeacherManager {
 	private Teacher teacher;
@@ -22,18 +23,18 @@ public class TeacherManager {
 		this.teacher = teacher;
 	}
 
-	public ArrayList<Subject> addSubject(Subject lesson) {
-		if (!teacher.getList().contains(lesson)) {
-			teacher.getList().add(lesson);
+	public List<Subject> addSubject(Subject lesson) {
+		if (!teacher.getSubjects().contains(lesson)) {
+			teacher.getSubjects().add(lesson);
 		}
-		return teacher.getList();
+		return teacher.getSubjects();
 	}
 
 	public void removeSubject(Subject lesson) {
 
-		for (int i = 0; i < teacher.getList().size(); i++) {
-			if (teacher.getList().get(i).equals(lesson)) {
-				teacher.getList().remove(lesson);
+		for (int i = 0; i < teacher.getSubjects().size(); i++) {
+			if (teacher.getSubjects().get(i).equals(lesson)) {
+				teacher.getSubjects().remove(lesson);
 				i--;
 			}
 		}
@@ -42,7 +43,7 @@ public class TeacherManager {
 // returns list with selected type of subjects 
 	public ArrayList<Subject> getSubjectsByType(SubjectType type) {
 		ArrayList<Subject> listByLessonType = new ArrayList<>();
-		ArrayList<Subject> list = teacher.getList();
+		List<Subject> list = teacher.getSubjects();
 		for (Subject les : list) {
 			if (les.getType().equals(type))
 				listByLessonType.add(les);
@@ -62,7 +63,7 @@ public class TeacherManager {
 	public ArrayList<Subject> getOnlyLectures(Teacher teacher) {
 		ArrayList<Subject> result = new ArrayList<>();
 
-		ArrayList<Subject> list = teacher.getList();
+		List<Subject> list = teacher.getSubjects();
 		for (Subject lecture : list) {
 			if (lecture.getType().equals(SubjectType.LECTURE)) {
 				String name = lecture.getName();
@@ -86,7 +87,7 @@ public class TeacherManager {
 	
 //returns list of subjects except teachers subjects
 	public ArrayList<Subject> noTeacherSubjects( ArrayList<Subject> fullList) {  
-		ArrayList<Subject> teacherList = teacher.getList();
+		List<Subject> teacherList = teacher.getSubjects();
 		ArrayList<Subject> noTeacherSubjects = new ArrayList<Subject>();
 		for(Subject subject:fullList)
 		{

@@ -11,13 +11,15 @@ import java.io.IOException;
 @WebServlet("/UploadServlet")
 @MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB
         maxFileSize=1024*1024*10,      // 10MB
-        maxRequestSize=1024*1024*50)   // 50MB
+        maxRequestSize=1024*1024*50,    // 50MB
+        location = "/tmp")
+
 public class UploadServlet extends HttpServlet {
     /**
      * Name of the directory where uploaded files will be saved, relative to
      * the web application directory.
      */
-    private static final String SAVE_DIR = "uploadFiles";
+    private static final String SAVE_DIR = "tmp";
 
     /**
      * handles file upload

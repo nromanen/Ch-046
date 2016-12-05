@@ -1,6 +1,7 @@
 package com.ss.schedule.dao;
 
 import com.ss.schedule.dbutil.DBUtil;
+import com.ss.schedule.model.Classroom;
 import com.ss.schedule.model.SubjectType;
 
 import java.sql.PreparedStatement;
@@ -18,7 +19,17 @@ public class SubjectTypeDao extends AbstractDao<SubjectType>{
     @Override
     public List<SubjectType> getAll() {
 
-        return null;
+        List <SubjectType> types = new ArrayList<>();
+        String sql = "SELECT name FROM subjecttypes";
+        try(Statement statement = connection.createStatement()) {
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()){
+                types.add(SubjectType.valueOf(rs.getString("name")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return types;
     }
 
     @Override

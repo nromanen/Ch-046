@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib tagdir="/WEB-INF/tags/page" prefix="page" %>
 
-
 <html>
 <head>
     <!-- Bootstrap -->
@@ -59,57 +58,54 @@
     </nav>
 
 
-    <c:if test="${isMessage==true}">
-        <div class="alert alert-success">${message}</div>
-    </c:if>
 
-    <h3 class="text-center">All classrooms</h3>
+    <h2>${message} </h2>
+    <form method="post" action="/${link}">
 
-    <table class="table table-striped">
-        <tr>
-            <td>Name</td>
-            <td>Capacity</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td colspan="2">Action</td>
+        <input type="number" hidden name="id" value="${classroom.id}">
+        <div class="form-group col-md-8">
+            <label for="name">Name:</label>
+            <c:if test="${errors.fNameError != null}"><page:error title="${errors.fNameError}"/></c:if>
+            <input type="text" class="form-control" name="name" value="${classroom.name}" id="name">
+            <span class="error text-danger" id="firstNameError"></span>
+        </div>
+        <div class="form-group col-md-8">
+            <label for="capacity">Capacity:</label>
+            <c:if test="${errors.lNameError != null}"><page:error title="${errors.lNameError}"/></c:if>
+            <input type="text" class="form-control" name="capacity" value="${classroom.capacity}" id="capacity">
+            <span class="error text-danger" id="lastNameError"></span>
+        </div>
+
+        <div class="form-group col-md-8">
+            <label for="types" class="control-label">Types</label>
+            <select class="form-control" name="types" id="types" multiple>
+                <c:forEach var="type" items="${types}">
+                    <option value="${type}"
+
+                    <c:forEach var="roomType" items="${classroom.types}">
+                        <c:if test="${roomType.id == type.id}">selected</c:if>
+                    </c:forEach>
 
 
-        </tr>
-        <c:forEach var="room" items="${classrooms}">
-            <tr>
-                <td>Classroom ${room.name}</td>
-                <td>${room.capacity}</td>
-                <td>${room.types}</td>
-                <td>${room.description}</td>
-                <td>
-                    <a href="/classroomUpdate?id=${room.id}" class="btn btn-info btn-sm">
-                        <span class="glyphicon glyphicon-pencil"></span> Edit
-                    </a>
-                </td>
-                <td>
-                    <form method="post" action="/classrooms">
-                        <input type="number" hidden name="id" value="${room.id}">
-                        <input type="submit" name="submit" value="Remove" class="btn btn-danger btn-sm">
-                    </form>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
-    <%--<form action = "/classrooms" method = "post">--%>
-    <%--<div class="form-group">--%>
-    <%--<label for="filePath">Upload classrooms from file to DB. (support formats .json, .xml, .txt)</label>--%>
-    <%--<input type="file" id = "filePath" name = "filePath">--%>
-    <%--</div>--%>
-    <%--<div class="col-sm-2 control-label" >--%>
-    <%--<input type="submit" value="Add to DB" class="btn btn-info " id="addClassrooms">--%>
-    <%--</div>--%>
-    <%--</form>--%>
+                    >${type}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="form-group col-md-8">
+            <label for="description">Description:</label>
+            <c:if test="${errors.ssnError != null}"><page:error title="${errors.ssnError}"/></c:if>
+            <textarea  class="form-control" name="description" id="description">${classroom.description}</textarea>
+            <span class="error text-danger" id="ssnError"></span>
+        </div>
+        <div class="col-md-12">
+            <input type="submit" name="submit" value="Submit" class="btn btn-info">
+        </div>
+    </form>
 
-    <div class="col-md-12">
-        <form method="get" action="/classroomUpdate">
-            <input type="number" hidden name="action" value="new">
-            <input type="number" hidden name="id" value="0">
-            <input type="submit" name="submit" value="Add new Classroom" class="btn btn-default">
-        </form>
-    </div>
-</div>
+    <page:footer/>
+    <page:js/>
+    <%--<script src = "../../assets/js/employeeFormValidator.js"></script>--%>
+
+
+</body>
+</html>
