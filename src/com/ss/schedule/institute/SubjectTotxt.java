@@ -1,4 +1,4 @@
-package FirstProject;
+package com.ss.schedule.institute;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,16 +24,16 @@ public class SubjectTotxt implements InputOutput {
 
 			e.printStackTrace();
 		}
-		Pattern pattern = Pattern.compile("([^\\(.]*)\\(([A-Z]*)\\)\\,([0-9]);");
+		Pattern pattern = Pattern.compile("([^\\(.]*)\\(([A-Z]*)\\)\\,\\s([0-9]);");
 		while (scn.hasNext()) {
 			String subject = scn.nextLine();
 			Matcher matcher = pattern.matcher(subject);
-			matcher.matches();
+			matcher.matches();	
 			String name = matcher.group(1);
 			String type = matcher.group(2);
 			int course = Integer.parseInt(matcher.group(3));
 			Subject ss = new Subject();
-			ss.setName(name);
+			ss.setName(name.trim());
 			ss.setType(SubjectType.valueOf(type));
 			ss.setCourse(course);
 			newList.add(ss);

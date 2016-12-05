@@ -1,17 +1,39 @@
-package FirstProject;
+package com.ss.schedule.institute;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class TeacherManager {
+	
 	private Teacher teacher;
+	private List<Teacher> teachers;
+	
+	
+	public List<Teacher> getTeachers() {
+		return teachers;
+	}
+
+	public void setTeachers(List<Teacher> teachers) {
+		this.teachers = teachers;
+	}
+
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
 
 	public TeacherManager(Teacher teacher) {
 		this.teacher = teacher;
 	}
 
 	public ArrayList<Subject> addSubject(Subject lesson) {
-		teacher.getList().add(lesson);
+		if (!teacher.getList().contains(lesson)) {
+			teacher.getList().add(lesson);
+		}
 		return teacher.getList();
 	}
 
@@ -24,7 +46,8 @@ public class TeacherManager {
 			}
 		}
 	}
-
+	
+// returns list with selected type of subjects 
 	public ArrayList<Subject> getSubjectsByType(SubjectType type) {
 		ArrayList<Subject> listByLessonType = new ArrayList<>();
 		ArrayList<Subject> list = teacher.getList();
@@ -42,7 +65,8 @@ public class TeacherManager {
 			return l1.getType().compareTo(l2.getType());
 		}
 	};
-
+	
+// returns subjects where teacher has only lectures(and  has not PR||Lab||Seminar)
 	public ArrayList<Subject> getOnlyLectures(Teacher teacher) {
 		ArrayList<Subject> result = new ArrayList<>();
 
@@ -67,18 +91,6 @@ public class TeacherManager {
 
 		return result;
 	}
-
-	public ArrayList<Subject> noTeacherSubjects(Teacher teacher, ArrayList<Subject> fullList) {
-		ArrayList<Subject> teacherList = teacher.getList();
-		for (int i = 0; i < fullList.size(); i++) {
-			for (int j = 0; j < teacherList.size(); j++) {
-				if (fullList.get(i).equals(teacherList.get(j))) {
-					fullList.remove(i);
-					i=0;
-					j=0;
-				}
-			}
-		}
-		return fullList;
-	}
 }
+
+	

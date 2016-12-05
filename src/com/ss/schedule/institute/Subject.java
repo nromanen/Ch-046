@@ -1,4 +1,4 @@
-package FirstProject;
+package com.ss.schedule.institute;
 
 import java.util.ArrayList;
 
@@ -12,6 +12,15 @@ public class Subject {
 	private String name;
 	private SubjectType type;
 	private int course;
+	private int id;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getCourse() {
 		return course;

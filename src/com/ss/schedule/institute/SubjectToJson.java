@@ -1,4 +1,4 @@
-package FirstProject;
+package com.ss.schedule.institute;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,11 +25,7 @@ public class SubjectToJson implements InputOutput<Subject> {
 		return list;
 	}
 
-	// write objects to file
-	Teacher teacher = new Teacher();
 	
-	List<Subject> list = teacher.getList();
-
 	String filePath = "d:/practice.json";
 	
 

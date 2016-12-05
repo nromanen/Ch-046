@@ -1,4 +1,4 @@
-package FirstProject;
+package com.ss.schedule.institute;
 
 import java.io.File;
 import java.util.List;
