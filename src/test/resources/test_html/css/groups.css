@@ -1,0 +1,51 @@
+.navbar {
+    margin-top: 10px;
+    border-radius: 0px;
+}
+
+.jumbotron {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+th > .list-group > li {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ul.list-group {
+    margin-bottom: 0px;
+}
+
+th.vertical-text-center {
+    vertical-align: middle !important;
+}
+
+th.gr-name {
+    font-size: 33px;
+}
+
+th.gr-amount {
+    font-size: 19px;
+}
+
+th > form > button.btn-update {
+    margin-bottom: 15px;
+}
+
+th > form > button {
+    width: 60%;
+}
+
+.btn-add {
+    height: 50px;
+    width: auto;
+    font-size: 25px;
+    margin: 20px 0px;
+    background: #15a305;
+}
+
+.alert {
+    margin-top: 20px;
+}

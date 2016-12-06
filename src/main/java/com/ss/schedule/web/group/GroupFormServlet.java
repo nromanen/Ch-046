@@ -1,9 +1,9 @@
-package com.ss.schedule.web;
+package com.ss.schedule.web.group;
 
 import com.ss.schedule.model.Group;
+import com.ss.schedule.model.Subject;
 import com.ss.schedule.service.GroupService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,14 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by vyach on 01.12.2016.
+ * Created by vyach on 06.12.2016.
  */
-@WebServlet(urlPatterns = "/groups")
-public class GroupServlet extends HttpServlet {
+
+@WebServlet(urlPatterns = {"/groups/add", "/groups/update"})
+public class GroupFormServlet extends HttpServlet {
 
 	private static final String PROPERTIES_FILE_PATH = "db_connection.properties";
 
@@ -28,16 +28,26 @@ public class GroupServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		initService();
 
-		List<Group> groups = new ArrayList<>();
-		try {
-			groups = groupService.getAllGroups();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		req.setAttribute("groups", groups);
+		String parameter = req.getParameter("group_id");
 
-		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/view/groups.jsp");
-		dispatcher.forward(req, resp);
+		if (parameter != null) {
+			try {
+				Group group = groupService.getGroupById(Long.valueOf(parameter));
+				req.setAttribute("subjects", getCourseSubjects(group.getName().charAt(0) - '0'));
+			} catch (SQLException e) {
+				//todo
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private List<Subject> getCourseSubjects(int course) {
+		return null;
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		super.doPost(req, resp);
 	}
 
 	private void initService() {

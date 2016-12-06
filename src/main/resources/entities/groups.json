@@ -15,11 +15,13 @@
       },
       {
         "name": "Philosophy",
-        "type": "LECTURE"
+        "type": "LECTURE",
+        "course": 1
       },
       {
         "name": "Philosophy",
-        "type": "SEMINAR"
+        "type": "SEMINAR",
+        "course": 1
       }
     ]
   },
@@ -39,11 +41,13 @@
       },
       {
         "name": "Philosophy",
-        "type": "LECTURE"
+        "type": "LECTURE",
+        "course": 1
       },
       {
         "name": "Philosophy",
-        "type": "SEMINAR"
+        "type": "SEMINAR",
+        "course": 1
       }
     ]
   },
@@ -63,11 +67,13 @@
       },
       {
         "name": "Philosophy",
-        "type": "LECTURE"
+        "type": "LECTURE",
+        "course": 1
       },
       {
         "name": "Philosophy",
-        "type": "SEMINAR"
+        "type": "SEMINAR",
+        "course": 1
       }
     ]
   },
@@ -87,11 +93,13 @@
       },
       {
         "name": "Philosophy",
-        "type": "LECTURE"
+        "type": "LECTURE",
+        "course": 1
       },
       {
         "name": "Philosophy",
-        "type": "SEMINAR"
+        "type": "SEMINAR",
+        "course": 1
       }
     ]
   },
@@ -101,15 +109,18 @@
     "subjects" : [
       {
         "name": "Python",
-        "type": "LECTURE"
+        "type": "LECTURE",
+        "course": 2
       },
       {
         "name": "Python",
-        "type": "LAB"
+        "type": "LAB",
+        "course": 2
       },
       {
         "name": "Python",
-        "type": "PRACTICE"
+        "type": "PRACTICE",
+        "course": 2
       }
     ]
   },
@@ -119,15 +130,18 @@
     "subjects" : [
       {
         "name": "Python",
-        "type": "LECTURE"
+        "type": "LECTURE",
+        "course": 2
       },
       {
         "name": "Python",
-        "type": "LAB"
+        "type": "LAB",
+        "course": 2
       },
       {
         "name": "Python",
-        "type": "PRACTICE"
+        "type": "PRACTICE",
+        "course": 2
       }
     ]
   },
@@ -169,11 +183,13 @@
     "subjects" : [
       {
         "name": ".Net",
-        "type": "LECTURE"
+        "type": "LECTURE",
+        "course": 3
       },
       {
         "name": ".Net",
-        "type": "PRACTICE"
+        "type": "PRACTICE",
+        "course": 3
       }
     ]
   },
@@ -183,11 +199,13 @@
     "subjects" : [
       {
         "name": ".Net",
-        "type": "LECTURE"
+        "type": "LECTURE",
+        "course": 3
       },
       {
         "name": ".Net",
-        "type": "PRACTICE"
+        "type": "PRACTICE",
+        "course": 3
       }
     ]
   },
@@ -197,7 +215,8 @@
     "subjects" : [
       {
         "name": "Transformation",
-        "type": "SEMINAR"
+        "type": "SEMINAR",
+        "course": 3
       }
     ]
   },
