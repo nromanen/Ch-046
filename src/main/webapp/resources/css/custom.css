@@ -47,9 +47,43 @@ th > form > button {
     width: auto;
     font-size: 25px;
     margin: 20px 0px;
-    background: #15a305;
+    background: rgb(255,176,59);
+    border-color: rgb(255,176,59);
+    color: rgb(142,40,0);
+}
+
+.btn-add:hover {
+    background: rgb(229, 153, 58);
+    border-color: rgb(229, 153, 58);
+    color: rgb(142,40,0);
+}
+
+.btn-add:active:focus {
+    background: rgb(187, 115, 54);
+    border-color: rgb(169, 99, 52);
+    color: rgb(142,40,0);
+}
+
+.btn-add:focus {
+    background: rgb(255,176,59);
+    border-color: rgb(255,176,59);
+    color: rgb(142,40,0);
 }
 
 .alert {
     margin-top: 20px;
+}
+
+.well > label {
+    margin-left: 10px;
+    margin-bottom: 0px;
+}
+
+.well > .badge {
+    float: right;
+}
+
+.btn-submit {
+    width: 130px;
+    margin: 20px;
 }

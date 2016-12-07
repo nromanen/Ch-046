@@ -11,23 +11,28 @@
   },
   {
     "name": "Python",
-    "type": "LECTURE"
+    "type": "LECTURE",
+    "course": 2
   },
   {
     "name": "Python",
-    "type": "LAB"
+    "type": "LAB",
+    "course": 2
   },
   {
     "name": "Python",
-    "type": "PRACTICE"
+    "type": "PRACTICE",
+    "course": 2
   },
   {
     "name": "Philosophy",
-    "type": "LECTURE"
+    "type": "LECTURE",
+    "course": 1
   },
   {
     "name": "Philosophy",
-    "type": "SEMINAR"
+    "type": "SEMINAR",
+    "course": 1
   },
   {
     "name": "Algebra",
@@ -41,23 +46,28 @@
   },
   {
     "name": ".Net",
-    "type": "LECTURE"
+    "type": "LECTURE",
+    "course": 3
   },
   {
     "name": ".Net",
-    "type": "PRACTICE"
+    "type": "PRACTICE",
+    "course": 3
   },
   {
     "name": "C++",
-    "type": "LECTURE"
+    "type": "LECTURE",
+    "course": 1
   },
   {
     "name": "C++",
-    "type": "PRACTICE"
+    "type": "PRACTICE",
+    "course": 1
   },
   {
     "name": "C++",
-    "type": "LAB"
+    "type": "LAB",
+    "course": 1
   },
   {
     "name": "MA",
@@ -86,6 +96,7 @@
   },
   {
     "name": "Transformation",
-    "type": "SEMINAR"
+    "type": "SEMINAR",
+    "course": 3
   }
 ]

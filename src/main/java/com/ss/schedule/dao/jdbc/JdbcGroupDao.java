@@ -97,7 +97,7 @@ public class JdbcGroupDao extends AbstractDao<Group> {
 	@Override
 	public List<Group> getAll() throws SQLException {
 		getConnection();
-		String request = "SELECT * FROM groups ORDER BY id ASC";
+		String request = "SELECT * FROM groups ORDER BY name ASC";
 		Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		ResultSet rs = statement.executeQuery(request);
 

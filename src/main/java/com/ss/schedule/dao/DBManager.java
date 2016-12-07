@@ -158,6 +158,7 @@ public class DBManager {
 	}
 
 	public static void main(String[] args) throws SQLException {
+		DBManager.dropAllTables(propertiesFilePath);
 		DBManager.createTablesInDataBase(propertiesFilePath);
 		DBManager.fillDataBaseWithData(propertiesFilePath);
 	}

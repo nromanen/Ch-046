@@ -104,7 +104,8 @@ public class JdbcSubjectDao extends AbstractDao<Subject> {
 				"FROM subjects AS s " +
 				"JOIN group_subject_map AS map ON s.id = map.subject_id " +
 				"JOIN subject_types AS t ON s.type_id = t.id " +
-				"WHERE map.group_id = ?";
+				"WHERE map.group_id = ?" +
+				"ORDER BY s.name";
 		PreparedStatement preparedStatement = connection.prepareStatement(request);
 		preparedStatement.setLong(1, groupId);
 		ResultSet rs = preparedStatement.executeQuery();
@@ -115,6 +116,41 @@ public class JdbcSubjectDao extends AbstractDao<Subject> {
 		}
 
 		return subjects;
+	}
+
+	public List<Subject> getSubjectsByCourse(int course) throws SQLException {
+		getConnection();
+		String request = "SELECT s.id, s.name, t.name, s.course " +
+				"FROM subjects AS s " +
+				"JOIN subject_types AS t ON s.type_id = t.id " +
+				"WHERE s.course = ?" +
+				"ORDER BY s.name";
+		PreparedStatement preparedStatement = connection.prepareStatement(request);
+		preparedStatement.setInt(1, course);
+
+		ResultSet rs = preparedStatement.executeQuery();
+
+		List<Subject> subjects = new ArrayList<>();
+		while (rs.next()) {
+			subjects.add(createSubject(rs));
+		}
+
+		return subjects;
+	}
+
+	public Subject getSubject(String name, String type, int course) throws SQLException {
+		getConnection();
+		String request = "SELECT s.id, s.name, t.name, s.course " +
+				"FROM subjects AS s " +
+				"JOIN subject_types AS t ON s.type_id = t.id " +
+				"WHERE s.name = ? AND t.name = ? AND s.course = ?";
+		PreparedStatement preparedStatement = connection.prepareStatement(request);
+		preparedStatement.setString(1, name);
+		preparedStatement.setString(2, type);
+		preparedStatement.setInt(3, course);
+		ResultSet rs = preparedStatement.executeQuery();
+		rs.next();
+		return createSubject(rs);
 	}
 
 	private Subject createSubject(ResultSet rs) throws SQLException {

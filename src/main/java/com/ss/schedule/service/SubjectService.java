@@ -39,4 +39,12 @@ public class SubjectService {
 	public List<Subject> getAllSubjects() throws SQLException {
 		return subjectDao.getAll();
 	}
+
+	public List<Subject> getSubjectsByCourse(int course) throws SQLException {
+		return subjectDao.getSubjectsByCourse(course);
+	}
+
+	public Subject getSubject(String name, String type, int course) throws SQLException {
+		return subjectDao.getSubject(name, type, course);
+	}
 }
