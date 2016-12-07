@@ -23,12 +23,11 @@ public class TestServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        String[] teachers = req.getParameterValues("teacher");
-        req.setAttribute("id",teachers[0]);
-        req.setAttribute("lastName",teachers[0]);
-        req.setAttribute("id",teachers[0]);
-        req.getRequestDispatcher("/WEB-INF/view/test.jsp").forward(req, resp);
+        int i = Integer.parseInt(req.getParameter("t"));
+        TeachersSubjectsDao td = new TeachersSubjectsDao();
+        List<Subject> list = td.getSubjects(i);
+        req.setAttribute("subjects",list);
+         req.getRequestDispatcher("/WEB-INF/view/subjects.jsp").forward(req, resp);
       //  System.out.println(teachers[0]);
     }
 }
