@@ -13,7 +13,7 @@ public class InputOutputClassroomTxt implements InputOutput<List<Classroom>> {
 
     private static final String ERROR_MESSAGE_EMPTY_LIST = "[ERROR] List is empty!";
 
-    private String pattern = "(^[A-Z]?[a-z0-9-_\\.]{1,15} )(\\[[A-Z ,\\]]{1,15})(, )([0-9]{1,3})(, )?(\\\"[A-Za-z \\.,-\\?!]+\\\")?;";
+    private String pattern = "(^[A-Z]?[a-z0-9-_\\.]{1,15} )(\\[[A-Z ,\\]]{1,50})(, )([0-9]{1,3})(, )?(\\\"[A-Za-z \\.,-\\?!]+\\\")?;";
     private Pattern p = Pattern.compile(pattern);
     private Matcher m = null;
 

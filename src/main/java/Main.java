@@ -1,7 +1,10 @@
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.ss.schedule.dao.ClassroomDao;
 import com.ss.schedule.dao.SubjectDao;
+import com.ss.schedule.io.InputOutputClassroomTxt;
 import com.ss.schedule.io.InputOutputJson;
+import com.ss.schedule.io.InputOutputTimeTableTxt;
+import com.ss.schedule.io.InputOutputXml;
 import com.ss.schedule.model.Classroom;
 import com.ss.schedule.model.Group;
 import com.ss.schedule.model.SubjectType;
@@ -20,14 +23,22 @@ public class Main {
         ClassroomDao classroomDao = new ClassroomDao();
 //
 //
-        InputOutputJson<List<Group>> groupsManager = new InputOutputJson<>(
-                new TypeReference<List<Group>>() {
+        InputOutputJson<List<Classroom>> classroomManager = new InputOutputJson<>(
+                new TypeReference<List<Classroom>>() {
                 });
 
-        ArrayList<Group> groups = (ArrayList<Group>) groupsManager.readFromFile("group.json");
+        List<Classroom> classrooms = (ArrayList<Classroom>) classroomManager.readFromFile("room.json");
 
-        System.out.println(groups);
+        InputOutputXml<List<Classroom>> xmlManager = new InputOutputXml<>(
+                new TypeReference<List<Classroom>>() {
+                });
+        xmlManager.writeToFile("room.xml", classrooms);
 
+        InputOutputClassroomTxt txtManager = new InputOutputClassroomTxt();
+
+        txtManager.writeToFile("room.txt", classrooms);
+
+        List<Classroom> testList = txtManager.readFromFile("room.txt");
 
 
 //

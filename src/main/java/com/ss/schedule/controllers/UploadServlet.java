@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.ss.schedule.dao.ClassroomDao;
+import com.ss.schedule.io.InputOutputClassroomTxt;
 import com.ss.schedule.io.InputOutputJson;
+import com.ss.schedule.io.InputOutputXml;
 import com.ss.schedule.model.Classroom;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -29,26 +31,24 @@ public class UploadServlet extends HttpServlet {
     private int maxMemSize = 4 * 1024;
     private File file ;
 
+    public void doGet(HttpServletRequest req,
+                      HttpServletResponse resp)
+            throws ServletException, java.io.IOException {
+
+        resp.sendRedirect("/classrooms");
+    }
+
+
     public void init( ){
         // Get the file location where it would be stored.
         filePath = getServletContext().getInitParameter("file-upload");
     }
-    public void doPost(HttpServletRequest request,
-                       HttpServletResponse response)
+    public void doPost(HttpServletRequest req,
+                       HttpServletResponse resp)
             throws ServletException, java.io.IOException {
         // Check that we have a file upload request
-        isMultipart = ServletFileUpload.isMultipartContent(request);
-        response.setContentType("text/html");
-        java.io.PrintWriter out = response.getWriter( );
+        isMultipart = ServletFileUpload.isMultipartContent(req);
         if( !isMultipart ){
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet upload</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<p>No file uploaded</p>");
-            out.println("</body>");
-            out.println("</html>");
             return;
         }
         DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -62,9 +62,11 @@ public class UploadServlet extends HttpServlet {
         // maximum file size to be uploaded.
         upload.setSizeMax( maxFileSize );
 
+        boolean isAdded = false;
+
         try{
             // Parse the request to get file items.
-            List fileItems = upload.parseRequest(request);
+            List fileItems = upload.parseRequest(req);
 
             // Process the uploaded file items
             Iterator i = fileItems.iterator();
@@ -75,11 +77,7 @@ public class UploadServlet extends HttpServlet {
                 if ( !fi.isFormField () )
                 {
                     // Get the uploaded file parameters
-                    String fieldName = fi.getFieldName();
                     String fileName = fi.getName();
-                    String contentType = fi.getContentType();
-                    boolean isInMemory = fi.isInMemory();
-                    long sizeInBytes = fi.getSize();
                     // Write the file
                     if( fileName.lastIndexOf("\\") >= 0 ){
                         file = new File( filePath +
@@ -89,33 +87,79 @@ public class UploadServlet extends HttpServlet {
                                 fileName.substring(fileName.lastIndexOf("\\")+1)) ;
                     }
                     fi.write( file ) ;
-                    out.println("Uploaded Filename: " + fileName + "<br>");
 
-                    InputOutputJson<List<Classroom>> classroomManager = new InputOutputJson<>(
-                            new TypeReference<List<Classroom>>() {
-                            });
-
-                    ArrayList<Classroom> classrooms = (ArrayList<Classroom>) classroomManager.readFromFile(file.getAbsolutePath());
-
-                    System.out.println(classrooms);
-
-                    ClassroomDao classroomDao = new ClassroomDao();
-                    for (Classroom room :   classrooms) {
-                        classroomDao.add(room);
-                    }
+                    isAdded = addClassroomsToDB(file.getAbsolutePath());
                 }
             }
-            out.println("</body>");
-            out.println("</html>");
-        }catch(Exception ex) {
-            System.out.println(ex);
+            ClassroomDao classroomDao = new ClassroomDao();
+            if(isAdded){
+                req.setAttribute("message","Classrooms from file added to DB  successfully");
+            } else{
+                req.setAttribute("errorMessage","Error! Classrooms from file did't add to DB");
+            }
+
+
+            List<Classroom> classrooms = classroomDao.getAll();
+            req.setAttribute("classrooms", classrooms);
+            req.getRequestDispatcher("/WEB-INF/view/classrooms.jsp").forward(req, resp);
+        }catch(Exception e) {
+            e.printStackTrace();
         }
     }
-    public void doGet(HttpServletRequest request,
-                      HttpServletResponse response)
-            throws ServletException, java.io.IOException {
 
-        throw new ServletException("GET method used with " +
-                getClass( ).getName( )+": POST method required.");
+    private boolean addClassroomsToDB(String path) {
+
+        List<Classroom> classrooms = new ArrayList<>();
+        if(path.endsWith(".json")) {
+            try {
+                InputOutputJson<List<Classroom>> classroomManager = new InputOutputJson<>(
+                        new TypeReference<List<Classroom>>() {
+                        });
+
+                classrooms = (ArrayList<Classroom>) classroomManager.readFromFile(path);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        } else if (path.endsWith(".xml")){
+            try {
+            InputOutputXml<List<Classroom>> classroomManager = new InputOutputXml<>(
+                    new TypeReference<List<Classroom>>() {
+                    });
+
+            classrooms = (ArrayList<Classroom>) classroomManager.readFromFile(path);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        } else if(path.endsWith(".txt")){
+            System.out.println("int txt");
+            try {
+                System.out.println("int try txt");
+            InputOutputClassroomTxt classroomManager = new InputOutputClassroomTxt();
+            classrooms = (ArrayList<Classroom>) classroomManager.readFromFile(path);
+                System.out.println("end try txt" + classrooms);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        } else {
+            return false;
+        }
+        System.out.println(classrooms);
+
+        try {
+            ClassroomDao classroomDao = new ClassroomDao();
+            for (Classroom room : classrooms) {
+                classroomDao.add(room);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
+
+
 }

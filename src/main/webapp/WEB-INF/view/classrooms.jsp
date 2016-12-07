@@ -63,6 +63,10 @@
         <div class="alert alert-success">${message}</div>
     </c:if>
 
+    <c:if test="${errorMessage!=null}">
+        <div class="alert alert-danger">${errorMessage}</div>
+    </c:if>
+
     <h3 class="text-center">All classrooms</h3>
 
     <table class="table table-striped">
@@ -107,14 +111,26 @@
     <%--</div>--%>
     <%--</form>--%>
 
-    <div class="col-md-12">
+    <div class="col-md-6">
         <form method="get" action="/classroomUpdate">
             <input type="number" hidden name="action" value="new">
             <input type="number" hidden name="id" value="0">
             <input type="submit" name="submit" value="Add new Classroom" class="btn btn-default">
         </form>
+        <a href="/DownloadFileServlet" class="btn btn-default"> Download classrooms</a>
     </div>
+
+    <div class="col-md-6">
+        Add classrooms to DB from file(supported formats .json, .xml, .txt): <br />
+        <form action="/upp" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" size="50" />
+            <br />
+            <input type="submit" value=" Add to DB "  class="btn btn-default"/>
+        </form>
+    </div>
+
 </div>
+
 
 <script>
     function confirmDelete() {
@@ -126,3 +142,4 @@
     }
 
 </script>
+</body>
