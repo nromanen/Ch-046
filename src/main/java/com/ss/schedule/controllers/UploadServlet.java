@@ -1,63 +1,121 @@
 package com.ss.schedule.controllers;
+
+import java.io.*;
+import java.util.*;
+
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import java.io.File;
-import java.io.IOException;
-@WebServlet("/UploadServlet")
-@MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB
-        maxFileSize=1024*1024*10,      // 10MB
-        maxRequestSize=1024*1024*50,    // 50MB
-        location = "/tmp")
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.ss.schedule.dao.ClassroomDao;
+import com.ss.schedule.io.InputOutputJson;
+import com.ss.schedule.model.Classroom;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.output.*;
+
+@WebServlet("/upp")
 public class UploadServlet extends HttpServlet {
-    /**
-     * Name of the directory where uploaded files will be saved, relative to
-     * the web application directory.
-     */
-    private static final String SAVE_DIR = "tmp";
 
-    /**
-     * handles file upload
-     */
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws ServletException, IOException {
-        // gets absolute path of the web application
-        String appPath = request.getServletContext().getRealPath("");
-        // constructs path of the directory to save uploaded file
-        String savePath = appPath + File.separator + SAVE_DIR;
+    private boolean isMultipart;
+    private String filePath;
+    private int maxFileSize = 50 * 1024;
+    private int maxMemSize = 4 * 1024;
+    private File file ;
 
-        // creates the save directory if it does not exists
-        File fileSaveDir = new File(savePath);
-        if (!fileSaveDir.exists()) {
-            fileSaveDir.mkdir();
-        }
-
-        for (Part part : request.getParts()) {
-            String fileName = extractFileName(part);
-            // refines the fileName in case it is an absolute path
-            fileName = new File(fileName).getName();
-            part.write(savePath + File.separator + fileName);
-        }
-        request.setAttribute("message", "Upload has been done successfully!");
-        getServletContext().getRequestDispatcher("/WEB-INF/view/message.jsp").forward(
-                request, response);
+    public void init( ){
+        // Get the file location where it would be stored.
+        filePath = getServletContext().getInitParameter("file-upload");
     }
-    /**
-     * Extracts file name from HTTP header content-disposition
-     */
-    private String extractFileName(Part part) {
-        String contentDisp = part.getHeader("content-disposition");
-        String[] items = contentDisp.split(";");
-        for (String s : items) {
-            if (s.trim().startsWith("filename")) {
-                return s.substring(s.indexOf("=") + 2, s.length()-1);
-            }
+    public void doPost(HttpServletRequest request,
+                       HttpServletResponse response)
+            throws ServletException, java.io.IOException {
+        // Check that we have a file upload request
+        isMultipart = ServletFileUpload.isMultipartContent(request);
+        response.setContentType("text/html");
+        java.io.PrintWriter out = response.getWriter( );
+        if( !isMultipart ){
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet upload</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<p>No file uploaded</p>");
+            out.println("</body>");
+            out.println("</html>");
+            return;
         }
-        return "";
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        // maximum size that will be stored in memory
+        factory.setSizeThreshold(maxMemSize);
+        // Location to save data that is larger than maxMemSize.
+        factory.setRepository(new File("c:\\temp"));
+
+        // Create a new file upload handler
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        // maximum file size to be uploaded.
+        upload.setSizeMax( maxFileSize );
+
+        try{
+            // Parse the request to get file items.
+            List fileItems = upload.parseRequest(request);
+
+            // Process the uploaded file items
+            Iterator i = fileItems.iterator();
+
+            while ( i.hasNext () )
+            {
+                FileItem fi = (FileItem)i.next();
+                if ( !fi.isFormField () )
+                {
+                    // Get the uploaded file parameters
+                    String fieldName = fi.getFieldName();
+                    String fileName = fi.getName();
+                    String contentType = fi.getContentType();
+                    boolean isInMemory = fi.isInMemory();
+                    long sizeInBytes = fi.getSize();
+                    // Write the file
+                    if( fileName.lastIndexOf("\\") >= 0 ){
+                        file = new File( filePath +
+                                fileName.substring( fileName.lastIndexOf("\\"))) ;
+                    }else{
+                        file = new File( filePath +
+                                fileName.substring(fileName.lastIndexOf("\\")+1)) ;
+                    }
+                    fi.write( file ) ;
+                    out.println("Uploaded Filename: " + fileName + "<br>");
+
+                    InputOutputJson<List<Classroom>> classroomManager = new InputOutputJson<>(
+                            new TypeReference<List<Classroom>>() {
+                            });
+
+                    ArrayList<Classroom> classrooms = (ArrayList<Classroom>) classroomManager.readFromFile(file.getAbsolutePath());
+
+                    System.out.println(classrooms);
+
+                    ClassroomDao classroomDao = new ClassroomDao();
+                    for (Classroom room :   classrooms) {
+                        classroomDao.add(room);
+                    }
+                }
+            }
+            out.println("</body>");
+            out.println("</html>");
+        }catch(Exception ex) {
+            System.out.println(ex);
+        }
+    }
+    public void doGet(HttpServletRequest request,
+                      HttpServletResponse response)
+            throws ServletException, java.io.IOException {
+
+        throw new ServletException("GET method used with " +
+                getClass( ).getName( )+": POST method required.");
     }
 }

@@ -59,7 +59,7 @@
     </nav>
 
 
-    <c:if test="${isMessage==true}">
+    <c:if test="${message!=null}">
         <div class="alert alert-success">${message}</div>
     </c:if>
 
@@ -76,7 +76,9 @@
 
         </tr>
         <c:forEach var="room" items="${classrooms}">
-            <tr>
+            <tr
+                    <c:if test="${room.id == updateClassroom.id}">class="success"</c:if>
+            >
                 <td>Classroom ${room.name}</td>
                 <td>${room.capacity}</td>
                 <td>${room.types}</td>
@@ -89,7 +91,7 @@
                 <td>
                     <form method="post" action="/classrooms">
                         <input type="number" hidden name="id" value="${room.id}">
-                        <input type="submit" name="submit" value="Remove" class="btn btn-danger btn-sm">
+                        <input type="submit" name="submit" value="Remove" class="btn btn-danger btn-sm" onclick="return confirmDelete();">
                     </form>
                 </td>
             </tr>
@@ -113,3 +115,14 @@
         </form>
     </div>
 </div>
+
+<script>
+    function confirmDelete() {
+        if (confirm("Do you want to delete classroom?")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+</script>

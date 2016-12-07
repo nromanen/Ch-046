@@ -64,20 +64,21 @@
 
         <input type="number" hidden name="id" value="${classroom.id}">
         <div class="form-group col-md-8">
-            <label for="name">Name:</label>
-            <c:if test="${errors.fNameError != null}"><page:error title="${errors.fNameError}"/></c:if>
-            <input type="text" class="form-control" name="name" value="${classroom.name}" id="name">
-            <span class="error text-danger" id="firstNameError"></span>
+            <label for="roomName">Name <span class="text-danger">*</span></label>
+            <c:if test="${errors.nameError != null}"><page:error title="${errors.nameError}"/></c:if>
+            <input type="text" class="form-control" name="name" value="${classroom.name}" id="roomName">
+            <span class="error text-danger" id="nameError"></span>
         </div>
         <div class="form-group col-md-8">
-            <label for="capacity">Capacity:</label>
-            <c:if test="${errors.lNameError != null}"><page:error title="${errors.lNameError}"/></c:if>
-            <input type="text" class="form-control" name="capacity" value="${classroom.capacity}" id="capacity">
-            <span class="error text-danger" id="lastNameError"></span>
+            <label for="capacity">Capacity <span class="text-danger">*</span></label>
+            <c:if test="${errors.capacityError != null}"><page:error title="${errors.capacityError}"/></c:if>
+            <input type="number" class="form-control" name="capacity" value="${classroom.capacity}" id="capacity">
+            <span class="error text-danger" id="capacityError"></span>
         </div>
 
         <div class="form-group col-md-8">
-            <label for="types" class="control-label">Types</label>
+            <label for="types" class="control-label">Types <span class="text-danger">*</span></label>
+            <c:if test="${errors.typesError != null}"><page:error title="${errors.typesError}"/></c:if>
             <select class="form-control" name="types" id="types" multiple>
                 <c:forEach var="type" items="${types}">
                     <option value="${type}"
@@ -90,21 +91,115 @@
                     >${type}</option>
                 </c:forEach>
             </select>
+            <span class="error text-danger" id="typesError"></span>
         </div>
         <div class="form-group col-md-8">
             <label for="description">Description:</label>
-            <c:if test="${errors.ssnError != null}"><page:error title="${errors.ssnError}"/></c:if>
             <textarea  class="form-control" name="description" id="description">${classroom.description}</textarea>
-            <span class="error text-danger" id="ssnError"></span>
         </div>
+
         <div class="col-md-12">
-            <input type="submit" name="submit" value="Submit" class="btn btn-info">
+            <span class="text-danger"><strong>* required fields</strong></span><br>
+            <input type="submit" name="submit" value="Submit" class="btn btn-info" id="submitRoom" disabled>
         </div>
     </form>
 
     <page:footer/>
     <page:js/>
-    <%--<script src = "../../assets/js/employeeFormValidator.js"></script>--%>
+
+
+    <script>
+
+        window.addEventListener("load", init, false);
+
+        var isCorrectName = false;
+        var isCorrectCapacity = false;
+        var isCorrectTypes= false;
+
+
+        function init () {
+
+            validation();
+            roomName.addEventListener("blur", validationName, false);
+            capacity.addEventListener("blur", validationCapacity, false);
+            types.addEventListener("change", validationTypes, false);
+        }
+
+        function validation() {
+            var name = document.getElementById("roomName").value;
+            if (name == "" || name.length > 20) {
+                isCorrectName = false;
+            } else {
+                isCorrectName = true;
+            }
+            var types = document.getElementById("types").value;
+
+            if (types == "") {
+                isCorrectTypes = false;
+            } else {
+                isCorrectTypes = true;
+            }
+            var capacity = document.getElementById("capacity").value;
+
+            if (capacity < 5 || capacity > 200) {
+                isCorrectCapacity = false;
+            } else {
+                isCorrectCapacity = true;
+            }
+            isCorrect();
+        }
+
+        function validationName () {
+
+            var name = document.getElementById("roomName").value;
+
+            if (name == "" || name.length > 20) {
+                nameError.innerHTML = "Error! Name can not be empty";
+                isCorrectName = false;
+            } else {
+                isCorrectName = true;
+                nameError.innerHTML = "";
+            }
+            isCorrect();
+        }
+
+        function validationCapacity () {
+            var capacity = document.getElementById("capacity").value;
+
+            if (capacity < 5 || capacity > 200) {
+                capacityError.innerHTML = "Error! Capacity should be between 5 and 200";
+                isCorrectCapacity = false;
+            } else {
+                isCorrectCapacity = true;
+                capacityError.innerHTML = "";
+            }
+            isCorrect();
+        }
+
+        function validationTypes() {
+
+            var types = document.getElementById("types").value;
+
+            if (types == "") {
+                typesError.innerHTML = "Error! Select type(s) please";
+                isCorrectTypes = false;
+            } else {
+                isCorrectTypes = true;
+                typesError.innerHTML = "";
+            }
+            isCorrect();
+        }
+
+        function isCorrect() {
+            if (isCorrectCapacity && isCorrectName && isCorrectTypes){
+                document.getElementById("submitRoom").removeAttribute("disabled");
+            } else {
+                document.getElementById("submitRoom").setAttribute("disabled","true");
+            }
+
+        }
+
+    </script>
 
 
 </body>

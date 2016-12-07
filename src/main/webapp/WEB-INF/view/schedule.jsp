@@ -63,7 +63,7 @@
     <c:if test = "${isResult  == false}">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <h3 class="text-center">Select Group add Subject to get available Classrooms</h3>
+            <h3 class="text-center">Select Group add Subject to create Time Table</h3>
             <form class="form-horizontal" action="/schedule" method="post">
                 <div class="form-group form-group-lg">
                     <label class="col-sm-2 control-label" for="group">Group </label>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="form-group form-group-lg">
                     <div class="col-sm-2 control-label" >
-                        <input type="submit" name="submit" value="Get classrooms" class="btn btn-info " id="submitRoom">
+                        <input type="submit" name="submit" value="Get classrooms" class="btn btn-info " id="submitRoom" disabled>
                     </div>
                 </div>
             </form>
@@ -114,7 +114,7 @@
                         <select id="day" name="day" class="form-control">
                             <c:forEach var="d" items="${days}">
                                 <option value="${d}"
-                                        <c:if test = "${d.id == currentDay.id}"> selected</c:if>
+                                        <c:if test = "${d == currentDay}"> selected</c:if>
 
                                 >${d}</option>
                             </c:forEach>
@@ -128,7 +128,7 @@
 
                             <c:forEach var="p" items="${pairs}">
                                 <option value="${p}"
-                                        <c:if test = "${p.id == currentPair.id}"> selected</c:if>
+                                        <c:if test = "${p == currentPair}"> selected</c:if>
                                 >${p}</option>
                             </c:forEach>
                         </select>
@@ -221,6 +221,63 @@
 
         });
 
+    </script>
+    <script>
+
+        window.addEventListener("load", init, false);
+
+        function init () {
+
+            console.log('init');
+
+            group.addEventListener("change", validation, false);
+            subject.addEventListener("change", validation, false);
+
+        }
+
+        function validation () {
+
+            var group = document.getElementById("group").value;
+            var subject = document.getElementById("subject").value;
+
+            console.log(group, subject);
+//            var isCorrectGroup = false;
+//            var isCorrectSubject = false;
+//
+//
+//            if (group != null || e.length > 30){
+//                titleError.innerHTML = "Error! Title should be between 2 sand 30 latter";
+//                isCorrectTitle = false;
+//            } else {
+//                isCorrectTitle = true;
+//                titleError.innerHTML = "";
+//            }
+//
+//            if (disposition.length < 5 || disposition.length > 60){
+//                dispositionError.innerHTML = "Error! Disposition should be between 5 sand 60 latter";
+//                isCorrectDisposition = false;
+//            } else {
+//                isCorrectDisposition = true;
+//                dispositionError.innerHTML = "";
+//            }
+//
+//            if (description.length == 0 ){
+//                descriptionError.innerHTML = "Error! Description  can't be empty";
+//                isCorrectDescription = false;
+//            } else {
+//                isCorrectDescription = true;
+//                descriptionError.innerHTML = "";
+//            }
+
+            if (group != "" && subject!= ""){
+                document.getElementById("submitRoom").removeAttribute("disabled");
+            } else {
+                document.getElementById("submitRoom").setAttribute("disabled","true");
+            }
+
+
+
+        }
     </script>
 
     <page:footer/>

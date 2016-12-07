@@ -124,8 +124,9 @@ public class ClassroomDao extends AbstractDao<Classroom> {
     public Classroom add(Classroom entity) {
 
         List<Classroom> classrooms = getAll();
+        System.out.println("add classroom");
         if (!classrooms.contains(entity)) {
-
+            System.out.println("no  classroom");
             String sql = "INSERT INTO classrooms " +
                     "(name, capacity, description) " +
                     "VALUES (?, ?, ?)";
@@ -138,9 +139,10 @@ public class ClassroomDao extends AbstractDao<Classroom> {
                 ps.executeUpdate();
 
                 long classroomId = getEntityIdByName(entity.getName());
-
-                for (SubjectType st :  entity.getTypes()) {
-                    classroomsSubjectTypeDao.add(classroomId, subjectTypeDao.getEntityIdByName(st.toString()));
+                if (entity.getTypes() != null) {
+                    for (SubjectType st : entity.getTypes()) {
+                        classroomsSubjectTypeDao.add(classroomId, subjectTypeDao.getEntityIdByName(st.toString()));
+                    }
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

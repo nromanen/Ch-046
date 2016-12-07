@@ -5,6 +5,8 @@ import com.ss.schedule.dao.ClassroomDao;
 import com.ss.schedule.dao.SubjectTypeDao;
 import com.ss.schedule.model.Classroom;
 import com.ss.schedule.model.SubjectType;
+import com.ss.schedule.validator.ClassroomErrors;
+import com.ss.schedule.validator.ClassroomValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +30,7 @@ public class ClassroomUpdateController extends HttpServlet {
         long id = 0L;
         try {
             id = Long.parseLong(req.getParameter("id"));
-        } catch (NullPointerException e){
+        } catch (NullPointerException | NumberFormatException e){
             System.out.println("parse id");
             e.printStackTrace();
         }
@@ -62,17 +64,31 @@ public class ClassroomUpdateController extends HttpServlet {
 
 
         Classroom classroom = getClassroom(req);
-        if (classroom.getId() != 0) {
-            classroomDao.update(classroom);
-        }  else {
-            classroomDao.add(classroom);
-        }
-        req.setAttribute("isMessage", true);
+        ClassroomValidator validator = new ClassroomValidator(classroom);
+        if(!validator.validation()) {
+            List<SubjectType> types = subjectTypeDao.getAll();
+            ClassroomErrors errors = validator.getErrors();
 
-        req.setAttribute("message", classroom.getId()!=0?"Classroom " + classroom.getName() + " update successfully!" : "New classroom " + classroom.getName() + " create successfully!");
-        List<Classroom> classrooms = classroomDao.getAll();
-        req.setAttribute("classrooms", classrooms);
-        req.getRequestDispatcher("/WEB-INF/view/classrooms.jsp").forward(req, resp);
+            req.setAttribute("types", types);
+            req.setAttribute("errors", errors);
+            req.setAttribute("classroom", classroom);
+            req.setAttribute("link", "classroomUpdate");
+            req.setAttribute("message", "Create new Classroom!!");
+            req.getRequestDispatcher("/WEB-INF/view/classroomUpdate.jsp").forward(req, resp);
+        } else {
+            if (classroom.getId() != 0) {
+                classroomDao.update(classroom);
+            } else {
+                classroomDao.add(classroom);
+            }
+
+            req.setAttribute("message", classroom.getId() != 0 ? "Classroom " + classroom.getName() + " update successfully!" : "New classroom " + classroom.getName() + " create successfully!");
+            List<Classroom> classrooms = classroomDao.getAll();
+            Classroom updateClassroom = classroomDao.getById(classroomDao.getEntityIdByName(classroom.getName()));
+            req.setAttribute("classrooms", classrooms);
+            req.setAttribute("updateClassroom", updateClassroom);
+            req.getRequestDispatcher("/WEB-INF/view/classrooms.jsp").forward(req, resp);
+        }
     }
 
     private Classroom getClassroom(HttpServletRequest req) {
@@ -86,8 +102,10 @@ public class ClassroomUpdateController extends HttpServlet {
 
         try {
             classroom.setCapacity(Integer.parseInt(req.getParameter("capacity")));
-        } catch (NullPointerException e){
+        } catch (NullPointerException | NumberFormatException e){
+            classroom.setCapacity(0);
             e.printStackTrace();
+
         }
 
         try {
@@ -103,16 +121,21 @@ public class ClassroomUpdateController extends HttpServlet {
             classroom.setId(0);
         }
 
-        String[] types = req.getParameterValues("types");
-        List<SubjectType> classroomTypes = new ArrayList<>();
+        try {
+            String[] types = req.getParameterValues("types");
+            List<SubjectType> classroomTypes = new ArrayList<>();
 
-        for (String t: types) {
-            SubjectType type = SubjectType.valueOf(t);
+            for (String t : types) {
+                SubjectType type = SubjectType.valueOf(t);
 
-            classroomTypes.add(type);
+                classroomTypes.add(type);
+            }
+
+            classroom.setTypes(classroomTypes);
+        } catch (NullPointerException e){
+            e.printStackTrace();
+            classroom.setTypes(null);
         }
-
-        classroom.setTypes(classroomTypes);
         return classroom;
     }
 //
