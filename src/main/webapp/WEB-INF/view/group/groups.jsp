@@ -44,6 +44,7 @@
         <div class="alert alert-${css} alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>${msg}</strong>
+            <c:remove var="msg"/>
         </div>
     </c:if>
 
@@ -53,7 +54,7 @@
         </form>
     </div>
     <div class="add col-sm-6">
-        <form method="get" action="/groups/add" class="text-right">
+        <form method="get" action="/groups/unused-subjects" class="text-right">
             <button type="submit" class="btn btn-lg btn-primary btn-add btn-unused">Find Unused Subjects</button>
         </form>
     </div>

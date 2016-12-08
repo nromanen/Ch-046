@@ -47,6 +47,14 @@ public class GroupService {
 		return groups;
 	}
 
+	public List<Group> getGroupsByCourse(int course) throws SQLException {
+		List<Group> groups = groupDao.getGroupsByCourse(course);
+		for (int i = 0; i < groups.size(); i++) {
+			groups.get(i).setSubjects(subjectDao.getSubjectsByGroupId(groups.get(i).getId()));
+		}
+		return groups;
+	}
+
 	public List<Group> getGroupsBySubjectId(long subjectId) throws SQLException {
 		List<Group> groups = groupDao.getGroupsBySubjectId(subjectId);
 		setSubjectsIntoGroups(groups);

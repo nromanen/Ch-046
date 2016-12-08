@@ -86,7 +86,7 @@ public class JdbcSubjectDao extends AbstractDao<Subject> {
 		String request = "SELECT s.id, s.name, t.name, s.course FROM subjects AS s " +
 				"JOIN subject_types AS t " +
 				"ON s.type_id = t.id " +
-				"ORDER BY s.id ASC";
+				"ORDER BY s.course ASC, s.name ASC";
 		Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		ResultSet rs = statement.executeQuery(request);
 

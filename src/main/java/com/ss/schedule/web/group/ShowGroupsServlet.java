@@ -26,8 +26,6 @@ public class ShowGroupsServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		initService();
-
 		List<Group> groups = new ArrayList<>();
 		try {
 			groups = groupService.getAllGroups();
@@ -36,11 +34,12 @@ public class ShowGroupsServlet extends HttpServlet {
 		}
 		req.setAttribute("groups", groups);
 
-		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/view/group/show_groups.jsp");
+		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/view/group/groups.jsp");
 		dispatcher.forward(req, resp);
 	}
 
-	private void initService() {
+	@Override
+	public void init() {
 		try {
 			if (groupService == null) {
 				groupService = new GroupService(PROPERTIES_FILE_PATH);

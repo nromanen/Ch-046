@@ -23,7 +23,6 @@ public class DeleteGroupServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		initService();
 		HttpSession session = req.getSession();
 
 		try {
@@ -41,7 +40,8 @@ public class DeleteGroupServlet extends HttpServlet {
 		resp.sendRedirect("/groups");
 	}
 
-	private void initService() {
+	@Override
+	public void init() {
 		try {
 			if (groupService == null) {
 				groupService = new GroupService(PROPERTIES_FILE_PATH);

@@ -86,7 +86,7 @@ public class JdbcGroupDao extends AbstractDao<Group> {
 	@Override
 	public Group getById(long id) throws SQLException {
 		getConnection();
-		String request = "SELECT * FROM groups WHERE id = ?";
+		String request = "SELECT * FROM groups WHERE id = ? GROUP BY name";
 		PreparedStatement preparedStatement = connection.prepareStatement(request);
 		preparedStatement.setLong(1, id);
 		ResultSet rs = preparedStatement.executeQuery();
@@ -114,10 +114,27 @@ public class JdbcGroupDao extends AbstractDao<Group> {
 		String request = "SELECT * FROM groups AS g " +
 				"JOIN group_subject_map AS map " +
 				"ON map.group_id = g.id " +
-				"WHERE map.subject_id = ?";
+				"WHERE map.subject_id = ? " +
+				"ORDER BY g.name";
 		PreparedStatement preparedStatement = connection.prepareStatement(request);
 		preparedStatement.setLong(1, subjectId);
 		ResultSet rs = preparedStatement.executeQuery();
+
+		List<Group> groups = new ArrayList<>();
+		while (rs.next()) {
+			groups.add(createGroup(rs));
+		}
+
+		return groups;
+	}
+
+	public List<Group> getGroupsByCourse(int course) throws SQLException {
+		getConnection();
+		String request = "SELECT * FROM groups " +
+				"WHERE name LIKE '" + course + "%' " +
+				"ORDER BY name";
+		Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		ResultSet rs = statement.executeQuery(request);
 
 		List<Group> groups = new ArrayList<>();
 		while (rs.next()) {

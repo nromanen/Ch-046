@@ -40,7 +40,7 @@
 
 <div class="container">
     <div class="jumbotron">
-        <h1 class="text-center">Add or Update Group</h1>
+        <h1 class="text-center">${action} Group</h1>
     </div>
 
     <form method="post" action="/groups/add" class="form-horizontal">

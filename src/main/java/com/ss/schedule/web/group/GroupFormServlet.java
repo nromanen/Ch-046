@@ -31,16 +31,16 @@ public class GroupFormServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		initService();
-
 		String groupId = req.getParameter("group_id");
 
 		try {
 			Group group = new Group();
+			req.setAttribute("action", "Add");
 			if (groupId != null) {
 				group = groupService.getGroupById(Long.valueOf(groupId));
 				req.setAttribute("subjects", getCourseSubjectsDoNotUsedInGroup(group.getName().charAt(0) - '0', group.getSubjects()));
 				req.setAttribute("group_subjects", group.getSubjects());
+				req.setAttribute("action", "Update");
 			}
 			req.setAttribute("group", group);
 		} catch (SQLException e) {
@@ -108,15 +108,18 @@ public class GroupFormServlet extends HttpServlet {
 	private List<Subject> createSubjectsList(String[] subjects, int course) throws SQLException {
 		List<Subject> subjectsList = new ArrayList<>();
 
-		for(String subject : subjects) {
-			String[] subjectNameAndType = subject.split(" ");
-			subjectsList.add(subjectService.getSubject(subjectNameAndType[0], subjectNameAndType[1], course));
+		if (subjects != null) {
+			for (String subject : subjects) {
+				String[] subjectNameAndType = subject.split(" ");
+				subjectsList.add(subjectService.getSubject(subjectNameAndType[0], subjectNameAndType[1], course));
+			}
 		}
 
 		return subjectsList;
 	}
 
-	private void initService() {
+	@Override
+	public void init() {
 		try {
 			if (groupService == null) {
 				groupService = new GroupService(PROPERTIES_FILE_PATH);

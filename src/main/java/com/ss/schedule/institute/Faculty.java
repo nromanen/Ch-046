@@ -190,26 +190,4 @@ public class Faculty {
 			throw new IllegalArgumentException(ERROR_MESSAGE_DELETE_SUBJECT);
 		}
 	}
-
-	public List<Subject> getUnusedSubjects() {
-		List<Subject> subjectsThatDoNotUse = new ArrayList<>();
-
-		for (Subject subject : subjects) {
-			boolean isSubjectUse = false;
-
-			for (Group group : groups) {
-				List<Subject> groupSubjects = group.getSubjects();
-				if (groupSubjects.contains(subject)) {
-					isSubjectUse = true;
-					break;
-				}
-			}
-
-			if (!isSubjectUse) {
-				subjectsThatDoNotUse.add(subject);
-			}
-		}
-
-		return subjectsThatDoNotUse;
-	}
 }
