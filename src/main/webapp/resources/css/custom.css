@@ -38,7 +38,7 @@ th > form.last-form {
     margin-bottom: 0px;
 }
 
-th > form > button {
+th > form > button.btn-action {
     width: 60%;
 }
 

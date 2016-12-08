@@ -28,7 +28,7 @@
         </div>
         <ul class="nav navbar-nav">
             <li><a href="#">Main</a></li>
-            <li class="active"><a href="#">Groups</a></li>
+            <li class="active"><a href="/groups">Groups</a></li>
             <li><a href="#">Page 2</a></li>
             <li><a href="#">Page 3</a></li>
         </ul>
@@ -84,12 +84,12 @@
                     </th>
                     <th class="vertical-text-center text-center">
                         <form method="get" action="/groups/update">
-                            <button class="btn btn-primary btn-update" type="submit" name="group_id"
+                            <button class="btn btn-primary btn-update btn-action" type="submit" name="group_id"
                                     value="${group.id}">Update
                             </button>
                         </form>
                         <form method="post" action="/groups/delete" class="last-form">
-                            <button class="btn btn-danger" type="submit" name="group_id" value="${group.id}">Delete
+                            <button class="btn btn-danger btn-action" type="submit" name="group_id" value="${group.id}">Delete
                             </button>
                         </form>
                     </th>

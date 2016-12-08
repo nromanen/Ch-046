@@ -47,4 +47,8 @@ public class SubjectService {
 	public Subject getSubject(String name, String type, int course) throws SQLException {
 		return subjectDao.getSubject(name, type, course);
 	}
+
+	public List<Subject> getUnusedSubjects() throws SQLException {
+		return subjectDao.getUnusedSubjects();
+	}
 }

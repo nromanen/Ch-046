@@ -86,7 +86,7 @@ public class JdbcGroupDao extends AbstractDao<Group> {
 	@Override
 	public Group getById(long id) throws SQLException {
 		getConnection();
-		String request = "SELECT * FROM groups WHERE id = ? GROUP BY name";
+		String request = "SELECT * FROM groups WHERE id = ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(request);
 		preparedStatement.setLong(1, id);
 		ResultSet rs = preparedStatement.executeQuery();

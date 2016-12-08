@@ -1,6 +1,5 @@
 package com.ss.schedule.web.group;
 
-import com.ss.schedule.model.Group;
 import com.ss.schedule.model.Subject;
 import com.ss.schedule.service.GroupService;
 import com.ss.schedule.service.SubjectService;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,7 +28,7 @@ public class AssignGroupsForUnusedSubjectServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			List<Subject> unusedSubjects = getUnusedSubjects(groupService.getAllGroups(), subjectService.getAllSubjects());
+			List<Subject> unusedSubjects = subjectService.getUnusedSubjects();
 			req.setAttribute("subjects", unusedSubjects);
 		} catch (SQLException e) {
 			//todo
@@ -39,28 +37,6 @@ public class AssignGroupsForUnusedSubjectServlet extends HttpServlet {
 
 		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/view/group/unused_subjects.jsp");
 		dispatcher.forward(req, resp);
-	}
-
-	private List<Subject> getUnusedSubjects(List<Group> groups, List<Subject> subjects) {
-		List<Subject> subjectsThatDoNotUse = new ArrayList<>();
-
-		for (Subject subject : subjects) {
-			boolean isSubjectUse = false;
-
-			for (Group group : groups) {
-				List<Subject> groupSubjects = group.getSubjects();
-				if (groupSubjects.contains(subject)) {
-					isSubjectUse = true;
-					break;
-				}
-			}
-
-			if (!isSubjectUse) {
-				subjectsThatDoNotUse.add(subject);
-			}
-		}
-
-		return subjectsThatDoNotUse;
 	}
 
 	@Override

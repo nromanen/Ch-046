@@ -153,6 +153,26 @@ public class JdbcSubjectDao extends AbstractDao<Subject> {
 		return createSubject(rs);
 	}
 
+	public List<Subject> getUnusedSubjects() throws SQLException {
+		getConnection();
+		String request = "SELECT s.id, s.name, t.name, s.course, map.group_id FROM subjects AS s " +
+				"LEFT JOIN group_subject_map AS map " +
+				"ON s.id = map.subject_id " +
+				"JOIN subject_types AS t " +
+				"ON s.type_id = t.id " +
+				"WHERE map.group_id IS NULL " +
+				"ORDER BY s.course, s.name";
+		Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		ResultSet rs = statement.executeQuery(request);
+
+		List<Subject> subjects = new ArrayList<>();
+		while (rs.next()) {
+			subjects.add(createSubject(rs));
+		}
+
+		return subjects;
+	}
+
 	private Subject createSubject(ResultSet rs) throws SQLException {
 		Subject subject = new Subject();
 		subject.setId(rs.getLong(1));
