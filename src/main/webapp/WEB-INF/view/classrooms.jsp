@@ -82,6 +82,7 @@
         <c:forEach var="room" items="${classrooms}">
             <tr
                     <c:if test="${room.id == updateClassroom.id}">class="success"</c:if>
+                     id = "room_${room.id}"
             >
                 <td>Classroom ${room.name}</td>
                 <td>${room.capacity}</td>
@@ -93,53 +94,145 @@
                     </a>
                 </td>
                 <td>
-                    <form method="post" action="/classrooms">
-                        <input type="number" hidden name="id" value="${room.id}">
-                        <input type="submit" name="submit" value="Remove" class="btn btn-danger btn-sm" onclick="return confirmDelete();">
-                    </form>
+                    <button class="btn btn-danger btn-sm" onclick="Confirm.render('Are you sure you want to delete classroom?','delete_room','room_${room.id}', '${room.id}')" > Remove</button>
                 </td>
             </tr>
         </c:forEach>
     </table>
-    <%--<form action = "/classrooms" method = "post">--%>
-    <%--<div class="form-group">--%>
-    <%--<label for="filePath">Upload classrooms from file to DB. (support formats .json, .xml, .txt)</label>--%>
-    <%--<input type="file" id = "filePath" name = "filePath">--%>
-    <%--</div>--%>
-    <%--<div class="col-sm-2 control-label" >--%>
-    <%--<input type="submit" value="Add to DB" class="btn btn-info " id="addClassrooms">--%>
-    <%--</div>--%>
-    <%--</form>--%>
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <form method="get" action="/classroomUpdate">
             <input type="number" hidden name="action" value="new">
             <input type="number" hidden name="id" value="0">
             <input type="submit" name="submit" value="Add new Classroom" class="btn btn-default">
         </form>
-        <a href="/DownloadFileServlet" class="btn btn-default"> Download classrooms</a>
     </div>
-
-    <div class="col-md-6">
-        Add classrooms to DB from file(supported formats .json, .xml, .txt): <br />
-        <form action="/upp" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" size="50" />
-            <br />
-            <input type="submit" value=" Add to DB "  class="btn btn-default"/>
+    <div class="col-md-12">
+        <a id="option" class="btn btn-default btn-sm">More options</a>
+    </div>
+    <br>
+    <div class="row" id="moreOption"  style="display: none">
+        <br>
+        <hr>
+        <br>
+        Add classrooms to DB from file(supported formats .json, .xml, .txt):
+        <form action="/upp" method="post" enctype="multipart/form-data" class="form-inline">
+            <div class="col-md-4">
+                <input type="file" name="file" size="50" class="filestyle" data-buttonName="btn-primary" id = "fileId"/>
+            </div>
+            <div class="col-md-4">
+                <input type="submit" value=" Add to DB"  class="btn btn-default" id = "addFile" disabled/>
+            </div>
         </form>
+        <div class="col-md-4"></div>
+        <br>
+        <hr>
+        <br>
+        <div class="col-md-5">
+            <a href="/DownloadFileServlet" class="btn btn-default"> Download classrooms</a>
+        </div>
+
     </div>
 
 </div>
 
+<div id="dialogoverlay"></div>
+<div id="dialogbox">
+    <div>
+        <div id="dialogboxhead"></div>
+        <div id="dialogboxbody"></div>
+        <div id="dialogboxfoot"></div>
+    </div>
+</div>
 
-<script>
-    function confirmDelete() {
-        if (confirm("Do you want to delete classroom?")) {
-            return true;
-        } else {
-            return false;
-        }
+
+
+<page:footer/>
+<page:js/>
+
+
+  <script>
+
+  window.addEventListener("load", init, false);
+
+          var isFile = false;
+
+
+          function init () {
+
+                 console.log('init');
+              fileId.addEventListener("change", validationFile, false);
+              option.addEventListener("click", show, false);
+          }
+
+          function validationFile() {
+              var fileId = document.getElementById("fileId").value;
+              console.log(fileId);
+              if (fileId == "" || fileId == null) {
+                  isFile = false;
+              } else {
+                  isFile = true;
+              }
+
+              if (isFile){
+                              document.getElementById("addFile").removeAttribute("disabled");
+                          } else {
+                              document.getElementById("addFile").setAttribute("disabled","true");
+                          }
+           }
+
+
+
+      function deletePost(id, classroomId){
+          var db_id = id.replace("room_", "");
+          $.post(
+            "/classrooms",
+            {
+              id: classroomId
+            }
+          );
+
+
+          // Run Ajax request here to delete post from database
+           document.getElementById(id).style.display = "none";
+          //document.body.removeChild(document.getElementById(id));
+      }
+      function CustomConfirm(){
+          this.render = function(dialog,op,id,classroomId){
+              var winW = window.innerWidth;
+              var winH = window.innerHeight;
+              var dialogoverlay = document.getElementById('dialogoverlay');
+              var dialogbox = document.getElementById('dialogbox');
+              dialogoverlay.style.display = "block";
+              dialogoverlay.style.height = winH+"px";
+              dialogbox.style.left = (winW/2) - (550 * .5)+"px";
+              dialogbox.style.top = "100px";
+              dialogbox.style.display = "block";
+
+              document.getElementById('dialogboxhead').innerHTML = "Confirm that action";
+              document.getElementById('dialogboxbody').innerHTML = dialog;
+              document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Confirm.yes(\''+op+'\',\''+id+'\',\''+classroomId+'\')">Yes</button> <button onclick="Confirm.no()">No</button>';
+          }
+          this.no = function(){
+              document.getElementById('dialogbox').style.display = "none";
+              document.getElementById('dialogoverlay').style.display = "none";
+          }
+          this.yes = function(op,id,classroomId){
+              if(op == "delete_room"){
+                  deletePost(id, classroomId);
+              }
+              document.getElementById('dialogbox').style.display = "none";
+              document.getElementById('dialogoverlay').style.display = "none";
+          }
+      }
+      var Confirm = new CustomConfirm();
+
+
+    function show () {
+
+        document.getElementById('moreOption').style.display = (document.getElementById('moreOption').style.display == 'none') ? '' : 'none';
     }
 
+    //$(":file").filestyle({buttonName: "btn-primary"});
 </script>
 </body>

@@ -83,9 +83,9 @@
                 <c:forEach var="type" items="${types}">
                     <option value="${type}"
 
-                    <c:forEach var="roomType" items="${classroom.types}">
-                        <c:if test="${roomType.id == type.id}">selected</c:if>
-                    </c:forEach>
+                            <c:forEach var="roomType" items="${classroom.types}">
+                                <c:if test="${roomType.id == type.id}">selected</c:if>
+                            </c:forEach>
 
 
                     >${type}</option>
@@ -96,6 +96,7 @@
         <div class="form-group col-md-8">
             <label for="description">Description:</label>
             <textarea  class="form-control" name="description" id="description">${classroom.description}</textarea>
+            <span class="error text-danger" id="descriptionError"></span>
         </div>
 
         <div class="col-md-12">
@@ -121,6 +122,7 @@
 
             validation();
             roomName.addEventListener("blur", validationName, false);
+            description.addEventListener("blur", validationDescription, false);
             capacity.addEventListener("blur", validationCapacity, false);
             types.addEventListener("change", validationTypes, false);
         }
@@ -153,11 +155,14 @@
 
             var name = document.getElementById("roomName").value;
 
+            name = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
             if (name == "" || name.length > 20) {
                 nameError.innerHTML = "Error! Name can not be empty";
                 isCorrectName = false;
             } else {
                 isCorrectName = true;
+                document.getElementById("roomName").value = name;
                 nameError.innerHTML = "";
             }
             isCorrect();
@@ -189,6 +194,24 @@
             }
             isCorrect();
         }
+
+        function validationDescription () {
+
+            var description = document.getElementById("description").value;
+
+            description = description.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+            if (description.length > 250) {
+                descriptionError.innerHTML = "Error! To long description";
+                isCorrectName = false;
+            } else {
+                isCorrectName = true;
+                document.getElementById("description").value = description;
+                descriptionError.innerHTML = "";
+            }
+            isCorrect();
+        }
+
 
         function isCorrect() {
             if (isCorrectCapacity && isCorrectName && isCorrectTypes){

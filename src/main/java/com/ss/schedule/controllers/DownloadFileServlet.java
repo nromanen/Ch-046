@@ -5,19 +5,17 @@ import com.ss.schedule.dao.ClassroomDao;
 import com.ss.schedule.io.InputOutputJson;
 import com.ss.schedule.model.Classroom;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
 
 @WebServlet("/DownloadFileServlet")
 public class DownloadFileServlet extends HttpServlet {
@@ -28,7 +26,7 @@ public class DownloadFileServlet extends HttpServlet {
         ClassroomDao classroomDao = new ClassroomDao();
 
         List<Classroom> classrooms = classroomDao.getAll();
-        String filePath = "C:/classrooms.json";
+        String filePath = "C:/Users/rmochetc/classrooms.json";
         File downloadFile = new File(filePath);
 
         InputOutputJson<List<Classroom>> classroomManager = new InputOutputJson<>(

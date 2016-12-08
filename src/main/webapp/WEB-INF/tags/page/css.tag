@@ -8,4 +8,6 @@
 
 <link rel="stylesheet" href="../../../assets/css/main.css">
 <link rel="stylesheet" href="../../../assets/css/test.css">
+<link rel="stylesheet" href="../../../assets/css/jquery-confirm.min.css">
+
 

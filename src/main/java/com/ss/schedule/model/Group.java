@@ -18,6 +18,8 @@ public class Group {
 	@JacksonXmlProperty
 	private int count;
 
+	private Group parent;
+
 	@JacksonXmlElementWrapper(localName = "subjects")
 	@JacksonXmlProperty(localName = "subject")
 	private List<Subject> subjects;
@@ -33,6 +35,14 @@ public class Group {
 	public Group(long id, String name, int count, List<Subject> subjects) {
 		this(name, count, subjects);
 		this.id = id;
+	}
+
+	public Group getParent() {
+		return parent;
+	}
+
+	public void setParent(Group parent) {
+		this.parent = parent;
 	}
 
 	public String getName() {

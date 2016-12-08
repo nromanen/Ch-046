@@ -102,6 +102,7 @@
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <h3 class="text-center">Available classroom(s) for Group-${group.name}(${group.count} students) and ${subject.name}(${subject.type})</h3>
+
             <c:if test="${errors.groupError != null}"><page:error title="${errors.groupError}"/></c:if>
             <c:if test="${errors.classroomError != null}"><page:error title="${errors.classroomError}"/></c:if>
             <h3 class="text-center">Select Classroom, Day of week add Pair Number to create new Pair</h3>
@@ -134,8 +135,8 @@
                         </select>
                     </div>
                 </div>
+                <c:if test="${errors.teacherError != null}"><page:error title="${errors.teacherError}"/></c:if>
                 <div class="form-group form-group-lg">
-                    <c:if test="${errors.teacherError != null}"><page:error title="${errors.teacherError}"/></c:if>
                     <label class="col-sm-2 control-label" for="teacher">Select Teacher </label>
                     <div class="col-sm-10">
                         <select id="teacher" name="teacher" class="form-control">
