@@ -1,16 +1,14 @@
 package com.ss.teacher;
 
-/**
- * Created by rmochetc on 07.12.2016.
- */
 
     import java.util.ArrayList;
+import java.util.List;
 
     public class Teacher {
         private String firstName;
         private String lastName;
         private int id;
-        private ArrayList<Subject> subjects = new ArrayList<>();
+        private List<Subject> subjects = new ArrayList<>();
 
         public int getId() {
             return id;
@@ -55,15 +53,15 @@ package com.ss.teacher;
 
         @Override
         public String toString() {
-            return "Teacher name " + getLastName() + " " + getFirstName();
+            return   getLastName() + " " + getFirstName()+" "+getId();
         }
 
-        public ArrayList<Subject> getList() {
+        public List<Subject> getList() {
             return subjects;
         }
 
-        public void setList(ArrayList<Subject> listofLessons) {
-            this.subjects = listofLessons;
+        public void setList(List<Subject> list) {
+            this.subjects = list;
         }
     }
 

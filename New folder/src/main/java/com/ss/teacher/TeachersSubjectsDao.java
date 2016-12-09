@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ss.teacher.DBConnector;
+
 
 public class TeachersSubjectsDao {
 	public void add(Teacher teacher) {
@@ -22,7 +24,36 @@ public class TeachersSubjectsDao {
 			e.printStackTrace();
 		}
 	}
+	public void setSubject(int teacherId, int subjectId) {
+		PreparedStatement pis;
+		try {
+			pis = DBConnector.getConnection()
+					.prepareStatement("INSERT INTO teachers_subjects (subject_id,teacher_id) VALUES (?,?)");
 
+			pis.setLong(1, subjectId);
+			pis.setLong(2, teacherId);
+			pis.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public boolean delete(int subjectId, int teacherId) {
+		PreparedStatement ps;
+		try {
+			ps = DBConnector.getConnection()
+					.prepareStatement("delete from teachers_subjects where teacher_id=? and subject_id=?");
+			ps.setInt(1, teacherId);
+			ps.setInt(2, subjectId);
+			ps.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	
 	public boolean delete(Teacher teacher, Subject subject) {
 		PreparedStatement ps;
 		try {

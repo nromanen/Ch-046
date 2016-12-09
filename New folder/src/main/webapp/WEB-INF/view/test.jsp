@@ -1,16 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<h1>List of teachers</h1>
+<head>
+  <meta charset="utf-8">
+  <title>List of teachers</title>
+  <style>
+  
+  </style>
+ </head>
 
-<form action="hello" method="post">
-<!-- 
-<select id="isTitles" name="isTitles"> -->
-<select name="t">
- <c:forEach var="teacher" items="${teachers}">
-   <option name="teacher" value="${teacher.id}">${teacher.id} ${teacher.lastName} ${teacher.firstName}</option>
-    </c:forEach>
-</select>
-<input type="submit" value="Check">
+<h1>List of teachers</h1>
+<form action="/TeacherInfo" method="get">
+<table border="0">
+  <c:forEach var="teacher" items="${teachers}">
+    <tr >
+      <td>  ${teacher.id} ${teacher.lastName} ${teacher.firstName} </td>
+        <td>
+        <a href="TeacherInfo?teacher=${teacher.id}" >Details</a></td>
+    </tr>
+  </c:forEach>
+  
+</table>
 </form>
 <br>
-${id}
+
