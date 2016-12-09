@@ -87,3 +87,13 @@ th > form > button.btn-action {
     width: 130px;
     margin: 20px;
 }
+
+.alert-message {
+    display: none;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    height: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    vertical-align: middle;
+}

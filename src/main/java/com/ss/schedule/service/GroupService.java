@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class GroupService {
 
-	private JdbcGroupDao groupDao; 
+	private JdbcGroupDao groupDao;
 	private JdbcSubjectDao subjectDao;
 
 	public GroupService(String propertiesFilePath) throws SQLException {

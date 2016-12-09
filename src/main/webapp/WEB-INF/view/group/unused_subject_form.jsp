@@ -83,7 +83,7 @@
         </div>
 
         <div class="form-group col-sm-12 text-center">
-            <button type="submit" class="btn btn-primary btn-lg btn-submit">Submit</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-submit">Assign</button>
         </div>
 
     </form>

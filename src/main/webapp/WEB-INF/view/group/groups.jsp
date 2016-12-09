@@ -55,7 +55,7 @@
     </div>
     <div class="add col-sm-6">
         <form method="get" action="/groups/unused-subjects" class="text-right">
-            <button type="submit" class="btn btn-lg btn-primary btn-add btn-unused">Find Unused Subjects</button>
+            <button type="submit" class="btn btn-lg btn-primary btn-add btn-unused">Unused Subjects</button>
         </form>
     </div>
 

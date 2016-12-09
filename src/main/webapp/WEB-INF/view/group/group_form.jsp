@@ -16,9 +16,12 @@
     <link href="/resources/css/bootstrap.css" rel="stylesheet">
     <script src="/resources/js/jquery.min.js"></script>
     <script src="/resources/js/bootstrap.js"></script>
+
     <link href="/resources/css/skins/square/green.css" rel="stylesheet">
     <script src="/resources/js/icheck.js"></script>
+
     <link href="/resources/css/custom.css" rel="stylesheet">
+    <script src="/resources/js/group-validator.js"></script>
 
     <title>Groups</title>
 </head>
@@ -43,7 +46,7 @@
         <h1 class="text-center">${action} Group</h1>
     </div>
 
-    <form method="post" action="/groups/add" class="form-horizontal">
+    <form method="post" action="/groups/add" class="form-horizontal" onsubmit="return(validate());" name="group_form">
 
         <input type="hidden" name="group_id" value="${group.id}">
 
@@ -52,14 +55,20 @@
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="group_name" name="gr_name" placeholder="Enter group name"
                        value="${group.name}">
+                <div id="name-alert" class="alert alert-danger alert-message">
+                    <span id="alert-name"></span>
+                </div>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="count">Student count:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="count" name="gr_count" placeholder="Enter group count"
+                <input type="number" class="form-control" id="count" name="gr_count" placeholder="Enter group count"
                        value="${group.count eq 0 ? "" : group.count}">
+                <div id="count-alert" class="alert alert-danger alert-message">
+                    <span id="alert-count"></span>
+                </div>
             </div>
         </div>
 
@@ -94,7 +103,7 @@
         </c:if>
 
         <div class="form-group col-sm-12 text-center">
-            <button type="submit" class="btn btn-primary btn-lg btn-submit">Submit</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-submit">${action} Group</button>
         </div>
 
     </form>

@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 public class FacultyTest {
 
@@ -166,27 +165,5 @@ public class FacultyTest {
 
 		Subject subject = new Subject("QA", SubjectType.LECTURE, 2);
 		faculty.deleteSubject(subject);
-	}
-
-	@Test
-	public void testGetUnusedSubjects() throws IOException {
-		ObjectMapper mapper = new ObjectMapper();
-		List<Group> groups = mapper.readValue(groupJson, new TypeReference<List<Group>>() {
-		});
-		List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {
-		});
-
-		Faculty faculty = new Faculty("Faculty", new ArrayList<>(groups), new ArrayList<>(subjects), new ArrayList<>());
-
-		List<Subject> unusedSubjects = faculty.getUnusedSubjects();
-
-		assertEquals(unusedSubjects.size(), 7);
-		assertTrue(unusedSubjects.contains(subjects.get(11)));
-		assertTrue(unusedSubjects.contains(subjects.get(12)));
-		assertTrue(unusedSubjects.contains(subjects.get(13)));
-		assertTrue(unusedSubjects.contains(subjects.get(14)));
-		assertTrue(unusedSubjects.contains(subjects.get(15)));
-		assertTrue(unusedSubjects.contains(subjects.get(16)));
-		assertTrue(unusedSubjects.contains(subjects.get(17)));
 	}
 }

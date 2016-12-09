@@ -90,8 +90,8 @@ public class GroupFormServlet extends HttpServlet {
 
 	private void executeAddGroup(HttpServletRequest req) throws SQLException {
 		Group group = new Group();
-		group.setName(req.getParameter("gr_name"));
-		group.setCount(Integer.valueOf(req.getParameter("gr_count")));
+		group.setName(req.getParameter("gr_name").trim());
+		group.setCount(Integer.valueOf(req.getParameter("gr_count").trim()));
 		groupService.addGroup(group);
 	}
 
