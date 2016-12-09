@@ -18,6 +18,7 @@
     <script src="/resources/js/bootstrap.js"></script>
     <link href="/resources/css/skins/square/green.css" rel="stylesheet">
     <script src="/resources/js/icheck.js"></script>
+    <script src="/resources/js/unused-subject-form.js"></script>
     <link href="/resources/css/custom.css" rel="stylesheet">
 
     <title>Groups</title>
@@ -47,7 +48,7 @@
         </h2>
     </div>
 
-    <form method="post" action="/groups/unused-subjects/add">
+    <form method="post" action="/groups/unused-subjects/add" onsubmit="return hasCheckedEvenOneGroup()">
         <input type="hidden" name="subject_id" value="${subject.id}"/>
 
         <div class="col-sm-12">
@@ -84,10 +85,28 @@
         </div>
 
         <div class="form-group col-sm-12 text-center">
-            <button type="submit" class="btn btn-primary btn-lg btn-submit">Assign</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-submit" data-toggle="modal">Assign</button>
         </div>
 
     </form>
+
+    <div id="error_message" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p id="conf-message">No one group was selected! Please select at least one group.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>

@@ -107,8 +107,14 @@ button.btn-action {
     vertical-align: middle;
 }
 
-#delete_popup {
+#delete_popup,
+#error_message {
     top: 25%;
+}
+
+#delete_popup p,
+#error_message p {
+    font-size: 18px;
 }
 
 .modal-form {
