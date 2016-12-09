@@ -8,6 +8,10 @@
     padding-bottom: 30px;
 }
 
+h2.bigger {
+    font-size: 50px;
+}
+
 th > .list-group > li {
     width: 80%;
     margin-left: auto;
@@ -38,8 +42,8 @@ th > form.last-form {
     margin-bottom: 0px;
 }
 
-th > form > button.btn-action {
-    width: 60%;
+button.btn-action {
+    width: 70%;
 }
 
 .btn-add {
@@ -83,6 +87,11 @@ th > form > button.btn-action {
     float: right;
 }
 
+.subject-well {
+    background: rgb(255,240,165);
+    border-color: rgb(255,240,165);
+}
+
 .btn-submit {
     width: 130px;
     margin: 20px;
@@ -96,4 +105,13 @@ th > form > button.btn-action {
     padding-top: 5px;
     padding-bottom: 5px;
     vertical-align: middle;
+}
+
+#delete_popup {
+    top: 25%;
+}
+
+.modal-form {
+    display: inline-block;
+    margin-right: 15px;
 }

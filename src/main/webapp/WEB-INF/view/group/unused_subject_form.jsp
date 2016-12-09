@@ -40,10 +40,11 @@
 
 <div class="container">
     <div class="jumbotron">
-        <h1 class="text-center">
+        <h2 class="text-center bigger">
             Groups Selection for<br>
-            ${subject.name} ${subject.type}, course ${subject.course}
-        </h1>
+            ${subject.name} ${subject.type}<br>
+            course ${subject.course}
+        </h2>
     </div>
 
     <form method="post" action="/groups/unused-subjects/add">

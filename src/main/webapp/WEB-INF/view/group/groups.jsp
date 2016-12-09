@@ -17,6 +17,8 @@
     <link href="/resources/css/bootstrap.css" rel="stylesheet">
     <link href="/resources/css/custom.css" rel="stylesheet">
 
+    <script src="/resources/js/delete-group.js"></script>
+
     <title>Groups</title>
 </head>
 <body>
@@ -72,7 +74,7 @@
             <tbody>
             <c:forEach var="group" items="${groups}">
                 <tr>
-                    <th class="vertical-text-center text-center gr-name">${group.name}</th>
+                    <th id="group${group.id}" class="vertical-text-center text-center gr-name">${group.name}</th>
                     <th class="vertical-text-center text-center gr-amount">${group.count}</th>
                     <th class="vertical-text-center">
                         <ul class="list-group">
@@ -88,16 +90,43 @@
                                     value="${group.id}">Update
                             </button>
                         </form>
-                        <form method="post" action="/groups/delete" class="last-form">
-                            <button class="btn btn-danger btn-action" type="submit" name="group_id" value="${group.id}">Delete
-                            </button>
-                        </form>
+
+                        <button id="del-btn" class="btn btn-danger btn-action" type="button" name="group_id"
+                                onclick="confirm(${group.id})" data-toggle="modal" data-target="#delete_popup">
+                            Delete
+                        </button>
+
                     </th>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
     </div>
+
+    <div id="delete_popup" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p id="conf-message"></p>
+                </div>
+                <div class="modal-footer">
+                    <form method="post" action="/groups/delete" class="modal-form">
+                        <button id="conf-button" class="btn btn-primary btn-update" type="submit"
+                                name="group_id">
+                            Confirm
+                        </button>
+                    </form>
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Decline</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script src="/resources/js/jquery.min.js"></script>

@@ -80,7 +80,7 @@
                 <div class="col-sm-offset-2">
                     <c:forEach var="subject" items="${group_subjects}">
                         <label class="col-sm-4">
-                            <div class="well">
+                            <div class="well subject-well">
                                 <input type="checkbox" name="gr_subject" id="${subject.name}(${subject.type})"
                                        value="${subject.name} ${subject.type}" checked>
                                 <label for="${subject.name}(${subject.type})">${subject.name}</label>
@@ -90,7 +90,7 @@
                     </c:forEach>
                     <c:forEach var="subject" items="${subjects}">
                         <label class="col-sm-4">
-                            <div class="well">
+                            <div class="well subject-well">
                                 <input type="checkbox" name="gr_subject" id="${subject.name}(${subject.type})"
                                        value="${subject.name} ${subject.type}">
                                 <label for="${subject.name}(${subject.type})">${subject.name}</label>
@@ -103,7 +103,7 @@
         </c:if>
 
         <div class="form-group col-sm-12 text-center">
-            <button type="submit" class="btn btn-primary btn-lg btn-submit">${action} Group</button>
+            <button type="submit" class="btn btn-primary btn-lg">${action} Group</button>
         </div>
 
     </form>

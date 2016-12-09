@@ -14,14 +14,16 @@ function validate() {
 
     var groupName = document.group_form.gr_name.value.trim();
     if (!groupName.match(/^\s*\d{2}\s*$/) || (groupName < minGroupNameNumber || groupName > maxGroupNameNumber)) {
-        document.getElementById("alert-name").innerHTML = "You enter wrong group name! Group name consists of 2 digits from 10 to 59";
+        document.getElementById("alert-name").innerHTML = "Wrong group name! Group name consists of 2 digits " +
+            "from " + minGroupNameNumber + " to " + maxGroupCount + " inclusive";
         document.getElementById("name-alert").style.display = "block";
         isFormDataValid = false;
     }
 
     var groupCount = document.group_form.gr_count.value.trim();
     if (groupCount <= 0 || groupCount > maxGroupCount) {
-        document.getElementById("alert-count").innerHTML = "You enter wrong group count! Group count cannot be fewer 1 and greater 100";
+        document.getElementById("alert-count").innerHTML = "Wrong group count! Group count cannot be fewer 1 and " +
+            "greater " + maxGroupCount;
         document.getElementById("count-alert").style.display = "block";
         isFormDataValid = false;
     }
