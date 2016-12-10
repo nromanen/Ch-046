@@ -82,7 +82,7 @@ public class ClassroomUpdateController extends HttpServlet {
                 classroomDao.add(classroom);
             }
 
-            req.setAttribute("message", classroom.getId() != 0 ? "Classroom " + classroom.getName() + " update successfully!" : "New classroom " + classroom.getName() + " create successfully!");
+            req.setAttribute("message", classroom.getId() != 0 ? "Classroom " + classroom.getName() + " updated successfully!" : "New classroom " + classroom.getName() + " created successfully!");
             List<Classroom> classrooms = classroomDao.getAll();
             Classroom updateClassroom = classroomDao.getById(classroomDao.getEntityIdByName(classroom.getName()));
             req.setAttribute("classrooms", classrooms);

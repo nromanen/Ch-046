@@ -2,7 +2,10 @@ package com.ss.schedule.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.ss.schedule.dao.ClassroomDao;
+import com.ss.schedule.io.InputOutput;
+import com.ss.schedule.io.InputOutputClassroomTxt;
 import com.ss.schedule.io.InputOutputJson;
+import com.ss.schedule.io.InputOutputXml;
 import com.ss.schedule.model.Classroom;
 
 import javax.servlet.ServletContext;
@@ -26,12 +29,31 @@ public class DownloadFileServlet extends HttpServlet {
         ClassroomDao classroomDao = new ClassroomDao();
 
         List<Classroom> classrooms = classroomDao.getAll();
-        String filePath = "C:/Users/rmochetc/classrooms.json";
+        String type = request.getParameter("fType");
+        System.out.println(type);
+
+//        if (!type.equals("txt") || !type.equals("xml")){
+//            type = "json";
+//        }
+
+        String filePath = "classrooms."+type;
+        System.out.println(filePath);
         File downloadFile = new File(filePath);
 
-        InputOutputJson<List<Classroom>> classroomManager = new InputOutputJson<>(
-                new TypeReference<List<Classroom>>() {
-                });
+        InputOutput classroomManager = null;
+        if(type.equals("txt")){
+            classroomManager = new InputOutputClassroomTxt();
+        } else if(type.equals("xml")){
+            classroomManager = new InputOutputXml<>(
+                    new TypeReference<List<Classroom>>() {
+                    });
+        } else if(type.equals("json")) {
+            classroomManager = new InputOutputJson<>(
+                    new TypeReference<List<Classroom>>() {
+                    });
+        } else {
+            throw  new RuntimeException("Some shits!");
+        }
 
         classroomManager.writeToFile(filePath, classrooms);
         FileInputStream inStream = new FileInputStream(downloadFile);

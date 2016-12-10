@@ -36,29 +36,17 @@
                             <li><a href="#">All Groups</a></li>
                             <li><a href="#">All classrooms</a></li>
                             <li><a href="#">All Subjects</a></li>
-
-                            <li><a href="#">Add new classroom</a></li>
-                            <li><a href="#">Add new Group</a></li>
-                            <li><a href="#">Add new Subject</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="#">Schedule</a></li>
                         </ul>
                     </li>
-                    <%--<li><a href="#">News</a></li>--%>
-                    <li><a href="contact.jsp">Contact</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <form class="navbar-form navbar-left" role="search" method="get" action="#">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search employee" name="search">
-                        </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </form>
-
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">Contact</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
+
     <h1  class="text-center" >SCHEDULE MAKER</h1>
     <c:if test = "${isResult  == false}">
         <div class="col-md-2"></div>

@@ -1,0 +1,202 @@
+create table subjects(id serial, name varchar(50), type_id integer references subjecttypes(id), course integer, PRIMARY KEY(id))
+
+insert into subjects (name, type_id, course) values ('Algebra',1,2);
+insert into subjects (name, type_id, course) values ('Algebra',3,2);
+insert into subjects (name, type_id, course) values ('Python',1, null);
+insert into subjects (name, type_id, course) values ('Python',4, null);
+insert into subjects (name, type_id, course) values ('Python',3, null);
+insert into subjects (name, type_id, course) values ('Philosophy',1, null);
+insert into subjects (name, type_id, course) values ('Philosophy',2, null);
+insert into subjects (name, type_id, course) values ('Algebra',1, 1);
+insert into subjects (name, type_id, course) values ('Algebra',3, 1);
+insert into subjects (name, type_id, course) values ('.Net',1, null);
+insert into subjects (name, type_id, course) values ('.Net',3, null);
+insert into subjects (name, type_id, course) values ('C++',1, null);
+insert into subjects (name, type_id, course) values ('C++',3, null);
+insert into subjects (name, type_id, course) values ('C++',4, null);
+insert into subjects (name, type_id, course) values ('MA',1, 2);
+insert into subjects (name, type_id, course) values ('MA',3, 2);
+insert into subjects (name, type_id, course) values ('MA',1, 1);
+insert into subjects (name, type_id, course) values ('MA',3, 1);
+insert into subjects (name, type_id, course) values ('MA',3, 3);
+insert into subjects (name, type_id, course) values ('Transformation',2, null);
+
+
+create table groups(id serial, name varchar(50), student_count integer, parent_id INTEGER references groups(id), PRIMARY KEY ( id ))
+
+insert into groups(name, student_count) values ('11', 20);
+insert into groups(name, student_count) values ('12', 22);
+insert into groups(name, student_count) values ('13', 5);
+insert into groups(name, student_count) values ('14', 7);
+insert into groups(name, student_count) values ('21', 10);
+insert into groups(name, student_count) values ('22', 9);
+insert into groups(name, student_count) values ('23', 5);
+insert into groups(name, student_count) values ('24', 4);
+insert into groups(name, student_count) values ('31', 12);
+insert into groups(name, student_count) values ('32', 7);
+insert into groups(name, student_count) values ('33', 6);
+insert into groups(name, student_count) values ('34', 7);
+
+
+create table groups_subjects (id serial, groups_id integer references groups(id), subjects_id integer references subjects(id));
+
+insert into groups_subjects (groups_id, subjects_id) values (1, 8);
+insert into groups_subjects (groups_id, subjects_id) values (1, 9);
+insert into groups_subjects (groups_id, subjects_id) values (1, 6);
+insert into groups_subjects (groups_id, subjects_id) values (1, 7);
+insert into groups_subjects (groups_id, subjects_id) values (2, 8);
+insert into groups_subjects (groups_id, subjects_id) values (2, 9);
+insert into groups_subjects (groups_id, subjects_id) values (2, 6);
+insert into groups_subjects (groups_id, subjects_id) values (2, 7);
+insert into groups_subjects (groups_id, subjects_id) values (3, 8);
+insert into groups_subjects (groups_id, subjects_id) values (3, 9);
+insert into groups_subjects (groups_id, subjects_id) values (3, 6);
+insert into groups_subjects (groups_id, subjects_id) values (3, 7);
+insert into groups_subjects (groups_id, subjects_id) values (4, 8);
+insert into groups_subjects (groups_id, subjects_id) values (4, 9);
+insert into groups_subjects (groups_id, subjects_id) values (4, 6);
+insert into groups_subjects (groups_id, subjects_id) values (4, 7);
+insert into groups_subjects (groups_id, subjects_id) values (5, 3);
+insert into groups_subjects (groups_id, subjects_id) values (5, 4);
+insert into groups_subjects (groups_id, subjects_id) values (5, 5);
+insert into groups_subjects (groups_id, subjects_id) values (6, 3);
+insert into groups_subjects (groups_id, subjects_id) values (6, 4);
+insert into groups_subjects (groups_id, subjects_id) values (6, 5);
+insert into groups_subjects (groups_id, subjects_id) values (7, 1);
+insert into groups_subjects (groups_id, subjects_id) values (7, 2);
+insert into groups_subjects (groups_id, subjects_id) values (8, 1);
+insert into groups_subjects (groups_id, subjects_id) values (8, 1);
+insert into groups_subjects (groups_id, subjects_id) values (9, 10);
+insert into groups_subjects (groups_id, subjects_id) values (9, 11);
+insert into groups_subjects (groups_id, subjects_id) values (10, 10);
+insert into groups_subjects (groups_id, subjects_id) values (10, 11);
+insert into groups_subjects (groups_id, subjects_id) values (11, 20);
+insert into groups_subjects (groups_id, subjects_id) values (12, 19);
+
+
+
+create table teachers(id serial not null, firstname varchar(30), lastname varchar(30), primary key (id))
+
+
+insert into teachers(firstname, lastname) values ('Ivan', 'Petrov');
+insert into teachers(firstname, lastname) values ('Iryna', 'Shvets');
+insert into teachers(firstname, lastname) values ('Leonid', 'Shvets');
+insert into teachers(firstname, lastname) values ('Ivan', 'Dolin');
+insert into teachers(firstname, lastname) values ('Galyna', 'Dorosh');
+insert into teachers(firstname, lastname) values ('Petro', 'Ponchyuk');
+
+
+create table teachers_subjects (id serial, teachers_id integer references teachers(id), subjects_id integer references subjects(id));
+
+insert into teachers_subjects (teachers_id, subjects_id) values(1,1);
+insert into teachers_subjects (teachers_id, subjects_id) values(1,5);
+insert into teachers_subjects (teachers_id, subjects_id) values(1,10);
+insert into teachers_subjects (teachers_id, subjects_id) values(2,1);
+insert into teachers_subjects (teachers_id, subjects_id) values(2,5);
+insert into teachers_subjects (teachers_id, subjects_id) values(2,12);
+insert into teachers_subjects (teachers_id, subjects_id) values(3,1);
+insert into teachers_subjects (teachers_id, subjects_id) values(3,5);
+insert into teachers_subjects (teachers_id, subjects_id) values(3,12);
+insert into teachers_subjects (teachers_id, subjects_id) values(4,6);
+insert into teachers_subjects (teachers_id, subjects_id) values(4,11);
+insert into teachers_subjects (teachers_id, subjects_id) values(4,13);
+insert into teachers_subjects (teachers_id, subjects_id) values(5,2);
+insert into teachers_subjects (teachers_id, subjects_id) values(5,3);
+insert into teachers_subjects (teachers_id, subjects_id) values(5,12);
+insert into teachers_subjects (teachers_id, subjects_id) values(5,10);
+insert into teachers_subjects (teachers_id, subjects_id) values(5,11);
+insert into teachers_subjects (teachers_id, subjects_id) values(5,13);
+insert into teachers_subjects (teachers_id, subjects_id) values(6,11);
+insert into teachers_subjects (teachers_id, subjects_id) values(6,10);
+insert into teachers_subjects (teachers_id, subjects_id) values(6,9);
+insert into teachers_subjects (teachers_id, subjects_id) values(6,6);
+insert into teachers_subjects (teachers_id, subjects_id) values(6,7);
+
+
+create table pairs(id serial not null, name varchar(40), primary key(id));
+
+insert into pairs(name) values ('FIRST');
+insert into pairs(name) values ('SECOND');
+insert into pairs(name) values ('THIRD');
+insert into pairs(name) values ('FORTH');
+insert into pairs(name) values ('FIFTH');
+insert into pairs(name) values ('SIXTH');
+insert into pairs(name) values ('SEVENTH');
+insert into pairs(name) values ('EIGHTS');
+insert into pairs(name) values ('NINTH');
+insert into pairs(name) values ('TENTH');
+
+create table dayofweeks(id serial not null, name varchar(40), primary key(id));
+
+insert into dayofweeks(name) values ('MONDAY');
+insert into dayofweeks(name) values ('TUESDAY');
+insert into dayofweeks(name) values ('WEDNESDAY');
+insert into dayofweeks(name) values ('THURSDAY');
+insert into dayofweeks(name) values ('FRIDAY');
+
+create table oddnes(id serial not null, name varchar(40), primary key(id));
+
+insert into oddnes(name) values ('ODD');
+insert into oddnes(name) values ('EVEN');
+insert into oddnes(name) values ('ALL');
+
+create table timeTeble (d integer references pairs(id), teachers_id integer references teachers(id), groups_id integer references groups(id), dayofweeks_id integer references dayofweeks(id), oddnes_id integer references oddnes(id), classrooms_id integer references classrooms(id), primary key(id));
+
+
+
+
+public class Main {
+
+
+    public static void main(String[] args) {
+
+        List<Group> groups = GroupsBundle.getAll();
+        for (Group group :
+                getSubGroup(groups)) {
+            System.out.println(group.getName() + " " + group.getSubjects().get(0).getName()+ "/" + group.getSubjects().get(0).getType() + "  "+group.getCount() + " || patent: " + group.getParent().getName());
+        }
+
+    }
+
+    public static List<Group> getSubGroup(List<Group> groups){
+
+
+        List<Group> subGroups = new ArrayList<>();
+        for (Group group :groups ) {
+            for (Subject subject: group.getSubjects()){
+                if(subject.getType().equals(SubjectType.LAB) || subject.getType().equals(SubjectType.PRACTICE)){
+                    int n = group.getCount()/subject.getType().getMaxStudentAmount();
+                    //System.out.println(group.getName() + "||||||"+subject.toString() + n + "");
+                    if(n!=0) {
+                        for (int i = 0; i < n ; i++) {
+                            Group sGroup = new Group();
+                            List<Subject> sGroupSubject = new ArrayList<>();
+                            sGroupSubject.add(subject);
+                            sGroup.setSubjects(sGroupSubject);
+                            sGroup.setName(group.getName() + "_" + (i+1));
+                            sGroup.setCount(group.getCount() / (n+1));
+                            sGroup.setParent(group);
+                            subGroups.add(sGroup);
+                        }
+
+                        Group sGroup = new Group();
+                        List<Subject> sGroupSubject = new ArrayList<>();
+                        sGroupSubject.add(subject);
+                        sGroup.setSubjects(sGroupSubject);
+                        sGroup.setName(group.getName() + "_" + (n + 1));
+                        sGroup.setCount(group.getCount() - (group.getCount() / (n+1)) * n);
+                        sGroup.setParent(group);
+                        subGroups.add(sGroup);
+                    }
+
+                }
+            }
+        }
+        return subGroups;
+
+    }
+}
+
+
+  
+ 

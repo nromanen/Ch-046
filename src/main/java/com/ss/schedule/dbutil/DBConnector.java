@@ -1,16 +1,16 @@
 package com.ss.schedule.dbutil;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  * Created by rmochetc on 27.11.16.
  */
 public class DBConnector {
-    private static final String DBURL = "jdbc:postgresql://127.0.0.1:5432/institute";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "1123581321";
+
 
     private static Connection connection = null;
 
@@ -19,9 +19,21 @@ public class DBConnector {
             return connection;
         else {
             try {
-                Class.forName("org.postgresql.Driver");
-                connection = DriverManager.getConnection(DBURL, USER, PASSWORD);
-            } catch (ClassNotFoundException | SQLException e) {
+                Properties prop=new Properties();
+
+                prop.load(DBConnector.class.getResourceAsStream("dbConnection.properties"));
+
+                String drivers = prop.getProperty("jdbc.drivers");
+                String connectionURL = prop.getProperty("jdbc.url");
+                String username = prop.getProperty("jdbc.username");
+                String password = prop.getProperty("jdbc.password");
+                Class.forName(drivers);
+                connection=DriverManager.getConnection(connectionURL,username,password);
+                System.out.println("Connection Successful");
+
+
+
+            } catch (ClassNotFoundException | SQLException | IOException e) {
                 e.printStackTrace();
             }
             return connection;
