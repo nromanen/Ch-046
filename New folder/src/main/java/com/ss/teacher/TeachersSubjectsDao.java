@@ -108,5 +108,27 @@ public class TeachersSubjectsDao {
 
 			return subjectsList;
 		}
+	 // returns list of subjects without teachers subjects
+	 public List<Subject> getUnusedSubjects(int teacherId)
+	 {
+		 List<Subject> subjectsList = new ArrayList<>();
+		 PreparedStatement ps;
+		try {
+			ps = DBConnector.getConnection()
+						.prepareStatement("select name,type,course,id from subjects where id not in"
+			+ " (select subject_id from teachers_subjects join subjects  on teachers_subjects.subject_id=subjects.id where teachers_subjects.teacher_id=?)");
+			ps.setInt(1, teacherId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Subject subject = new Subject(rs.getString("name"), SubjectType.valueOf(rs.getString("type")), rs.getInt("course"));
+				subject.setId(rs.getInt("id"));
+				subjectsList.add(subject);}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return subjectsList;
+			
+	 }
 }
 

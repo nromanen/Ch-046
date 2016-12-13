@@ -6,21 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="style.css">
-<title>Teachers subjects</title>
+<title>Teacher error</title>
 </head>
 <body>
-<h1>${name}</h1><br>
-<table id="subjectView">
-<tr>
-    <th>Title </th>
-     <th>Type </th>
-      <th>Course </th>
-   </tr>
-<c:forEach var="subject" items="${subjects}">
-   
-   <tr><td> ${subject.name}</td><td>${subject.type}</td><td>${subject.course} </td></tr>
-  <%--  <> ${subject.id} ${subject.name} ${subject.type} ${subject.course}  --%>
-   </c:forEach>
- </table>
+<div class="teacherError">
+<h1>Fail</h1><br>
+<p>${error}</p>
+</div>
 </body>
 </html>

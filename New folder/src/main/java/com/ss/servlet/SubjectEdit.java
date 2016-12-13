@@ -34,10 +34,7 @@ public class SubjectEdit extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		System.out.println(request.getParameter("teacherId"));
-		System.out.println(request.getParameter("subjectId"));
+		
 		TeachersSubjectsDao tsd = new TeachersSubjectsDao();
 		TeacherDao td = new TeacherDao();
 		int teacherId = Integer.parseInt(request.getParameter("teacherId"));
@@ -56,8 +53,7 @@ public class SubjectEdit extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println(request.getParameter("teacherId"));
-		System.out.println(request.getParameter("subjectId"));
+		
 		TeachersSubjectsDao tsd = new TeachersSubjectsDao();
 		TeacherDao td = new TeacherDao();
 		int teacherId = Integer.parseInt(request.getParameter("teacherId"));

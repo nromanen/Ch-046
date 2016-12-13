@@ -5,47 +5,54 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+ <link rel="stylesheet" href="style.css">
+<title>Teachers info</title>
+
+
 </head>
 <body>
 <h1>Teacher's info </h1>
 <h1>${name}</h1><br>
  <form action="TeacherInfo" method="post">
        <table border="0">
+       
           <tr>
-             <td>Edit firstname</td>
-             <td><input type="text" name="firstame" value= "${firstname}" /> </td>
+             <td> Firstname</td>
+             <td><input type="text" name="firstname" value= "${firstname}" /> </td>
           </tr>
           <tr>
-             <td>Edit lastname</td>
+             <td> Lastname</td>
              <td><input type="text" name="lastname" value= "${lastname}" /> </td>
           </tr>
            <tr>
              <td>Id</td>
              <td> ${id} </td>
+            <input type="text" hidden name="teacherId" value="${id}" />
           </tr>
           
           <tr>
              <td colspan ="2">
             
-                <input type="submit" id = "submit" value="Save" style="width: 80px ; height:24px; text-align: center;border-radius: 10px 10px 10px 10px;"/> 
-               
+                <input type="submit" value="Save" class="button"/> </form>
+                            
              </td>
           </tr>
        </table>
-   </form>
+   
 
 <p>List of subjects<p>
 <form action="SubjectEdit" method="post">
-<table border="0">
-<c:forEach var="subject" items="${subjects}">
-   <tr>
-    <td> ${subject.id} ${subject.name} ${subject.type} ${subject.course} </td>
-   <td> <a href="SubjectEdit?subjectId=${subject.id}&teacherId=${id}" >Delete</a></td>
-    <%-- <input type="text" hidden name="teacherId" value="${id}" > --%>
-   
-   <!--  <th> <input type="submit" id="submit" name="teacherId" value="Delete" style="width: 80px ; height:24px; text-align: center;border-radius: 10px 10px 10px 10px;"/> </th> -->
+<table class="table2">
+<tr>
+    <th>Title </th>
+     <th>Type </th>
+      <th>Course </th>
+       <th>Action </th>
    </tr>
+<c:forEach var="subject" items="${subjects}">
+   <tr><td> ${subject.name}</td><td>${subject.type}</td><td>${subject.course} </td>
+   <td> <a href="SubjectEdit?subjectId=${subject.id}&teacherId=${id}" >Delete</a></td></tr>
+      
    </c:forEach>
  </table>
  </form>
@@ -56,8 +63,8 @@
    <option  value="${subject.id}">${subject.id} ${subject.name} ${subject.type} ${subject.course}</option>
     </c:forEach>
 </select>
-<input type="text" hidden name="teacher" value="${id}" >
-  <input type="submit" id="submit" name="submit" value="Add subject" style="width: 100px ; height:24px; text-align: center;border-radius: 10px 10px 10px 10px;"/> 
+<input type="text" hidden name="teacher" value="${id}" />
+  <input type="submit" class="button1" id="submit" name="submit" value="Add subject"/> 
  </form>
 </body>
 </html>

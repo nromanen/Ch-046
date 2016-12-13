@@ -3,6 +3,7 @@ package com.ss.teacher;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,5 +54,50 @@ public class TeacherDao {
 	            return null;
 	        }
 	    }
-    
+    public boolean update(int id, String firstname, String lastname) {
+		 PreparedStatement ps;
+	        try {
+	            ps = DBConnector.getConnection().prepareStatement("UPDATE teachers set firstname=?,lastname=? where id=?");
+	            ps.setString(1, firstname);
+	            ps.setString(2, lastname);
+	            ps.setInt(3, id);
+	            ps.executeUpdate();
+	            return true;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+    public boolean add(Teacher teacher) {
+		try {
+			PreparedStatement ps = DBConnector.getConnection().prepareStatement("INSERT INTO teachers (firstname,lastname) VALUES (?,?)",
+					Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, teacher.getFirstName());
+			ps.setString(2, teacher.getLastName());
+			ps.executeUpdate();
+			ResultSet generatedKeys = ps.getGeneratedKeys();
+			int id = 0;
+			while (generatedKeys.next()) {
+				id = generatedKeys.getInt(1);
+			}
+			teacher.setId(id);
+			new TeachersSubjectsDao().add(teacher);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+    public boolean delete(int id) {
+		try {
+			PreparedStatement ps = DBConnector.getConnection().prepareStatement("DELETE FROM teachers WHERE id=?");
+			ps.setLong(1, id);
+			ps.executeUpdate();
+
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-@WebServlet(urlPatterns = {"/hello", "/"})
+@WebServlet(urlPatterns = {"/hello"})
 public class TestServlet extends HttpServlet {
 
 	// displays teachers list on main page
@@ -30,17 +30,15 @@ public class TestServlet extends HttpServlet {
     // adds subject connected with teacher in teachers_subjects
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    	System.out.println("started");
+    	
     	TeacherDao td = new TeacherDao();
     	TeachersSubjectsDao tsd = new TeachersSubjectsDao();
     	 int teacherId = Integer.parseInt(req.getParameter("teacher"));
     	 int subjectId = Integer.parseInt(req.getParameter("subject"));
     	 String teacherName = td.getById(teacherId).toString();
-    	 tsd.setSubject(teacherId,subjectId);
+       	 tsd.setSubject(teacherId,subjectId);
     	 List<Subject> list = tsd.getSubjects(teacherId);
-    	 System.out.println("teacherid"+teacherId);
-    	 System.out.println("subjectId"+subjectId);
-    	 System.out.println(list);
+    	 req.setAttribute("name", teacherName);
     	 req.setAttribute("subjects",list);
     	 req.getRequestDispatcher("/WEB-INF/view/subjectView.jsp").forward(req, resp);
     }
