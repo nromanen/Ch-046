@@ -41,7 +41,8 @@ public class UploadServlet extends HttpServlet {
 
     public void init( ){
         // Get the file location where it would be stored.
-        filePath = getServletContext().getInitParameter("file-upload");
+        //filePath = getServletContext().getInitParameter("file-upload");
+        filePath = "C:\\temp\\";
     }
     public void doPost(HttpServletRequest req,
                        HttpServletResponse resp)
@@ -55,7 +56,7 @@ public class UploadServlet extends HttpServlet {
         // maximum size that will be stored in memory
         factory.setSizeThreshold(maxMemSize);
         // Location to save data that is larger than maxMemSize.
-        factory.setRepository(new File("c:\\temp"));
+        factory.setRepository(new File("C:\\temp"));
 
         // Create a new file upload handler
         ServletFileUpload upload = new ServletFileUpload(factory);
@@ -86,7 +87,9 @@ public class UploadServlet extends HttpServlet {
                         file = new File( filePath +
                                 fileName.substring(fileName.lastIndexOf("\\")+1)) ;
                     }
-                    fi.write( file ) ;
+                    fi.write( file );
+
+                    System.out.println(file.getAbsolutePath());
 
                     isAdded = addClassroomsToDB(file.getAbsolutePath());
                 }

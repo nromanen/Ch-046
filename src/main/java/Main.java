@@ -1,5 +1,10 @@
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.ss.schedule.controllers.GroupsBundle;
 import com.ss.schedule.dao.ClassroomDao;
+import com.ss.schedule.dao.GroupDao;
+import com.ss.schedule.dao.TimeTableDao;
+import com.ss.schedule.io.InputOutputJson;
+import com.ss.schedule.model.Classroom;
 import com.ss.schedule.model.Group;
 import com.ss.schedule.model.Subject;
 import com.ss.schedule.model.SubjectType;
@@ -23,7 +28,11 @@ public class Main {
             System.out.println(group.getName() + " " + group.getSubjects().get(0).getName()+ "/" + group.getSubjects().get(0).getType() + "  "+group.getCount() + " || patent: " + group.getParent().getName());
         }
 
-        ClassroomDao classroomDao = new ClassroomDao();
+        GroupDao groupDao = new GroupDao();
+        System.out.println(groupDao.getAll());
+
+        TimeTableDao timeTableDao = new TimeTableDao();
+        System.out.println(timeTableDao.isTimeTable(1,7));
 
     }
 

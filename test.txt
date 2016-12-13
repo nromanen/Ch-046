@@ -1,6 +1,0 @@
--------
-name: Alex;
-age: 21;
-male;
--------
-end of file;

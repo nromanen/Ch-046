@@ -1,4 +1,4 @@
-create table subjects(id serial, name varchar(50), type_id integer references subjecttypes(id), course integer, PRIMARY KEY(id))
+create table subjects(id serial, name varchar(50), type_id integer references subjecttypes(id), course integer, PRIMARY KEY(id));
 
 insert into subjects (name, type_id, course) values ('Algebra',1,2);
 insert into subjects (name, type_id, course) values ('Algebra',3,2);
@@ -22,7 +22,7 @@ insert into subjects (name, type_id, course) values ('MA',3, 3);
 insert into subjects (name, type_id, course) values ('Transformation',2, null);
 
 
-create table groups(id serial, name varchar(50), student_count integer, parent_id INTEGER references groups(id), PRIMARY KEY ( id ))
+create table groups(id serial, name varchar(50), student_count integer, parent_id INTEGER references groups(id), PRIMARY KEY ( id ));
 
 insert into groups(name, student_count) values ('11', 20);
 insert into groups(name, student_count) values ('12', 22);
@@ -75,7 +75,7 @@ insert into groups_subjects (groups_id, subjects_id) values (12, 19);
 
 
 
-create table teachers(id serial not null, firstname varchar(30), lastname varchar(30), primary key (id))
+create table teachers(id serial not null, firstname varchar(30), lastname varchar(30), primary key (id));
 
 
 insert into teachers(firstname, lastname) values ('Ivan', 'Petrov');
@@ -140,63 +140,26 @@ insert into oddnes(name) values ('ODD');
 insert into oddnes(name) values ('EVEN');
 insert into oddnes(name) values ('ALL');
 
-create table timeTeble (d integer references pairs(id), teachers_id integer references teachers(id), groups_id integer references groups(id), dayofweeks_id integer references dayofweeks(id), oddnes_id integer references oddnes(id), classrooms_id integer references classrooms(id), primary key(id));
+create table timeTable (id serial not null, subjects_id integer references subjects(id), pairs_id integer references pairs(id), teachers_id integer references teachers(id), groups_id integer references groups(id), dayofweeks_id integer references dayofweeks(id), oddnes_id integer references oddnes(id), classrooms_id integer references classrooms(id), primary key(id));
+
+-- insert into timetable (subjects_id, pairs_id, teachers_id, groups_id, dayofweeks_id, oddnes_id, classrooms_id) values (2,2,2,2,2,2,95);
+
+select groups_id, groups.name,
+subjects_id, subjects.name,
+teachers_id,  teachers.lastname, teachers.firstname,
+dayofweeks_id, dayofweeks.name,
+pairs_id, pairs.name,
+oddnes_id, oddnes.name,
+classrooms_id, classrooms.name
+from timetable
+join subjects on subjects.id = subjects_id
+join teachers on teachers.id = teachers_id
+join pairs on pairs.id = pairs_id
+join groups on groups.id = groups_id
+join dayofweeks on dayofweeks.id = dayofweeks_id
+join oddnes on oddnes.id = oddnes_id
+join classrooms on classrooms.id = classrooms_id
+where timetable.id = 1;
 
 
-
-
-public class Main {
-
-
-    public static void main(String[] args) {
-
-        List<Group> groups = GroupsBundle.getAll();
-        for (Group group :
-                getSubGroup(groups)) {
-            System.out.println(group.getName() + " " + group.getSubjects().get(0).getName()+ "/" + group.getSubjects().get(0).getType() + "  "+group.getCount() + " || patent: " + group.getParent().getName());
-        }
-
-    }
-
-    public static List<Group> getSubGroup(List<Group> groups){
-
-
-        List<Group> subGroups = new ArrayList<>();
-        for (Group group :groups ) {
-            for (Subject subject: group.getSubjects()){
-                if(subject.getType().equals(SubjectType.LAB) || subject.getType().equals(SubjectType.PRACTICE)){
-                    int n = group.getCount()/subject.getType().getMaxStudentAmount();
-                    //System.out.println(group.getName() + "||||||"+subject.toString() + n + "");
-                    if(n!=0) {
-                        for (int i = 0; i < n ; i++) {
-                            Group sGroup = new Group();
-                            List<Subject> sGroupSubject = new ArrayList<>();
-                            sGroupSubject.add(subject);
-                            sGroup.setSubjects(sGroupSubject);
-                            sGroup.setName(group.getName() + "_" + (i+1));
-                            sGroup.setCount(group.getCount() / (n+1));
-                            sGroup.setParent(group);
-                            subGroups.add(sGroup);
-                        }
-
-                        Group sGroup = new Group();
-                        List<Subject> sGroupSubject = new ArrayList<>();
-                        sGroupSubject.add(subject);
-                        sGroup.setSubjects(sGroupSubject);
-                        sGroup.setName(group.getName() + "_" + (n + 1));
-                        sGroup.setCount(group.getCount() - (group.getCount() / (n+1)) * n);
-                        sGroup.setParent(group);
-                        subGroups.add(sGroup);
-                    }
-
-                }
-            }
-        }
-        return subGroups;
-
-    }
-}
-
-
-  
- 
+--select count(id) from timetable where subjects_id = 1 and groups_id = 1;

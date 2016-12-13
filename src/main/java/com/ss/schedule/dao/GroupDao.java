@@ -45,7 +45,7 @@ public class GroupDao extends AbstractDao<Group> {
     @Override
     public List<Group> getAll() {
         List <Group> list = new ArrayList<>();
-        String sql = "SELECT * FROM group";
+        String sql = "SELECT * FROM groups";
         try(Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()){
@@ -61,7 +61,7 @@ public class GroupDao extends AbstractDao<Group> {
         Group group = new Group();
         group.setId(rs.getInt("id"));
         group.setName(rs.getString("name"));
-        group.setCount(rs.getInt("count"));
+        group.setCount(rs.getInt("student_count"));
         group.setParent(getById(rs.getInt("parent_id")));
 
         return group;

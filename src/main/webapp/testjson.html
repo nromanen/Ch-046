@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../../../assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../../assets/css/test.css">
+    <link rel="stylesheet" href="../../../assets/css/jquery-confirm.min.css">
+</head>
+<body>
+
+<button id="testGet" > submit ajax</button>
+<div id="result"></div>
+
+
+<div id="dialogoverlay"></div>
+<div id="dialogbox">
+    <div>
+        <div id="dialogboxhead"></div>
+        <div id="dialogboxbody"></div>
+        <div id="dialogboxfoot"></div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+
+    window.addEventListener("load", init, false);
+
+
+    function init () {
+        console.log('init');
+        testGet.addEventListener("click", ajaxget, false);
+
+    }
+
+
+    function ajaxget(){
+        console.log("ajax");
+        $.ajax({
+            type : "GET", // http method
+            url : "/testajax", // the endpoint
+            data : {
+                group : 666,
+                subject: 666
+            },
+
+            success : function(json) {
+
+                console.log(json);
+                console.log("success");
+                if(json.value1 == "true"){
+                    console.log("true");
+                    Confirm.render('Do you want add subject to timetable ?','post','/', {"flammable": "inflammable", "duh": "no duh"});
+                    //goToUrl('get', '/classrooms', "test");
+                } else{
+                    console.log("false");
+                    goToUrl('get', '/classrooms', "test");
+                }
+
+
+            }
+        });
+
+    }
+
+
+    function goToUrl(method, url, obj){
+
+        if (method == "get"){
+            window.location.href = url;
+        } else if( method == "post"){
+
+
+
+//            var obj = {
+//                "flammable": "inflammable",
+//                "duh": "no duh"
+//            };
+            //obj = $.parseJSON(obj);
+            console.log(obj);
+
+
+            $.each( obj, function( key, value ) {
+                console.log( key + ": " + value );
+            });
+
+            var form = '';
+            $.each( obj, function( key, value ) {
+                form += '<input type="hidden" name="'+key+'" value="'+value+'">';
+
+            });
+            console.log(form);
+            //$('<form action="' + url + '" method="POST">' + form + '</form>').appendTo($(document.body)).submit();
+        } else {
+            throw new Error("ERROR! Not supported method's type!")
+        }
+
+
+    }
+    function CustomConfirm(){
+        var method, url, args;
+
+        this.render = function(message, method1, url1, args1){
+            method = method1;
+            url = url1;
+            args = args1;
+
+            var winW = window.innerWidth;
+            var winH = window.innerHeight;
+            var dialogoverlay = document.getElementById('dialogoverlay');
+            var dialogbox = document.getElementById('dialogbox');
+            dialogoverlay.style.display = "block";
+            dialogoverlay.style.height = winH+"px";
+            dialogbox.style.left = (winW/2) - (550 * .5)+"px";
+            dialogbox.style.top = "100px";
+            dialogbox.style.display = "block";
+
+            document.getElementById('dialogboxhead').innerHTML = "Confirm that action";
+            document.getElementById('dialogboxbody').innerHTML = message;
+            document.getElementById('dialogboxfoot').innerHTML = '<button class=\'btn-md btn-success\' onclick="Confirm.yes()">Yes</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class=\'btn-md btn-danger\' onclick="Confirm.no()">No</button>';
+        };
+        this.no = function(){
+            document.getElementById('dialogbox').style.display = "none";
+            document.getElementById('dialogoverlay').style.display = "none";
+        };
+        this.yes = function(){
+
+            goToUrl(method, url, args);
+
+            document.getElementById('dialogbox').style.display = "none";
+            document.getElementById('dialogoverlay').style.display = "none";
+        }
+    }
+    var Confirm = new CustomConfirm();
+
+
+
+
+
+</script>
+</body>
+</html>

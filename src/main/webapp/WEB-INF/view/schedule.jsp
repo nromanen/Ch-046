@@ -7,52 +7,19 @@
 
 <html>
 <head>
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="/assets/css/main.css">
-
+    <page:css/>
 </head>
 <body>
 
 <div class="container">
 
-    <nav class="navbar navbar-default navbar-inverse" style="border-radius:0px !important; margin-bottom:0px;">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/classrooms">UNIVERSITY</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">All Groups</a></li>
-                            <li><a href="#">All classrooms</a></li>
-                            <li><a href="#">All Subjects</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Schedule</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">News</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-
-    <h1  class="text-center" >SCHEDULE MAKER</h1>
+    <page:header/>
+    <h1  class="text-center" >SCHEDULE MAKER without web.xml</h1>
     <c:if test = "${isResult  == false}">
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <h3 class="text-center">Select Group add Subject to create Time Table</h3>
-            <form class="form-horizontal" action="/schedule" method="post">
+            <form class="form-horizontal">
                 <div class="form-group form-group-lg">
                     <label class="col-sm-2 control-label" for="group">Group </label>
                     <div class="col-sm-10">
@@ -77,201 +44,171 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group form-group-lg">
-                    <div class="col-sm-2 control-label" >
-                        <input type="submit" name="submit" value="Get classrooms" class="btn btn-info " id="submitRoom" disabled>
-                    </div>
-                </div>
             </form>
+            <div class="col-sm-2 control-label" >
+                <button class="btn btn-info " id="checkSubject" disabled>Next</button>
+            </div>
         </div>
     </c:if>
 
     <c:if test = "${isResult  == true}">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-            <h3 class="text-center">Available classroom(s) for Group-${group.name}(${group.count} students) and ${subject.name}(${subject.type})</h3>
-
-            <c:if test="${errors.groupError != null}"><page:error title="${errors.groupError}"/></c:if>
-            <c:if test="${errors.classroomError != null}"><page:error title="${errors.classroomError}"/></c:if>
-            <h3 class="text-center">Select Classroom, Day of week add Pair Number to create new Pair</h3>
-            <form class="form-horizontal" action="/pair" method="post">
-                <input type="hidden" id="groupAdd" name="groupAdd" value="${group.id}">
-                <input type="hidden" id="subjectAdd" name="subjectAdd" value="${subject.id}">
-                <div class="form-group form-group-lg">
-                    <label class="col-sm-2 control-label" for="day">Select Day </label>
-                    <div class="col-sm-10">
-                        <select id="day" name="day" class="form-control">
-                            <c:forEach var="d" items="${days}">
-                                <option value="${d}"
-                                        <c:if test = "${d == currentDay}"> selected</c:if>
-
-                                >${d}</option>
-                            </c:forEach>
-                        </select>
+        <c:if test="${warningMessage!=null}">
+            <div class="row" id="warning">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="alert alert-warning">${warningMessage}&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success" id="warningYes">&nbsp;&nbsp;&nbsp;Yes&nbsp;&nbsp;&nbsp;</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a type="button" class="btn btn-warning" href="/">&nbsp;&nbsp;&nbsp;No&nbsp;&nbsp;&nbsp;</a>
                     </div>
                 </div>
-                <div class="form-group form-group-lg">
-                    <label class="col-sm-2 control-label" for="pair">Select Pair </label>
-                    <div class="col-sm-10">
-                        <select id="pair" name="pair" class="form-control">
+            </div>
+        </c:if>
 
-                            <c:forEach var="p" items="${pairs}">
-                                <option value="${p}"
-                                        <c:if test = "${p == currentPair}"> selected</c:if>
-                                >${p}</option>
-                            </c:forEach>
-                        </select>
+        <div class="row" id="mainContent" <c:if test="${warningMessage!=null}">style="display: none;" </c:if>>
+            <c:if test="${warningStreamMessage!=null}">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="alert alert-warning">${warningStreamMessage}</div>
                     </div>
                 </div>
-                <c:if test="${errors.teacherError != null}"><page:error title="${errors.teacherError}"/></c:if>
-                <div class="form-group form-group-lg">
-                    <label class="col-sm-2 control-label" for="teacher">Select Teacher </label>
-                    <div class="col-sm-10">
-                        <select id="teacher" name="teacher" class="form-control">
+            </c:if>
 
-                            <c:forEach var="t" items="${teachers}">
-                                <option value="${t.id}"
-                                        <c:if test = "${t.id == currentTeacher.id}"> selected</c:if>
-                                >${t.firstName} ${t.lastName}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
-                <hr>
-                <div class="col-sm-2">
-                    Select Week
-                </div>
-                <c:forEach var="o" items="${oddness}">
-                    <div class="col-sm-1">
-                        <label><input type="radio" name="oddnes" id="${o}" value="${o}"
-                        <c:if test = "${o.id == currentOddness.id}"> checked</c:if>
-                        >${o}</label>
-                    </div>
-                    <div class="col-sm-1"></div>
-                </c:forEach>
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h3 class="text-center">Available classroom(s) for Group-${group.name}(${group.count} students) and ${subject.name}(${subject.type})</h3>
 
-                <hr>
-                <hr>
-                <h3 class="text-center">Select classroom</h3>
-                <table class="table table-striped">
-                    <tr>
-                        <td>Name</td>
-                        <td>Capacity</td>
-                        <td>Type</td>
-                        <td>Description</td>
-                    </tr>
-                    <c:forEach var="room" items="${classrooms}">
-                        <tr>
-                            <td>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="classroom" id="${room.id}" value="${room.id}"
-                                        <c:if test = "${room.id == currentClassroom.id}"> checked</c:if>
-                                        >
-                                        Classroom ${room.name}
-                                    </label>
-                                </div>
-                            </td>
-                            <td>${room.capacity}</td>
-                            <td>${subject.type}</td>
-                            <td>${room.description}</td>
-                        </tr>
+                <c:if test="${errors.groupError != null}"><page:error title="${errors.groupError}"/></c:if>
+                <c:if test="${errors.classroomError != null}"><page:error title="${errors.classroomError}"/></c:if>
+                <h3 class="text-center">Select Classroom, Day of week add Pair Number to create new Pair</h3>
+                <form class="form-horizontal" action="/pair" method="post">
+                    <input type="hidden" id="groupAdd" name="groupAdd" value="${group.id}">
+                    <input type="hidden" id="subjectAdd" name="subjectAdd" value="${subject.id}">
+                    <div class="form-group form-group-lg">
+                        <label class="col-sm-2 control-label" for="day">Select Day </label>
+                        <div class="col-sm-10">
+                            <select id="day" name="day" class="form-control">
+                                <c:forEach var="d" items="${days}">
+                                    <option value="${d}"
+                                            <c:if test = "${d == currentDay}"> selected</c:if>
+
+                                    >${d}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-lg">
+                        <label class="col-sm-2 control-label" for="pair">Select Pair </label>
+                        <div class="col-sm-10">
+                            <select id="pair" name="pair" class="form-control">
+
+                                <c:forEach var="p" items="${pairs}">
+                                    <option value="${p}"
+                                            <c:if test = "${p == currentPair}"> selected</c:if>
+                                    >${p}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                    <c:if test="${errors.teacherError != null}"><page:error title="${errors.teacherError}"/></c:if>
+                    <div class="form-group form-group-lg">
+                        <label class="col-sm-2 control-label" for="teacher">Select Teacher </label>
+                        <div class="col-sm-10">
+                            <select id="teacher" name="teacher" class="form-control">
+
+                                <c:forEach var="t" items="${teachers}">
+                                    <option value="${t.id}"
+                                            <c:if test = "${t.id == currentTeacher.id}"> selected</c:if>
+                                    >${t.firstName} ${t.lastName}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="col-sm-2">
+                        Select Week
+                    </div>
+                    <c:forEach var="o" items="${oddness}">
+                        <div class="col-sm-1">
+                            <label><input type="radio" name="oddnes" id="${o}" value="${o}"
+                            <c:if test = "${o.id == currentOddness.id}"> checked</c:if>
+                            >${o}</label>
+                        </div>
+                        <div class="col-sm-1"></div>
                     </c:forEach>
-                </table>
-                <div class="col-sm-2 control-label" >
-                    <input type="submit" value="Create new Pair" class="btn btn-info " id="submitSchedule">
-                </div>
-            </form>
+
+                    <hr>
+                    <hr>
+                    <h3 class="text-center">Select classroom</h3>
+                    <table class="table table-striped">
+                        <tr>
+                            <td>Name</td>
+                            <td>Capacity</td>
+                            <td>Type</td>
+                            <td>Description</td>
+                        </tr>
+                        <c:forEach var="room" items="${classrooms}">
+                            <tr>
+                                <td>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="classroom" id="${room.id}" value="${room.id}"
+                                            <c:if test = "${room.id == currentClassroom.id}"> checked</c:if>
+                                            >
+                                            Classroom ${room.name}
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>${room.capacity}</td>
+                                <td>${subject.type}</td>
+                                <td>${room.description}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                    <div class="col-sm-2 control-label" >
+                        <input type="submit" value="Create new Pair" class="btn btn-info " id="submitSchedule">
+                    </div>
+                </form>
+            </div>
         </div>
+
     </c:if>
-
-
-
-    <page:js/>
-    <script>
-        $( document ).ready(function(){
-
-            console.log('work');
-
-            var $cat = $("#group"),
-                    $subcat = $("#subject");
-
-            $cat.on("change",function(){
-                var _rel = $(this).val();
-                console.log(_rel);
-                $subcat.find("option").attr("style","");
-                $subcat.val("");
-                if(!_rel) return $subcat.prop("disabled",true);
-
-                $subcat.find("[rel="+_rel+"]").show();
-
-                $subcat.prop("disabled",false);
-            });
-
-        });
-
-    </script>
-    <script>
-
-        window.addEventListener("load", init, false);
-
-        function init () {
-
-            console.log('init');
-
-            group.addEventListener("change", validation, false);
-            subject.addEventListener("change", validation, false);
-
-        }
-
-        function validation () {
-
-            var group = document.getElementById("group").value;
-            var subject = document.getElementById("subject").value;
-
-            console.log(group, subject);
-//            var isCorrectGroup = false;
-//            var isCorrectSubject = false;
-//
-//
-//            if (group != null || e.length > 30){
-//                titleError.innerHTML = "Error! Title should be between 2 sand 30 latter";
-//                isCorrectTitle = false;
-//            } else {
-//                isCorrectTitle = true;
-//                titleError.innerHTML = "";
-//            }
-//
-//            if (disposition.length < 5 || disposition.length > 60){
-//                dispositionError.innerHTML = "Error! Disposition should be between 5 sand 60 latter";
-//                isCorrectDisposition = false;
-//            } else {
-//                isCorrectDisposition = true;
-//                dispositionError.innerHTML = "";
-//            }
-//
-//            if (description.length == 0 ){
-//                descriptionError.innerHTML = "Error! Description  can't be empty";
-//                isCorrectDescription = false;
-//            } else {
-//                isCorrectDescription = true;
-//                descriptionError.innerHTML = "";
-//            }
-
-            if (group != "" && subject!= ""){
-                document.getElementById("submitRoom").removeAttribute("disabled");
-            } else {
-                document.getElementById("submitRoom").setAttribute("disabled","true");
-            }
-
-
-
-        }
-    </script>
-
     <page:footer/>
 </div>
 
+
+<div id="dialogoverlay"></div>
+<div id="dialogbox">
+    <div>
+        <div id="dialogboxhead"></div>
+        <div id="dialogboxbody"></div>
+        <div id="dialogboxfoot"></div>
+    </div>
+</div>
+
+<page:js/>
+<script src="../../assets/js/schedule.js" ></script>
+<script src="../../assets/js/confirm.js" ></script>
+
+<script>
+
+    window.addEventListener("load", init, false);
+
+    function init () {
+        warningYes.addEventListener("click", show, false);
+
+    }
+
+    function show () {
+
+        document.getElementById('mainContent').style.display = '';
+        document.getElementById('warning').style.display = 'none';
+
+
+    }
+
+
+</script>
 </body>
 </html>
 

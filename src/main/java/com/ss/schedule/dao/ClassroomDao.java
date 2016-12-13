@@ -108,10 +108,12 @@ public class ClassroomDao extends AbstractDao<Classroom> {
     public boolean delete(long id) {
 
         String sql = "DELETE FROM classrooms WHERE id = ?";
-        try(PreparedStatement ps = connection.prepareStatement(sql);) {
+        System.out.println(id);
+        try(PreparedStatement ps = connection.prepareStatement(sql)) {
             classroomsSubjectTypeDao.deleteByClassroomId(id);
             ps.setLong(1, id);
             ps.executeUpdate();
+
 
             return true;
         } catch (SQLException e) {

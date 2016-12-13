@@ -200,7 +200,7 @@ public class GroupsBundle {
         return result;
     }
 
-    public static List<TimeTable> getTimeTableByDayPair(DayOfWeek day, Pair pair) {
+    public static List<TimeTable> getTimeTableByDayPair(DayOfWeek day, Pair pair, OddnessOfWeek oddness) {
         List<TimeTable> result = new ArrayList<>();
         for(TimeTable timeTable : timeTables){
             System.out.println("Day " + day);
@@ -208,12 +208,33 @@ public class GroupsBundle {
             System.out.println("All day " + timeTable.getDay());
             System.out.println("All pair " + timeTable.getPair());
             if(timeTable.getDay().equals(day) && timeTable.getPair().equals(pair)){
-                System.out.println("Add timetable " + timeTable);
-                result.add(timeTable);
+                if (oddness == OddnessOfWeek.ALL) {
+                    System.out.println("Add timetable " + timeTable);
+                    result.add(timeTable);
+                } else if(oddness == OddnessOfWeek.EVEN){
+                    if (timeTable.getOddnessOfWeek() == OddnessOfWeek.ALL || timeTable.getOddnessOfWeek() == OddnessOfWeek.EVEN){
+                        result.add(timeTable);
+                    }
+                } else {
+                    if (timeTable.getOddnessOfWeek() == OddnessOfWeek.ALL || timeTable.getOddnessOfWeek() == OddnessOfWeek.ODD){
+                        result.add(timeTable);
+                    }
+                }
             }
         }
         return result;
 
+    }
+
+    public static List<Group> getGroupsBySubject(Subject subject){
+        List<Group> result= new ArrayList<>();
+
+        for (Group group: groups){
+            if (group.getSubjects().contains(subject)){
+                result.add(group);
+            }
+        }
+        return result;
     }
 
     public static void addTimeTable(TimeTable timeTable) {

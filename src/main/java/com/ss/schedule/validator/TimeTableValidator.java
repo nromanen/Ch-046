@@ -33,7 +33,7 @@ public class TimeTableValidator {
 
     private void init() {
         System.out.println("itin1");
-        timeTebles = GroupsBundle.getTimeTableByDayPair(currentTimeTable.getDay(), currentTimeTable.getPair());
+        timeTebles = GroupsBundle.getTimeTableByDayPair(currentTimeTable.getDay(), currentTimeTable.getPair(), currentTimeTable.getOddnessOfWeek());
         System.out.println("init2");
         System.out.println(timeTebles);
         System.out.println(currentTimeTable);

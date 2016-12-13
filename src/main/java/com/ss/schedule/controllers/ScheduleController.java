@@ -2,6 +2,8 @@ package com.ss.schedule.controllers;
 
 
 import com.ss.schedule.dao.ClassroomDao;
+import com.ss.schedule.dao.GroupDao;
+import com.ss.schedule.dao.TimeTableDao;
 import com.ss.schedule.model.*;
 
 import javax.servlet.ServletException;
@@ -10,9 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/$", "/schedule"}, loadOnStartup = 1)
+@WebServlet(urlPatterns = {"/index.html", "/schedule"})
 public class ScheduleController extends HttpServlet {
 
     private ClassroomDao classroomDao = new ClassroomDao();
@@ -20,11 +23,13 @@ public class ScheduleController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-                List<Group> groups = GroupsBundle.getAll();
-                System.out.println("Before sending Groups:" + groups);
-                req.setAttribute("isResult", false);
-                req.setAttribute("groups", groups);
-                req.getRequestDispatcher("/WEB-INF/view/schedule.jsp").forward(req, resp);
+        GroupDao groupDao = new GroupDao();
+        //List<Group> groups = groupDao.getAll();
+        List<Group> groups = GroupsBundle.getAll();
+        System.out.println("Before sending Groups:" + groups);
+        req.setAttribute("isResult", false);
+        req.setAttribute("groups", groups);
+        req.getRequestDispatcher("/WEB-INF/view/schedule.jsp").forward(req, resp);
     }
 
 
@@ -32,14 +37,39 @@ public class ScheduleController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
-        String[] subject = req.getParameterValues("subject");
-        String[] group = req.getParameterValues("group");
+        long groupId = Long.parseLong(req.getParameter("group"));
+        long subjectId = Long.parseLong(req.getParameter("subject"));
 
-        //System.out.println(subject);
-       //System.out.println(group);
 
-        SubjectType type = GroupsBundle.getSubjectById(Long.parseLong(subject[0].trim())).getType();
-        long capacity = GroupsBundle.getGroupById(Long.parseLong(group[0])).getCount();
+        TimeTableDao timeTableDao = new TimeTableDao();
+        if (timeTableDao.isTimeTable(subjectId, groupId)) {
+            System.out.println("Is timeTable");
+            req.setAttribute("warningMessage", "<b>Warning!</b> This TimeTable is in schedule now." +
+                    "Are you sure yo want to add it again?");
+        } else {
+            System.out.println("No timeTable");
+        }
+
+        SubjectType type = GroupsBundle.getSubjectById(subjectId).getType();
+        Subject subject1 = GroupsBundle.getSubjectById(subjectId);
+        long capacity = GroupsBundle.getGroupById(groupId).getCount();
+
+        List<Group> stream;
+        if (type == SubjectType.LECTURE) {
+            System.out.println("type" + type);
+            stream = GroupsBundle.getGroupsBySubject(subject1);
+            System.out.println("streM " + stream);
+            if(!stream.isEmpty()){
+                String streamGroup = "" ;
+                for (Group g: stream){
+                    streamGroup += g.getName() + "; ";
+                }
+                System.out.println(streamGroup);
+                req.setAttribute("warningStreamMessage", "<b>Warning!</b> This is Stream Subject." +
+                        " TimeTable will be create for all stream's groups " + streamGroup);
+            }
+        }
+
 
         List<Classroom> classrooms =  classroomDao.getByTypeAndCapacity(type, capacity);
 //        System.out.println(capacity);
@@ -56,16 +86,16 @@ public class ScheduleController extends HttpServlet {
         Pair[] pairs = Pair.values();
         OddnessOfWeek[] oddness = OddnessOfWeek.values();
         req.setAttribute("isResult", true);
-        List<Teacher> teachers = GroupsBundle.getTeachersBySubject(GroupsBundle.getSubjectById(Long.parseLong(subject[0])));
+        List<Teacher> teachers = GroupsBundle.getTeachersBySubject(GroupsBundle.getSubjectById(subjectId));
         System.out.println(teachers);
-        req.setAttribute("subject", GroupsBundle.getSubjectById(Long.parseLong(subject[0].trim())));
+        req.setAttribute("subject", subject1);
         req.setAttribute("teachers", teachers);
         req.setAttribute("pairs", pairs);
         req.setAttribute("days", days);
         req.setAttribute("oddness", oddness);
         req.setAttribute("currentOddness", OddnessOfWeek.ALL);
 
-        req.setAttribute("group",GroupsBundle.getGroupById(Long.parseLong(group[0])));
+        req.setAttribute("group",GroupsBundle.getGroupById(groupId));
         req.getRequestDispatcher("/WEB-INF/view/schedule.jsp").forward(req, resp);
     }
 

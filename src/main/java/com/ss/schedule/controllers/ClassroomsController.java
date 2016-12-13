@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by Admin on 02.12.16.
  */
-@WebServlet(urlPatterns = "/classrooms", loadOnStartup = 1)
+@WebServlet(urlPatterns = "/classrooms")
 public class ClassroomsController extends HttpServlet {
 
     private ClassroomDao classroomDao = new ClassroomDao();
@@ -33,6 +33,7 @@ public class ClassroomsController extends HttpServlet {
 
         long id = Long.parseLong(req.getParameter("id"));
         String name = classroomDao.getById(id).getName();
+        System.out.println(id);
         classroomDao.delete(id);
         req.setAttribute("isMessage", true);
         req.setAttribute("message", "Classroom " + name + " deleted successfully!");
