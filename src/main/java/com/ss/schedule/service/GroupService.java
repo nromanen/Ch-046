@@ -1,7 +1,7 @@
 package com.ss.schedule.service;
 
-import com.ss.schedule.dao.jdbc.JdbcGroupDao;
-import com.ss.schedule.dao.jdbc.JdbcSubjectDao;
+import com.ss.schedule.dao.hibernate.HGroupDao;
+import com.ss.schedule.dao.hibernate.HSubjectDao;
 import com.ss.schedule.model.Group;
 
 import java.sql.SQLException;
@@ -12,59 +12,57 @@ import java.util.List;
  */
 public class GroupService {
 
-	private JdbcGroupDao groupDao;
-	private JdbcSubjectDao subjectDao;
+	private HGroupDao groupDao;
+	private HSubjectDao subjectDao;
 
 	public GroupService(String propertiesFilePath) throws SQLException {
-		this.groupDao = new JdbcGroupDao(propertiesFilePath);
-		this.subjectDao = new JdbcSubjectDao(propertiesFilePath);
+		this.groupDao = new HGroupDao(propertiesFilePath);
+		this.subjectDao = new HSubjectDao(propertiesFilePath);
 	}
 
-	public Group addGroup(Group group) throws SQLException {
-		return groupDao.add(group);
+	public void addGroup(Group group) throws SQLException {
+		groupDao.openCurrentSessionWithTransaction();
+		groupDao.add(group);
+		groupDao.closeCurrentSessionAndCommitTransaction();
 	}
 
-	public Group updateGroup(Group group) throws SQLException {
-		Group updatedGroup = groupDao.update(group);
-		updatedGroup.setSubjects(subjectDao.getSubjectsByGroupId(updatedGroup.getId()));
-		return updatedGroup;
+	public void updateGroup(Group group) throws SQLException {
+		groupDao.openCurrentSessionWithTransaction();
+		groupDao.update(group);
+		groupDao.closeCurrentSessionAndCommitTransaction();
 	}
 
-	public boolean deleteGroup(long groupId) throws SQLException {
-		return groupDao.delete(groupId);
+	public void deleteGroup(Group group) throws SQLException {
+		groupDao.openCurrentSessionWithTransaction();
+		groupDao.delete(group);
+		groupDao.closeCurrentSessionAndCommitTransaction();
 	}
 
 	public Group getGroupById(long groupId) throws SQLException {
+		groupDao.openCurrentSession();
 		Group group = groupDao.getById(groupId);
-		group.setSubjects(subjectDao.getSubjectsByGroupId(groupId));
+		groupDao.closeCurrentSession();
 		return group;
 	}
 
 	public List<Group> getAllGroups() throws SQLException {
+		groupDao.openCurrentSession();
 		List<Group> groups = groupDao.getAll();
-		setSubjectsIntoGroups(groups);
-
+		groupDao.closeCurrentSession();
 		return groups;
 	}
 
 	public List<Group> getGroupsByCourse(int course) throws SQLException {
+		groupDao.openCurrentSession();
 		List<Group> groups = groupDao.getGroupsByCourse(course);
-		for (int i = 0; i < groups.size(); i++) {
-			groups.get(i).setSubjects(subjectDao.getSubjectsByGroupId(groups.get(i).getId()));
-		}
+		groupDao.closeCurrentSession();
 		return groups;
 	}
 
 	public List<Group> getGroupsBySubjectId(long subjectId) throws SQLException {
+		groupDao.openCurrentSession();
 		List<Group> groups = groupDao.getGroupsBySubjectId(subjectId);
-		setSubjectsIntoGroups(groups);
-
+		groupDao.closeCurrentSession();
 		return groups;
-	}
-
-	private void setSubjectsIntoGroups(List<Group> groups) throws SQLException {
-		for (Group group : groups) {
-			group.setSubjects(subjectDao.getSubjectsByGroupId(group.getId()));
-		}
 	}
 }

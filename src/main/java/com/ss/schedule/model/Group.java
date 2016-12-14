@@ -3,10 +3,13 @@ package com.ss.schedule.model;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import org.hibernate.annotations.GenericGenerator;
 
-
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "groups")
 @JacksonXmlRootElement(localName = "group")
 public class Group {
 
@@ -14,16 +17,28 @@ public class Group {
 	private static final String ERROR_MESSAGE_ADD_SUBJECT = "[ERROR] This subject has already existed!";
 
 	@JacksonXmlProperty
+	@Id
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name = "increment", strategy = "increment")
+	@Column(name = "id")
 	private long id;
 
 	@JacksonXmlProperty
+	@Column(name = "name", unique = true, nullable = false, length = 10)
 	private String name;
 
 	@JacksonXmlProperty
+	@Column(name = "count", nullable = false)
 	private int count;
 
 	@JacksonXmlElementWrapper(localName = "subjects")
 	@JacksonXmlProperty(localName = "subject")
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@JoinTable(
+			name = "group_subject",
+			joinColumns = @JoinColumn(name = "group_id"),
+			inverseJoinColumns = @JoinColumn(name = "subject_id")
+	)
 	private List<Subject> subjects;
 
 	public Group() {}

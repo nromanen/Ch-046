@@ -1,8 +1,10 @@
 package com.ss.schedule.dao;
 
-import com.ss.schedule.dbutil.DBConnector;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,25 +13,54 @@ import java.util.List;
  */
 public abstract class AbstractDao<E> {
 
-	protected Connection connection;
 	private final String propertiesFilePath;
+	private Session currentSession;
+	private Transaction currentTransaction;
+	private SessionFactory sessionFactory;
 
 	public AbstractDao(String propertiesFilePath) throws SQLException {
 		this.propertiesFilePath = propertiesFilePath;
-		connection = DBConnector.getConnection(propertiesFilePath);
 	}
 
-	public abstract E add(E entity) throws SQLException;
+	public abstract void add(E entity) throws SQLException;
 
-	public abstract E update(E entity) throws SQLException;
+	public abstract void update(E entity) throws SQLException;
 
-	public abstract boolean delete(long id) throws SQLException;
+	public abstract void delete(E entity) throws SQLException;
 
 	public abstract E getById(long id) throws SQLException;
 
 	public abstract List<E> getAll() throws SQLException;
 
-	protected void getConnection() throws SQLException {
-		connection = DBConnector.getConnection(propertiesFilePath);
+	public Session openCurrentSession() {
+		currentSession = getSessionFactory().openSession();
+		return currentSession;
+	}
+
+	public Session openCurrentSessionWithTransaction() {
+		currentSession = getSessionFactory().openSession();
+		currentTransaction = currentSession.beginTransaction();
+		return currentSession;
+	}
+
+	private SessionFactory getSessionFactory() {
+		if (sessionFactory == null) {
+			Configuration configuration = new Configuration().configure(propertiesFilePath);
+			sessionFactory = configuration.buildSessionFactory();
+		}
+		return sessionFactory;
+	}
+
+	public void closeCurrentSession() {
+		currentSession.close();
+	}
+
+	public void closeCurrentSessionAndCommitTransaction() {
+		currentTransaction.commit();
+		currentSession.close();
+	}
+
+	public Session getCurrentSession() {
+		return currentSession;
 	}
 }

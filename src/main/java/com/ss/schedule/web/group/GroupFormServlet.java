@@ -2,6 +2,7 @@ package com.ss.schedule.web.group;
 
 import com.ss.schedule.model.Group;
 import com.ss.schedule.model.Subject;
+import com.ss.schedule.model.SubjectType;
 import com.ss.schedule.service.GroupService;
 import com.ss.schedule.service.SubjectService;
 
@@ -24,7 +25,7 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/groups/add", "/groups/update"})
 public class GroupFormServlet extends HttpServlet {
 
-	private static final String PROPERTIES_FILE_PATH = "db_connection.properties";
+	private static final String PROPERTIES_FILE_PATH = "hibernate.cfg.xml";
 
 	private GroupService groupService;
 	private SubjectService subjectService;
@@ -111,7 +112,8 @@ public class GroupFormServlet extends HttpServlet {
 		if (subjects != null) {
 			for (String subject : subjects) {
 				String[] subjectNameAndType = subject.split(" ");
-				subjectsList.add(subjectService.getSubject(subjectNameAndType[0], subjectNameAndType[1], course));
+				subjectsList.add(subjectService.getSubject(subjectNameAndType[0],
+						SubjectType.valueOf(subjectNameAndType[1]), course));
 			}
 		}
 

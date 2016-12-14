@@ -2,6 +2,7 @@
  * Created by vyach on 09.12.2016.
  */
 
+"use strict";
 
 function hasCheckedEvenOneGroup() {
     var groups = document.getElementsByName("group_id");

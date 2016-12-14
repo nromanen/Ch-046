@@ -1,5 +1,6 @@
 package com.ss.schedule.web.group;
 
+import com.ss.schedule.model.Group;
 import com.ss.schedule.service.GroupService;
 
 import javax.servlet.ServletException;
@@ -17,7 +18,7 @@ import java.sql.SQLException;
 @WebServlet(urlPatterns = "/groups/delete")
 public class DeleteGroupServlet extends HttpServlet {
 
-	private static final String PROPERTIES_FILE_PATH = "db_connection.properties";
+	private static final String PROPERTIES_FILE_PATH = "hibernate.cfg.xml";
 
 	private GroupService groupService;
 
@@ -26,7 +27,8 @@ public class DeleteGroupServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 
 		try {
-			groupService.deleteGroup(Long.valueOf(req.getParameter("group_id")));
+			Group group = groupService.getGroupById(Long.valueOf(req.getParameter("group_id")));
+			groupService.deleteGroup(group);
 			session.setAttribute("css", "success");
 			session.setAttribute("msg", "Group has deleted successfully!");
 		} catch (SQLException ex) {

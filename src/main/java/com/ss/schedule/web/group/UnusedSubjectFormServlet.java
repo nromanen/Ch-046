@@ -24,7 +24,7 @@ import java.util.List;
 @WebServlet(urlPatterns = "/groups/unused-subjects/add")
 public class UnusedSubjectFormServlet extends HttpServlet {
 
-	private static final String PROPERTIES_FILE_PATH = "db_connection.properties";
+	private static final String PROPERTIES_FILE_PATH = "hibernate.cfg.xml";
 
 	private GroupService groupService;
 	private SubjectService subjectService;

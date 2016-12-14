@@ -33,7 +33,7 @@ public class FacultyTest {
 
 		assertEquals(subgroupsStreams.size(), 20);
 
-		Subject subjectPythonLec = new Subject("Python", SubjectType.LECTURE);
+		Subject subjectPythonLec = new Subject("Python", SubjectType.LECTURE, 2);
 		Subject subjectAlgebraPractice = new Subject("Algebra", SubjectType.PRACTICE, 1);
 		Subject subjectMaLac = new Subject("MA", SubjectType.LECTURE, 1);
 		Subject subjectMaPractice = new Subject("MA", SubjectType.PRACTICE, 1);

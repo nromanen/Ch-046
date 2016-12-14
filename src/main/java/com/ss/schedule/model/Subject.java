@@ -2,26 +2,38 @@ package com.ss.schedule.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "subjects", uniqueConstraints = {
+		@UniqueConstraint(columnNames = {"name", "type", "course"}),
+})
 @JacksonXmlRootElement(localName = "subject")
 public class Subject {
 
 	@JacksonXmlProperty
+	@Id
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name = "increment", strategy = "increment")
+	@Column(name = "id")
 	private long id;
 
 	@JacksonXmlProperty
+	@Column(name = "name", nullable = false)
 	private String name;
+
 	@JacksonXmlProperty
+	@Enumerated(EnumType.STRING)
+	@Column(name = "type")
 	private SubjectType type;
+
 	@JacksonXmlProperty
+	@Column(name = "course", nullable = false)
 	private int course;
 
 	public Subject() {}
-
-	public Subject(String name, SubjectType type) {
-		this.name = name;
-		this.type = type;
-	}
 
 	public Subject(String name, SubjectType type, int courseNumber) {
 		this.name = name;

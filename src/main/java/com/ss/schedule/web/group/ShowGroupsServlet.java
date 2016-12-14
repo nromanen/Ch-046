@@ -20,7 +20,7 @@ import java.util.List;
 @WebServlet(urlPatterns = "/groups")
 public class ShowGroupsServlet extends HttpServlet {
 
-	private static final String PROPERTIES_FILE_PATH = "db_connection.properties";
+	private static final String PROPERTIES_FILE_PATH = "hibernate.cfg.xml";
 
 	private GroupService groupService;
 

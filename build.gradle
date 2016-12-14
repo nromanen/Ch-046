@@ -12,6 +12,7 @@ repositories {
 }
 
 dependencies {
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.5.Final'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.4'
     compile group: 'postgresql', name: 'postgresql', version: '9.3-1102.jdbc41'
     compile group: 'com.fasterxml', name: 'jackson-xml-databind', version: '0.6.2'

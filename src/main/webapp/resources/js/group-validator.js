@@ -2,6 +2,8 @@
  * Created by vyach on 08.12.2016.
  */
 
+"use strict";
+
 var minGroupNameNumber = 10;
 var maxGroupNameNumber = 59;
 var maxGroupCount = 100;

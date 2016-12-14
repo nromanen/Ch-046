@@ -1,70 +1,94 @@
 package com.ss.schedule.service;
 
-import com.ss.schedule.dao.DBManager;
-import com.ss.schedule.dao.DataBaseTestData;
-import com.ss.schedule.dbutil.DBConnector;
 import com.ss.schedule.model.Group;
-import com.ss.schedule.model.Subject;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 /**
  * Created by vyach on 01.12.2016.
  */
 public class GroupServiceTest {
 
-	private GroupService groupService;
-	private Connection connection;
-	private final String propertiesFilePath = "test_db_connection.properties";
+	private final String hibernateConfigFilePath = "test_hibernate.cfg.xml";
 
-	@BeforeClass
-	public void setUpClass() throws SQLException {
-		groupService = new GroupService(propertiesFilePath);
-	}
+	private GroupService groupService;
 
 	@BeforeMethod
 	public void setUp() throws SQLException {
-		DBManager.dropAllTables(propertiesFilePath);
-		DBManager.createTablesInDataBase(propertiesFilePath);
-		DataBaseTestData.fillDataBaseWithTestData(propertiesFilePath);
-		connection = DBConnector.getConnection(propertiesFilePath);
+		groupService = new GroupService(hibernateConfigFilePath);
 	}
 
-	@AfterMethod
-	public void tearDown() throws SQLException {
-		DBManager.dropAllTables(propertiesFilePath);
-		connection.close();
+	@Test
+	public void testAddGroup() throws SQLException {
+		assertEquals(groupService.getAllGroups().size(), 12);
+
+		Group group = new Group("29", 22, new ArrayList<>());
+
+		groupService.addGroup(group);
+		assertEquals(groupService.getAllGroups().size(), 13);
 	}
 
 	@Test
 	public void testUpdateGroup() throws SQLException {
-		Group group = groupService.getGroupById(1);
-		List<Subject> subjects = group.getSubjects();
-		assertEquals(subjects.size(), 4);
+		assertEquals(groupService.getAllGroups().size(), 12);
 
-		subjects.remove(0);
-		subjects.remove(0);
+		Group group = groupService.getGroupById(3L);
+		assertEquals(group.getName(), "13");
+		assertEquals(group.getCount(), 5);
 
-		group.setSubjects(subjects);
-		group = groupService.updateGroup(group);
+		group.setName("19");
+		group.setCount(23);
+		groupService.updateGroup(group);
 
-		assertEquals(group.getSubjects().size(), 2);
-		assertTrue(group.getSubjects().containsAll(subjects));
+		Group updatedGroup = groupService.getGroupById(3L);
+		assertEquals(updatedGroup.getName(), group.getName());
+		assertEquals(updatedGroup.getCount(), group.getCount());
+		assertEquals(groupService.getAllGroups().size(), 12);
+	}
+
+	@Test
+	public void testDeleteGroup() throws SQLException {
+		assertEquals(groupService.getAllGroups().size(), 12);
+
+		Group group1 = groupService.getGroupById(1);
+		Group group2 = groupService.getGroupById(2);
+
+		groupService.deleteGroup(group1);
+		groupService.deleteGroup(group2);
+
+		assertEquals(groupService.getAllGroups().size(), 10);
+	}
+
+	@Test
+	public void testGetGroupById() throws SQLException {
+		Group group11 = groupService.getGroupById(1);
+		Group group12 = groupService.getGroupById(2);
+
+		assertEquals(group11.getName(), "11");
+		assertEquals(group12.getName(), "12");
+		assertEquals(group11.getCount(), 20);
+		assertEquals(group12.getCount(), 22);
+	}
+
+	@Test
+	public void getAllGroups() throws SQLException {
+		assertEquals(groupService.getAllGroups().size(), 12);
+	}
+
+	@Test
+	public void getGroupsByCourse() throws SQLException {
+		assertEquals(groupService.getGroupsByCourse(1).size(), 4);
+		assertEquals(groupService.getGroupsByCourse(2).size(), 4);
+		assertEquals(groupService.getGroupsByCourse(3).size(), 4);
 	}
 
 	@Test
 	public void testGetGroupsBySubjectId() throws SQLException {
-		List<Group> groups = groupService.getGroupsBySubjectId(7);
-		assertEquals(groups.size(), 4);
+		assertEquals(groupService.getGroupsBySubjectId(7).size(), 4);
 	}
-
 }
