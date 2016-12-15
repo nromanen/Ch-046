@@ -21,11 +21,11 @@
     <script src="/resources/js/icheck.js"></script>
 
     <link href="/resources/css/custom.css" rel="stylesheet">
-    <script src="/resources/js/group-validator.js"></script>
+    <script src="/resources/js/group-form-validator.js"></script>
 
     <title>Groups</title>
 </head>
-<body>
+<body onload="initGroupName('${group.name}')">
 
 <nav class="navbar navbar-inverse">
     <div class="container">
@@ -46,7 +46,8 @@
         <h1 class="text-center">${action} Group</h1>
     </div>
 
-    <form method="post" action="/groups/add" class="form-horizontal" onsubmit="return(validate());" name="group_form">
+    <form method="post" action="/groups/add" class="form-horizontal" onsubmit="return validate('${action}')"
+          name="group_form">
 
         <input type="hidden" name="group_id" value="${group.id}">
 
@@ -98,6 +99,11 @@
                             </div>
                         </label>
                     </c:forEach>
+                    <div class="col-sm-12">
+                        <div id="subject-alert" class="alert alert-danger alert-message">
+                            <span id="alert-subject"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </c:if>

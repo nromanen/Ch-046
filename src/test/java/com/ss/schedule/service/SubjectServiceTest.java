@@ -6,6 +6,7 @@ import com.ss.schedule.model.SubjectType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import javax.persistence.PersistenceException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -53,8 +54,7 @@ public class SubjectServiceTest {
 		assertEquals(subject, subjectService.getSubjectById(1));
 	}
 
-	// todo не удается удалить, если ссылается foreign key. Нужно ли нам создавать в Subject лист Group чтоб указать cascade
-	@Test
+	@Test(expectedExceptions = PersistenceException.class)
 	public void testDeleteSubject() throws SQLException {
 		assertEquals(subjectService.getAllSubjects().size(), 20);
 

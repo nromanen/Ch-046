@@ -101,7 +101,7 @@ button.btn-action {
     display: none;
     margin-top: 10px;
     margin-bottom: 15px;
-    height: 30px;
+    min-height: 30px;
     padding-top: 5px;
     padding-bottom: 5px;
     vertical-align: middle;
