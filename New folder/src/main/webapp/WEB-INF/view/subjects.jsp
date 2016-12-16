@@ -33,7 +33,7 @@
           <tr>
              <td colspan ="2">
             
-                <input type="submit" value="Save" class="button"/> </form>
+                <input type="submit" value="Save" class="button1"/> </form>
                             
              </td>
           </tr>
@@ -51,7 +51,8 @@
    </tr>
 <c:forEach var="subject" items="${subjects}">
    <tr><td> ${subject.name}</td><td>${subject.type}</td><td>${subject.course} </td>
-   <td> <a href="SubjectEdit?subjectId=${subject.id}&teacherId=${id}" >Delete</a></td></tr>
+   <td> <a href="SubjectEdit?subjectId=${subject.id}&teacherId=${id}"
+    onclick="return confirm('Are you sure you want to delete ${subject.name} ${subject.type} course:${subject.course}  ')" style="background-color:#f21036" >Delete</a></td></tr>
       
    </c:forEach>
  </table>
@@ -63,8 +64,8 @@
    <option  value="${subject.id}">${subject.id} ${subject.name} ${subject.type} ${subject.course}</option>
     </c:forEach>
 </select>
-<input type="text" hidden name="teacher" value="${id}" />
-  <input type="submit" class="button1" id="submit" name="submit" value="Add subject"/> 
+<input type="text" hidden name="teacherId" value="${id}" />
+  <input type="submit" class="button1" id="submit" name="submit" value="Add subject" /> 
  </form>
 </body>
 </html>

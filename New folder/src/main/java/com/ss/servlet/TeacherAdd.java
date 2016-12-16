@@ -42,26 +42,44 @@ public class TeacherAdd extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 String error;
+		 String error2;
 		 TeacherValid tv = new TeacherValid();
-		 if(tv.isNameEmpty(request.getParameter("firstame"))==false || tv.isNameEmpty(request.getParameter("lastname"))==false){
+		 if(tv.isNameEmpty(request.getParameter("firstname"))==false){ 
+			 
 				error=tv.getError();
 				request.setAttribute("error", error);
-				request.getRequestDispatcher("/WEB-INF/view/TeacherError.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/view/AddTeacher.jsp").forward(request, response);
 			 }
-			else if (tv.nameMatches(request.getParameter("firstame"),tv.getNamePattern())==false || tv.nameMatches(request.getParameter("lastname"), tv.getNamePattern())==false)
+		 else if (tv.isNameEmpty(request.getParameter("lastname"))==false){
+			
+			  error2 = tv.getError();
+			 request.setAttribute("error2", error2);
+			 request.getRequestDispatcher("/WEB-INF/view/AddTeacher.jsp").forward(request, response);
+			 
+		 }
+		 else if (tv.nameMatches(request.getParameter("firstname"),tv.getNamePattern())==false)
 			{
-				error="not correct data, name and lastname should start from uppercase letter and be no longer than 34 symbols";
+			
+				error=" name and lastname should start from uppercase letter and be no longer than 34 symbols";
 				request.setAttribute("error", error);
-				request.getRequestDispatcher("/WEB-INF/view/TeacherError.jsp").forward(request, response);
-			}		 
-		else{
-		TeacherDao td = new TeacherDao();
+				request.getRequestDispatcher("/WEB-INF/view/AddTeacher.jsp").forward(request, response);
+			}
+		 else if (tv.nameMatches(request.getParameter("lastname"),tv.getNamePattern())==false){
+			
+			error2=" name and lastname should start from uppercase letter and be no longer than 34 symbols";
+			request.setAttribute("error2", error2);
+			request.getRequestDispatcher("/WEB-INF/view/AddTeacher.jsp").forward(request, response);
+		}
+		
+		 else {
+			 TeacherDao td = new TeacherDao();
+		
 		Teacher teacher = new Teacher(request.getParameter("firstame"),request.getParameter("lastname"));
 		td.add(teacher);
 		 List<Teacher> list = TeacherDao.getAll();
 	        request.setAttribute("teachers",list);
-	        request.getRequestDispatcher("/WEB-INF/view/test.jsp").forward(request, response);
-		 }		
+	        request.getRequestDispatcher("/WEB-INF/view/test.jsp").forward(request, response);}
+		 		
 	}
 
 }

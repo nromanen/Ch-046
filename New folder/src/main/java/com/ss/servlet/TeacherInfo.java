@@ -86,10 +86,7 @@ public class TeacherInfo extends HttpServlet {
 			request.setAttribute("teachers", list);
 			request.getRequestDispatcher("/WEB-INF/view/test.jsp").forward(request, response);
 		}
-		 
-		
-		
-
+	
 	}
 
 }

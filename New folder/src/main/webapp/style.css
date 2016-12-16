@@ -4,12 +4,13 @@ button {
 	 text-align: center;
 	 border-radius: 10px 10px 10px 10px; 
 }
-.button {
+#addbutt {
+	font:bold 100% 'century gothic', arial, sans-serif;
+	background-color: #e8edf4;
+	height:34px;
 	width: 100px ; 
-	height:24px;
-	 text-align: center;
-	 border-radius: 10px 10px 10px 10px;
 }
+
 .button1 {
 	width: 100px ; 
 	padding-top:2px;
@@ -38,7 +39,7 @@ h1 {
 	
 	font:normal 350% 'century gothic', arial, sans-serif;
 }
-.teacherError p {
+.teacherError, .teacherError p {
 	padding-left:200px;
 	padding-right:200px;
 	text-align:center;
@@ -46,9 +47,13 @@ h1 {
 	color:#D6628B;
 	text-align:center;
 }
-.teachAdd {
-	font:normal 100% 'century gothic', arial, sans-serif;
+.teachAdd h1 {
+	font:normal 200% 'century gothic', arial, sans-serif;
 }
+.teacherAddTable {
+	width:50%;
+}
+
 .teach {
 	
 	margin-left:100px;
@@ -63,10 +68,12 @@ h1 {
 	width:50%;
 	margin-left:200px;
 }
-#firstTab, #firstTab th, #firstTab td {
-	margin-left:220px;
-	text-align:center;
-	 border: 0px solid black;
-	width:35%;
+#thaction {
+	padding-left:150px;
 }
+.teacheraddError {
+	text-align: left;
+	color:#f76c8a;
+}
+
 

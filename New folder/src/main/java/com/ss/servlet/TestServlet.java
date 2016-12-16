@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ss.teacher.Subject;
+import com.ss.teacher.SubjectDao;
 import com.ss.teacher.Teacher;
 import com.ss.teacher.TeacherDao;
 import com.ss.teacher.TeachersSubjectsDao;
@@ -29,17 +30,26 @@ public class TestServlet extends HttpServlet {
 
     // adds subject connected with teacher in teachers_subjects
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    	
-    	TeacherDao td = new TeacherDao();
-    	TeachersSubjectsDao tsd = new TeachersSubjectsDao();
-    	 int teacherId = Integer.parseInt(req.getParameter("teacher"));
-    	 int subjectId = Integer.parseInt(req.getParameter("subject"));
-    	 String teacherName = td.getById(teacherId).toString();
-       	 tsd.setSubject(teacherId,subjectId);
-    	 List<Subject> list = tsd.getSubjects(teacherId);
-    	 req.setAttribute("name", teacherName);
-    	 req.setAttribute("subjects",list);
-    	 req.getRequestDispatcher("/WEB-INF/view/subjectView.jsp").forward(req, resp);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	    	
+    	SubjectDao sd = new SubjectDao();
+ 		TeachersSubjectsDao tsd = new TeachersSubjectsDao();
+ 		TeacherDao td = new TeacherDao();
+ 		int teacherId = Integer.parseInt(request.getParameter("teacherId"));
+ 		int subjectId = Integer.parseInt(request.getParameter("subject"));
+ 		String teacherName = td.getById(teacherId).toString();
+ 		String firstname = td.getById(teacherId).getFirstName();
+ 		String lastname = td.getById(teacherId).getLastName();
+ 		 tsd.setSubject(teacherId,subjectId);
+ 		List<Subject> list = tsd.getSubjects(teacherId);
+ 		List<Subject> unusedSubjects = tsd.getUnusedSubjects(teacherId);
+ 		request.setAttribute("allsubjects", unusedSubjects);
+ 		request.setAttribute("subjects", list);
+ 		request.setAttribute("name", teacherName);
+ 		request.setAttribute("firstname", firstname);
+ 		request.setAttribute("lastname", lastname);
+ 		request.setAttribute("id", teacherId);
+ 		request.getRequestDispatcher("/WEB-INF/view/subjects.jsp").forward(request, response);
+ 		
     }
 }

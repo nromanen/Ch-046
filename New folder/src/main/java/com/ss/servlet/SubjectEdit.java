@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ss.teacher.Subject;
+import com.ss.teacher.SubjectDao;
 import com.ss.teacher.TeacherDao;
 import com.ss.teacher.TeachersSubjectsDao;
 
@@ -34,7 +35,8 @@ public class SubjectEdit extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		/*System.out.println(request.getParameter("teacherId"));
+		System.out.println(request.getParameter("subjectId"));
 		TeachersSubjectsDao tsd = new TeachersSubjectsDao();
 		TeacherDao td = new TeacherDao();
 		int teacherId = Integer.parseInt(request.getParameter("teacherId"));
@@ -44,7 +46,30 @@ public class SubjectEdit extends HttpServlet {
 		List<Subject> list = tsd.getSubjects(teacherId);
 		request.setAttribute("name",teacherName);
 		request.setAttribute("subjects", list);
-		request.getRequestDispatcher("/WEB-INF/view/subjectView.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/subjects.jsp").forward(request, response);*/
+		
+		SubjectDao sd = new SubjectDao();
+		TeachersSubjectsDao tsd = new TeachersSubjectsDao();
+		TeacherDao td = new TeacherDao();
+		int teacherId = Integer.parseInt(request.getParameter("teacherId"));
+		int subjectId = Integer.parseInt(request.getParameter("subjectId"));
+		String teacherName = td.getById(teacherId).toString();
+		String firstname = td.getById(teacherId).getFirstName();
+		String lastname = td.getById(teacherId).getLastName();
+		tsd.delete(subjectId, teacherId);
+		List<Subject> list = tsd.getSubjects(teacherId);
+		List<Subject> unusedSubjects = tsd.getUnusedSubjects(teacherId);
+		request.setAttribute("allsubjects", unusedSubjects);
+		request.setAttribute("subjects", list);
+		request.setAttribute("name", teacherName);
+		request.setAttribute("firstname", firstname);
+		request.setAttribute("lastname", lastname);
+		request.setAttribute("id", teacherId);
+		request.getRequestDispatcher("/WEB-INF/view/subjects.jsp").forward(request, response);
+		
+		
+		
+		
 	}
 
 	/**
@@ -52,18 +77,27 @@ public class SubjectEdit extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
+			throws ServletException, IOException {				
+		System.out.println(request.getParameter("teacherId"));
+		System.out.println(request.getParameter("subjectId"));
+		SubjectDao sd = new SubjectDao();
 		TeachersSubjectsDao tsd = new TeachersSubjectsDao();
 		TeacherDao td = new TeacherDao();
 		int teacherId = Integer.parseInt(request.getParameter("teacherId"));
 		int subjectId = Integer.parseInt(request.getParameter("subjectId"));
 		String teacherName = td.getById(teacherId).toString();
+		String firstname = td.getById(teacherId).getFirstName();
+		String lastname = td.getById(teacherId).getLastName();
 		tsd.delete(subjectId, teacherId);
 		List<Subject> list = tsd.getSubjects(teacherId);
-		request.setAttribute("name",teacherName);
+		List<Subject> unusedSubjects = tsd.getUnusedSubjects(teacherId);
+		request.setAttribute("allsubjects", unusedSubjects);
 		request.setAttribute("subjects", list);
-		request.getRequestDispatcher("/WEB-INF/view/subjectView.jsp").forward(request, response);
+		request.setAttribute("name", teacherName);
+		request.setAttribute("firstname", firstname);
+		request.setAttribute("lastname", lastname);
+		request.setAttribute("id", teacherId);
+		request.getRequestDispatcher("/WEB-INF/view/subjects.jsp").forward(request, response);
 	}
 
 }
