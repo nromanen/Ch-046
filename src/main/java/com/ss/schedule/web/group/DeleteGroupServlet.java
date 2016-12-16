@@ -30,7 +30,7 @@ public class DeleteGroupServlet extends HttpServlet {
 			Group group = groupService.getGroupById(Long.valueOf(req.getParameter("group_id")));
 			groupService.deleteGroup(group);
 			session.setAttribute("css", "success");
-			session.setAttribute("msg", "Group has deleted successfully!");
+			session.setAttribute("msg", "Group " + group.getName() + " has deleted successfully!");
 		} catch (SQLException ex) {
 			//todo
 			ex.printStackTrace();

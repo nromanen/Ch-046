@@ -1,6 +1,5 @@
 package com.ss.schedule.service;
 
-import com.ss.schedule.dao.hibernate.HGroupDao;
 import com.ss.schedule.dao.hibernate.HSubjectDao;
 import com.ss.schedule.model.Subject;
 import com.ss.schedule.model.SubjectType;
@@ -14,11 +13,9 @@ import java.util.List;
 public class SubjectService {
 
 	private HSubjectDao subjectDao;
-	private HGroupDao groupDao;
 
 	public SubjectService(String propertiesFilePath) throws SQLException {
 		this.subjectDao = new HSubjectDao(propertiesFilePath);
-		this.groupDao = new HGroupDao(propertiesFilePath);
 	}
 
 	public void addSubject(Subject subject) throws SQLException {

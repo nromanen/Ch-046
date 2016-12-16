@@ -22,4 +22,5 @@ dependencies {
     compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.21'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
     testCompile group: 'org.testng', name: 'testng', version: '6.9.13.6'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.3.5'
 }

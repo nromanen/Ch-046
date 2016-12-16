@@ -32,7 +32,7 @@ function validateForm() {
     var groupName = document.group_form.gr_name.value.trim();
     if (!groupName.match(/^\s*\d{2}\s*$/) || (groupName < MIN_GROUP_NAME_NUMBER || groupName > MAX_GROUP_NAME_NUMBER)) {
         document.getElementById("alert-name").innerHTML = "Wrong group name! Group name consists of 2 digits " +
-            "from " + MIN_GROUP_NAME_NUMBER + " to " + MAX_GROUP_COUNT + " inclusive";
+            "from " + MIN_GROUP_NAME_NUMBER + " to " + MAX_GROUP_NAME_NUMBER + " inclusive";
         document.getElementById("name-alert").style.display = "block";
         isFormDataValid = false;
     }
@@ -54,7 +54,7 @@ function validateUpdateForm() {
         if (hasFirstCharacterChanged(groupName)) {
             if (hasAtLeastOneSubjectChecked()) {
                 document.getElementById("alert-subject").innerHTML = "Updating is impossible! The course " +
-                    "(first character in name) must be similar or unchecked all subjects";
+                    "(first character in name) must be similar to previous group course or unchecked all subjects";
                 document.getElementById("subject-alert").style.display = "block";
                 return false;
             }

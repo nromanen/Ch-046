@@ -11,7 +11,6 @@
         <property name="hibernate.connection.password">111</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL92Dialect</property>
         <property name="show_sql">true</property>
-        <!--<mapping package="com.ss.schedule.model"/>-->
         <mapping class="com.ss.schedule.model.Group"/>
         <mapping class="com.ss.schedule.model.Subject"/>
     </session-factory>

@@ -65,4 +65,11 @@ public class GroupService {
 		groupDao.closeCurrentSession();
 		return groups;
 	}
+
+	public Group getGroupByName(String groupName) {
+		groupDao.openCurrentSession();
+		Group group = groupDao.getGroupByName(groupName);
+		groupDao.closeCurrentSession();
+		return group;
+	}
 }

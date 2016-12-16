@@ -110,4 +110,8 @@ public class SubjectServiceTest {
 		assertEquals(subjectService.getUnusedSubjects().size(), 5);
 	}
 
+	@Test
+	public void testGetSubjectsByGroupId() throws SQLException {
+		assertEquals(subjectService.getSubjectsByGroupId(1).size(), 4);
+	}
 }

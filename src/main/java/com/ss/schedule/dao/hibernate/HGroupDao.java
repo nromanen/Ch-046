@@ -67,4 +67,13 @@ public class HGroupDao extends AbstractDao<Group> {
 		Query<Group> query = session.createQuery(request);
 		return query.list();
 	}
+
+	public Group getGroupByName(String groupName) {
+		String request = "SELECT g FROM Group g " +
+				"WHERE g.name = :name";
+		Session session = getCurrentSession();
+		Query<Group> query = session.createQuery(request);
+		query.setParameter("name", groupName);
+		return query.uniqueResult();
+	}
 }

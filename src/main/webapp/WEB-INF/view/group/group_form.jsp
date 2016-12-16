@@ -21,7 +21,7 @@
     <script src="/resources/js/icheck.js"></script>
 
     <link href="/resources/css/custom.css" rel="stylesheet">
-    <script src="/resources/js/group-form-validator.js"></script>
+    <script src="/resources/js/../group-form-validator.js"></script>
 
     <title>Groups</title>
 </head>
@@ -46,6 +46,13 @@
         <h1 class="text-center">${action} Group</h1>
     </div>
 
+    <div id="subject-alert" style="display: ${msg eq null ? "none" : "block"}"
+         class="alert alert-danger alert-message">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <span id="alert-subject">${msg}</span>
+        <c:remove var="msg"/>
+    </div>
+
     <form method="post" action="/groups/add" class="form-horizontal" onsubmit="return validate('${action}')"
           name="group_form">
 
@@ -55,9 +62,11 @@
             <label class="control-label col-sm-2" for="group_name">Group name:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="group_name" name="gr_name" placeholder="Enter group name"
-                       value="${group.name}">
-                <div id="name-alert" class="alert alert-danger alert-message">
-                    <span id="alert-name"></span>
+                       value="${group.name eq "0" ? "" : group.name}">
+                <div id="name-alert" style="display: ${gr_name_error eq null ? "none" : "block"}"
+                     class="alert alert-danger alert-message">
+                    <span id="alert-name">${gr_name_error}</span>
+                    <c:remove var="gr_name_error"/>
                 </div>
             </div>
         </div>
@@ -67,8 +76,10 @@
             <div class="col-sm-10">
                 <input type="number" class="form-control" id="count" name="gr_count" placeholder="Enter group count"
                        value="${group.count eq 0 ? "" : group.count}">
-                <div id="count-alert" class="alert alert-danger alert-message">
-                    <span id="alert-count"></span>
+                <div id="count-alert" style="display: ${gr_count_error eq null ? "none" : "block"}"
+                     class="alert alert-danger alert-message">
+                    <span id="alert-count">${gr_count_error}</span>
+                    <c:remove var="gr_count_error"/>
                 </div>
             </div>
         </div>
@@ -99,17 +110,14 @@
                             </div>
                         </label>
                     </c:forEach>
-                    <div class="col-sm-12">
-                        <div id="subject-alert" class="alert alert-danger alert-message">
-                            <span id="alert-subject"></span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </c:if>
 
-        <div class="form-group col-sm-12 text-center">
-            <button type="submit" class="btn btn-primary btn-lg">${action} Group</button>
+        <div class="col-sm-offset-2">
+            <div class="form-group col-sm-12 text-center">
+                <button type="submit" class="btn btn-primary btn-lg">${action} Group</button>
+            </div>
         </div>
 
     </form>
