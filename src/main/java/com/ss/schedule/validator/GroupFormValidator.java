@@ -35,14 +35,16 @@ public class GroupFormValidator {
 		Matcher matcher = pattern.matcher(group.getName());
 		String nameErrorMessage = "Wrong group name! Group name consists of 2 digits " +
 				"from " + MIN_GROUP_NAME_NUMBER + " to " + MAX_GROUP_NAME_NUMBER + " inclusive";
+		String previousGroupName =(String) session.getAttribute("groupName");
 
 		if (matcher.find()) {
 			int groupNumber = Integer.valueOf(group.getName());
 			if (groupNumber < MIN_GROUP_NAME_NUMBER || groupNumber > MAX_GROUP_NAME_NUMBER) {
 				session.setAttribute("gr_name_error", nameErrorMessage);
 				return false;
-			} else if (group.getId() > 0 && isGroupCourseChanged(group)) {
-				session.setAttribute("gr_course_error", "Updating is impossible! The course " +
+			} else if (group.getId() > 0 && isGroupCourseChanged(group,  previousGroupName) &&
+					isSubjectsFromAnotherGroup(group, previousGroupName)) {
+				session.setAttribute("msg", "Updating is impossible! The course " +
 						"(first character in name) must be similar to previous group course or unchecked all subjects");
 				return false;
 			}
@@ -54,12 +56,16 @@ public class GroupFormValidator {
 		return true;
 	}
 
-	private static boolean isGroupCourseChanged(Group group) {
+	private static boolean isGroupCourseChanged(Group group, String groupName) {
+		int previousGroupCourse = groupName.charAt(0) - '0';
+		int newGroupCourse = group.getName().charAt(0) - '0';
+		return previousGroupCourse != newGroupCourse;
+	}
+
+	private static boolean isSubjectsFromAnotherGroup(Group group,String groupName) {
+		int previousGroupCourse = groupName.charAt(0) - '0';
 		if (group.getSubjects().size() > 0) {
-			int previousGroupCourse = group.getSubjects().get(0).getCourse();
-			if ((group.getName().charAt(0) - '0') != previousGroupCourse) {
-				return true;
-			}
+			return group.getSubjects().get(0).getCourse() != previousGroupCourse;
 		}
 		return false;
 	}

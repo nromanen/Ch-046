@@ -41,9 +41,13 @@
     </div>
 </nav>
 
+<c:set var="mainName" value="${groupName eq null ? group.name : groupName}"/>
+<c:remove var="groupName"/>
+
+
 <div class="container">
     <div class="jumbotron">
-        <h1 class="text-center">${action} Group</h1>
+        <h1 class="text-center">${action} Group ${action eq "Update" ? mainName : ""}</h1>
     </div>
 
     <div id="subject-alert" style="display: ${msg eq null ? "none" : "block"}"
@@ -53,10 +57,12 @@
         <c:remove var="msg"/>
     </div>
 
-    <form method="post" action="${pageContext.request.contextPath}/groups/add" class="form-horizontal" onsubmit="return validate('${action}')"
+    <form method="post" action="${pageContext.request.contextPath}/groups/add" class="form-horizontal"
+          onsubmit="return validate('${action}')"
           name="group_form">
 
         <input type="hidden" name="group_id" value="${group.id}">
+        <input type="hidden" name="main_name" value="${mainName}">
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="group_name">Group name:</label>
@@ -94,7 +100,7 @@
                         <label class="col-sm-4">
                             <div class="well subject-well">
                                 <input type="checkbox" name="gr_subject" id="${subject.name}(${subject.type})"
-                                       value="${subject.name} ${subject.type}" checked>
+                                       value="${subject.name} ${subject.type} ${subject.course}" checked>
                                 <label for="${subject.name}(${subject.type})">${subject.name}</label>
                                 <span class="badge">${subject.type}</span>
                             </div>
@@ -104,7 +110,7 @@
                         <label class="col-sm-4">
                             <div class="well subject-well">
                                 <input type="checkbox" name="gr_subject" id="${subject.name}(${subject.type})"
-                                       value="${subject.name} ${subject.type}">
+                                       value="${subject.name} ${subject.type} ${subject.course}">
                                 <label for="${subject.name}(${subject.type})">${subject.name}</label>
                                 <span class="badge">${subject.type}</span>
                             </div>

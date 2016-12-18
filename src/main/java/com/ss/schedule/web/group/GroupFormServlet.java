@@ -66,10 +66,11 @@ public class GroupFormServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Group group = getGroup(req);
 		HttpSession session = req.getSession();
+		session.setAttribute("groupName", req.getParameter("main_name"));
 
 		try {
+			Group group = getGroup(req);
 			if (GroupFormValidator.hasErrors(session, group) || isGroupExists(session, group)) {
 				setSessionAttributes(session, group);
 				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/view/group/group_form.jsp");
@@ -98,30 +99,25 @@ public class GroupFormServlet extends HttpServlet {
 		resp.sendRedirect(req.getContextPath() + "/groups");
 	}
 
-	private Group getGroup(HttpServletRequest req) {
+	private Group getGroup(HttpServletRequest req) throws SQLException {
 		long groupId = Long.valueOf(req.getParameter("group_id"));
 		Group group = new Group();
 
-		if (groupId != 0) {
-			try {
-				group = groupService.getGroupById(groupId);
-			} catch (SQLException ex) {
-				//todo
-				ex.printStackTrace();
-			}
-		}
-
 		String groupName = req.getParameter("gr_name").trim();
 		String groupCount = req.getParameter("gr_count").trim();
+
+		group.setId(groupId);
 		group.setName(groupName.equals("") ? "0" : groupName);
 		group.setCount(Integer.valueOf((groupCount.equals("")) ? "0" : groupCount));
+		group.setSubjects(createSubjectsList(req.getParameterValues("gr_subject")));
 
 		return group;
 	}
 
 	private boolean isGroupExists(HttpSession session, Group group) {
 		Group checkingGroup = groupService.getGroupByName(group.getName());
-		if (checkingGroup != null) {
+		String mainGroupName = (String) session.getAttribute("groupName");
+		if (checkingGroup != null && !mainGroupName.equals(group.getName())) {
 			session.setAttribute("msg", "Failed! Group " + group.getName() + " has already existed");
 			return true;
 		}
@@ -151,20 +147,22 @@ public class GroupFormServlet extends HttpServlet {
 		group.setId(Long.valueOf(req.getParameter("group_id")));
 		group.setName(req.getParameter("gr_name"));
 		group.setCount(Integer.valueOf(req.getParameter("gr_count")));
-		int course = group.getName().charAt(0) - '0';
-		group.setSubjects(createSubjectsList(req.getParameterValues("gr_subject"), course));
+		group.setSubjects(createSubjectsList(req.getParameterValues("gr_subject")));
 		groupService.updateGroup(group);
 		return group.getName();
 	}
 
-	private List<Subject> createSubjectsList(String[] subjects, int course) throws SQLException {
+	private List<Subject> createSubjectsList(String[] subjects) throws SQLException {
 		List<Subject> subjectsList = new ArrayList<>();
 
 		if (subjects != null) {
-			for (String subject : subjects) {
-				String[] subjectNameAndType = subject.split(" ");
-				subjectsList.add(subjectService.getSubject(subjectNameAndType[0],
-						SubjectType.valueOf(subjectNameAndType[1]), course));
+			for (String subjectData : subjects) {
+				String[] subjectParameters = subjectData.split(" ");
+				Subject subject = subjectService.getSubject(subjectParameters[0],
+						SubjectType.valueOf(subjectParameters[1]), Integer.valueOf(subjectParameters[2]));
+				if (subject != null) {
+					subjectsList.add(subject);
+				}
 			}
 		}
 
