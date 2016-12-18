@@ -95,7 +95,7 @@ public class GroupFormServlet extends HttpServlet {
 		}
 
 		resp.setStatus(HttpServletResponse.SC_FOUND);
-		resp.sendRedirect("/groups");
+		resp.sendRedirect(req.getContextPath() + "/groups");
 	}
 
 	private Group getGroup(HttpServletRequest req) {

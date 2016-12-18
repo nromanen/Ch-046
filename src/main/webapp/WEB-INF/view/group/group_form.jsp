@@ -13,15 +13,15 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Bootstrap -->
-    <link href="/resources/css/bootstrap.css" rel="stylesheet">
-    <script src="/resources/js/jquery.min.js"></script>
-    <script src="/resources/js/bootstrap.js"></script>
+    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
 
-    <link href="/resources/css/skins/square/green.css" rel="stylesheet">
-    <script src="/resources/js/icheck.js"></script>
+    <link href="${pageContext.request.contextPath}/resources/css/skins/square/green.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/resources/js/icheck.js"></script>
 
-    <link href="/resources/css/custom.css" rel="stylesheet">
-    <script src="/resources/js/../group-form-validator.js"></script>
+    <link href="${pageContext.request.contextPath}/resources/css/custom.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/resources/js/group-form-validator.js"></script>
 
     <title>Groups</title>
 </head>
@@ -34,9 +34,9 @@
         </div>
         <ul class="nav navbar-nav">
             <li><a href="#">Main</a></li>
-            <li class="active"><a href="/groups">Groups</a></li>
-            <li><a href="#">Page 2</a></li>
-            <li><a href="#">Page 3</a></li>
+            <li class="active"><a href="${pageContext.request.contextPath}/groups">Groups</a></li>
+            <li><a href="#">Subjects</a></li>
+            <li><a href="#">Schedule</a></li>
         </ul>
     </div>
 </nav>
@@ -53,7 +53,7 @@
         <c:remove var="msg"/>
     </div>
 
-    <form method="post" action="/groups/add" class="form-horizontal" onsubmit="return validate('${action}')"
+    <form method="post" action="${pageContext.request.contextPath}/groups/add" class="form-horizontal" onsubmit="return validate('${action}')"
           name="group_form">
 
         <input type="hidden" name="group_id" value="${group.id}">

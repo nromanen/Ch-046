@@ -39,7 +39,7 @@ public class DeleteGroupServlet extends HttpServlet {
 		}
 
 		resp.setStatus(HttpServletResponse.SC_FOUND);
-		resp.sendRedirect("/groups");
+		resp.sendRedirect(req.getContextPath() + "/groups");
 	}
 
 	@Override

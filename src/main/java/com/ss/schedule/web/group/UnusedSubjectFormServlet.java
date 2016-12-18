@@ -64,7 +64,7 @@ public class UnusedSubjectFormServlet extends HttpServlet {
 		}
 
 		resp.setStatus(HttpServletResponse.SC_FOUND);
-		resp.sendRedirect("/groups/unused-subjects");
+		resp.sendRedirect(req.getContextPath() + "/groups/unused-subjects");
 	}
 
 	private List<Group> getGroupsList(String[] groupIds) throws SQLException {

@@ -4,7 +4,11 @@
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <display-name>schedule</display-name>
 
+    <welcome-file-list>
+        <welcome-file>groups</welcome-file>
+    </welcome-file-list>
 
 
 </web-app>

@@ -14,8 +14,10 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Bootstrap -->
-    <link href="/resources/css/bootstrap.css" rel="stylesheet">
-    <link href="/resources/css/custom.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
+    <link href="${pageContext.request.contextPath}/resources/css/custom.css" rel="stylesheet">
 
     <title>Groups</title>
 </head>
@@ -28,9 +30,9 @@
         </div>
         <ul class="nav navbar-nav">
             <li><a href="#">Main</a></li>
-            <li class="active"><a href="/groups">Groups</a></li>
-            <li><a href="#">Page 2</a></li>
-            <li><a href="#">Page 3</a></li>
+            <li class="active"><a href="${pageContext.request.contextPath}/groups">Groups</a></li>
+            <li><a href="#">Subjects</a></li>
+            <li><a href="#">Schedule</a></li>
         </ul>
     </div>
 </nav>
@@ -65,7 +67,7 @@
                     <th class="vertical-text-center text-center">${subject.type}</th>
                     <th class="vertical-text-center text-center">${subject.course}</th>
                     <th class="vertical-text-center text-center">
-                        <form method="get" action="/groups/unused-subjects/add">
+                        <form method="get" action="${pageContext.request.contextPath}/groups/unused-subjects/add">
                             <button class="btn btn-primary" type="submit" name="subject_id"
                                     value="${subject.id}">Assign groups
                             </button>
@@ -77,9 +79,6 @@
         </table>
     </div>
 </div>
-
-<script src="/resources/js/jquery.min.js"></script>
-<script src="/resources/js/bootstrap.js"></script>
 
 </body>
 </html>

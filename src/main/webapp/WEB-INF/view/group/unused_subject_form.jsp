@@ -13,13 +13,13 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Bootstrap -->
-    <link href="/resources/css/bootstrap.css" rel="stylesheet">
-    <script src="/resources/js/jquery.min.js"></script>
-    <script src="/resources/js/bootstrap.js"></script>
-    <link href="/resources/css/skins/square/green.css" rel="stylesheet">
-    <script src="/resources/js/icheck.js"></script>
-    <script src="/resources/js/unused-subject-form.js"></script>
-    <link href="/resources/css/custom.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
+    <link href="${pageContext.request.contextPath}/resources/css/skins/square/green.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/resources/js/icheck.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/unused-subject-form.js"></script>
+    <link href="${pageContext.request.contextPath}/resources/css/custom.css" rel="stylesheet">
 
     <title>Groups</title>
 </head>
@@ -32,9 +32,9 @@
         </div>
         <ul class="nav navbar-nav">
             <li><a href="#">Main</a></li>
-            <li class="active"><a href="/groups">Groups</a></li>
-            <li><a href="#">Page 2</a></li>
-            <li><a href="#">Page 3</a></li>
+            <li class="active"><a href="${pageContext.request.contextPath}/groups">Groups</a></li>
+            <li><a href="#">Subjects</a></li>
+            <li><a href="#">Schedule</a></li>
         </ul>
     </div>
 </nav>
@@ -48,7 +48,7 @@
         </h2>
     </div>
 
-    <form method="post" action="/groups/unused-subjects/add" onsubmit="return hasCheckedEvenOneGroup()">
+    <form method="post" action="${pageContext.request.contextPath}/groups/unused-subjects/add" onsubmit="return hasCheckedEvenOneGroup()">
         <input type="hidden" name="subject_id" value="${subject.id}"/>
 
         <div class="col-sm-12">
@@ -72,8 +72,8 @@
                         <th class="vertical-text-center">
                             <ul class="list-group">
                                 <c:forEach var="gSubject" items="${group.subjects}">
-                                    <li class="list-group-item">${gSubject.name}<span
-                                            class="badge">${gSubject.type}</span>
+                                    <li class="list-group-item">${gSubject.name}
+                                        <span class="badge">${gSubject.type}</span>
                                     </li>
                                 </c:forEach>
                             </ul>

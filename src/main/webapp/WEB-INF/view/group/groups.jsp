@@ -14,10 +14,12 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Bootstrap -->
-    <link href="/resources/css/bootstrap.css" rel="stylesheet">
-    <link href="/resources/css/custom.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
+    <link href="${pageContext.request.contextPath}/resources/css/custom.css" rel="stylesheet">
 
-    <script src="/resources/js/delete-group.js"></script>
+    <script src="resources/js/delete-group.js"></script>
 
     <title>Groups</title>
 </head>
@@ -30,9 +32,9 @@
         </div>
         <ul class="nav navbar-nav">
             <li><a href="#">Main</a></li>
-            <li class="active"><a href="/groups">Groups</a></li>
-            <li><a href="#">Page 2</a></li>
-            <li><a href="#">Page 3</a></li>
+            <li class="active"><a href="${pageContext.request.contextPath}/groups">Groups</a></li>
+            <li><a href="#">Subjects</a></li>
+            <li><a href="#">Schedule</a></li>
         </ul>
     </div>
 </nav>
@@ -51,12 +53,12 @@
     </c:if>
 
     <div class="add col-sm-6">
-        <form method="get" action="/groups/add">
+        <form method="get" action="${pageContext.request.contextPath}/groups/add">
             <button type="submit" class="btn btn-lg btn-primary btn-add">Add Group</button>
         </form>
     </div>
     <div class="add col-sm-6">
-        <form method="get" action="/groups/unused-subjects" class="text-right">
+        <form method="get" action="${pageContext.request.contextPath}/groups/unused-subjects" class="text-right">
             <button type="submit" class="btn btn-lg btn-primary btn-add btn-unused">Unused Subjects</button>
         </form>
     </div>
@@ -85,7 +87,7 @@
                         </ul>
                     </th>
                     <th class="vertical-text-center text-center">
-                        <form method="get" action="/groups/update">
+                        <form method="get" action="${pageContext.request.contextPath}/groups/update">
                             <button class="btn btn-primary btn-update btn-action" type="submit" name="group_id"
                                     value="${group.id}">Update
                             </button>
@@ -114,7 +116,7 @@
                     <p id="conf-message"></p>
                 </div>
                 <div class="modal-footer">
-                    <form method="post" action="/groups/delete" class="modal-form">
+                    <form method="post" action="${pageContext.request.contextPath}/groups/delete" class="modal-form">
                         <button id="conf-button" class="btn btn-primary btn-update" type="submit"
                                 name="group_id">
                             Confirm
@@ -128,9 +130,6 @@
     </div>
 
 </div>
-
-<script src="/resources/js/jquery.min.js"></script>
-<script src="/resources/js/bootstrap.js"></script>
 
 </body>
 </html>
