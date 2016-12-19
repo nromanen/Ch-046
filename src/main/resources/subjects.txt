@@ -163,3 +163,31 @@ where timetable.id = 1;
 
 
 --select count(id) from timetable where subjects_id = 1 and groups_id = 1;
+
+
+Properties prop=new Properties();
+
+        InputStream in = getServletContext().getResourceAsStream("/WEB-INF/dbConnection.properties");
+
+        prop.load(in);
+
+        in.close();
+
+        String DRIVER = prop.getProperty("jdbc.drivers");
+
+        String DBURL = prop.getProperty("jdbc.url");
+
+        String USER = prop.getProperty("jdbc.username");
+
+        String PASSWORD = prop.getProperty("jdbc.password");
+
+        System.out.println("DRIVER: " + DRIVER + "; DBURL: " + DBURL + "; USER: " + USER + "; PASSWORD: " + PASSWORD);
+
+
+        String logFile = "c:/log4j.properties";
+        System.out.println(logFile);
+
+        PropertyConfigurator.configure(logFile);
+        Logger log = Logger.getRootLogger();
+
+        log.info("Start processing");

@@ -4,6 +4,7 @@ import com.ss.schedule.dbutil.DBUtil;
 import com.ss.schedule.model.Subject;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -26,7 +27,35 @@ public class SubjectDao extends AbstractDao<Subject> {
 
     @Override
     public Subject getById(long id) {
-        return null;
+
+        Subject subject = null;
+        String sql = "SELECT * FROM subjects WHERE id = ?";
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                subject = getSubject(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return subject;
+    }
+
+    private Subject getSubject(ResultSet rs) throws SQLException{
+
+        SubjectTypeDao subjectTypeDao = new SubjectTypeDao();
+
+        Subject subject = new Subject();
+        subject.setId(rs.getInt("id"));
+        subject.setName(rs.getString("name"));
+        subject.setType(subjectTypeDao.getById(rs.getInt("type_id")));
+        subject.setCourse(rs.getInt("course"));
+
+
+        return subject;
     }
 
     @Override
@@ -81,7 +110,6 @@ public class SubjectDao extends AbstractDao<Subject> {
                         " PRIMARY KEY ( id ))";
 
                 stmt.executeUpdate(sql);
-                System.out.println("Table subjects created!");
             } catch (SQLException e) {
                 System.out.println("ERROR! Table subjects did not created!");
             }

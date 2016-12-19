@@ -28,4 +28,5 @@ public abstract class AbstractDao<E> {
     public abstract E add(E entity);
 
 
+
 }

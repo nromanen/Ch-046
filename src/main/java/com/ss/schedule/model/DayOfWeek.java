@@ -12,4 +12,11 @@ MONDAY(1), TUESDAY(2), WEDNESDAY(3), THURSDAY(4), FRIDAY(5);
     public long getId() {
         return id;
     }
+
+    public static DayOfWeek getById(long id) {
+        for(DayOfWeek e : values()) {
+            if(e.id == id) return e;
+        }
+        return null;
+    }
 }

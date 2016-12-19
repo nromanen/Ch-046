@@ -5,7 +5,19 @@ function init () {
     console.log('init');
     checkSubject.addEventListener("click", check, false);
 
+
+
+
 }
+
+$(function() {
+    // setTimeout() function will be fired after page is loaded
+    // it will wait for 5 sec. and then will fire
+    // $("#successMessage").hide() function
+    setTimeout(function() {
+        $(".alert").fadeOut('fast');
+    }, 5000);
+});
 
 
 function check(){
@@ -16,7 +28,7 @@ function check(){
     console.log("ajax");
     $.ajax({
         type : "GET", // http method
-        url : "/testajax", // the endpoint
+        url : "checkTimetable", // the endpoint
         data : {
             group : group,
             subject: subject
@@ -28,11 +40,11 @@ function check(){
             console.log("success");
             if(json.result == "true"){
                 console.log("true");
-                Confirm.render('Do you want add subject to timetable ?','post','/schedule', { group : group, subject: subject});
+                Confirm.render('Do you want add subject to timetable ?','post','schedule', { group : group, subject: subject});
 
             } else{
                 console.log("false");
-                goToUrl('post', '/schedule', { group : group, subject: subject});
+                goToUrl('post', 'schedule', { group : group, subject: subject});
             }
 
 
@@ -62,8 +74,8 @@ function goToUrl(method, url, obj){
         throw new Error("ERROR! Not supported method's type!")
     }
 
-
 }
+
 function CustomConfirm(){
     var method, url, args;
 
@@ -86,7 +98,7 @@ function CustomConfirm(){
 
         document.getElementById('dialogboxhead').innerHTML = "Confirm that action";
         document.getElementById('dialogboxbody').innerHTML = message;
-        document.getElementById('dialogboxfoot').innerHTML = '<button class=\'btn-md btn-success\' onclick="Confirm.yes()">Yes</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class=\'btn-md btn-danger\' onclick="Confirm.no()">No</button>';
+        // document.getElementById('dialogboxfoot').innerHTML = '<button class=\'btn-md btn-success\' onclick="Confirm.yes()">Yes</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class=\'btn-md btn-danger\' onclick="Confirm.no()">No</button>';
     };
     this.no = function(){
         document.getElementById('dialogbox').style.display = "none";

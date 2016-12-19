@@ -12,4 +12,11 @@ FIRST(1), SECOND(2), THIRD(3), FORTH(4), FIFTH(5), SIXTH(6), SEVENTH(7), EIGHTS(
     public long getId() {
         return id;
     }
+
+    public static Pair getById(Long id) {
+        for(Pair e : values()) {
+            if(e.id == id) return e;
+        }
+        return null;
+    }
 }

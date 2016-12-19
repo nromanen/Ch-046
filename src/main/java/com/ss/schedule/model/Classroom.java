@@ -101,17 +101,12 @@ public class Classroom implements Comparable<Classroom>{
 
 		Classroom classroom = (Classroom) o;
 
-		if (capacity != classroom.capacity) return false;
-		if (name != null ? !name.equals(classroom.name) : classroom.name != null) return false;
-		return types != null ? types.equals(classroom.types) : classroom.types == null;
+		return name != null ? name.equals(classroom.name) : classroom.name == null;
 
 	}
 
 	@Override
 	public int hashCode() {
-		int result = name != null ? name.hashCode() : 0;
-		result = 31 * result + capacity;
-		result = 31 * result + (types != null ? types.hashCode() : 0);
-		return result;
+		return name != null ? name.hashCode() : 0;
 	}
 }

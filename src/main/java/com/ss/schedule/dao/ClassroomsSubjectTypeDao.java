@@ -41,7 +41,7 @@ public class ClassroomsSubjectTypeDao {
                         "subject_types_id integer references subjectTypes(id))";
 
                 stmt.executeUpdate(sql);
-                System.out.println("Table classrooms_subject_types created!");
+
             } catch (SQLException e) {
                 System.out.println("ERROR! Table classrooms_subject_types did not add!");
             }

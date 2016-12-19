@@ -1,0 +1,52 @@
+2016-12-14 12:24:36,953 INFO - <message text>
+2016-12-14 12:24:36,968 WARN - <message text>
+2016-12-14 12:24:36,968 ERROR - <message text>
+2016-12-14 12:24:36,968 FATAL - <message text>
+2016-12-14 12:25:47,187 INFO - <message text>
+2016-12-14 12:25:47,187 WARN - <message text>
+2016-12-14 12:25:47,187 ERROR - <message text>
+2016-12-14 12:25:47,187 FATAL - <message text>
+2016-12-14 12:34:09,796 INFO - <message text>
+2016-12-14 12:34:09,796 WARN - <message text>
+2016-12-14 12:34:09,796 ERROR - <message text>
+2016-12-14 12:34:09,796 FATAL - <message text>
+2016-12-14 12:34:35,562 INFO - <message text>
+2016-12-14 12:34:35,562 WARN - <message text>
+2016-12-14 12:34:35,562 ERROR - <message text>
+2016-12-14 12:34:35,562 FATAL - <message text>
+2016-12-14 12:35:15,812 ERROR - <message text>
+java.lang.RuntimeException: Testing log4j
+	at Main.main(Main.java:38)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)
+2016-12-14 12:35:15,859 INFO - <message text>
+2016-12-14 12:35:15,859 WARN - <message text>
+2016-12-14 12:35:15,859 ERROR - <message text>
+2016-12-14 12:35:15,859 FATAL - <message text>
+2016-12-14 13:27:13,156 ERROR - <message text>
+java.lang.RuntimeException: Testing log4j
+	at Main.main(Main.java:38)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)
+2016-12-14 13:27:13,171 INFO - <message text>
+2016-12-14 13:27:13,171 WARN - <message text>
+2016-12-14 13:27:13,171 ERROR - <message text>
+2016-12-14 13:27:13,171 FATAL - <message text>
+2016-12-14 13:30:13,250 ERROR - <message text>
+java.lang.RuntimeException: Testing log4j
+	at Main.main(Main.java:38)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:147)
+2016-12-14 13:30:13,265 INFO - <message text>
+2016-12-14 13:30:13,265 WARN - <message text>
+2016-12-14 13:30:13,265 ERROR - <message text>
+2016-12-14 13:30:13,265 FATAL - <message text>

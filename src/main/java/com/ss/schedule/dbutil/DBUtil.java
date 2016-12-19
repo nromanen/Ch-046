@@ -13,8 +13,7 @@ public class DBUtil {
         boolean tExists = false;
         try (ResultSet rs = conn.getMetaData().getTables(null, null, tableName, null)) {
             while (rs.next()) {
-                String tName = rs.getString("TABLE_NAME");
-                System.out.println("Table " + tName + " exist");
+                String tName = rs.getString("TABLE_NAME");;
 
                 if (tName != null && tName.equals(tableName)) {
                     tExists = true;
@@ -22,7 +21,6 @@ public class DBUtil {
                 }
             }
         } catch (SQLException e){
-            System.out.println("ERROR!!");
             throw new RuntimeException();
         }
         return tExists;

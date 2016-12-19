@@ -1,4 +1,4 @@
-package com.ss.schedule.controllers;
+package com.ss.schedule.controllers.classroom;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.ss.schedule.dao.ClassroomDao;
@@ -7,6 +7,7 @@ import com.ss.schedule.io.InputOutputClassroomTxt;
 import com.ss.schedule.io.InputOutputJson;
 import com.ss.schedule.io.InputOutputXml;
 import com.ss.schedule.model.Classroom;
+import com.ss.schedule.services.ClassroomService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -20,24 +21,21 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-@WebServlet("/DownloadFileServlet")
-public class DownloadFileServlet extends HttpServlet {
+@WebServlet("/classroomDownload")
+public class ClassroomDownloadServlet extends HttpServlet {
+
+    private static final String TYPE_ERROR = "ERROR! NOT_SUPPORTED_ERROR";
+
+    private ClassroomService classroomService = new ClassroomService();
 
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
-        // reads input file from an absolute path
-        ClassroomDao classroomDao = new ClassroomDao();
 
-        List<Classroom> classrooms = classroomDao.getAll();
+        List<Classroom> classrooms = classroomService.getAll();
         String type = request.getParameter("fType");
-        System.out.println(type);
-
-//        if (!type.equals("txt") || !type.equals("xml")){
-//            type = "json";
-//        }
 
         String filePath = "classrooms."+type;
-        System.out.println(filePath);
+
         File downloadFile = new File(filePath);
 
         InputOutput classroomManager = null;
@@ -52,37 +50,26 @@ public class DownloadFileServlet extends HttpServlet {
                     new TypeReference<List<Classroom>>() {
                     });
         } else {
-            throw  new RuntimeException("Some shits!");
+            throw  new RuntimeException(TYPE_ERROR);
         }
 
         classroomManager.writeToFile(filePath, classrooms);
         FileInputStream inStream = new FileInputStream(downloadFile);
 
-        // if you want to use a relative path to context root:
-        String relativePath = getServletContext().getRealPath("");
-        System.out.println("relativePath = " + relativePath);
-
-        // obtains ServletContext
         ServletContext context = getServletContext();
 
-        // gets MIME type of the file
         String mimeType = context.getMimeType(filePath);
         if (mimeType == null) {
-            // set to binary type if MIME mapping not found
             mimeType = "application/octet-stream";
         }
-        System.out.println("MIME type: " + mimeType);
 
-        // modifies response
         response.setContentType(mimeType);
         response.setContentLength((int) downloadFile.length());
 
-        // forces download
         String headerKey = "Content-Disposition";
         String headerValue = String.format("attachment; filename=\"%s\"", downloadFile.getName());
         response.setHeader(headerKey, headerValue);
 
-        // obtains response's output stream
         OutputStream outStream = response.getOutputStream();
 
         byte[] buffer = new byte[4096];

@@ -7,7 +7,7 @@ import java.io.Serializable;
 @XmlRootElement(name = "TimeTable")
 @XmlType(propOrder = { "subject", "pair", "teacher", "group", "day", "oddnessOfWeek", })
 @SuppressWarnings("serial")
-public class TimeTable implements Serializable {
+public class TimeTable implements Serializable, Comparable<TimeTable> {
 	/* Example: Algebra(LAB), FIRST, [Ann, Parkinson], 101, MONDAY, All */
 	public static final String TIMETABLES_PATTERN = "(^[A-Z][a-z]{2,15}+)\\(([A-Z]{2,15})\\)" +
 	/* The first group is the subject's title, the second-- it's type; */
@@ -21,6 +21,7 @@ public class TimeTable implements Serializable {
 			/* the seventh -- day of week */
 			"\\s([A-Z][a-z]{2}|[A-Z]{4})";
 	/* the eighth -- oddness of week */
+	private long id;
 	private Subject subject;
 	private Pair pair;
 	private Teacher teacher;
@@ -28,6 +29,14 @@ public class TimeTable implements Serializable {
 	private DayOfWeek day;
 	private OddnessOfWeek oddnessOfWeek;
 	private Classroom classroom;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public Subject getSubject() {
 		return subject;
@@ -137,4 +146,14 @@ public class TimeTable implements Serializable {
 		return true;
 	}
 
+	@Override
+	public int compareTo(TimeTable o) {
+		if(this.group.getName().compareTo(o.getGroup().getName()) == 0){
+			if(this.day.getId() == o.day.getId()){
+				return (int)(this.getPair().getId() - o.getPair().getId());
+			}
+			return (int) (this.day.getId() - o.day.getId());
+		}
+		return this.group.getName().compareTo(o.getGroup().getName());
+	}
 }

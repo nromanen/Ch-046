@@ -1,7 +1,6 @@
 package com.ss.schedule.dao;
 
 import com.ss.schedule.dbutil.DBUtil;
-import com.ss.schedule.model.Classroom;
 import com.ss.schedule.model.SubjectType;
 
 import java.sql.PreparedStatement;
@@ -35,7 +34,7 @@ public class SubjectTypeDao extends AbstractDao<SubjectType>{
     @Override
     public SubjectType getById(long id) {
 
-        String sql = "SELECT * FROM subject_types WHERE id = ?";
+        String sql = "SELECT * FROM subjecttypes WHERE id = ?";
         try(PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setLong(1, id);
@@ -119,7 +118,6 @@ public class SubjectTypeDao extends AbstractDao<SubjectType>{
                         "PRIMARY KEY (id)) ";
                 statement.executeUpdate(sql);
                 fillSubjectTypesTable();
-                System.out.println("Table subjectTypes created!");
             } catch (SQLException e) {
                 System.out.println("ERROR! Table subjectTypes did not add!");
             }

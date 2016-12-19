@@ -197,7 +197,7 @@ public class ClassroomDao extends AbstractDao<Classroom> {
                         " PRIMARY KEY ( id ))";
 
                 stmt.executeUpdate(sql);
-                System.out.println("Table classrooms created!");
+
             } catch (SQLException e) {
                 System.out.println("ERROR! Table classroom did not created!");
             }

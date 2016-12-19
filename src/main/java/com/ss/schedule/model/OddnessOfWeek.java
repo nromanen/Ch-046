@@ -12,4 +12,11 @@ ODD(1), EVEN(2), ALL(3);
     public long getId() {
         return id;
     }
+
+    public static OddnessOfWeek getById(long id) {
+        for(OddnessOfWeek e : values()) {
+            if(e.id == id) return e;
+        }
+        return null;
+    }
 }

@@ -14,7 +14,7 @@
     <page:header/>
 
     <c:if test="${message!=null}">
-        <div class="alert alert-success">${message}</div>
+        <div class="alert alert-success" id = "message">${message}</div>
     </c:if>
 
     <c:if test="${errorMessage!=null}">
@@ -44,12 +44,12 @@
                     <td>${room.types}</td>
                     <td>${room.description}</td>
                     <td>
-                        <a href="/classroomUpdate?id=${room.id}" class="btn btn-info btn-sm">
+                        <a href="classroomUpdate?id=${room.id}" class="btn btn-info btn-sm">
                             <span class="glyphicon glyphicon-pencil"></span> Edit
                         </a>
                     </td>
                     <td>
-                        <button class="btn btn-danger btn-sm" onclick="Confirm.render('Are you sure you want to delete classroom?','post','/classrooms', {'id': '${room.id}'})"> Remove</button>
+                        <button class="btn btn-danger btn-sm" onclick="Confirm.render('Are you sure you want to delete classroom?','post','classrooms', {'id': '${room.id}'})"><span class="glyphicon glyphicon-remove"></span> Remove</button>
                     </td>
                 </tr>
             </c:forEach>
@@ -61,14 +61,14 @@
     </c:if>
 
     <div class="col-md-12">
-        <form method="get" action="/classroomUpdate">
+        <form method="get" action="classroomUpdate">
             <input type="number" hidden name="action" value="new">
             <input type="number" hidden name="id" value="0">
             <input type="submit" name="submit" value="Add classroom" class="btn btn-default">
         </form>
     </div>
     <div class="col-md-12">
-        <img src="/assets/img/arrow_down.png" id="option" height="5%" width="auto" style="cursor:pointer;"
+        <img src="assets/img/arrow_down.png" id="option" height="5%" width="auto" style="cursor:pointer;"
 
              data-toggle="tooltip" data-placement="bottom" title="More/less options!">
         <%--<a id="option" class="btn btn-default btn-sm">More options</a>--%>
@@ -79,7 +79,7 @@
         <hr>
         <br>
         <%--Add classrooms to DB from file(supported formats .json, .xml, .txt):--%>
-        <form action="/upp" method="post" enctype="multipart/form-data" class="form-inline">
+        <form action="upload" method="post" enctype="multipart/form-data" class="form-inline">
             <div class="col-md-4">
                 <input type="file" name="file" size="50" class="filestyle" data-buttonName="btn-primary" id = "fileId" accept="text/xml, text/plain, application/json"/>
             </div>
@@ -100,7 +100,7 @@
             </select>
             <br>
             <br>
-            <a class="btn btn-default" id="getRooms" href = "/DownloadFileServlet?fType=json">Get classrooms</a>
+            <a class="btn btn-default" id="getRooms" href = "classroomDownload?fType=json">Get classrooms</a>
         </div>
 
     </div>
@@ -112,7 +112,7 @@
     <div>
         <div id="dialogboxhead"></div>
         <div id="dialogboxbody"></div>
-        <div id="dialogboxfoot"></div>
+        <div id="dialogboxfoot"><button class='btn btn-danger' onclick="Confirm.yes()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-success' onclick="Confirm.no()">Cancel</button></div>
     </div>
 </div>
 
@@ -120,7 +120,8 @@
 
 <page:footer/>
 <page:js/>
-<script src="../../assets/js/classroom.js" ></script>
-<script src="../../assets/js/confirm.js" ></script>
+<script src="../../../assets/js/classroom.js" ></script>
+<script src="../../../assets/js/confirm.js" ></script>
+
 
 </body>
