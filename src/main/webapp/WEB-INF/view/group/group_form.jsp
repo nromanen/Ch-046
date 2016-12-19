@@ -4,6 +4,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:set var="contextPath" value="${pageContext.request.contextPath}" scope="page"/>
+<c:set var="mainName" value="${groupName eq null ? group.name : groupName}" scope="page"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,19 +16,20 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Bootstrap -->
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
+    <link href="${contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+    <script src="${contextPath}/resources/js/jquery.min.js"></script>
+    <script src="${contextPath}/resources/js/bootstrap.js"></script>
 
-    <link href="${pageContext.request.contextPath}/resources/css/skins/square/green.css" rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/resources/js/icheck.js"></script>
+    <link href="${contextPath}/resources/css/skins/square/green.css" rel="stylesheet">
+    <script src="${contextPath}/resources/js/icheck.js"></script>
 
-    <link href="${pageContext.request.contextPath}/resources/css/custom.css" rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/resources/js/group-form-validator.js"></script>
+    <link href="${contextPath}/resources/css/custom.css" rel="stylesheet">
+    <script src="${contextPath}/resources/js/group-form-validator.js"></script>
 
     <title>Groups</title>
 </head>
-<body onload="initGroupName('${group.name}')">
+
+<body onload="initGroupName('${mainName}')">
 
 <nav class="navbar navbar-inverse">
     <div class="container">
@@ -34,16 +38,12 @@
         </div>
         <ul class="nav navbar-nav">
             <li><a href="#">Main</a></li>
-            <li class="active"><a href="${pageContext.request.contextPath}/groups">Groups</a></li>
+            <li class="active"><a href="${contextPath}/groups">Groups</a></li>
             <li><a href="#">Subjects</a></li>
             <li><a href="#">Schedule</a></li>
         </ul>
     </div>
 </nav>
-
-<c:set var="mainName" value="${groupName eq null ? group.name : groupName}"/>
-<c:remove var="groupName"/>
-
 
 <div class="container">
     <div class="jumbotron">
@@ -57,7 +57,7 @@
         <c:remove var="msg"/>
     </div>
 
-    <form method="post" action="${pageContext.request.contextPath}/groups/add" class="form-horizontal"
+    <form method="post" action="${contextPath}/groups/add" class="form-horizontal"
           onsubmit="return validate('${action}')"
           name="group_form">
 
@@ -97,7 +97,7 @@
                 </div>
                 <div class="col-sm-offset-2">
                     <c:forEach var="subject" items="${group_subjects}">
-                        <label class="col-sm-4">
+                        <label class="col-sm-6">
                             <div class="well subject-well">
                                 <input type="checkbox" name="gr_subject" id="${subject.name}(${subject.type})"
                                        value="${subject.name} ${subject.type} ${subject.course}" checked>
@@ -107,7 +107,7 @@
                         </label>
                     </c:forEach>
                     <c:forEach var="subject" items="${subjects}">
-                        <label class="col-sm-4">
+                        <label class="col-sm-6">
                             <div class="well subject-well">
                                 <input type="checkbox" name="gr_subject" id="${subject.name}(${subject.type})"
                                        value="${subject.name} ${subject.type} ${subject.course}">
@@ -128,6 +128,9 @@
 
     </form>
 </div>
+
+<c:remove var="groupName"/>
+<c:remove var="mainName"/>
 
 <script>
     $(document).ready(function () {

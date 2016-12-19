@@ -1,3 +1,7 @@
+.container {
+    width: 840px;
+}
+
 .navbar {
     margin-top: 10px;
     border-radius: 0px;
@@ -6,6 +10,7 @@
 .jumbotron {
     padding-top: 30px;
     padding-bottom: 30px;
+    background-color: #fff;
 }
 
 h2.bigger {
@@ -42,6 +47,10 @@ th > form.last-form {
     margin-bottom: 0px;
 }
 
+.table-striped > tbody > tr:nth-of-type(2n+1) {
+    background-color: rgb(222, 222, 222);
+}
+
 button.btn-action {
     width: 70%;
 }
@@ -50,28 +59,7 @@ button.btn-action {
     height: 50px;
     width: auto;
     font-size: 25px;
-    margin: 20px 0px;
-    background: rgb(255,176,59);
-    border-color: rgb(255,176,59);
-    color: rgb(142,40,0);
-}
-
-.btn-add:hover {
-    background: rgb(229, 153, 58);
-    border-color: rgb(229, 153, 58);
-    color: rgb(142,40,0);
-}
-
-.btn-add:active:focus {
-    background: rgb(187, 115, 54);
-    border-color: rgb(169, 99, 52);
-    color: rgb(142,40,0);
-}
-
-.btn-add:focus {
-    background: rgb(255,176,59);
-    border-color: rgb(255,176,59);
-    color: rgb(142,40,0);
+    margin-bottom: 20px;
 }
 
 .alert {
@@ -88,8 +76,8 @@ button.btn-action {
 }
 
 .subject-well {
-    background: rgb(255,240,165);
-    border-color: rgb(255,240,165);
+    background: rgb(222, 222, 222);
+    border-color: rgb(203, 203, 203);
 }
 
 .btn-submit {

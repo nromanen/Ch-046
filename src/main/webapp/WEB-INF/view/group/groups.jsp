@@ -5,6 +5,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:set var="contextPath" value="${pageContext.request.contextPath}" scope="page"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,15 +16,16 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Bootstrap -->
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
-    <link href="${pageContext.request.contextPath}/resources/css/custom.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+    <script src="${contextPath}/resources/js/jquery.min.js"></script>
+    <script src="${contextPath}/resources/js/bootstrap.js"></script>
+    <link href="${contextPath}/resources/css/custom.css" rel="stylesheet">
 
     <script src="resources/js/delete-group.js"></script>
 
     <title>Groups</title>
 </head>
+
 <body>
 
 <nav class="navbar navbar-inverse">
@@ -32,7 +35,7 @@
         </div>
         <ul class="nav navbar-nav">
             <li><a href="#">Main</a></li>
-            <li class="active"><a href="${pageContext.request.contextPath}/groups">Groups</a></li>
+            <li class="active"><a href="${contextPath}/groups">Groups</a></li>
             <li><a href="#">Subjects</a></li>
             <li><a href="#">Schedule</a></li>
         </ul>
@@ -53,12 +56,12 @@
     </c:if>
 
     <div class="add col-sm-6">
-        <form method="get" action="${pageContext.request.contextPath}/groups/add">
+        <form method="get" action="${contextPath}/groups/add">
             <button type="submit" class="btn btn-lg btn-primary btn-add">Add Group</button>
         </form>
     </div>
     <div class="add col-sm-6">
-        <form method="get" action="${pageContext.request.contextPath}/groups/unused-subjects" class="text-right">
+        <form method="get" action="${contextPath}/groups/unused-subjects" class="text-right">
             <button type="submit" class="btn btn-lg btn-primary btn-add btn-unused">Unused Subjects</button>
         </form>
     </div>
@@ -87,8 +90,8 @@
                         </ul>
                     </th>
                     <th class="vertical-text-center text-center">
-                        <form method="get" action="${pageContext.request.contextPath}/groups/update">
-                            <button class="btn btn-primary btn-update btn-action" type="submit" name="group_id"
+                        <form method="get" action="${contextPath}/groups/update">
+                            <button class="btn btn-success btn-update btn-action" type="submit" name="group_id"
                                     value="${group.id}">Update
                             </button>
                         </form>
@@ -116,8 +119,8 @@
                     <p id="conf-message"></p>
                 </div>
                 <div class="modal-footer">
-                    <form method="post" action="${pageContext.request.contextPath}/groups/delete" class="modal-form">
-                        <button id="conf-button" class="btn btn-primary btn-update" type="submit"
+                    <form method="post" action="${contextPath}/groups/delete" class="modal-form">
+                        <button id="conf-button" class="btn btn-success btn-update" type="submit"
                                 name="group_id">
                             Confirm
                         </button>

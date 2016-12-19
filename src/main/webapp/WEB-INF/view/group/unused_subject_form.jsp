@@ -4,6 +4,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:set var="contextPath" value="${pageContext.request.contextPath}" scope="page"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,16 +15,17 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Bootstrap -->
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
-    <link href="${pageContext.request.contextPath}/resources/css/skins/square/green.css" rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/resources/js/icheck.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/unused-subject-form.js"></script>
-    <link href="${pageContext.request.contextPath}/resources/css/custom.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+    <script src="${contextPath}/resources/js/jquery.min.js"></script>
+    <script src="${contextPath}/resources/js/bootstrap.js"></script>
+    <link href="${contextPath}/resources/css/skins/square/green.css" rel="stylesheet">
+    <script src="${contextPath}/resources/js/icheck.js"></script>
+    <script src="${contextPath}/resources/js/unused-subject-form.js"></script>
+    <link href="${contextPath}/resources/css/custom.css" rel="stylesheet">
 
     <title>Groups</title>
 </head>
+
 <body>
 
 <nav class="navbar navbar-inverse">
@@ -32,7 +35,7 @@
         </div>
         <ul class="nav navbar-nav">
             <li><a href="#">Main</a></li>
-            <li class="active"><a href="${pageContext.request.contextPath}/groups">Groups</a></li>
+            <li class="active"><a href="${contextPath}/groups">Groups</a></li>
             <li><a href="#">Subjects</a></li>
             <li><a href="#">Schedule</a></li>
         </ul>
@@ -48,7 +51,7 @@
         </h2>
     </div>
 
-    <form method="post" action="${pageContext.request.contextPath}/groups/unused-subjects/add" onsubmit="return hasCheckedEvenOneGroup()">
+    <form method="post" action="${contextPath}/groups/unused-subjects/add" onsubmit="return hasCheckedEvenOneGroup()">
         <input type="hidden" name="subject_id" value="${subject.id}"/>
 
         <div class="col-sm-12">

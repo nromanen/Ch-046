@@ -95,6 +95,7 @@ public class GroupFormServlet extends HttpServlet {
 			session.setAttribute("msg", "The operation was failed!");
 		}
 
+		session.removeAttribute("groupName");
 		resp.setStatus(HttpServletResponse.SC_FOUND);
 		resp.sendRedirect(req.getContextPath() + "/groups");
 	}
