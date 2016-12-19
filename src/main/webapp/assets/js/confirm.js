@@ -15,7 +15,7 @@ $(function() {
     // it will wait for 5 sec. and then will fire
     // $("#successMessage").hide() function
     setTimeout(function() {
-        $(".alert").fadeOut('fast');
+        $(".alert-success").fadeOut('fast');
     }, 5000);
 });
 

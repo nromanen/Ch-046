@@ -85,13 +85,13 @@
                     <table class="table table-striped">
                         <c:forEach var="tt" items="${timeTable1}">
                             <tr>
-                                <td>
+                                <td <c:if test = "${tt  == null}">class="notactive" </c:if>>
                                     <c:if test = "${tt  != null}">${tt.subject.name}(${tt.subject.type})
                                         <br>Classroom ${tt.classroom.name}<br>
                                         ${tt.teacher.firstName} ${tt.teacher.lastName}</c:if>
 
                                     <c:if test = "${tt  == null}"><br>
-                                        -----
+
                                     <br>
                                     <br>
                                     </c:if>
@@ -106,13 +106,13 @@
                     <table class="table table-striped">
                         <c:forEach var="tt" items="${timeTable2}">
                             <tr>
-                                <td>
+                                <td <c:if test = "${tt  == null}">class="notactive" </c:if>>
                                     <c:if test = "${tt  != null}">${tt.subject.name}(${tt.subject.type})
                                         <br>Classroom ${tt.classroom.name}<br>
                                         ${tt.teacher.firstName} ${tt.teacher.lastName}</c:if>
 
                                     <c:if test = "${tt  == null}"><br>
-                                        -----
+
                                         <br>
                                         <br>
                                     </c:if>
@@ -127,13 +127,13 @@
                     <table class="table table-striped">
                         <c:forEach var="tt" items="${timeTable3}">
                             <tr>
-                                <td>
+                                <td <c:if test = "${tt  == null}">class="notactive" </c:if>>
                                     <c:if test = "${tt  != null}">${tt.subject.name}(${tt.subject.type})
                                         <br>Classroom ${tt.classroom.name}<br>
                                         ${tt.teacher.firstName} ${tt.teacher.lastName}</c:if>
 
                                     <c:if test = "${tt  == null}"><br>
-                                        -----
+
                                         <br>
                                         <br>
                                     </c:if>
@@ -148,13 +148,13 @@
                     <table class="table table-striped">
                         <c:forEach var="tt" items="${timeTable4}">
                             <tr>
-                                <td>
+                                <td <c:if test = "${tt  == null}">class="notactive" </c:if>>
                                     <c:if test = "${tt  != null}">${tt.subject.name}(${tt.subject.type})
                                         <br>Classroom ${tt.classroom.name}<br>
                                         ${tt.teacher.firstName} ${tt.teacher.lastName}</c:if>
 
                                     <c:if test = "${tt  == null}"><br>
-                                        -----
+
                                         <br>
                                         <br>
                                     </c:if>
@@ -169,13 +169,13 @@
                     <table class="table table-striped">
                         <c:forEach var="tt" items="${timeTable5}">
                             <tr>
-                                <td>
+                                <td <c:if test = "${tt  == null}">class="notactive" </c:if>>
                                     <c:if test = "${tt  != null}">${tt.subject.name}(${tt.subject.type})
                                         <br>Classroom ${tt.classroom.name}<br>
                                         ${tt.teacher.firstName} ${tt.teacher.lastName}</c:if>
 
                                     <c:if test = "${tt  == null}"><br>
-                                        -----
+
                                         <br>
                                         <br>
                                     </c:if>
@@ -190,8 +190,8 @@
             </tbody>
         </table>
 
-        <a class="btn btn-default" href="groupSchedule">Get schedule for another group</a><br><br>
-        <a class="btn btn-default" href="teacherSchedule">Get schedule for teacher</a>
+        <a class="btn btn-info" href="groupSchedule">Schedule for group</a><br><br>
+        <a class="btn btn-info" href="teacherSchedule">Schedule for teacher</a>
 
     </c:if>
     <page:footer/>

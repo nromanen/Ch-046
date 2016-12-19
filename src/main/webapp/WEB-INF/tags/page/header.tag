@@ -17,6 +17,7 @@
                         <li><a href="teacherSchedule">Schedule for teacher</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="schedule">Add timetable</a></li>
+                        <li><a href="notInSchedule">Unset subjects</a></li>
                         <li><a href="classroomUpdate?action=&id=0&submit=Add+classroom">Add classroom</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="timetables">All timetables</a></li>

@@ -54,11 +54,6 @@
             <div class="col-sm-12 control-label" >
                 <button class="btn btn-info " id="checkSubject" disabled>Next</button>
             </div>
-
-            <div class="col-sm-10">
-                <hr>
-                <a href="notInSchedule" class="btn btn-default">Show unset subjects</a>
-            </div>
         </div>
     </c:if>
 

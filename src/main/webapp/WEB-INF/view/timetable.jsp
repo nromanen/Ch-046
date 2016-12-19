@@ -29,7 +29,8 @@
             <td>Teacher</td>
             <td>Day</td>
             <td>Pair</td>
-            <td>Oddes</td>
+            <td>Oddness</td>
+            <td>Classroom</td>
             <td colspan="2">Action</td>
 
 
@@ -41,6 +42,7 @@
             <td>${tt.day}</td>
             <td>${tt.pair}</td>
             <td>${tt.oddnessOfWeek}</td>
+            <td>${tt.classroom.name}</td>
             <td>
                 <a href="timetableUpdate?id=${tt.id}" class="btn btn-info btn-sm">
                     <span class="glyphicon glyphicon-pencil"></span> Edit timetable

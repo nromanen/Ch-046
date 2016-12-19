@@ -84,3 +84,7 @@
 #dialogbox > div > #dialogboxhead{ background: #fff; font-size:24px; padding:10px; color: #000000;  border-bottom: 1px solid lightgray;}
 #dialogbox > div > #dialogboxbody{ background: #fff; font-size:19px; padding:20px; color: #000000; border-bottom: 1px solid lightgray;}
 #dialogbox > div > #dialogboxfoot{ background: #fff; padding:10px; text-align:right; }
+
+.notactive {
+     background-color: #e3e7ed;
+}

@@ -65,6 +65,8 @@ public class TimeTableUpdateController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        System.out.println("POST UPDATE RUN!!!");
+
         String[] subject = req.getParameterValues("subjectAdd");
         List<TimeTableErrors> errors = new ArrayList<>();
         TimeTable timeTable;
@@ -120,7 +122,7 @@ public class TimeTableUpdateController extends HttpServlet {
             req.setAttribute("pairs", pairs);
             req.setAttribute("days", days);
             req.setAttribute("oddness", oddness);
-            req.setAttribute("link", "/timetableUpdate");
+            req.setAttribute("link", "timetableUpdate");
 
 
             req.setAttribute("group",timeTable.getGroup());
