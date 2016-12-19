@@ -2,6 +2,7 @@ package com.ss.schedule.dao;
 
 import com.ss.schedule.dbutil.DBUtil;
 import com.ss.schedule.model.Pair;
+import com.ss.schedule.model.SubjectType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class PairsDao extends AbstractDao<Pair> {
 
-    PairsDao(){
+    public PairsDao(){
         createPairsTableIfNotExist();
     }
     @Override
@@ -28,6 +29,22 @@ public class PairsDao extends AbstractDao<Pair> {
             e.printStackTrace();
         }
         return pairs;
+    }
+
+    long getIdByName(Pair pair){
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement(
+                    "SELECT * FROM pairs WHERE name=?"
+            );
+            preparedStatement.setString(1,pair.name());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                return resultSet.getLong("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     @Override
@@ -100,7 +117,7 @@ public class PairsDao extends AbstractDao<Pair> {
     }
 
     public long getPairIdByName(String name){
-        String sql="Select * from pairs where id = (?)";
+        String sql="Select * from pairs where name = (?)";
         return new DBUtil().getEntityIdByNameExecQuery(connection,sql,name);
     }
 }

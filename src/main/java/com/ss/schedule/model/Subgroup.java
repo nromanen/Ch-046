@@ -1,5 +1,6 @@
 package com.ss.schedule.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ss.schedule.institute.TimeTableManager;
 
 import java.util.List;
@@ -8,7 +9,13 @@ import java.util.List;
  * Created by oleg on 27.11.16.
  */
 public class Subgroup extends StudentCommunity {
+    @JsonBackReference
     private Group group;
+
+    public Subgroup(String name, int count, List<Subject> subjects, Group group,long id) {
+        super(name, count, subjects, id);
+        this.group = group;
+    }
 
     public Subgroup(String name, int count, Group group) {
         super(name, count);
@@ -28,15 +35,7 @@ public class Subgroup extends StudentCommunity {
         super(name, count, subjects);
     }
 
-    @Override
-    public boolean canBeAddedToTimetableManager(TimeTableManager timeTableManager) {
-        for (TimeTable timeTable:timeTableManager.getTimeTables()){
-            if (isPresentOrEquals(timeTable.getStudentCommunity())){
-                return false;
-            }
-        }
-        return true;
-    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -76,6 +75,15 @@ public class Subgroup extends StudentCommunity {
         return false;
     }
 
+    @Override
+    public boolean canBeAddedToTimetableManager(TimeTableManager timeTableManager) {
+        for (TimeTable timeTable:timeTableManager.getTimeTables()){
+            if (isPresentOrEquals(timeTable.getStudentCommunity())){
+                return false;
+            }
+        }
+        return true;
+    }
 
 
 }

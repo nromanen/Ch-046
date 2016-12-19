@@ -1,6 +1,7 @@
 package com.ss.schedule.servlets;
 
 import com.ss.schedule.dao.DayOfWeekDao;
+import com.ss.schedule.dao.GroupDao;
 import com.ss.schedule.dao.OddnessOfWeekDao;
 import com.ss.schedule.institute.TimeTableManager;
 import com.ss.schedule.model.*;
@@ -19,7 +20,7 @@ import static com.ss.schedule.model.SubjectType.LECTURE;
 /**
  * Created by oleg on 01.12.16.
  */
-@WebServlet("/c")
+@WebServlet("/chooseTimetable")
 public class TimetableServlet extends HttpServlet {
     private Group group=new Group("31",35,null);;
 
@@ -28,13 +29,17 @@ public class TimetableServlet extends HttpServlet {
         List<TimeTable> timeTablesForGroup = createTimeTablesForGroup();
         TimeTableManager timeTableManager=new TimeTableManager();
         timeTableManager.setTimeTables(timeTablesForGroup);
-        List<TimeTable> lessonByGroup = timeTableManager.getlessonByGroup(group.getName());
+//        List<TimeTable> lessonByGroup = timeTableManager.getTimetablesForGroup(group.getName());
         DayOfWeekDao dayOfWeekDao=new DayOfWeekDao();
         List<DayOfWeek> allDays = dayOfWeekDao.getAll();
         req.setAttribute("group",group);
-        req.setAttribute("timetablesForGroup",lessonByGroup);
+//        req.setAttribute("timetablesForGroup",lessonByGroup);
         req.setAttribute("days_of_week",allDays);
         req.setAttribute("oddness_of_weeks",new OddnessOfWeekDao().getAll());
+
+        List<Group> groups = new GroupDao().getAll();
+        req.setAttribute("groups",groups);
+
         //if (req.) System.out.println("parameers = 0");
         req.getRequestDispatcher("WEB-INF/view/timetable.jsp").forward(req,resp);
 

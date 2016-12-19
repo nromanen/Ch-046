@@ -6,12 +6,13 @@ package com.ss.schedule;
 //import com.fasterxml.jackson.core.type.TypeReference;
 //import com.ss.schedule.institute.ClassroomManager;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.ss.schedule.institute.Faculty;
+import com.ss.schedule.institute.Util;
 import com.ss.schedule.io.InputOutputJson;
 import com.ss.schedule.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import static com.ss.schedule.model.SubjectType.LECTURE;
 
@@ -29,7 +30,7 @@ import static com.ss.schedule.model.SubjectType.LECTURE;
 // */
 public class Main {
 //
-    private static Faculty FCS;
+    private static Util FCS;
 //
     public static void main(String[] args) {
 ////
@@ -56,7 +57,7 @@ public class Main {
 //        TimeTableManager timeTableManager=new TimeTableManager();
 //
 //
-//        FCS=new Faculty("Faculty of computer science",groups,subjects,teachers,classrooms);
+//        FCS=new Util("Util of computer science",groups,subjects,teachers,classrooms);
 //        //FCS.setClassrooms(classrooms);
 //        FCS.getGroups().add(0,new Group("23_24",9,new LinkedList<>()));
 //        LinkedHashMap<Subject, List<? extends StudentCommunity>> groupsSubgroupsStreams = FCS.getGroupsSubgroupsStreams();
@@ -115,7 +116,7 @@ public class Main {
 //        tt2.setTeacher(new Teacher());
 //        tt2.setClassroom(FCS.getClassrooms().get(0));
 //        tt2.setTeacher(FCS.getTeachers().get(0));
-////        timeTableManager.addTimeTable(tt2);
+////        timeTableManager.canAddTimetable(tt2);
 //        System.out.println(timeTableManager.
 //                isTeacherFreeNow(DayOfWeek.MONDAY,OddnessOfWeek.ALL,FCS.getTeachers().get(0),Pair.FIRST));
 ////        System.out.println(timeTableManager.
@@ -131,28 +132,28 @@ public class Main {
 //        System.out.println(groupFreeNow);
 //        System.exit(0);
 
-        InputOutputJson<ArrayList<Classroom>> iojClassRooms = new InputOutputJson<>(
-                new TypeReference<ArrayList<Classroom>>() {
-                });
-        InputOutputJson<List<Group>>iojGroups=new InputOutputJson<>(new TypeReference<List<Group>>() {
-        });
-        InputOutputJson<List<Subject>>iojSubjects=new InputOutputJson<>(new TypeReference<List<Subject>>() {
-        });
-        InputOutputJson<List<Teacher>>iojTeachers=new InputOutputJson<>(new TypeReference<List<Teacher>>() {
-        });
-
-        List<Classroom> classrooms = iojClassRooms.readFromFile("room.json");
-        List<Group> groups = iojGroups.readFromFile("/media/oleg/D254AF9D54AF8339/Users/Oleg/OneDrive/Education3/" +
-                "JavaFx/TimeTable1/Ch-046 (copy)/src/main/resourses/group.json");
-        List<Subject> subjects = iojSubjects.readFromFile("/media/oleg/D254AF9D54AF8339/Users/Oleg/" +
-                "OneDrive/Education3/JavaFx/TimeTable1/Ch-046 (copy)/src/main/resourses/subject.json");
-        List<Teacher> teachers=iojTeachers.readFromFile("/media/oleg/D254AF9D54AF8339/Users/Oleg/OneDrive/" +
-                "Education3/JavaFx/TimeTable1/Ch-046 (copy)/src/main/resourses/teacher.json");
-
-        FCS=new Faculty("Faculty of computer science",groups,subjects,teachers,classrooms);
-        for (Group group:FCS.getGroups())
-            group.setSubgroups(new ArrayList<>());
-        List<Subgroup> subgroups = FCS.createSubgroups(FCS.getSubjects().get(1));
+//        InputOutputJson<ArrayList<Classroom>> iojClassRooms = new InputOutputJson<>(
+//                new TypeReference<ArrayList<Classroom>>() {
+//                });
+//        InputOutputJson<List<Group>>iojGroups=new InputOutputJson<>(new TypeReference<List<Group>>() {
+//        });
+//        InputOutputJson<List<Subject>>iojSubjects=new InputOutputJson<>(new TypeReference<List<Subject>>() {
+//        });
+//        InputOutputJson<List<Teacher>>iojTeachers=new InputOutputJson<>(new TypeReference<List<Teacher>>() {
+//        });
+//
+//        List<Classroom> classrooms = iojClassRooms.readFromFile("room.json");
+//        List<Group> groups = iojGroups.readFromFile("/media/oleg/D254AF9D54AF8339/Users/Oleg/OneDrive/Education3/" +
+//                "JavaFx/TimeTable1/Ch-046 (copy)/src/main/resourses/group.json");
+//        List<Subject> subjects = iojSubjects.readFromFile("/media/oleg/D254AF9D54AF8339/Users/Oleg/" +
+//                "OneDrive/Education3/JavaFx/TimeTable1/Ch-046 (copy)/src/main/resourses/subject.json");
+//        List<Teacher> teachers=iojTeachers.readFromFile("/media/oleg/D254AF9D54AF8339/Users/Oleg/OneDrive/" +
+//                "Education3/JavaFx/TimeTable1/Ch-046 (copy)/src/main/resourses/teacher.json");
+//
+//        FCS=new Util("Util of computer science",groups,subjects,teachers,classrooms);
+//        for (Group group:FCS.getGroups())
+//            group.setSubgroups(new ArrayList<>());
+//        List<Subgroup> subgroups = FCS.createSubgroups(FCS.getSubjects().get(1));
 
     }
 

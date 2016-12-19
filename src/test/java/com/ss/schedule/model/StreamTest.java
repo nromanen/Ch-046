@@ -1,7 +1,7 @@
 package com.ss.schedule.model;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.ss.schedule.institute.Faculty;
+import com.ss.schedule.institute.Util;
 import com.ss.schedule.io.InputOutputJson;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -11,14 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.ss.schedule.model.SubjectType.LECTURE;
-import static org.testng.Assert.*;
 
 /**
  * Created by oleg on 27.11.16.
  */
 public class StreamTest {
 
-    private Faculty FCS;
+    private Util FCS;
 
     @DataProvider(name = "streamProvider")
     public Object[][] streamProvider(){
@@ -48,7 +47,7 @@ public class StreamTest {
                 "Education3/JavaFx/TimeTable1/Ch-046 (copy)/src/main/resourses/teacher.json");
 
 
-        FCS=new Faculty("Faculty of computer science",groups,subjects,teachers,classrooms);
+        FCS=new Util("Util of computer science",groups,subjects,teachers,classrooms);
         for (Group group:FCS.getGroups())
             group.setSubgroups(new ArrayList<>());
         FCS.createSubgroups(FCS.getSubjects().get(1));

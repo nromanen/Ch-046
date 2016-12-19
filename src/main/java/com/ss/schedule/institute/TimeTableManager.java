@@ -1,19 +1,23 @@
 package com.ss.schedule.institute;
 
+import com.ss.schedule.dao.GroupDao;
+import com.ss.schedule.dao.JdbcSubjectDao;
+import com.ss.schedule.dao.TimeTableDao;
+import com.ss.schedule.dbutil.DBConnector;
+import com.ss.schedule.exceptions.TimetableException;
 import com.ss.schedule.model.*;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 //@SuppressWarnings("serial")
 //@XmlRootElement(name = "TimeTableManager")
 //@XmlType(propOrder = {"timeTables"})
 public class TimeTableManager implements Serializable {
-    private List<TimeTable> timeTables;
+    private List<TimeTable> timeTables=new ArrayList<>();
 
     public List<TimeTable> getTimeTables() {
         return timeTables;
@@ -65,11 +69,13 @@ public class TimeTableManager implements Serializable {
         return tempList;
     }
 
-    public List<TimeTable> getlessonByGroup(String groupName) {
+    public List<TimeTable> getTimetablesForGroup(StudentCommunity studentCommunity,
+                                                 DayOfWeek dayOfWeek,OddnessOfWeek oddnessOfWeek) {
         List<TimeTable> tempList = new ArrayList<>();
         for (TimeTable timeTable : timeTables) {
-           
-            if (groupName.equals(timeTable.getStudentCommunity().getName())) {
+            if (timeTable.getStudentCommunity().equals(studentCommunity)
+                    &&(timeTable.getOddnessOfWeek().equals(oddnessOfWeek))
+                    &&(timeTable.getDay().equals(dayOfWeek))) {
                 tempList.add(timeTable);
             }
         }
@@ -137,7 +143,7 @@ public class TimeTableManager implements Serializable {
 //            System.out.println(gr.getName()+" "+gr.getCount());
 //        }
 //    }
-//Katya dura
+
     public List<TimeTable> sortTimeTables(List<TimeTable> timeTables){
         Pair[] pairs = Pair.values();
         List<Pair> listOfPairs = new ArrayList<Pair>(Arrays.asList(pairs));
@@ -177,120 +183,79 @@ public class TimeTableManager implements Serializable {
 
 
 
-    public boolean isClassroomFreeNow(DayOfWeek dayOfWeek,OddnessOfWeek oddnessOfWeek,Classroom classroom,Pair pair){
-        for (TimeTable timeTable:timeTables
+    public boolean isClassroomFreeNow(TimeTable timeTable){
+        TimeTableDao timeTableDao=new TimeTableDao();
+        List<TimeTable> timetablesInPreciseTime = timeTableDao.getTimetablesAtPreciseTime(timeTable);
+        for (TimeTable tmeTable:timetablesInPreciseTime
              ) {
-            if (timeTable.getClassroom().equals(classroom)&&(timeTable.getOddnessOfWeek().equals(oddnessOfWeek)|| timeTable.getOddnessOfWeek().equals(OddnessOfWeek.ALL)
-            ||(oddnessOfWeek.equals(OddnessOfWeek.ALL)&&timeTable.getOddnessOfWeek().equals(OddnessOfWeek.ODD))
-                    ||(oddnessOfWeek.equals(OddnessOfWeek.ALL)&&timeTable.getOddnessOfWeek().equals(OddnessOfWeek.EVEN)))
-                    && timeTable.getDay().equals(dayOfWeek)&&timeTable.getPair().equals(pair)){
+            if (timeTable.getClassroom().equals(tmeTable.getClassroom())&&(timeTable.getOddnessOfWeek().equals(tmeTable.getOddnessOfWeek())
+                    || tmeTable.getOddnessOfWeek().equals(OddnessOfWeek.ALL)
+            ||(timeTable.getOddnessOfWeek().equals(OddnessOfWeek.ALL)&&tmeTable.getOddnessOfWeek().equals(OddnessOfWeek.ODD))
+                    ||(timeTable.getOddnessOfWeek().equals(OddnessOfWeek.ALL)&&tmeTable.getOddnessOfWeek().equals(OddnessOfWeek.EVEN)))
+                  ){
                 return false ;
             }
         }
         return true;
     }
 
-    public boolean isTeacherFreeNow(DayOfWeek dayOfWeek,OddnessOfWeek oddnessOfWeek,Teacher teacher,Pair pair){
-        for (TimeTable timeTable:timeTables){
-            if (timeTable.getTeacher().equals(teacher)&&(timeTable.getOddnessOfWeek().equals(oddnessOfWeek)|| timeTable.getOddnessOfWeek().equals(OddnessOfWeek.ALL)
-                    ||(oddnessOfWeek.equals(OddnessOfWeek.ALL)&&timeTable.getOddnessOfWeek().equals(OddnessOfWeek.ODD))
-                    ||(oddnessOfWeek.equals(OddnessOfWeek.ALL)&&timeTable.getOddnessOfWeek().equals(OddnessOfWeek.EVEN)))
-                    && timeTable.getDay().equals(dayOfWeek)&&timeTable.getPair().equals(pair)){
+    public boolean isTeacherFreeNow(TimeTable timeTable){
+        TimeTableDao timeTableDao=new TimeTableDao();
+        List<TimeTable> timetablesOfGroupInPreciseTime = timeTableDao.getTimetablesAtPreciseTime(timeTable);
+        for (TimeTable tmeTable:timetablesOfGroupInPreciseTime
+                ) {
+            if (timeTable.getTeacher().equals(tmeTable.getTeacher())&&(timeTable.getOddnessOfWeek().equals(tmeTable.getOddnessOfWeek())
+                    || tmeTable.getOddnessOfWeek().equals(OddnessOfWeek.ALL)
+                    ||(timeTable.getOddnessOfWeek().equals(OddnessOfWeek.ALL)&&tmeTable.getOddnessOfWeek().equals(OddnessOfWeek.ODD))
+                    ||(timeTable.getOddnessOfWeek().equals(OddnessOfWeek.ALL)&&tmeTable.getOddnessOfWeek().equals(OddnessOfWeek.EVEN)))
+                    ){
                 return false ;
             }
         }
         return true;
     }
-//
-////    public boolean isTeacherFreeNow(DayOfWeek dayOfWeek,OddnessOfWeek oddnessOfWeek,Teacher teacher,Pair pair){
-////        for (TimeTable timeTable:timeTables){
-////            if (timeTable.getTeacher().equals(teacher)&& isThisTimetable(dayOfWeek,oddnessOfWeek,pair,timeTable)){
-////                return false ;
-////            }
-////        }
-////        return true;
-////    }
-//
-//    public boolean isGroupFreeNow(DayOfWeek dayOfWeek, OddnessOfWeek oddnessOfWeek,
-//                                  List<Group> groups, Pair pair,
-//                                  LinkedHashMap<Subject, List<Group>> groupsSubgroupsStreams, Faculty faculty){
-//        GroupDependenciesCreator groupDependenciesCreator=new GroupDependenciesCreator(groupsSubgroupsStreams);
-//        HashMap<Group, List<Group>> groupsDependencies = groupDependenciesCreator.getGroupsDependencies();
-//        //group is not free if groupdependencies values by key current group contains
-//        Pattern groupNamePattern=Pattern.compile("(\\d{2})");
-//        System.out.println("is");
-////        System.out.println(groupsDependencies.get(group)+"     "+group);
-//
-//
-//        //for (TimeTable timeTable:timeTables){
-////            if ((timeTable.getOddnessOfWeek().equals(oddnessOfWeek)|| timeTable.getOddnessOfWeek().equals(OddnessOfWeek.ALL)
-////                    ||(oddnessOfWeek.equals(OddnessOfWeek.ALL)&&timeTable.getOddnessOfWeek().equals(OddnessOfWeek.ODD))
-////                    ||(oddnessOfWeek.equals(OddnessOfWeek.ALL)&&timeTable.getOddnessOfWeek().equals(OddnessOfWeek.EVEN)))
-////                    && timeTable.getDay().equals(dayOfWeek)&&timeTable.getPair().equals(pair)){
-////                return true ;
-////            }
-//        //}
-//
-//        for (TimeTable timeTable:timeTables){
-//
-//                for (Group group : timeTable.getGroup())
-//                    for (Group gr : groups)
-//                        if (group.equals(gr))
-//                            if (
-//                                    (timeTable.getOddnessOfWeek().equals(oddnessOfWeek)|| timeTable.getOddnessOfWeek().equals(OddnessOfWeek.ALL)
-//                                    ||(oddnessOfWeek.equals(OddnessOfWeek.ALL)&&timeTable.getOddnessOfWeek().equals(OddnessOfWeek.ODD)
-//                                    ||(oddnessOfWeek.equals(OddnessOfWeek.ALL)&&timeTable.getOddnessOfWeek().equals(OddnessOfWeek.EVEN))))
-//                                    && timeTable.getDay().equals(dayOfWeek)&&timeTable.getPair().equals(pair)) {
-//
-//                                return false;
-//                            }
-//
+
+//    public boolean isGroupFreeNow(TimeTable timeTableToCheck){
+//        TimeTableDao timeTableDao=new TimeTableDao();
+//        StudentCommunity studentCommunityToCheck = timeTableToCheck.getStudentCommunity();
+//        List<TimeTable>timetablesOfGroupInPreciseTime = timeTableDao.getTimetablesOfGroupInPreciseTime(timeTableToCheck);
+//        if (studentCommunityToCheck instanceof Subgroup){
+//            for (TimeTable timeTable:timetablesOfGroupInPreciseTime){
+//                if(timeTable.getStudentCommunity() instanceof Subgroup){
+//                    Subgroup subgroup = (Subgroup) timeTable.getStudentCommunity();
+//                    if (studentCommunityToCheck.equals(subgroup)) return true;
+//                } else if (timeTable.getStudentCommunity() instanceof Group){
+//                    Group group = (Group) timeTable.getStudentCommunity();
+//                    if (group.getSubgroups().contains(this)){
+//                        return true;
+//                    }
+//                } else if (studentCommunityToCheck instanceof Stream)
+//                {
+//                    Stream stream = (Stream) studentCommunityToCheck;
+////                    if (stream.containsSubgroup(this))
+////                        return true;
+//                }
+//                return false;
+//            }
 //        }
 //
-////        if (group.getName().contains("-")) {
-//            for (Group group:groups)
-//            for (TimeTable timetable :
-//                    timeTables) {
-//                for (Group gr:timetable.getGroup())
-//                if (groupsDependencies.get(group).contains(gr)) {
-//                    if (
-//                            (timetable.getOddnessOfWeek().equals(oddnessOfWeek)|| timetable.getOddnessOfWeek().equals(OddnessOfWeek.ALL)
-//                                    ||(oddnessOfWeek.equals(OddnessOfWeek.ALL)&&timetable.getOddnessOfWeek().equals(OddnessOfWeek.ODD)
-//                                    ||(oddnessOfWeek.equals(OddnessOfWeek.ALL)&&timetable.getOddnessOfWeek().equals(OddnessOfWeek.EVEN))))
-//                                    && timetable.getDay().equals(dayOfWeek)&&timetable.getPair().equals(pair)) {
-//
-//                        return false;
-//                    }
-//                }
-//            }
-////        }else
-//
-////        if (group.getName().length()>2)
-////        {
-////            Matcher matcher=groupNamePattern.matcher(group.getName());
-////            while (matcher.find()){
-////                String current_group_name=matcher.group(0);
-////                Group groupByName = findGroupByName(faculty, current_group_name);
-////                System.out.println(matcher.group(0));
-////                for (TimeTable timeTable:timeTables){
-////                    if (groupsDependencies.get(groupByName).contains(timeTable.getGroup()))
-////                        return false;
-////                }
-////            }
-////        }
-//
-//        return true;
 //    }
-//
-    public void addTimeTable(TimeTable timeTable,LinkedHashMap<Subject,List<Group>> groupSubgroupStream,Faculty faculty){
-        if (isClassroomFreeNow(timeTable.getDay(),
-                timeTable.getOddnessOfWeek(),timeTable.getClassroom(),timeTable.getPair())
-                &&
-                isTeacherFreeNow(timeTable.getDay(),
-                        timeTable.getOddnessOfWeek(),timeTable.getTeacher(),timeTable.getPair())
-                && timeTable.getStudentCommunity().canBeAddedToTimetableManager(this)){
-            System.out.println("ClassRoom was added");
-        } else System.out.println("Classroom is already taken");
+
+    public boolean canAddTimetable(TimeTable timeTable) throws RuntimeException{
+        if (!isClassroomFreeNow(timeTable)){
+            throw new TimetableException("Classroom is already taken!");
+        }
+        if (!isTeacherFreeNow(timeTable)){
+           throw  new TimetableException("Teacher is busy now!");
+        }
+
+        if (!isStudentCommunityFreeNow(timeTable)) {
+            throw new TimetableException("Student community is busy now!");
+        }
+        return true;
+
+
+
     }
 
 //    private boolean isThisTimetable(DayOfWeek dayOfWeek,OddnessOfWeek oddnessOfWeek,Pair pair,TimeTable timeTable){
@@ -300,12 +265,149 @@ public class TimeTableManager implements Serializable {
 //                && timeTable.getDay().equals(dayOfWeek) && timeTable.getPair().equals(pair));
 //    }
 
-    public Group findGroupByName(Faculty faculty,String name){
-        for (Group group:faculty.getGroups()){
+    public Group findGroupByName(Util util, String name){
+        for (Group group: util.getGroups()){
             if (group.getName().equals(name))
                 return group;
         }
         return null;
+    }
+
+  public List<TimeTable> getTablesForStudByDayAndOddness(StudentCommunity studentCommunity,
+                                                        OddnessOfWeek oddnessOfWeek){
+      List<TimeTable> timeTables=new ArrayList<>();
+      for (TimeTable table:getTimeTables())
+      {
+          if (table.getOddnessOfWeek().equals(oddnessOfWeek)
+                  &&table.getStudentCommunity().equals(studentCommunity))
+          {
+             timeTables.add(table);
+          }
+      }
+      return timeTables;
+  }
+
+    public void addTimetable(TimeTable timeTable) {
+        if (canAddTimetable(timeTable)) {
+            if (timeTable.getStudentCommunity() instanceof Stream) {
+                Stream stream = (Stream) timeTable.getStudentCommunity();
+                for (Group gr :
+                        stream.getGroups()) {
+                    TimeTable time = new TimeTable();
+                    time.setTeacher(timeTable.getTeacher());
+                    time.setSubject(timeTable.getSubject());
+                    time.setPair(timeTable.getPair());
+                    time.setOddnessOfWeek(timeTable.getOddnessOfWeek());
+                    time.setDay(timeTable.getDay());
+                    time.setStudentCommunity(gr);
+                    time.setClassroom(timeTable.getClassroom());
+                    this.getTimeTables().add(time);
+                    new TimeTableDao().add(time);
+//                    time.setId(timeTable.getId());
+                }
+            }
+            {
+                getTimeTables().add(timeTable);
+                new TimeTableDao().add(timeTable);
+            }
+        }
+    }
+//    }
+
+    public void addTimetableFromDB(TimeTable timeTable){
+        if (canAddTimetable(timeTable))
+        {
+            if (timeTable.getStudentCommunity() instanceof Stream){
+                Stream stream = (Stream) timeTable.getStudentCommunity();
+                for (Group gr :
+                        stream.getGroups()) {
+                    TimeTable time = new TimeTable();
+                    time.setTeacher(timeTable.getTeacher());
+                    time.setSubject(timeTable.getSubject());
+                    time.setPair(timeTable.getPair());
+                    time.setOddnessOfWeek(timeTable.getOddnessOfWeek());
+                    time.setDay(timeTable.getDay());
+                    time.setStudentCommunity(gr);
+                    time.setClassroom(timeTable.getClassroom());
+                    this.getTimeTables().add(time);
+                }
+            } else
+            {
+                getTimeTables().add(timeTable);
+            }
+        }
+    }
+
+    List<String> addGroupsOfStreamBySubject(Util util, TimeTable timeTable){
+        LinkedHashMap<Subject, List<? extends StudentCommunity>> groupsSubgroupsStreams = util.getGroupsSubgroupsStreams();
+        List<Stream> streams = (List<Stream>) groupsSubgroupsStreams.get(timeTable.getSubject());
+        Stream streamToAdd=null;
+        List<String> groupNames=new ArrayList<>();
+        for (Stream stream:streams)
+        {
+            if (stream.getSubjects().contains(timeTable.getSubject()))
+                streamToAdd=stream;
+            break;
+
+        }
+        timeTable.setStudentCommunity(streamToAdd);
+        addTimetable(timeTable);
+        for (Group group:streamToAdd.getGroups()){
+            groupNames.add(group.getName());
+        }
+        return groupNames;
+    }
+
+    List<String> getGroupsOfStreamBySubject(Util util, Subject subject){
+        LinkedHashMap<Subject, List<? extends StudentCommunity>> groupsSubgroupsStreams = util.getGroupsSubgroupsStreams();
+        List<Stream> streams = (List<Stream>) groupsSubgroupsStreams.get(subject);
+        Stream streamToAdd=null;
+        List<String> groupNames=new ArrayList<>();
+        for (Stream stream:streams)
+        {
+            if (stream.getSubjects().contains(subject))
+                streamToAdd=stream;
+            break;
+
+        }
+
+        for (Group group:streamToAdd.getGroups()){
+            groupNames.add(group.getName());
+        }
+        return  groupNames;
+    }
+
+    public void createSubgroups(){
+        Util util =new Util();
+        util.setSubjects(new JdbcSubjectDao().getAll());
+        util.setGroups(new GroupDao().getAll());
+            util.getGroupsSubgroupsStreams();
+            for (Group group:util.getGroups())
+            new GroupDao().add(group);
+
+    }
+
+    public boolean isStudentCommunityFreeNow(TimeTable timeTable){
+
+        List<TimeTable> timetablesOfGroupOrSubgroup = new TimeTableDao().getTimetablesOfGroupOrSubgroup(timeTable);
+
+        return timetablesOfGroupOrSubgroup.size() == 0;
+
+    }
+
+    public TimeTable[] getTimetablesWithWindows(List<TimeTable> timeTables){
+        TimeTable[] timeTables1=new TimeTable[10];
+        for (Pair pair:Pair.values()){
+            for (TimeTable timeTable:timeTables){
+                timeTables1[pair.ordinal()]=null;
+               if (timeTable.getPair().equals(pair)){
+//                   timeTables1.add(pair.ordinal(),timeTable);
+                   timeTables1[pair.ordinal()] = timeTable;
+                   break;
+               }
+            }
+        }
+        return timeTables1;
     }
 
 

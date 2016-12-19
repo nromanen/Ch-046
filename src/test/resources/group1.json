@@ -6,20 +6,24 @@
       {
         "name": "Algebra",
         "type": "LECTURE",
-        "course": 1
+        "course": 1,
+        "id":168
       },
       {
         "name": "Algebra",
         "type": "PRACTICE",
-        "course": 1
+        "course": 1,
+        "id":169
       },
       {
         "name": "Philosophy",
-        "type": "LECTURE"
+        "type": "LECTURE",
+        "id":166
       },
       {
         "name": "Philosophy",
-        "type": "SEMINAR"
+        "type": "SEMINAR",
+        "id":167
       }
     ]
   },
@@ -30,20 +34,25 @@
       {
         "name": "Algebra",
         "type": "LECTURE",
-        "course": 1
+        "course": 1,
+        "id":168
       },
       {
         "name": "Algebra",
         "type": "PRACTICE",
-        "course": 1
+        "course": 1,
+        "id":169
       },
       {
         "name": "Philosophy",
-        "type": "LECTURE"
+        "type": "LECTURE",
+        "id":166
+
       },
       {
         "name": "Philosophy",
-        "type": "SEMINAR"
+        "type": "SEMINAR",
+        "id":167
       }
     ]
   },
@@ -54,20 +63,24 @@
       {
         "name": "Algebra",
         "type": "LECTURE",
-        "course": 1
+        "course": 1,
+        "id":168
       },
       {
         "name": "Algebra",
         "type": "PRACTICE",
-        "course": 1
+        "course": 1,
+        "id":169
       },
       {
         "name": "Philosophy",
-        "type": "LECTURE"
+        "type": "LECTURE",
+        "id":166
       },
       {
         "name": "Philosophy",
-        "type": "SEMINAR"
+        "type": "SEMINAR",
+        "id":167
       }
     ]
   },
@@ -78,20 +91,24 @@
       {
         "name": "Algebra",
         "type": "LECTURE",
-        "course": 1
+        "course": 1,
+        "id":168
       },
       {
         "name": "Algebra",
         "type": "PRACTICE",
-        "course": 1
+        "course": 1,
+        "id":169
       },
       {
         "name": "Philosophy",
-        "type": "LECTURE"
+        "type": "LECTURE",
+        "id":166
       },
       {
         "name": "Philosophy",
-        "type": "SEMINAR"
+        "type": "SEMINAR",
+        "id":167
       }
     ]
   },
@@ -102,14 +119,17 @@
       {
         "name": "Python",
         "type": "LECTURE"
+        ,"id":163
       },
       {
         "name": "Python",
-        "type": "LAB"
+        "type": "LAB",
+        "id":164
       },
       {
         "name": "Python",
-        "type": "PRACTICE"
+        "type": "PRACTICE",
+        "id":165
       }
     ]
   },
@@ -119,15 +139,18 @@
     "subjects" : [
       {
         "name": "Python",
-        "type": "LECTURE"
+        "type": "LECTURE",
+        "id":163
       },
       {
         "name": "Python",
-        "type": "LAB"
+        "type": "LAB",
+        "id":164
       },
       {
         "name": "Python",
-        "type": "PRACTICE"
+        "type": "PRACTICE",
+        "id":165
       }
     ]
   },
@@ -138,12 +161,14 @@
       {
         "name": "Algebra",
         "type": "LECTURE",
-        "course": 2
+        "course": 2,
+        "id":161
       },
       {
         "name": "Algebra",
         "type": "PRACTICE",
-        "course": 2
+        "course": 2,
+        "id":162
       }
     ]
   },
@@ -154,12 +179,14 @@
       {
         "name": "Algebra",
         "type": "LECTURE",
-        "course": 2
+        "course": 2,
+        "id":161
       },
       {
         "name": "Algebra",
         "type": "PRACTICE",
-        "course": 2
+        "course": 2,
+        "id":162
       }
     ]
   },
@@ -169,11 +196,13 @@
     "subjects" : [
       {
         "name": ".Net",
-        "type": "LECTURE"
+        "type": "LECTURE",
+        "id":170
       },
       {
         "name": ".Net",
         "type": "PRACTICE"
+        ,"id":171
       }
     ]
   },
@@ -183,11 +212,13 @@
     "subjects" : [
       {
         "name": ".Net",
-        "type": "LECTURE"
+        "type": "LECTURE",
+        "id":170
       },
       {
         "name": ".Net",
-        "type": "PRACTICE"
+        "type": "PRACTICE",
+        "id":171
       }
     ]
   },
@@ -197,7 +228,8 @@
     "subjects" : [
       {
         "name": "Transformation",
-        "type": "SEMINAR"
+        "type": "SEMINAR",
+        "id":180
       }
     ]
   },
@@ -208,7 +240,8 @@
       {
         "name": "MA",
         "type": "PRACTICE",
-        "course": 3
+        "course": 3,
+        "id":179
       }
     ]
   }

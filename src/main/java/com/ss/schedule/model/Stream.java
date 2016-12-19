@@ -9,7 +9,7 @@ import java.util.List;
  * Created by oleg on 27.11.16.
  */
 public class Stream extends StudentCommunity {
-    List<Group> groups;
+    List<Group> groups=new ArrayList<>();
 
     public List<Group> getGroups() {
         return groups;

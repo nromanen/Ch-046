@@ -5,7 +5,9 @@ import com.ss.schedule.model.SubjectType;
 import com.ss.schedule.model.Teacher;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Comparator;
+import java.util.List;
 
 // author Maksym Maksymenko last commit 23.11 18:02
 
@@ -25,25 +27,25 @@ public class TeacherManager {
 		this.teacher = teacher;
 	}
 
-	public ArrayList<Subject> addSubject(Subject lesson) {
-		if(!teacher.getList().contains(lesson)){
-		teacher.getList().add(lesson);}
-		return teacher.getList();
+	public List<Subject> addSubject(Subject lesson) {
+		if(!teacher.getSubjects().contains(lesson)){
+		teacher.getSubjects().add(lesson);}
+		return teacher.getSubjects();
 	}
 
 	public void removeSubject(Subject lesson) {
 
-		for (int i = 0; i < teacher.getList().size(); i++) {
-			if (teacher.getList().get(i).equals(lesson)) {
-				teacher.getList().remove(lesson);
+		for (int i = 0; i < teacher.getSubjects().size(); i++) {
+			if (teacher.getSubjects().get(i).equals(lesson)) {
+				teacher.getSubjects().remove(lesson);
 				i--;
 			}
 		}
 	}
 
-	public ArrayList<Subject> getSubjectsByType( SubjectType type) {
-		ArrayList<Subject> listByLessonType = new ArrayList<>();
-		ArrayList<Subject> list = teacher.getList();
+	public List<Subject> getSubjectsByType( SubjectType type) {
+		List<Subject> listByLessonType = new ArrayList<>();
+		List<Subject> list = teacher.getSubjects();
 		for (Subject les : list) {
 			if (les.getType().equals(type))
 				listByLessonType.add(les);
@@ -59,10 +61,10 @@ public class TeacherManager {
 		}
 	};
 
-	public ArrayList<Subject> getOnlyLectures(Teacher teacher) {
-		ArrayList<Subject> result = new ArrayList<>();
+	public List<Subject> getOnlyLectures(Teacher teacher) {
+		List<Subject> result = new ArrayList<>();
 
-		ArrayList<Subject> list = teacher.getList();
+		List<Subject> list = teacher.getSubjects();
 		for (Subject lecture : list) {
 			if (lecture.getType().equals(SubjectType.LECTURE)) {
 				String name = lecture.getName();

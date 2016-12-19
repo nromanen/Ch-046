@@ -53,7 +53,8 @@ public class ClassroomDao extends AbstractDao<Classroom> {
     @Override
     public List<Classroom> getAll() {
         List <Classroom> list = new ArrayList<>();
-        String sql = "SELECT * FROM classrooms order by capacity";
+        String sql = "SELECT * FROM classrooms ";
+        //order by capacity";
         try(Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()){
@@ -139,7 +140,7 @@ public class ClassroomDao extends AbstractDao<Classroom> {
                 long classroomId = getEntityIdByName(entity.getName());
 
                 for (SubjectType st :  entity.getTypes()) {
-                    classroomsSubjectTypeDao.add(classroomId, subjectTypeDao.getEntityIdByName(st.toString()));
+                    classroomsSubjectTypeDao.add(classroomId, st.getId());
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

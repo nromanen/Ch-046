@@ -22,6 +22,16 @@ public class TimeTable implements Serializable {
 			/* the seventh -- day of week */
 			"\\s([A-Z][a-z]{2}|[A-Z]{4})";
 	/* the eighth -- oddness of week */
+	long id;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	private Subject subject;
 	private Pair pair;
 	private Teacher teacher;
@@ -90,7 +100,7 @@ public class TimeTable implements Serializable {
 	@Override
 	public String toString() {
 		return subject.getName() + "(" + subject.getType() + ")" + ", " + pair + ", [" + teacher.getFirstName() + ", "
-				+ teacher.getLastName() + "], " + /*getGroup().getName() +*/ ", " + day + ", " + oddnessOfWeek;
+				+ teacher.getLastName() + "], " + getStudentCommunity().getName() + ", " + day + ", " + oddnessOfWeek;
 	}
 
 	@Override

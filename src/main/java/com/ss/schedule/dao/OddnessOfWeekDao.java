@@ -46,6 +46,11 @@ public class OddnessOfWeekDao extends AbstractDao<OddnessOfWeek> {
         return null;
     }
 
+    public long getIdByName(String name){
+        String sql="select * from oddness_of_week where name =?";
+        return new DBUtil().getEntityIdByNameExecQuery(connection,sql,name);
+    }
+
     @Override
     public OddnessOfWeek update(OddnessOfWeek entity) {
         return null;

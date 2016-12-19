@@ -12,28 +12,22 @@ public abstract class StudentCommunity {
     protected int count;
     protected List<Subject> subjects=new ArrayList<>();
 
-    int a=0;
+    public long getId() {
+        return id;
+    }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (!(o instanceof StudentCommunity)) return false;
-//
-//        StudentCommunity that = (StudentCommunity) o;
-//
-//        if (count != that.count) return false;
-//        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-//        return subjects != null ? subjects.equals(that.subjects) : that.subjects == null;
-//
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        int result = name != null ? name.hashCode() : 0;
-//        result = 31 * result + count;
-//        result = 31 * result + (subjects != null ? subjects.hashCode() : 0);
-//        return result;
-//    }
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    protected long id;
+
+    public StudentCommunity(String name, int count, List<Subject> subjects, long id) {
+        this.name = name;
+        this.count = count;
+        this.subjects = subjects;
+        this.id = id;
+    }
 
     public StudentCommunity(String name, int count, List<Subject> subjects) {
         this.name = name;
@@ -77,5 +71,24 @@ public abstract class StudentCommunity {
 
     public abstract boolean isPresentOrEquals(StudentCommunity studentCommunity);
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof StudentCommunity)) return false;
 
+        StudentCommunity that = (StudentCommunity) o;
+
+        if (count != that.count) return false;
+        //if (id != that.id) return false;
+        return name != null ? name.equals(that.name) : that.name == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + count;
+        result = 31 * result + (int) (id ^ (id >>> 32));
+        return result;
+    }
 }

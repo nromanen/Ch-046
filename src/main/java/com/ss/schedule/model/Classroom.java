@@ -12,7 +12,6 @@ import java.util.List;
 public class Classroom implements Comparable<Classroom>{
 
 	@XmlTransient
-	@JsonIgnore
 	private long id;
 	@JacksonXmlProperty
 	private String name;

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class Faculty {
+public class Util {
 
 	private static final String ERROR_MESSAGE_ADD_SUBJECT = "[ERROR] This subject has already existed!";
 	private static final String ERROR_MESSAGE_DELETE_SUBJECT = "[ERROR] Subject doesn't no exist!";
@@ -19,16 +19,16 @@ public class Faculty {
 	private List<Teacher> teachers;
 	private static List<Classroom> classrooms;
 
-	public Faculty() {
+	public Util() {
 
 	}
 
-	public Faculty(String name, List<Group> groups, List<Subject> subjects, List<Teacher> teachers,List<Classroom> classrooms) {
+	public Util(String name, List<Group> groups, List<Subject> subjects, List<Teacher> teachers, List<Classroom> classrooms) {
 		this.name = name;
 		this.groups = groups;
 		this.subjects = subjects;
 		this.teachers = teachers;
-		Faculty.classrooms=classrooms;
+		Util.classrooms=classrooms;
 	}
 
 	public String getName() {
@@ -68,7 +68,7 @@ public class Faculty {
 	}
 
 	public void setClassrooms(List<Classroom> classrooms) {
-		Faculty.classrooms = classrooms;
+		Util.classrooms = classrooms;
 	}
 
 
@@ -77,6 +77,20 @@ public class Faculty {
 	//у потоку завжди один предмет, то чи не логічніше в базовому класі мати сабжет,а ліст сабжектів лище в
 	//похідних класах?
 	//Ще не забудь запитати про переповнення стеку в джейсонах!!!
+
+	public List<Subgroup> getSubgroupsBySubject(Subject subject,Group group){
+        List<Subgroup> subgroups=new ArrayList<>();
+        List<Subgroup> studentCommunities = (List<Subgroup>) getGroupsSubgroupsStreams().get(subject);
+        for (Subgroup subgroup:studentCommunities
+             ) {
+            if (subgroup.getSubjects().contains(subject) && subgroup.getGroup().equals(group)){
+                subgroups.add(subgroup);
+            }
+        }
+        return subgroups;
+    }
+
+
 	public LinkedHashMap<Subject, List<? extends StudentCommunity>> getGroupsSubgroupsStreams() {
 		LinkedHashMap<Subject, List<? extends StudentCommunity>> groupsSubgroupsStreams = new LinkedHashMap<>();
         List<? extends StudentCommunity> students=new ArrayList<>();
@@ -100,8 +114,10 @@ public class Faculty {
 				if (maxStudentAmount >= count) {
 					Subgroup subgroup=new Subgroup(group.getName(),group.getCount(),group);
                     subgroup.getSubjects().add(subject);
-                    group.getSubgroups().add(subgroup);
-					subgroups.add(subgroup);
+					if (!group.getSubgroups().contains(subgroup)) {
+						group.getSubgroups().add(subgroup);
+						subgroups.add(subgroup);
+					}
 				} else {
 					for (int i = 2; ; i++) {
 						if ((i * maxStudentAmount) >= count) {
@@ -110,7 +126,8 @@ public class Faculty {
 								subgroups.add(formSubGroup(group, subGroupAmount, j,subject));
 							}
 							int remainStudentAmount = count - ((count / i) * (i - 1));
-							subgroups.add(formSubGroup(group, remainStudentAmount, i,subject));
+                            Subgroup subgroup=formSubGroup(group, remainStudentAmount, i,subject);
+							subgroups.add(subgroup);
 							break;
 						}
 					}
@@ -124,7 +141,15 @@ public class Faculty {
 	private Subgroup formSubGroup(Group group, int subGroupAmount, int subGroupIndex,Subject subject) {
 		Subgroup subgroup=new Subgroup(group.getName()+ "-"+subGroupIndex,subGroupAmount,group);
 		subgroup.getSubjects().add(subject);
-        group.getSubgroups().add(subgroup);
+        if (!group.getSubgroups().contains(subgroup)) {
+            subgroup.getSubjects().add(subject);
+            group.getSubgroups().add(subgroup);
+        } else
+        {
+            int index=group.getSubgroups().indexOf(subgroup);
+            Subgroup subgroup1 = group.getSubgroups().get(index);
+            subgroup1.getSubjects().add(subject);
+        }
 		return subgroup;
 	}
 
@@ -151,7 +176,7 @@ public class Faculty {
 			return streams;
 		}
 
-		return null;
+		return streams;
 	}
 
 	private StringBuilder buildStreamName(StringBuilder streamName, String name) {

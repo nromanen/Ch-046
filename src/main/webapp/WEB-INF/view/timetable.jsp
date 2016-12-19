@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Devcolibri.com</title>
+    <title></title>
 </head>
 <body>
 <c:set var="strings" value="101"/>
@@ -15,18 +15,25 @@
     </tr>
     </c:forEach>
 </table>
-<form action="${pageContext.request.contextPath}/c" method="get">
+<form action="${pageContext.request.contextPath}/forGroup" method="get">
     <select name="group">
-        <option>${group}</option>
+        <option value="">Select group</option>
+        <c:forEach var="group" items="${requestScope.groups}">
+        <option value="${group.id}">${group.getName()}</option>
+
+        </c:forEach>
     </select>
 
     <select name="day_of_week">
+        <option value="">Select day</option>
         <c:forEach var="dayOfWeek" items="${requestScope.days_of_week}">
             <option>${dayOfWeek.name()}</option>
         </c:forEach>
     </select>
+
     <select name="oddness_of_week">
-        <c:forEach var="oddness_of_week" items="${oddness_of_weeks}">
+        <option value="">Select oddness</option>
+        <c:forEach var="oddness_of_week" items="${requestScope.oddness_of_weeks}">
             <option>${oddness_of_week.name()}</option>
         </c:forEach>
     </select>
@@ -34,8 +41,6 @@
    <input type="submit" name="subm" value="Send">
 
 </form>
-<c:if test="${requestScope.keySet().size()!=0}">
-    <p>dfghjkl</p>
-</c:if>
+
 </body>
 </html>

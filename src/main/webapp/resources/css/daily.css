@@ -1,0 +1,11 @@
+table{
+    border: solid red 1px;
+}
+
+table tbody:nth-child(2){
+    border-bottom: solid red 1px;
+}
+
+.pair{
+    float:left;
+}

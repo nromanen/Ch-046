@@ -28,7 +28,7 @@ public class GroupDependenciesCreatorTest {
 //        List<Group> groups = mapper.readValue(groupJson, new TypeReference<List<Group>>() {});
 //        List<Subject> subjects = mapper.readValue(subjectJson, new TypeReference<List<Subject>>() {});
 //
-//        Faculty faculty = new Faculty("Programmers", groups, subjects, new ArrayList<>(),null);
+//        Util faculty = new Util("Programmers", groups, subjects, new ArrayList<>(),null);
 //        HashMap<Subject, List<Group>> subgroupsStreams = faculty.getGroupsSubgroupsStreams();
 //
 //        assertEquals(subgroupsStreams.size(), 20);

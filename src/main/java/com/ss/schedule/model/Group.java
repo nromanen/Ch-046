@@ -1,26 +1,18 @@
 package com.ss.schedule.model;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.ss.schedule.institute.TimeTableManager;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JacksonXmlRootElement(localName = "group")
 public class Group extends StudentCommunity {
-
-//	@JacksonXmlProperty
-//	private String name;
-//
-//	@JacksonXmlProperty
-//	private int count;
-//
-//	@JacksonXmlElementWrapper(localName = "subjects")
-//	@JacksonXmlProperty(localName = "subject")
-//	private List<Subject> subjects;
-    private List<Subgroup> subgroups;
+	@JsonManagedReference
+    private List<Subgroup> subgroups=new ArrayList<>();
 
     public List<Subgroup> getSubgroups() {
         return subgroups;
@@ -31,6 +23,10 @@ public class Group extends StudentCommunity {
     }
 
     public Group() {;
+	}
+
+	public Group(String name, int count, List<Subject> subjects, long id) {
+		super(name, count, subjects, id);
 	}
 
 	public Group(String name, int count, List<Subject> subjects) {
@@ -63,7 +59,12 @@ public class Group extends StudentCommunity {
 
 	@Override
 	public boolean canBeAddedToTimetableManager(TimeTableManager timeTableManager) {
-		return false;
+		for (TimeTable timeTable:timeTableManager.getTimeTables()){
+			if (isPresentOrEquals(timeTable.getStudentCommunity())){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override

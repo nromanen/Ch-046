@@ -31,6 +31,11 @@ public class DayOfWeekDao extends AbstractDao<DayOfWeek> {
         return dayOfWeeks;
     }
 
+    public long getIdByName(String name){
+        String sql="Select * from days_of_week where name=?";
+        return new DBUtil().getEntityIdByNameExecQuery(connection,sql,name);
+    }
+
     @Override
     public DayOfWeek getById(long id) {
         String sql="SELECT * FROM days_of_week WHERE id=?";

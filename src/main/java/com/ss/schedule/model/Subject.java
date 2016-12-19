@@ -16,8 +16,9 @@ public class Subject {
 	@JacksonXmlProperty
 	private int course;
 	@XmlTransient
-	@JsonIgnore
-	private int id;
+
+	private long id;
+
 
 	public Subject() {}
 
@@ -26,7 +27,14 @@ public class Subject {
 		this.type = type;
 	}
 
-	public Subject(String name,  int courseNumber,SubjectType type) {
+	public Subject(String name,  int course,SubjectType type, long id) {
+		this.name = name;
+		this.type = type;
+		this.course = course;
+		this.id = id;
+	}
+
+	public Subject(String name, int courseNumber, SubjectType type) {
 		this.name = name;
 		this.course = courseNumber;
 		this.type = type;
@@ -56,11 +64,11 @@ public class Subject {
 		this.course = course;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setID(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

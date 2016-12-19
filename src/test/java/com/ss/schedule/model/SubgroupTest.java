@@ -1,8 +1,7 @@
 package com.ss.schedule.model;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.ss.schedule.Main;
-import com.ss.schedule.institute.Faculty;
+import com.ss.schedule.institute.Util;
 import com.ss.schedule.institute.TimeTableManager;
 import com.ss.schedule.io.InputOutputJson;
 import org.testng.annotations.BeforeTest;
@@ -19,7 +18,7 @@ import static org.testng.Assert.*;
  */
 public class SubgroupTest {
 
-    private Faculty FCS;
+    private Util FCS;
     private TimeTableManager timeTableManager;
 
     @BeforeTest
@@ -43,7 +42,7 @@ public class SubgroupTest {
                 "Education3/JavaFx/TimeTable1/Ch-046 (copy)/src/main/resourses/teacher.json");
 
 
-        FCS=new Faculty("Faculty of computer science",groups,subjects,teachers,classrooms);
+        FCS=new Util("Util of computer science",groups,subjects,teachers,classrooms);
         for (Group group:FCS.getGroups())
             group.setSubgroups(new ArrayList<>());
         FCS.createSubgroups(FCS.getSubjects().get(1));

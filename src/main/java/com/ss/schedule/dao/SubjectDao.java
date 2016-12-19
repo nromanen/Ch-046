@@ -55,7 +55,7 @@ public class SubjectDao extends AbstractDao<Subject> {
         for (int i = 0; i < listOfSubjects.size(); i++) {
             try {
                 PreparedStatement ps = connection
-                        .prepareStatement("INSERT INTO SUBJECTS (NAME, SUBJECT_TYPE, COURSE) VALUES(?,?,?)");
+                        .prepareStatement("INSERT INTO SUBJECTS (NAME, type_id, COURSE) VALUES(?,?,?)");
 
                 ps.setString(1, listOfSubjects.get(i).getName());
                 ps.setString(2, listOfSubjects.get(i).getType().toString());
@@ -94,7 +94,7 @@ public class SubjectDao extends AbstractDao<Subject> {
                 String subjectType = rs.getString("SUBJECT_TYPE");
                 int subjectCourse = rs.getInt("COURSE");
                 Subject subject = new Subject();
-                subject.setID(subjectID);
+                subject.setId(subjectID);
                 subject.setName(subjectName);
                 subject.setType(SubjectType.valueOf(subjectType));
                 subject.setCourse(subjectCourse);
@@ -111,14 +111,14 @@ public class SubjectDao extends AbstractDao<Subject> {
         Subject subject = new Subject();
         try {
             PreparedStatement ps = connection
-                    .prepareStatement("SELECT NAME, SUBJECT_TYPE, COURSE FROM SUBJECTS WHERE ID=?");
+                    .prepareStatement("SELECT NAME, type_id, COURSE FROM SUBJECTS WHERE ID=?");
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String subjectName = rs.getString("NAME");
-                String subjectType = rs.getString("SUBJECT_TYPE");
+                String subjectType = rs.getString("type_id");
                 int subjectCourse = rs.getInt("COURSE");
-                subject.setID((int) id);
+                subject.setId((int) id);
                 subject.setName(subjectName);
                 subject.setType(SubjectType.valueOf(subjectType));
                 subject.setCourse(subjectCourse);
@@ -133,11 +133,11 @@ public class SubjectDao extends AbstractDao<Subject> {
     public Subject update(Subject entity) {
         try {
             PreparedStatement ps = connection
-                    .prepareStatement("UPDATE SUBJECTS SET NAME=?, SUBJECT_TYPE=?, COURSE=? WHERE ID=?");
+                    .prepareStatement("UPDATE SUBJECTS SET NAME=?, type_id=?, COURSE=? WHERE ID=?");
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getType().toString());
             ps.setInt(3, entity.getCourse());
-            ps.setInt(4, entity.getId());
+            ps.setLong(4, entity.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

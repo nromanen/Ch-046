@@ -17,7 +17,7 @@ public class SubjectTypeDao extends AbstractDao<SubjectType>{
 
     @Override
     public List<SubjectType> getAll() {
-
+        SubjectType.LECTURE.setId(1);
         return null;
     }
 
@@ -43,8 +43,8 @@ public class SubjectTypeDao extends AbstractDao<SubjectType>{
     public List<SubjectType> getEntitiesByClassroomId(Long id) {
 
         List<SubjectType> subjectTypes = new ArrayList<>();
-        String sql = "select name from subjecttypes join classrooms_subjecttypes on " +
-                "classroom_id = ? and subject_types_id = subjecttypes.id";
+        String sql = "select name from subject_types join classrooms_subjecttypes on " +
+                "subject_types_id = subject_types.id WHERE classroom_id = ?";
         try(PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setLong(1, id);
@@ -60,7 +60,7 @@ public class SubjectTypeDao extends AbstractDao<SubjectType>{
     }
 
     public long getEntityIdByName(String name) {
-        String sql = "SELECT id FROM subjectTypes WHERE name = ?";
+        String sql = "SELECT id FROM subject_types WHERE name = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, name);
