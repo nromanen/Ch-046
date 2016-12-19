@@ -10,9 +10,9 @@ import java.sql.SQLException;
  */
 public class DBConnector {
 
-    private static final String DBURL = "jdbc:postgresql://127.0.0.1:5432/institute";
+    private static final String DBURL = "jdbc:postgresql://127.0.0.1:5433/rmochetc";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "1123581321";
+    private static final String PASSWORD = "root";
     private static final String DRIVER = "org.postgresql.Driver";
 
     private static Connection connection = null;

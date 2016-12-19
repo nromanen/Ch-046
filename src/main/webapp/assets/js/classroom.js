@@ -20,7 +20,7 @@ function createLink () {
 
     var type = document.getElementById("fType").value;
     console.log(type);
-    document.getElementById("getRooms").href = "/DownloadFileServlet?fType="+type;
+    document.getElementById("getRooms").href = "classroomDownload?fType="+type;
     var link = document.getElementById("getRooms").href;
     console.log(link);
 }
@@ -54,13 +54,13 @@ function show () {
 
     if (i%2 == 0)
     {
-        document.getElementById("option").src = "/assets/img/arrow_up.png";
+        document.getElementById("option").src = "assets/img/arrow_up.png";
 
         i++;
     }
     else
     {
-        document.getElementById("option").src = "/assets/img/arrow_down.png";
+        document.getElementById("option").src = "assets/img/arrow_down.png";
         i++;
     }
 }

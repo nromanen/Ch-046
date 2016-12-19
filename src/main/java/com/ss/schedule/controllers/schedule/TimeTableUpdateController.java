@@ -57,7 +57,7 @@ public class TimeTableUpdateController extends HttpServlet {
         req.setAttribute("currentOddness", timeTable.getOddnessOfWeek());
         req.setAttribute("groupName", "Group" + timeTable.getGroup().getName());
         req.setAttribute("capacity", timeTable.getGroup().getCount());
-        req.setAttribute("link", "/timetableUpdate");
+        req.setAttribute("link", "timetableUpdate");
         req.setAttribute("group",timeTable.getGroup());
         req.getRequestDispatcher("/WEB-INF/view/schedule.jsp").forward(req, resp);
     }

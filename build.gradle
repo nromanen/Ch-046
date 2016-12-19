@@ -40,3 +40,7 @@ dependencies {
 
 
 }
+
+war {
+    archiveName = 'rmochetc.war'
+}

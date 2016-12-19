@@ -69,7 +69,7 @@
     <page:footer/>
     <page:js/>
 
-    <script src="../../../assets/js/classroomUpdate.js" ></script>
+    <script src="assets/js/classroomUpdate.js" ></script>
 
 
 

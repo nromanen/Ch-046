@@ -201,8 +201,8 @@
 
 
 <page:js/>
-<script src="../../../assets/js/schedule.js" ></script>
-<script src="../../../assets/js/confirm.js" ></script>
+<script src="assets/js/schedule.js" ></script>
+<script src="assets/js/confirm.js" ></script>
 
 
 </body>

@@ -88,7 +88,7 @@
                       action=${link}
                 </c:if>
                 <c:if test="${link == null}">
-                    action="/pair"
+                    action="pair"
                 </c:if>
                       method="post">
                     <c:if test="${group != null}"><input type="hidden" id="groupAdd" name="groupAdd" value="${group.id}"></c:if>
@@ -212,8 +212,8 @@
 </div>
 
 <page:js/>
-<script src="../../../assets/js/schedule.js" ></script>
-<script src="../../../assets/js/confirm.js" ></script>
+<script src="assets/js/schedule.js" ></script>
+<script src="assets/js/confirm.js" ></script>
 
 </body>
 </html>
