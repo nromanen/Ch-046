@@ -79,6 +79,12 @@ public class TeacherInfo extends HttpServlet {
 			request.setAttribute("error", error);
 			request.getRequestDispatcher("/WEB-INF/view/TeacherError.jsp").forward(request, response);
 		}
+	//	System.out.println(request.getParameter("lastname")+request.getParameter("firstname"));
+		else if (td.isExist(request.getParameter("lastname"),request.getParameter("firstname"))){
+			error="teacher with same firstname and lastname already exist";
+			request.setAttribute("error", error);
+			request.getRequestDispatcher("/WEB-INF/view/TeacherError.jsp").forward(request, response);
+		}
 		else {
 			td.update(Integer.parseInt(request.getParameter("teacherId")), request.getParameter("firstname"),
 					request.getParameter("lastname")); 

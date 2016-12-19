@@ -23,12 +23,12 @@
           <tr>
              <td>Lastname*</td>
               <td><input type="text" name="lastname" placeholder="Ivanov" value= "${lastname}" /> <br>
-               <p><c:if test="${error2!=null}"><div class="teacheraddError">${error}</div></c:if></p> </td> 
+               <p><c:if test="${error2!=null}"><div class="teacheraddError">${error2}</div></c:if></p> </td> 
           </tr>
         
        </table>
        <br>
-       
+      
         <input type="submit" class="button1" value="Add"/>
         
        </form>

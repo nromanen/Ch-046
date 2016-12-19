@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
  <link rel="stylesheet" href="style.css">
 <title>Teachers info</title>
 
@@ -51,9 +52,9 @@
    </tr>
 <c:forEach var="subject" items="${subjects}">
    <tr><td> ${subject.name}</td><td>${subject.type}</td><td>${subject.course} </td>
-   <td> <a href="SubjectEdit?subjectId=${subject.id}&teacherId=${id}"
-    onclick="return confirm('Are you sure you want to delete ${subject.name} ${subject.type} course:${subject.course}  ')" style="background-color:#f21036" >Delete</a></td></tr>
-      
+   <td> <a class="btn waves-effect waves-light indigo" href="SubjectEdit?subjectId=${subject.id}&teacherId=${id}"
+    onclick="return confirm('Are you sure you want to delete ${subject.name} ${subject.type} course:${subject.course} ')" style="background-color:#f21036" >Delete</a></td></tr>
+     
    </c:forEach>
  </table>
  </form>
@@ -67,5 +68,6 @@
 <input type="text" hidden name="teacherId" value="${id}" />
   <input type="submit" class="button1" id="submit" name="submit" value="Add subject" /> 
  </form>
+
 </body>
 </html>

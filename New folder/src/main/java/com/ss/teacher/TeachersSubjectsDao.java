@@ -1,5 +1,7 @@
 package com.ss.teacher;
-
+/**
+ * Created by mmaksymtc 
+ */
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

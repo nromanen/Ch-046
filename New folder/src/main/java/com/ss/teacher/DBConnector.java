@@ -1,8 +1,6 @@
 package com.ss.teacher;
 
-/**
- * Created by rmochetc on 07.12.2016.
- */
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
