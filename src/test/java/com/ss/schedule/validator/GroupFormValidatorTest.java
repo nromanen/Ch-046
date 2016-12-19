@@ -37,7 +37,8 @@ public class GroupFormValidatorTest {
 
 		assertFalse(GroupFormValidator.hasErrors(session, group));
 
-		verifyZeroInteractions(session);
+		verify(session, times(1)).getAttribute(eq("groupName"));
+		verifyNoMoreInteractions(session);
 	}
 
 	@Test
@@ -48,6 +49,7 @@ public class GroupFormValidatorTest {
 		assertTrue(GroupFormValidator.hasErrors(session, group));
 
 		verify(session, times(1)).setAttribute(eq("gr_name_error"), anyString());
+		verify(session, times(1)).getAttribute(eq("groupName"));
 		verifyNoMoreInteractions(session);
 	}
 
@@ -59,6 +61,7 @@ public class GroupFormValidatorTest {
 		assertTrue(GroupFormValidator.hasErrors(session, group));
 
 		verify(session, times(1)).setAttribute(eq("gr_name_error"), anyString());
+		verify(session, times(1)).getAttribute(eq("groupName"));
 		verifyNoMoreInteractions(session);
 	}
 
@@ -69,7 +72,8 @@ public class GroupFormValidatorTest {
 		Group group = new Group("10", 101, new ArrayList<>());
 		assertTrue(GroupFormValidator.hasErrors(session, group));
 
-		verify(session, times(1)).setAttribute(eq("gr_count_error"), anyString());
+		verify(session, times(1)).setAttribute(eq("msg"), anyString());
+		verify(session, times(1)).getAttribute(eq("groupName"));
 		verifyNoMoreInteractions(session);
 	}
 
@@ -77,10 +81,11 @@ public class GroupFormValidatorTest {
 	public void testHasErrorInGroupCountFewerMinGroupCount() {
 		doNothing().when(session).setAttribute(any(), any());
 
-		Group group = new Group("10", 0, new ArrayList<>());
+		Group group = new Group("19", 0, new ArrayList<>());
 		assertTrue(GroupFormValidator.hasErrors(session, group));
 
-		verify(session, times(1)).setAttribute(eq("gr_count_error"), anyString());
+		verify(session, times(1)).setAttribute(eq("msg"), anyString());
+		verify(session, times(1)).getAttribute(eq("groupName"));
 		verifyNoMoreInteractions(session);
 	}
 
@@ -92,13 +97,15 @@ public class GroupFormValidatorTest {
 		assertTrue(GroupFormValidator.hasErrors(session, group));
 
 		verify(session, times(1)).setAttribute(eq("gr_name_error"), anyString());
-		verify(session, times(1)).setAttribute(eq("gr_count_error"), anyString());
+		verify(session, times(1)).setAttribute(eq("msg"), anyString());
+		verify(session, times(1)).getAttribute(eq("groupName"));
 		verifyNoMoreInteractions(session);
 	}
 
 	@Test
 	public void testHasErrorWhenChangeGroupCourseAndDoNotDeletePreviousSubjects() {
 		doNothing().when(session).setAttribute(any(), any());
+		when(session.getAttribute("groupName")).thenReturn("32");
 
 		List<Subject> subjects = new ArrayList<>();
 		subjects.add(new Subject("Algebra", SubjectType.LECTURE, 2));
@@ -107,7 +114,8 @@ public class GroupFormValidatorTest {
 		group.setId(3);
 		assertTrue(GroupFormValidator.hasErrors(session, group));
 
-		verify(session, times(1)).setAttribute(eq("gr_course_error"), anyString());
+		verify(session, times(1)).setAttribute(eq("msg"), anyString());
+		verify(session, times(1)).getAttribute(eq("groupName"));
 		verifyNoMoreInteractions(session);
 	}
 }
