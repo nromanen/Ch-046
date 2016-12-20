@@ -42,7 +42,7 @@
 </nav>
 <div class="col-md-2"></div>
 <div class="col-md-8">
-    <h3 class="text-center">Select Group/subgroup, day and oddness in order to get the timetable</h3>
+    <h3 class="text-center">Select Group, day and oddness in order to get the timetable</h3>
     <form class="form-horizontal" action="${pageContext.request.contextPath}/forGroup" method="post">
         <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="group">Group </label>
@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <div class="form-group form-group-lg">
+        <div style="display: none" class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="subgroup" id="subgroup_label">Subgroup</label>
             <div class="col-sm-10">
                 <select name="subgroup" id="subgroup" class="form-control">
