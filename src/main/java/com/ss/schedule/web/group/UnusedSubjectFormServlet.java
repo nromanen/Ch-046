@@ -49,19 +49,26 @@ public class UnusedSubjectFormServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
+		String[] groupIds = req.getParameterValues("group_id");
 
-		try {
-			Subject subject = subjectService.getSubjectById(Long.valueOf(req.getParameter("subject_id")));
-			List<Group> groups = getGroupsList(req.getParameterValues("group_id"));
+		if (groupIds == null) {
+			req.setAttribute("msg", "No one group was selected! Please select at least one group.");
+			doGet(req, resp);
+			return;
+		} else {
+			try {
+				Subject subject = subjectService.getSubjectById(Long.valueOf(req.getParameter("subject_id")));
+				List<Group> groups = getGroupsList(groupIds);
 
-			executeUpdateGroups(groups, subject);
-			session.setAttribute("css", "success");
-			session.setAttribute("msg", createMessage(groups, subject));
-		} catch (SQLException ex) {
-			//todo
-			ex.printStackTrace();
-			session.setAttribute("css", "danger");
-			session.setAttribute("msg", "The operation was failed!");
+				executeUpdateGroups(groups, subject);
+				session.setAttribute("css", "success");
+				session.setAttribute("msg", createMessage(groups, subject));
+			} catch (SQLException ex) {
+				//todo
+				ex.printStackTrace();
+				session.setAttribute("css", "danger");
+				session.setAttribute("msg", "The operation was failed!");
+			}
 		}
 
 		resp.setStatus(HttpServletResponse.SC_FOUND);
@@ -88,7 +95,7 @@ public class UnusedSubjectFormServlet extends HttpServlet {
 	private String createMessage(List<Group> groups, Subject subject) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Subject ").append(subject.getName()).append("(").append(subject.getType()).append(") ")
-				.append(subject.getCourse()).append(" course, had been added into:");
+				.append(subject.getCourse()).append(" course had been added into:");
 
 		for (Group group : groups) {
 			sb.append("<br>Group ").append(group.getName()); // <br> - new line for html

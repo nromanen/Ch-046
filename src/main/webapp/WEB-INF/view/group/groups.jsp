@@ -120,13 +120,13 @@
                 </div>
                 <div class="modal-footer">
                     <form method="post" action="${contextPath}/groups/delete" class="modal-form">
-                        <button id="conf-button" class="btn btn-success btn-update" type="submit"
+                        <button id="conf-button" class="btn btn-success btn-update conf-button" type="submit"
                                 name="group_id">
-                            Confirm
+                            Yes
                         </button>
                     </form>
 
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Decline</button>
+                    <button type="button" class="btn btn-danger conf-button" data-dismiss="modal">No</button>
                 </div>
             </div>
         </div>

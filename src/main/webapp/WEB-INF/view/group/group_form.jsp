@@ -51,7 +51,7 @@
     </div>
 
     <div id="subject-alert" style="display: ${msg eq null ? "none" : "block"}"
-         class="alert alert-danger alert-message">
+         class="alert alert-danger">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <span id="alert-subject">${msg}</span>
         <c:remove var="msg"/>

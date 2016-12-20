@@ -11,7 +11,11 @@ function hasCheckedEvenOneGroup() {
             return true;
         }
     }
-    $('#error_message').modal('show');
+
+    var msg = document.getElementById("alert-subject");
+    msg.innerHTML = "No one group was selected! Please select at least one group";
+    document.getElementById("subject-alert").style.display = "block";
+
+    msg.focus();
     return false;
 }
-

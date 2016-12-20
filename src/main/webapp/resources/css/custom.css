@@ -113,3 +113,7 @@ button.btn-action {
     display: inline-block;
     margin-right: 15px;
 }
+
+.conf-button {
+    width: 70px;
+}

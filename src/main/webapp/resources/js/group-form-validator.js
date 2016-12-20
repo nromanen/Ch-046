@@ -53,9 +53,11 @@ function validateUpdateForm() {
         var groupName = document.group_form.gr_name.value.trim();
         if (hasFirstCharacterChanged(groupName)) {
             if (hasAtLeastOneSubjectChecked()) {
-                document.getElementById("alert-subject").innerHTML = "Updating is impossible! The course " +
+                var msg = document.getElementById("alert-subject");
+                msg.innerHTML = "Updating is impossible! The course " +
                     "(first character in name) must be similar to previous group course or unchecked all subjects";
                 document.getElementById("subject-alert").style.display = "block";
+                msg.focus();
                 return false;
             }
         }

@@ -51,6 +51,13 @@
         </h2>
     </div>
 
+    <div id="subject-alert" style="display: ${msg eq null ? "none" : "block"}"
+         class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <span id="alert-subject">${msg}</span>
+        <c:remove var="msg"/>
+    </div>
+
     <form method="post" action="${contextPath}/groups/unused-subjects/add" onsubmit="return hasCheckedEvenOneGroup()">
         <input type="hidden" name="subject_id" value="${subject.id}"/>
 
@@ -101,7 +108,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <p id="conf-message">No one group was selected! Please select at least one group.</p>
+                    <p id="conf-message"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

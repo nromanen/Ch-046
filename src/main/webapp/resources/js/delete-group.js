@@ -6,6 +6,6 @@
 
 function confirm(groupId) {
     var groupName = document.getElementById("group" + groupId).innerHTML;
-    document.getElementById("conf-message").innerHTML = "You are going to delete Group " + groupName;
+    document.getElementById("conf-message").innerHTML = "You are going to delete Group " + groupName + " ?";
     document.getElementById("conf-button").value = groupId;
 }
