@@ -22,12 +22,12 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Go to <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="populateTimetable">Add timetable</a></li>
-                        <li><a href="deleteTimetable">Remove timetable</a></li>
+
                         <li><a href="chooseTimetable">Watch timetable</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="updateTimetable">Update timetable</a></li>
+
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">Watch subgroups</a></li>
+                        <li><a href="groupsAndStreams">Watch subgroups</a></li>
                     </ul>
                 </li>
             </ul>
