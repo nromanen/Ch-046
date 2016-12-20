@@ -16,7 +16,7 @@ public abstract class AbstractDao<E> {
 	private final String propertiesFilePath;
 	private Session currentSession;
 	private Transaction currentTransaction;
-	private SessionFactory sessionFactory;
+	private static SessionFactory sessionFactory;
 
 	public AbstractDao(String propertiesFilePath) throws SQLException {
 		this.propertiesFilePath = propertiesFilePath;

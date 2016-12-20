@@ -3,6 +3,7 @@ package com.ss.schedule.service;
 import com.ss.schedule.model.Group;
 import com.ss.schedule.model.Subject;
 import com.ss.schedule.model.SubjectType;
+import com.ss.schedule.service.dbutil.DBManager;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -19,12 +20,17 @@ import static org.testng.Assert.assertNotNull;
 public class SubjectServiceTest {
 
 	private final String hibernateConfigFilePath = "test_hibernate.cfg.xml";
+	private final String propertiesFilePath = "test_db_connection.properties";
+
 
 	private SubjectService subjectService;
 	private GroupService groupService;
 
 	@BeforeMethod
 	public void setUp() throws SQLException {
+		DBManager.dropAllTables();
+		DBManager.createTablesInDataBase();
+		DBManager.fillDataBaseWithData();
 		subjectService = new SubjectService(hibernateConfigFilePath);
 		groupService = new GroupService(hibernateConfigFilePath);
 	}
