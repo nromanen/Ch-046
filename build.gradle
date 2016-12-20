@@ -27,5 +27,5 @@ dependencies {
 }
 
 war{
-    archiveName='oleg'
+    archiveName='oleg.war'
 }

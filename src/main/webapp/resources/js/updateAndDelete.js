@@ -59,7 +59,6 @@ function getSubjects() {
                 var obj=JSON.parse(response);
                 console.log(obj);
                 for (var i=0;i<obj.length;i++){
-
                     $('#subject').append($("<option/>",{
                         text: obj[i].name +"("+obj[i].type+")",
                         value:obj[i].id

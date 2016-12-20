@@ -43,7 +43,7 @@
 <div class="col-md-2"></div>
 <div class="col-md-8">
     <h3 class="text-center">Select Group/subgroup, day and oddness in order to get the timetable</h3>
-    <form class="form-horizontal" action="${pageContext.request.contextPath}/forGroup" method="get">
+    <form class="form-horizontal" action="${pageContext.request.contextPath}/forGroup" method="post">
         <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="group">Group </label>
             <div class="col-sm-10">
