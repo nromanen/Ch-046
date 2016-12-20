@@ -37,8 +37,6 @@ dependencies {
     compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.2'
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
     compile group: 'log4j', name: 'log4j', version: '1.2.17'
-
-
 }
 
 war {

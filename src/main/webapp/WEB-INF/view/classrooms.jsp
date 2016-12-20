@@ -64,7 +64,7 @@
         <form method="get" action="classroomUpdate">
             <input type="number" hidden name="action" value="new">
             <input type="number" hidden name="id" value="0">
-            <input type="submit" name="submit" value="Add classroom" class="btn btn-default">
+            <input type="submit" name="submit" value="Add classroom" class="btn btn-info">
         </form>
     </div>
     <div class="col-md-12">

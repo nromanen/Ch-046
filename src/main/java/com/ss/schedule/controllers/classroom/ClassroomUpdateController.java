@@ -74,11 +74,12 @@ public class ClassroomUpdateController extends HttpServlet {
         } else {
             if (classroom.getId() != 0) {
                 classroomService.update(classroom);
+                req.setAttribute("message", UPDATE_SUCCESSFUL);
             } else {
                classroom = classroomService.add(classroom);
+                req.setAttribute("message",  CREATE_SUCCESSFUL);
             }
 
-            req.setAttribute("message", classroom.getId() != 0 ? UPDATE_SUCCESSFUL : CREATE_SUCCESSFUL);
             List<Classroom> classrooms = classroomService.getAll();
             req.setAttribute("classrooms", classrooms);
             req.setAttribute("updateClassroom", classroom);
@@ -96,6 +97,7 @@ public class ClassroomUpdateController extends HttpServlet {
 
     private Classroom getClassroom(HttpServletRequest req) {
         Classroom classroom = new Classroom();
+        classroom.setId(0);
 
         try {
             classroom.setName(req.getParameter("name"));
@@ -121,7 +123,6 @@ public class ClassroomUpdateController extends HttpServlet {
             classroom.setId(Long.parseLong(req.getParameter("id")));
         } catch (NullPointerException | NumberFormatException e){
             e.printStackTrace();
-            classroom.setId(0);
         }
 
         try {

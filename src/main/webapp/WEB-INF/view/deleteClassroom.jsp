@@ -13,8 +13,15 @@
 
     <page:header/>
 
-    <div class="alert alert-danger">${errorMessage}</div>
+    <c:if test="${not empty errorMessage}">
+            <div class="alert alert-success">${errorMessage}</div>
+        </c:if>
 
+    <c:if test="${not empty message}">
+        <div class="alert alert-success">${message}</div>
+    </c:if>
+
+    <c:if test="${not empty timeTables}">
     <hr>
     <table class="table table-striped">
         <tr>
@@ -23,7 +30,8 @@
             <td>Teacher</td>
             <td>Day</td>
             <td>Pair</td>
-            <td>Oddes</td>
+            <td>Oddness</td>
+            <td>Classroom</td>
             <td colspan="2">Action</td>
 
 
@@ -35,23 +43,30 @@
             <td>${tt.day}</td>
             <td>${tt.pair}</td>
             <td>${tt.oddnessOfWeek}</td>
+            <td>${tt.classroom.name}</td>
             <td>
-                <a href="timetableUpdate?id=${tt.id}" class="btn btn-info btn-sm">
+                <a href="timetableUpdate?id=${tt.id}&classroomId=${classroomId}$fromPage=deleteClassroom" class="btn btn-info btn-sm">
                     <span class="glyphicon glyphicon-pencil"></span> Edit
                 </a>
             </td>
             <td>
-                <button class="btn btn-danger btn-sm" onclick="Confirm.render('Are you sure you want to delete timetable?','post','timetables', {'id': '${tt.id}'})"><span class="glyphicon glyphicon-remove"></span> Remove</button>
+                <button class="btn btn-danger btn-sm" onclick="Confirm.render('Are you sure you want to delete timetable?','post','timetables', {'id': '${tt.id}', 'classroomId': '${classroomId}', 'fromPage' : 'deleteClassroom'})"><span class="glyphicon glyphicon-remove"></span> Remove</button>
             </td>
             </tr>
         </c:forEach>
         <tr>
             <td>
-                <button class="btn btn-danger btn-sm" onclick="Confirm.render('Are you sure you want to delete all this timetables?','post','timetables', {'classroomId': '${classroomId}'})"><span class="glyphicon glyphicon-remove"></span> Remove all</button>
+                <button class="btn btn-danger btn-sm" onclick="Confirm.render('Are you sure you want to delete all this timetables?','post','timetables', {'classroomId': '${classroomId}', 'fromPage' : 'deleteClassroom'})"><span class="glyphicon glyphicon-remove"></span> Remove all</button>
             </td>
         </tr>
     </table>
 
+</c:if>
+
+<c:if test="${empty timeTables}">
+<hr>
+    <button class="btn btn-danger btn-sm" onclick="Confirm.render('Are you sure you want to delete classroom?', 'post', 'classrooms', {'id': '${classroomId}'})"><span class="glyphicon glyphicon-remove"></span> Remove classroom</button>
+</c:if>
 
 
     <page:footer/>
