@@ -23,26 +23,14 @@ public class TimeTableDaoTEST {
     }
 
     TimeTableDao tableDao=new TimeTableDao();
-    TimeTable timeTable, timeTableWithSubgroup,timeTableWithStream;
+    TimeTable timeTable;
     Util FCS;
 
     @BeforeTest
     void setUp(){
-        InputOutputJson<ArrayList<Classroom>> iojClassRooms = new InputOutputJson<>(
-                new TypeReference<ArrayList<Classroom>>() {
-                });
-        InputOutputJson<List<Group>>iojGroups=new InputOutputJson<>(new TypeReference<List<Group>>() {
-        });
-        InputOutputJson<List<Subject>>iojSubjects=new InputOutputJson<>(new TypeReference<List<Subject>>() {
-        });
-        InputOutputJson<List<Teacher>>iojTeachers=new InputOutputJson<>(new TypeReference<List<Teacher>>() {
-        });
-
         List<Classroom> classrooms = new ClassroomDao().getAll();
         List<Group> groups = new GroupDao().getAll();
         List<Subject> subjects = new JdbcSubjectDao().getAll();
-//        List<Teacher> teachers=iojTeachers.readFromFile("/media/oleg/D254AF9D54AF8339/Users/Oleg/OneDrive/" +
-//                "Education3/JavaFx/TimeTable1/Ch-046 (copy)/src/main/resourses/teacher.json");
 
         FCS=new Util("Util of computer science",groups,subjects,null,classrooms);
         LinkedHashMap<Subject, List<? extends StudentCommunity>>
@@ -56,27 +44,6 @@ public class TimeTableDaoTEST {
         timeTable.setOddnessOfWeek(OddnessOfWeek.ODD);
         timeTable.setPair(Pair.FIRST);
         timeTable.setTeacher(new Teacher());
-        // ВИПРАВИ БАГ З ПРЕДМЕТАМИ!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        // ВИПРАВИ БАГ З ПРЕДМЕТАМИ!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        // ВИПРАВИ БАГ З ПРЕДМЕТАМИ!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        //НЕ ЗАБУДЬ ПРО ЦЕ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-//        timeTableWithSubgroup =new TimeTable();
-//        timeTableWithSubgroup.setClassroom(new ClassroomDao().getById(1));
-//        timeTableWithSubgroup.setDay(DayOfWeek.MONDAY);
-//        timeTableWithSubgroup.setStudentCommunity(new GroupDao().getById(495).getSubgroups().get(0));
-//        timeTableWithSubgroup.setSubject(new JdbcSubjectDao().getById(121));
-//        timeTableWithSubgroup.setOddnessOfWeek(OddnessOfWeek.ODD);
-//        timeTableWithSubgroup.setPair(Pair.FIRST);
-//        timeTableWithSubgroup.setTeacher(new Teacher());
-
-//        timeTableWithStream=new TimeTable();
-//        timeTableWithStream.setClassroom(new ClassroomDao().getById(1));
-//        timeTableWithStream.setDay(DayOfWeek.MONDAY);
-//        timeTableWithStream.setStudentCommunity(new GroupDao().getById(390).getSubgroups().get(0));
-//        timeTableWithStream.setSubject(new JdbcSubjectDao().getById(121));
-//        timeTableWithStream.setOddnessOfWeek(OddnessOfWeek.ODD);
-//        timeTableWithStream.setPair(Pair.FIRST);
-//        timeTableWithStream.setTeacher(new Teacher());
     }
 
     @Test
@@ -92,8 +59,6 @@ public class TimeTableDaoTEST {
 
     @Test
     public void testUpdate() throws Exception {
-        TimeTableManager timeTableManager=new TimeTableManager();
-//        timeTableManager.isStudentCommunityFreeNow(new GroupDao().getById(1061));
     }
 
     @Test

@@ -31,21 +31,7 @@ public class PairsDao extends AbstractDao<Pair> {
         return pairs;
     }
 
-    long getIdByName(Pair pair){
-        try {
-            PreparedStatement preparedStatement=connection.prepareStatement(
-                    "SELECT * FROM pairs WHERE name=?"
-            );
-            preparedStatement.setString(1,pair.name());
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
-                return resultSet.getLong("id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
+
 
     @Override
     public Pair getById(long id) {
@@ -80,19 +66,6 @@ public class PairsDao extends AbstractDao<Pair> {
         return null;
     }
 
-    public void addTestData(){
-        String query="INSERT INTO pairs (NAME ) VALUES (?)";
-        try(PreparedStatement prepareStatement=connection.prepareStatement(query)){;
-            for (Pair p: Pair.values()
-                    ) {
-                prepareStatement.setString(1,p.name());
-                prepareStatement.executeUpdate();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void createPairsTableIfNotExist() {
         if (!DBUtil.tableExist(connection, "pairs")) {
@@ -111,7 +84,7 @@ public class PairsDao extends AbstractDao<Pair> {
         }
     }
 
-    public long getEntitiIdByName(String name){
+    public long getEntityIdByName(String name){
         String sql = "SELECT id FROM pairs WHERE name = ?";
         return new DBUtil().getEntityIdByNameExecQuery(connection,sql,name);
     }

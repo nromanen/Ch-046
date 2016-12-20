@@ -3,8 +3,6 @@ package com.ss.schedule.dao;
 import com.ss.schedule.model.Pair;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-
 import static org.testng.Assert.*;
 
 /**
@@ -15,7 +13,7 @@ public class PairsDaoTest {
 
     @Test
     public void testGetEntitiIdByName() throws Exception {
-        long first = pairsDao.getEntitiIdByName("FIRST");
+        long first = pairsDao.getEntityIdByName("FIRST");
         assertEquals(first,14);
     }
 

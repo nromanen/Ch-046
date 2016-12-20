@@ -2,7 +2,6 @@ package com.ss.schedule.dao;
 
 import com.ss.schedule.dbutil.DBConnector;
 import com.ss.schedule.model.Subject;
-import com.ss.schedule.model.SubjectType;
 import com.ss.schedule.model.Teacher;
 
 import java.sql.PreparedStatement;
@@ -79,8 +78,6 @@ public class TeachersSubjectsDao {
                         resultSet.getString("lastname")
                 );
                 teacher.setId(resultSet.getLong("t_id"));
-                //List<Subject> subjects = getSubjects(teacher);
-                //teacher.setSubjects(subjects);
                 teachers.add(teacher);
             }
         } catch (SQLException e) {

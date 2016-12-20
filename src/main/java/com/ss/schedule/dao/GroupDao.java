@@ -16,12 +16,10 @@ import java.util.List;
  * Created by oleg on 03.12.16.
  */
 public class GroupDao extends AbstractDao<Group> {
- private Groups_subjectsDao groups_subject_dao=new Groups_subjectsDao();
+ private GroupsSubjectsDao groups_subject_dao=new GroupsSubjectsDao();
     int i;
     public GroupDao(){
         createClassroomsTableIfNotExist();
-//        if (groups_subject_dao!=null)
-//        groups_subject_dao=new Groups_subjectsDao();
     }
     @Override
     public List<Group> getAll() {
@@ -33,7 +31,7 @@ public class GroupDao extends AbstractDao<Group> {
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()){
                 group=getGroup(resultSet);
-                group.setSubjects(new Groups_subjectsDao().getSubjectsForGroup(group));
+                group.setSubjects(new GroupsSubjectsDao().getSubjectsForGroup(group));
                 group.setSubgroups(getSubgroupsOfGroup(group));
                 groups.add(group);
             }
@@ -55,7 +53,7 @@ public class GroupDao extends AbstractDao<Group> {
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 group = getGroup(rs);
-                group.setSubjects(new Groups_subjectsDao().getSubjectsForGroup(group));
+                group.setSubjects(new GroupsSubjectsDao().getSubjectsForGroup(group));
                 group.setSubgroups(getSubgroupsOfGroup(group));
 
             }
@@ -85,7 +83,7 @@ public class GroupDao extends AbstractDao<Group> {
                         resultSet.getLong("id")
 
                 );
-                Groups_subjectsDao groups_subjectsDao=new Groups_subjectsDao();
+                GroupsSubjectsDao groups_subjectsDao=new GroupsSubjectsDao();
                 subgroup.setSubjects(groups_subjectsDao.getSubjectsForGroup(subgroup));
                 return subgroup;
             }
@@ -111,7 +109,7 @@ public class GroupDao extends AbstractDao<Group> {
                             new GroupDao().getById(resultSet.getLong("parent_id")),
                             resultSet.getLong("id")
                     );
-                    Groups_subjectsDao groups_subjectsDao = new Groups_subjectsDao();
+                    GroupsSubjectsDao groups_subjectsDao = new GroupsSubjectsDao();
                     subgroup.setSubjects(groups_subjectsDao.getSubjectsForGroup(subgroup));
                     return subgroup;
                 } else {
@@ -121,7 +119,7 @@ public class GroupDao extends AbstractDao<Group> {
                             new ArrayList<>(),
                             resultSet.getLong("id")
                     );
-                    Groups_subjectsDao groups_subjectsDao = new Groups_subjectsDao();
+                    GroupsSubjectsDao groups_subjectsDao = new GroupsSubjectsDao();
                     group.setSubjects(groups_subjectsDao.getSubjectsForGroup(group));
                     group.setSubgroups(getSubgroupsOfGroup(group));
                     return group;
@@ -140,7 +138,7 @@ public class GroupDao extends AbstractDao<Group> {
 
     @Override
     public boolean delete(long id) {
-        new Groups_subjectsDao().deleteSubjectsOfGroup(id);
+        new GroupsSubjectsDao().deleteSubjectsOfGroup(id);
         deleteSubgroupsOfGroup(id);
         try {
             PreparedStatement preparedStatement=connection.prepareStatement(
@@ -169,7 +167,7 @@ public class GroupDao extends AbstractDao<Group> {
                 id=rs.getInt(1);
                 entity.setId(id);
                 addSubgroupsOfGroup(entity);
-                new Groups_subjectsDao().addSubjectsOfGroup(entity);
+                new GroupsSubjectsDao().addSubjectsOfGroup(entity);
             }
             return entity;
         } catch (SQLException e) {
@@ -194,7 +192,7 @@ public class GroupDao extends AbstractDao<Group> {
                     long id=generatedKeys.getInt(1);
                     sub.setId(id);
                 }
-                new Groups_subjectsDao().addSubjectsOfGroup(sub);
+                new GroupsSubjectsDao().addSubjectsOfGroup(sub);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -221,7 +219,7 @@ public class GroupDao extends AbstractDao<Group> {
                 );
                 preparedStatement.setLong(1,group.getId());
                 ResultSet resultSet = preparedStatement.executeQuery();
-                Groups_subjectsDao groups_subjectsDao=new Groups_subjectsDao();
+                GroupsSubjectsDao groups_subjectsDao=new GroupsSubjectsDao();
                 while (resultSet.next()){
                     Subgroup subgroup=new Subgroup(
                             resultSet.getString("name"),

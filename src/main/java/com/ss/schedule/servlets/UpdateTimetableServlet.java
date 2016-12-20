@@ -1,5 +1,6 @@
 package com.ss.schedule.servlets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ss.schedule.dao.*;
 import com.ss.schedule.model.*;
 
@@ -35,7 +36,6 @@ public class UpdateTimetableServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TimeTableDao timeTableDao = new TimeTableDao();
-        Map<String, String[]> parameterMap = req.getParameterMap();
         TimeTable timeTable=new TimeTable();
         timeTable.setId(Long.parseLong(req.getParameter("table_id")));
         timeTable.setDay(DayOfWeek.valueOf(req.getParameter("day_of_week")));
@@ -48,6 +48,19 @@ public class UpdateTimetableServlet extends HttpServlet {
         if(!req.getParameter("subgroup").equals("0"))
         timeTable.setStudentCommunity(groupDao.getStudentCommunityById(Long.parseLong(req.getParameter("subgroup"))));
         else timeTable.setStudentCommunity(groupDao.getStudentCommunityById(Long.parseLong(req.getParameter("group"))));
-        timeTableDao.update(timeTable);
+        TimeTable update = timeTableDao.update(timeTable);
+        ObjectMapper objMapeer=new ObjectMapper();
+        String asString = objMapeer.writeValueAsString(update);
+//        resp.getWriter().write(asString);
+        List<DayOfWeek> all = new DayOfWeekDao().getAll();
+        req.setAttribute("days",all);
+        List<Group> groups=new GroupDao().getAll();
+        req.setAttribute("groups",groups);
+        List<OddnessOfWeek> oddnessOfWeeks = new OddnessOfWeekDao().getAll();
+        req.setAttribute("oddnesses",oddnessOfWeeks);
+        List<Classroom> allClassrooms = new ClassroomDao().getAll();
+        req.setAttribute("allClassrooms",allClassrooms);
+        req.setAttribute("allPairs",Pair.values());
+        req.getRequestDispatcher("/WEB-INF/view/daily_timetable_for_group.jsp");
     }
 }

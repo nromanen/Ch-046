@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Map;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Created by oleg on 12.12.16.
@@ -21,22 +20,16 @@ import java.util.concurrent.TimeoutException;
 @WebServlet("/addTimetable")
 public class AddTimetableServlet extends HttpServlet {
     GroupDao groupDao=new GroupDao();
-    TimeTableDao timeTableDao=new TimeTableDao();
     TimeTableManager timeTableManager=new TimeTableManager();
-    Groups_subjectsDao groups_subjectsDao=new Groups_subjectsDao();
+    GroupsSubjectsDao groups_subjectsDao=new GroupsSubjectsDao();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, String[]> parameterMap = req.getParameterMap();
-        Enumeration<String> attributeNames = req.getAttributeNames();
 
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, String[]> parameterMap = req.getParameterMap();
-        Enumeration<String> attributeNames = req.getAttributeNames();
         int group_id= Integer.parseInt(req.getParameter("groupAdd"));
-        Group group = groupDao.getById(group_id);
         long stud_comm_id=Long.parseLong(req.getParameter("studentCommunityAdd"));
         Stream stream=new Stream();
         StudentCommunity studentCommunity=groupDao.getStudentCommunityById(stud_comm_id);
@@ -66,8 +59,6 @@ public class AddTimetableServlet extends HttpServlet {
                 req.setAttribute("error",e.toString());
             }
         }
-
-        String error = (String)req.getAttribute("error");
         req.getRequestDispatcher("WEB-INF/view/success.jsp").forward(req,resp);
     }
 

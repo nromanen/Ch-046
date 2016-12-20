@@ -39,9 +39,7 @@ public class Stream extends StudentCommunity {
     public boolean isPresentOrEquals(StudentCommunity studentCommunity) {
         if (studentCommunity instanceof Stream){
             Stream stream = (Stream) studentCommunity;
-            //?????????????????????????????????????????
             if (stream.containsAnyGroupOf(this)) return true;
-            //if (this.getGroups().containsAll(stream.getGroups())) return true;
         }else if (studentCommunity instanceof Group)
         {
             Group group = (Group) studentCommunity;

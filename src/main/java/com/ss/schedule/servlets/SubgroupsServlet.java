@@ -1,7 +1,7 @@
 package com.ss.schedule.servlets;
 
 import com.ss.schedule.dao.GroupDao;
-import com.ss.schedule.dao.Groups_subjectsDao;
+import com.ss.schedule.dao.GroupsSubjectsDao;
 import com.ss.schedule.dao.JdbcSubjectDao;
 import com.ss.schedule.institute.Util;
 import com.ss.schedule.model.*;
@@ -22,7 +22,6 @@ import java.util.List;
 public class SubgroupsServlet extends HttpServlet {
    private JdbcSubjectDao jdbcSubjectDao=new JdbcSubjectDao();
     GroupDao groupDao=new GroupDao();
-    Groups_subjectsDao groups_subjectsDao=new Groups_subjectsDao();
    private boolean streamsAndSubgroupsExist=false;
     private Util util=new Util();
 
@@ -52,7 +51,6 @@ public class SubgroupsServlet extends HttpServlet {
 
 
         for (Group group:groups) {
-            //groupDao.add(group);
             if ( group.getSubgroups().size()!=0){
                 streamsAndSubgroupsExist=true;
                 break;
@@ -103,7 +101,6 @@ public class SubgroupsServlet extends HttpServlet {
 
 
         for (Group group:groups) {
-            //groupDao.add(group);
             if ( group.getSubgroups().size()!=0){
                 streamsAndSubgroupsExist=true;
                 break;

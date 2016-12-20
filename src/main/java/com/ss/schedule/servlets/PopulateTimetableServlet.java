@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +30,7 @@ public class PopulateTimetableServlet extends HttpServlet {
     List<OddnessOfWeek> oddnessOfWeeks= new OddnessOfWeekDao().getAll();
     List<Group> groups = new GroupDao().getAll();
     private GroupDao groupDao=new GroupDao();
-    private Groups_subjectsDao groups_subjectsDao=new Groups_subjectsDao();
+    private GroupsSubjectsDao groups_subjectsDao=new GroupsSubjectsDao();
     private JdbcSubjectDao subjectDao=new JdbcSubjectDao();
     private ClassroomManager classroomManager=new ClassroomManager();
     private Group group=null;
@@ -70,7 +69,6 @@ public class PopulateTimetableServlet extends HttpServlet {
         } else
             listOfAvailableRooms=classroomManager.getListOfAvailableRooms(subject,studentCommunity);
 
-        Map<String, String[]> parameterMap = req.getParameterMap();
         req.setAttribute("isResult",true);
         req.setAttribute("pairs",pairs);
         req.setAttribute("days_of_week",dayOfWeeks);
@@ -98,17 +96,11 @@ public class PopulateTimetableServlet extends HttpServlet {
             this.group = groupDao.getById(groupId);
              asString = objectMapper.writeValueAsString(this.group);
         }
-
-        InputOutputJson<List<Subgroup>> subgroupIOJ=new InputOutputJson<>(new TypeReference<List<Subgroup>>() {
-        });
-
-
         req.setAttribute("pairs",pairs);
         req.setAttribute("isResult", false);
         req.setAttribute("days_of_week",dayOfWeeks);
         req.setAttribute("oddneses_of_week",oddnessOfWeeks);
         req.setAttribute("groups",groups);
-//        req.setAttribute("jsonGroup",5);
 
         req.getRequestDispatcher("/WEB-INF/view/schedule.jsp").forward(req, resp);
     }

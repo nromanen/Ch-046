@@ -18,48 +18,9 @@
 
 </head>
 <body>
-
+<page:header/>
 <div class="container">
 
-    <nav class="navbar navbar-default navbar-inverse" style="border-radius:0px !important; margin-bottom:0px;">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/classrooms">UNIVERSITY</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">All Groups</a></li>
-                            <li><a href="#">All classrooms</a></li>
-                            <li><a href="#">All Subjects</a></li>
-
-                            <li><a href="#">Add new classroom</a></li>
-                            <li><a href="#">Add new Group</a></li>
-                            <li><a href="#">Add new Subject</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Schedule</a></li>
-                        </ul>
-                    </li>
-                    <%--<li><a href="#">News</a></li>--%>
-                    <li><a href="contact.jsp">Contact</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <form class="navbar-form navbar-left" role="search" method="get" action="#">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search employee" name="search">
-                        </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </form>
-
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
     <h1  class="text-center"  id="ttt">SCHEDULE MAKER</h1>
     <c:if test = "${isResult  == false}">
         <div class="col-md-2"></div>
@@ -95,17 +56,10 @@
                     <div class="col-sm-10">
                         <select disabled="disabled" id="subject" name="subject" class="form-control">
                             <option value>Select Subject</option>
-                            <%--<c:forEach var="group" items="${requestScope.groups}">--%>
-                                <%--<c:forEach var="subject" items="${group.subjects}">--%>
-                                    <%--<option rel="${group.id}" value="${subject.id}" >${subject.name}(${subject.type})</option>--%>
-                                <%--</c:forEach>--%>
-                            <%--</c:forEach>--%>
                         </select>
 
                     </div>
-                    <%--<c:if test="${requestScope.groups}"--%>
-
-                </div>
+               </div>
                 <div class="form-group form-group-lg">
                     <div class="col-sm-2 control-label" >
                         <input type="submit" name="submit" value="Get classrooms" class="btn btn-info " id="submitRoom" disabled>
@@ -120,10 +74,10 @@
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <h3 class="text-center">Available classroom(s) for Group-${group.name}(${group.count} students) and ${subject.name}(${subject.type})</h3>
-            <c:if test="${requestScope.streamGroups.size() ne 0}">
+            <c:if test="${requestScope.streamGroups.size() ne null}">
             <h2>Selected subject is a stream. Therefore new timetables for the following groups were created</h2>
                 <c:forEach var="group" items="${requestScope.streamGroups}">
-                    <p>${group.name}</p>
+                    ${group.name}
                 </c:forEach>
             </c:if>
             <c:if test="${errors.groupError != null}"><page:error title="${errors.groupError}"/></c:if>
@@ -172,15 +126,17 @@
                         </select>
                     </div>
                 </div>
-                <hr>
-                <div class="col-sm-2">
-                    Select Week
-                    <select name="oddnessAdd">
-                        <c:forEach var="oddness" items="${oddneses_of_week}">
-                            <option>${oddness}</option>
-                        </c:forEach>
-                    </select>
+                <div class="form-group form-group-lg">
+                    <label class="col-sm-2 control-label" for="day">Select Week </label>
+                    <div class="col-sm-10">
+                        <select name="oddnessAdd" class="form-control">
+                            <c:forEach var="oddness" items="${oddneses_of_week}">
+                                <option>${oddness}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
                 </div>
+                <hr>
                 <c:forEach var="o" items="${oddness}">
                     <div class="col-sm-1">
                         <label><input type="radio" name="oddnes" id="${o}" value="${o}"
@@ -229,8 +185,12 @@
 
     <page:js/>
     <script>
-        $( document ).ready(function(){
 
+        $( document ).ready(function(){
+            classroomValidation();
+            $('input:radio').click(function () {
+                document.getElementById("submitSchedule").removeAttribute("disabled");
+            });
             console.log('work');
 
             var $cat = $("#group"),
@@ -254,10 +214,7 @@
         window.addEventListener("load", init, false);
         function init () {
             console.log('init');
-
-            group.addEventListener("change", showSub, false);
             subgroup.addEventListener("change",validation,false);
-            subject.addEventListener("change", showSub, false);
             subject.addEventListener("change", validation, false);
             group.addEventListener("change",getSubjects,false);
             subgroup.addEventListener("change",getSubjects,false);
@@ -265,47 +222,24 @@
         }
 
         function validation () {
-
             var group = $("#group option:selected").text();
             var subject = $("#subject option:selected").text();
-            //var subgroup=$("#subgroup option:selected").text();
-
-            //alert($("#subgroup").is(':visible'));
-
             if (group != "Select group" && subject!= "Select subject" ){
                 document.getElementById("submitRoom").removeAttribute("disabled");
             } else {
                 document.getElementById("submitRoom").setAttribute("disabled","true");
             }
+        }
 
-//            if($("#subgroup").is(':visible')){
-//                //alert(subgroup !=="Select subgroup");
-//                if (subgroup !="Select subgroup"){
-//                    document.getElementById("submitRoom").removeAttribute("disabled");
-//                } else {
-//                    document.getElementById("submitRoom").setAttribute("disabled","true");
-//                }
-//            }
+        function classroomValidation() {
+            try {
+                if ($('input[name=classroom]:checked').val() === undefined) {
+                    document.getElementById("submitSchedule").setAttribute("disabled", "true");
+                } else document.getElementById("submitSchedule").removeAttribute("disabled");
+            } catch (exc){}
         }
     </script>
 
-    <%--<script>--%>
-        <%--function createSubgroups() {--%>
-            <%--var message="";--%>
-            <%--for (var i = 0; i < ${requestScope.subgroups}; i++) {--%>
-                <%--message += ${i.name}--%>
-            <%--}--%>
-            <%--//alert("Timetables for the following groups were created");--%>
-            <%--alert(message);--%>
-        <%--}--%>
-    <%--</script>--%>
-
-    <script>
-        var message="";
-        <c:forEach var="group" items="${requestScope.streamGroups}">
-            message =message+ ${group.name} +" " ;
-                    </c:forEach>
-    </script>
 
     <script type="text/javascript">
         function f(){
@@ -333,39 +267,8 @@
                 }
             });
         }
-
-
         $("#subject").hide();
         $("#subject_label").hide();
-        function showSub() {
-//           if($("#subject option:selected").text().indexOf("LAB")!=-1){
-//               $("#subgroup").show();
-//               $("#subgroup_label").show();
-//        } else {
-//               $("#subgroup").hide();
-//               $("#subgroup_label").hide();
-//               $("#subgroup").val("Select subgroup");
-//           }
-//            if($("#subgroup").is(':visible')) {
-//                if ($("#subgroup option:selected").text() != "Select subgroup") {
-//                    document.getElementById("submitRoom").removeAttribute("disabled");
-//                } else {
-//                    document.getElementById("submitRoom").setAttribute("disabled", "true");
-//                }
-//            }
-
-
-
-//            console.log($("#subject").val());
-//            if ($("#subject").val()!="") {
-//                $("#subgroup").show();
-//                $("#subgroup_label").show();
-//            } else {
-//                $("#subgroup").hide();
-//                $("#subgroup_label").hide();
-//            }
-        }
-
         function getSubjects() {
             var group_id;
             if ($("#subgroup").val()==0)
@@ -402,16 +305,6 @@
                             }
                         });
         }
-
-        function populateSubgroups(jsonGroup) {
-           //var gr= JSON.parse(jsonGroup);
-            $('#subgroup').append($("<option/>", {
-                value: "jkjkjk",
-                text: "jkkjk"
-            }));
-        }
-
-
     </script>
 
 

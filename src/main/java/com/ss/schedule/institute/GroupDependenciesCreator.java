@@ -28,13 +28,9 @@ public class GroupDependenciesCreator {
         this.groupsDependencies = new HashMap<>();
     }
 
-    /*
-     * String length equal 2, 4, 5 if main Group name consists of 2 symbols.
-     * If main Group name length will have changed, this parameters must be changed too
-     * */
+
     public HashMap<Group, List<Group>> getGroupsDependencies() {
         findAllGroupsSubgroupsStreams();
-
         for (Group group : groupSet) {
             if (group.getName().length() == 2) {
                 groupsDependencies.put(group, getGroupDependencies(group.getName()));

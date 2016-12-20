@@ -111,13 +111,6 @@ public class UtilTest {
 
     @BeforeTest
     public void prepareForTest(){
-        InputOutputJson<ArrayList<Classroom>> iojClassRooms = new InputOutputJson<>(
-                new TypeReference<ArrayList<Classroom>>() {
-                });
-        InputOutputJson<List<Group>>iojGroups=new InputOutputJson<>(new TypeReference<List<Group>>() {
-        });
-        InputOutputJson<List<Subject>>iojSubjects=new InputOutputJson<>(new TypeReference<List<Subject>>() {
-        });
         InputOutputJson<List<Teacher>>iojTeachers=new InputOutputJson<>(new TypeReference<List<Teacher>>() {
         });
 

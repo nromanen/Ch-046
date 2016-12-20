@@ -16,12 +16,10 @@ import java.util.List;
 public class JdbcSubjectDao extends AbstractDao<Subject> {
 
     public JdbcSubjectDao()  {
-        //super(propertiesFilePath);
     }
 
     @Override
     public Subject add(Subject subject)  {
-        //DBConnector.getConnection();
         String request = "INSERT INTO subjects (name, type_id, course) VALUES (?, ?, ?)";
         PreparedStatement preparedStatement = null;
         try {
@@ -55,10 +53,7 @@ public class JdbcSubjectDao extends AbstractDao<Subject> {
 
     @Override
     public Subject update(Subject subject)  {
-        //getConnection();
         String request = "UPDATE subjects SET name = ?, type_id = ?, course = ? WHERE id = ?";
-
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(request);
             preparedStatement.setString(1, subject.getName());
@@ -76,7 +71,6 @@ public class JdbcSubjectDao extends AbstractDao<Subject> {
 
     @Override
     public boolean delete(long id)  {
-        //getConnection();
         String request = "DELETE FROM subjects WHERE id = ?";
         PreparedStatement preparedStatement = null;
         try {
@@ -87,12 +81,10 @@ public class JdbcSubjectDao extends AbstractDao<Subject> {
             e.printStackTrace();
         }
         return false;
-         // because method executeUpdate() return 1 if operation finished successfully
     }
 
     @Override
     public Subject getById(long id)  {
-        //getConnection();
         String request = "SELECT  s.id, s.name, t.name, s.course FROM subjects  AS s " +
                 "JOIN subject_types AS t " +
                 "ON s.type_id = t.id " +
@@ -113,12 +105,10 @@ public class JdbcSubjectDao extends AbstractDao<Subject> {
 
     @Override
     public List<Subject> getAll()  {
-        //getConnection();
         String request = "SELECT s.id, s.name, t.name, s.course FROM subjects AS s " +
                 "JOIN subject_types AS t " +
                 "ON s.type_id = t.id " +
                 "ORDER BY s.id ASC";
-       // String request="SELECT  * FROM subjects";
         Statement statement ;
         List<Subject> subjects=null;
         try {
@@ -134,24 +124,6 @@ public class JdbcSubjectDao extends AbstractDao<Subject> {
         return subjects;
     }
 
-    public List<Subject> getSubjectsByGroupId(long groupId) throws SQLException {
-        //getConnection();
-        String request = "SELECT s.id, s.name, t.name, s.course " +
-                "FROM subjects AS s " +
-                "JOIN group_subject_map AS map ON s.id = map.subject_id " +
-                "JOIN subject_types AS t ON s.type_id = t.id " +
-                "WHERE map.group_id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(request);
-        preparedStatement.setLong(1, groupId);
-        ResultSet rs = preparedStatement.executeQuery();
-
-        List<Subject> subjects = new ArrayList<>();
-        while (rs.next()) {
-            subjects.add(createSubject(rs));
-        }
-
-        return subjects;
-    }
 
     private Subject createSubject(ResultSet rs) throws SQLException {
         Subject subject = new Subject();

@@ -79,7 +79,6 @@ public abstract class StudentCommunity {
         StudentCommunity that = (StudentCommunity) o;
 
         if (count != that.count) return false;
-        //if (id != that.id) return false;
         return name != null ? name.equals(that.name) : that.name == null;
 
     }

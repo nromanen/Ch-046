@@ -54,7 +54,6 @@ public class TimeTable implements Serializable {
 
 	public void setSubject(Subject subject) {
 		this.subject = subject;
-//		groupsSubgroupsStreams.get(subjectsKeySet[1]).remove(0);
 	}
 
 	public Teacher getTeacher() {

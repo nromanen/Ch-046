@@ -52,8 +52,7 @@ public class ClassroomDaoTest {
         });
         List<Classroom> classrooms = inputOutputJson.readFromFile("/home/oleg/Рабочий стол/" +
                 "Ch-046 (copy) (другая копия)/src/test/resources/group1.json");
-//        for (Classroom classroom:classrooms)
-//        new ClassroomDao().add(classroom);
+//        for (ClomDao().add(classroom);
         List<Classroom> classrooms1=new ClassroomDao().getAll();
     }
 

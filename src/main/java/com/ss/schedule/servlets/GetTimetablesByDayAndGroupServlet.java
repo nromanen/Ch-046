@@ -31,10 +31,14 @@ public class GetTimetablesByDayAndGroupServlet extends HttpServlet {
     @Override
     //getDaylyTimetables
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        StudentCommunity group=new GroupDao().getStudentCommunityById(Long.parseLong(req.getParameter("group")));
+        int student_community_id;
+        StudentCommunity studentCommunity;
         Map<String, String[]> parameterMap = req.getParameterMap();
+        if (req.getParameter("subgroup").equals("0"))
+            studentCommunity=new GroupDao().getStudentCommunityById(Long.parseLong(req.getParameter("subgroup")));
+        else studentCommunity=new GroupDao().getStudentCommunityById(Long.parseLong(req.getParameter("group")));
         TimeTable[] groups = new TimeTableDao().getDayTimetableOfGroup(
-                group,
+                studentCommunity,
                 DayOfWeek.valueOf(req.getParameter("day_of_week")),
                 OddnessOfWeek.valueOf(req.getParameter("oddness"))
                 );

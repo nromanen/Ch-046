@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class ClassroomManager {
 
-    //return list of rooms that are available for subject(have the same type) and groups (have equals or more capacity)
     public List<Classroom> getListOfAvailableRooms(Subject subject, StudentCommunity studentCommunity){
 
         List<Classroom> availableClassrooms = new ArrayList<>();

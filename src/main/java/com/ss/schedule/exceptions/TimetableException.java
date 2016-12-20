@@ -7,7 +7,6 @@ public class TimetableException extends RuntimeException {
     String error;
     @Override
     public String toString() {
-//        return super.toString();
         return error;
 
     }

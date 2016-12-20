@@ -30,7 +30,6 @@ public class GetSubgroupsServlet extends HttpServlet {
         int groupId;
         ObjectMapper objectMapper=new ObjectMapper();
         String asString="" ;
-        String reqParameter = req.getParameter("group");
         if(req.getParameter("group")!=null) {
             groupId = Integer.parseInt(req.getParameter("group"));
             this.group = groupDao.getById(groupId);
@@ -39,7 +38,6 @@ public class GetSubgroupsServlet extends HttpServlet {
 
         req.setAttribute("jsonGroup",78);
 
-        //req.getRequestDispatcher("/WEB-INF/view/schedule.jsp").forward(req, resp);
         resp.getWriter().write(asString);
     }
 }

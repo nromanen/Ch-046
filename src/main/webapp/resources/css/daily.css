@@ -6,6 +6,12 @@ table tbody:nth-child(2){
     border-bottom: solid red 1px;
 }
 
+
+.tableDiv{
+    width: 140px;
+    float: left;
+}
+
 .pair{
     float:left;
 }

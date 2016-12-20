@@ -31,10 +31,7 @@ public class DBUtil {
         return tExists;
     }
 
-//    public <T> T getById(String sql) throws SQLException {
-//        PreparedStatement preparedStatement=DBConnector.getConnection().prepareStatement(sql);
-//
-//    }
+
 
     public long getEntityIdByNameExecQuery(Connection connection, String sql,String name){
         try(PreparedStatement ps = connection.prepareStatement(sql)) {

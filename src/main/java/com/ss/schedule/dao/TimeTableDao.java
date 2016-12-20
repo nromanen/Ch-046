@@ -12,12 +12,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by oleg on 30.11.16.
  */
 public class TimeTableDao extends AbstractDao<TimeTable> {
+
+    public TimeTableDao(){
+
+    }
+
 
     @Override
     public List<TimeTable> getAll() {
@@ -69,9 +73,8 @@ public class TimeTableDao extends AbstractDao<TimeTable> {
             preparedStatement.setLong(7,entity.getId());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
-                new Group_timetableDao().deleteGroupsOfTimetable(entity.getId());
-                new Group_timetableDao().addGroupOrSubgroupOfTimetable(entity);
-
+                new GroupTimetableDao().deleteGroupsOfTimetable(entity.getId());
+                new GroupTimetableDao().addGroupOrSubgroupOfTimetable(entity);
             return entity;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,7 +90,7 @@ public class TimeTableDao extends AbstractDao<TimeTable> {
             );
             preparedStatement.setLong(1,id);
             preparedStatement.executeUpdate();
-            new Group_timetableDao().deleteGroupsOfTimetable(id);
+            new GroupTimetableDao().deleteGroupsOfTimetable(id);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,28 +98,7 @@ public class TimeTableDao extends AbstractDao<TimeTable> {
         return false;
     }
 
-    public List<TimeTable> getTimetablesOfGroupInPreciseTime(TimeTable timeTable){
-        List<TimeTable> timeTables=new ArrayList<>();
-        try {
-            PreparedStatement preparedStatement=connection.prepareStatement(
-                    "SELECT *" +
-                            " from group_timetable JOIN timetables" +
-                            " ON timetable_id=timetables.id WHERE group_id=? AND timetables.day_of_week_id=? "+
-                            " AND timetables.oddness_of_week_id=? OR timetables.oddness_of_week_id=3 AND timetables.pair_id=?"
-            );
-            preparedStatement.setLong(1,timeTable.getStudentCommunity().getId());
-            preparedStatement.setLong(2,timeTable.getDay().getId());
-            preparedStatement.setLong(3,timeTable.getOddnessOfWeek().getId());
-            preparedStatement.setLong(4,timeTable.getPair().getId());
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                timeTables.add(getTimetable(resultSet));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return timeTables;
-    }
+
 
      public List<TimeTable> getTimetablesAtPreciseTime(TimeTable timeTable){
                List<TimeTable> timeTables=new ArrayList<>();
@@ -155,7 +137,7 @@ public class TimeTableDao extends AbstractDao<TimeTable> {
             if (rs.next()){
                 id=rs.getInt(1);
                 entity.setId(id);
-                new Group_timetableDao().addGroupOrSubgroupOfTimetable(entity);
+                new GroupTimetableDao().addGroupOrSubgroupOfTimetable(entity);
             }
             return entity;
 
@@ -181,7 +163,7 @@ public class TimeTableDao extends AbstractDao<TimeTable> {
             timeTable.setDay(new DayOfWeekDao().getById(rs.getInt("day_of_week_id")));
             timeTable.setOddnessOfWeek(new OddnessOfWeekDao().getById(rs.getInt("oddness_of_week_id")));
             timeTable.setClassroom(new ClassroomDao().getById(rs.getInt("classroom_id")));
-            Group_timetableDao group_timetableDao = new Group_timetableDao();
+            GroupTimetableDao group_timetableDao = new GroupTimetableDao();
             timeTable.setStudentCommunity(group_timetableDao.getStudentCommunityOfTimetable(timeTable));
             }
          catch (SQLException e) {
@@ -194,9 +176,33 @@ public class TimeTableDao extends AbstractDao<TimeTable> {
         List<TimeTable> timeTables=new ArrayList<>();
         String sql= "SELECT timetables.id as tmetable_id, subject_id, pair_id,teacher_id," +
                 " day_of_week_id, oddness_of_week_id, classroom_id FROM group_timetable JOIN timetables ON timetable_id=timetables.id " +
-                "WHERE pair_id=? AND day_of_week_id=? AND group_id IN (SELECT groups.id FROM groups WHERE id=? " +
+                "WHERE pair_id=? AND day_of_week_id=? AND (oddness_of_week_id=3 OR oddness_of_week_id=?) " +
+                "AND group_id IN (SELECT groups.id FROM groups WHERE id=? " +
                 "OR parent_id=?)";
-        System.out.println(sql);
+        if (timeTable.getStudentCommunity() instanceof Subgroup){
+            Subgroup studentCommunity = (Subgroup) timeTable.getStudentCommunity();
+            String sql1= "SELECT timetables.id as tmetable_id, subject_id, pair_id,teacher_id," +
+                    " day_of_week_id, oddness_of_week_id, classroom_id FROM group_timetable JOIN timetables ON timetable_id=timetables.id " +
+                    "WHERE pair_id=? AND day_of_week_id=? AND (oddness_of_week_id=3 OR oddness_of_week_id=?) " +
+                    "AND group_id IN (SELECT groups.id FROM groups WHERE id=? " +
+                    "OR id=?)";
+            try {
+                PreparedStatement preparedStatement=connection.prepareStatement(sql1);
+                preparedStatement.setLong(1, timeTable.getPair().getId());
+                preparedStatement.setLong(2,timeTable.getDay().getId());
+                preparedStatement.setLong(3,timeTable.getOddnessOfWeek().getId());
+                preparedStatement.setLong(4,studentCommunity.getId());
+                preparedStatement.setLong(5,studentCommunity.getGroup().getId());
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()){
+                    TimeTable timetable = getTimetable(resultSet);
+                    timetable.setId(resultSet.getLong("tmetable_id"));
+                    timeTables.add(timetable);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 
         if (timeTable.getStudentCommunity() instanceof Stream){
             Stream studentCommunity = (Stream) timeTable.getStudentCommunity();
@@ -208,8 +214,9 @@ public class TimeTableDao extends AbstractDao<TimeTable> {
                     );
                     preparedStatement.setLong(1, timeTable.getPair().getId());
                     preparedStatement.setLong(2,timeTable.getDay().getId());
-                    preparedStatement.setLong(3,group.getId());
+                    preparedStatement.setLong(3,timeTable.getOddnessOfWeek().getId());
                     preparedStatement.setLong(4,group.getId());
+                    preparedStatement.setLong(5,group.getId());
                     ResultSet resultSet = preparedStatement.executeQuery();
                     while (resultSet.next()){
                         TimeTable timetable = getTimetable(resultSet);
@@ -220,15 +227,16 @@ public class TimeTableDao extends AbstractDao<TimeTable> {
                     e.printStackTrace();
                 }
             }
-        }
+        } else
         try {
             PreparedStatement preparedStatement= DBConnector.getConnection().prepareStatement(
                     sql
             );
             preparedStatement.setLong(1, timeTable.getPair().getId());
             preparedStatement.setLong(2,timeTable.getDay().getId());
-            preparedStatement.setLong(3,timeTable.getStudentCommunity().getId());
+            preparedStatement.setLong(3,timeTable.getOddnessOfWeek().getId());
             preparedStatement.setLong(4,timeTable.getStudentCommunity().getId());
+            preparedStatement.setLong(5,timeTable.getStudentCommunity().getId());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 TimeTable timetable = getTimetable(resultSet);
@@ -241,7 +249,7 @@ public class TimeTableDao extends AbstractDao<TimeTable> {
         return timeTables;
     }
 
-    public LinkedHashMap<DayOfWeek,TimeTable[]> getWeeklyTimetablesForGroup(Group group,OddnessOfWeek oddnessOfWeek){
+    public LinkedHashMap<DayOfWeek,TimeTable[]> getWeeklyTimetablesForGroup(StudentCommunity group,OddnessOfWeek oddnessOfWeek){
         List<TimeTable> timeTables=new ArrayList<>();
         LinkedHashMap<DayOfWeek,TimeTable[]> timetablesMap=new LinkedHashMap<>();
         try {
@@ -259,7 +267,7 @@ public class TimeTableDao extends AbstractDao<TimeTable> {
             while (resultSet.next()){
                 TimeTable timetable = getTimetable(resultSet);
                 timetable.setId(resultSet.getLong("tmetable_id"));
-                Group_timetableDao group_timetableDao = new Group_timetableDao();
+                GroupTimetableDao group_timetableDao = new GroupTimetableDao();
                 timetable.setStudentCommunity(group_timetableDao.getStudentCommunityOfTimetable(timetable));
                 timetablesMap.get(timetable.getDay())[timetable.getPair().ordinal()]=timetable;
                 timeTables.add(timetable);
@@ -283,7 +291,7 @@ public class TimeTableDao extends AbstractDao<TimeTable> {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 TimeTable timetable = getTimetable(resultSet);
-                Group_timetableDao group_timetableDao = new Group_timetableDao();
+                GroupTimetableDao group_timetableDao = new GroupTimetableDao();
                 timetable.setStudentCommunity(group_timetableDao.getStudentCommunityOfTimetable(timetable));
                 timetable.setId(resultSet.getLong("ttid"));
                 timeTables[timetable.getPair().ordinal()]=timetable;

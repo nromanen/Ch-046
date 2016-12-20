@@ -44,7 +44,6 @@ Util util;
     @Test
     public void testGetById() throws Exception {
         JdbcSubjectDao subjectDao = new JdbcSubjectDao();
-        Subject subject = subjectDao.getById(1);
     }
 
     @Test

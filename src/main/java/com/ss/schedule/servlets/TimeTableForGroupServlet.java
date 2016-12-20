@@ -1,7 +1,6 @@
 package com.ss.schedule.servlets;
 
-import com.ss.schedule.dao.GroupDao;
-import com.ss.schedule.dao.TimeTableDao;
+import com.ss.schedule.dao.*;
 import com.ss.schedule.institute.TimeTableManager;
 import com.ss.schedule.model.*;
 
@@ -23,26 +22,28 @@ import java.util.Map;
 public class TimeTableForGroupServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        long group_id=Long.parseLong(req.getParameter("group"));
+        StudentCommunity studentCommunity;
+        if (!req.getParameter("subgroup").equals("0"))
+            studentCommunity=new GroupDao().getStudentCommunityById(Long.parseLong(req.getParameter("subgroup")));
+        else studentCommunity=new GroupDao().getStudentCommunityById(Long.parseLong(req.getParameter("group")));
         TimeTableDao timeTableDao=new TimeTableDao();
-        Group group = new GroupDao().getById(group_id);
-        req.setAttribute("group",group);
-        TimeTableManager timeTableManager=new TimeTableManager();
-        Map<String, String[]> parameterMap = req.getParameterMap();
-        if (req.getParameter("day_of_week").equals("")){
+        req.setAttribute("group",studentCommunity);
             LinkedHashMap<DayOfWeek, TimeTable[]> weeklyTimetablesForGroup = timeTableDao.getWeeklyTimetablesForGroup(
-                    group, OddnessOfWeek.valueOf(req.getParameter("oddness_of_week")));
+                    studentCommunity, OddnessOfWeek.valueOf(req.getParameter("oddness_of_week")));
             req.setAttribute("timetables",weeklyTimetablesForGroup);
-        } else
-        {
-            TimeTable[] timetablesForGroup = timeTableDao.getDayTimetableOfGroup(
-                    group,
-                    DayOfWeek.valueOf(req.getParameter("day_of_week")),
-                    OddnessOfWeek.valueOf(req.getParameter("oddness_of_week")));
-
-            req.setAttribute("timetables",timetablesForGroup);
-        }
         req.setAttribute("allPairs", Pair.values());
+
+        List<DayOfWeek> days = new DayOfWeekDao().getAll();
+        req.setAttribute("days",days);
+        List<Group> groups=new GroupDao().getAll();
+        req.setAttribute("groups",groups);
+        List<OddnessOfWeek> oddnessOfWeeks = new OddnessOfWeekDao().getAll();
+        req.setAttribute("oddnesses",oddnessOfWeeks);
+        List<Classroom> allClassrooms = new ClassroomDao().getAll();
+        req.setAttribute("classrooms",allClassrooms);
+        req.setAttribute("teachers",new TeachersDao().getAll());
+        req.setAttribute("pairs",Pair.values());
+        req.setAttribute("timetables1",new TimeTableDao().getAll());
         req.getRequestDispatcher("/WEB-INF/view/daily_timetable_for_group.jsp").forward(req,resp);
     }
 

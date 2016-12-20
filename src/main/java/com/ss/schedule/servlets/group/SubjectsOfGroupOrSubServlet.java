@@ -2,8 +2,7 @@ package com.ss.schedule.servlets.group;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ss.schedule.dao.GroupDao;
-import com.ss.schedule.dao.Groups_subjectsDao;
-import com.ss.schedule.model.Group;
+import com.ss.schedule.dao.GroupsSubjectsDao;
 import com.ss.schedule.model.Subject;
 
 import javax.servlet.ServletException;
@@ -21,7 +20,7 @@ import java.util.List;
 public class SubjectsOfGroupOrSubServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Groups_subjectsDao groups_subjectsDao=new Groups_subjectsDao();
+        GroupsSubjectsDao groups_subjectsDao=new GroupsSubjectsDao();
         long group_id= Long.parseLong(req.getParameter("group_id"));
         List<Subject> subjectsForGroup = groups_subjectsDao.getSubjectsForGroup(new GroupDao().getById(group_id));
         ObjectMapper objectMapper=new ObjectMapper();

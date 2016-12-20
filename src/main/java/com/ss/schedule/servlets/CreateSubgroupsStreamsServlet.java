@@ -59,16 +59,11 @@ public class CreateSubgroupsStreamsServlet extends HttpServlet {
                 subjectGroupMap.put(subject,stream.getGroups());
             }
         }
-
-
-
         if (streamsAndSubgroupsExist)
             req.setAttribute("streamsAndSubgroupsExist",true);
         else req.setAttribute("streamsAndSubgroupsExist",false);
         req.setAttribute("streams",subjectGroupMap);
         req.setAttribute("subgroups",groupSubgroupMap);
-
-
     }
 
     @Override
@@ -106,8 +101,6 @@ public class CreateSubgroupsStreamsServlet extends HttpServlet {
                 } catch (IndexOutOfBoundsException e){}
             }
         }
-
-
         req.setAttribute("streams",subjectGroupMap);
         req.setAttribute("subgroups",groupSubgroupMap);
         req.getRequestDispatcher("/WEB-INF/view/confirm.jsp").forward(req,resp);

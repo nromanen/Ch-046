@@ -29,11 +29,6 @@ public class GroupDaoTest {
 
     @Test
     public void testGetById() throws Exception {
-//        Group byId = groupDao.getById(390);
-//        System.out.println(byId);
-//        Group group = groupDao.getById(495);
-//        List<Subgroup> subgroupById = groupDao.getSubgroupsOfGroup(group);
-//        List<Group> groupsOfStream = new Groups_subjectsDao().getGroupsOfStream(new JdbcSubjectDao().getById(121));
         groupDao.getStudentCommunityById(1061);
     }
 
@@ -60,13 +55,6 @@ public class GroupDaoTest {
         util.setGroups(groups);
         util.setSubjects(subjects);
 
-//        for (Group gr: util.getGroups()
-//             ) {
-//                gr.setSubjects(subjects);
-//        }
-//        util.setGroups(groupDao.getAll());
-//
-//        util.getGroupsSubgroupsStreams();
         for (Group group: util.getGroups()) {
             groupDao.add(group);
         }

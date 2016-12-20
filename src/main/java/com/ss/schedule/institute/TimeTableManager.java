@@ -215,31 +215,6 @@ public class TimeTableManager implements Serializable {
         return true;
     }
 
-//    public boolean isGroupFreeNow(TimeTable timeTableToCheck){
-//        TimeTableDao timeTableDao=new TimeTableDao();
-//        StudentCommunity studentCommunityToCheck = timeTableToCheck.getStudentCommunity();
-//        List<TimeTable>timetablesOfGroupInPreciseTime = timeTableDao.getTimetablesOfGroupInPreciseTime(timeTableToCheck);
-//        if (studentCommunityToCheck instanceof Subgroup){
-//            for (TimeTable timeTable:timetablesOfGroupInPreciseTime){
-//                if(timeTable.getStudentCommunity() instanceof Subgroup){
-//                    Subgroup subgroup = (Subgroup) timeTable.getStudentCommunity();
-//                    if (studentCommunityToCheck.equals(subgroup)) return true;
-//                } else if (timeTable.getStudentCommunity() instanceof Group){
-//                    Group group = (Group) timeTable.getStudentCommunity();
-//                    if (group.getSubgroups().contains(this)){
-//                        return true;
-//                    }
-//                } else if (studentCommunityToCheck instanceof Stream)
-//                {
-//                    Stream stream = (Stream) studentCommunityToCheck;
-////                    if (stream.containsSubgroup(this))
-////                        return true;
-//                }
-//                return false;
-//            }
-//        }
-//
-//    }
 
     public boolean canAddTimetable(TimeTable timeTable) throws RuntimeException{
         if (!isClassroomFreeNow(timeTable)){
@@ -258,12 +233,7 @@ public class TimeTableManager implements Serializable {
 
     }
 
-//    private boolean isThisTimetable(DayOfWeek dayOfWeek,OddnessOfWeek oddnessOfWeek,Pair pair,TimeTable timeTable){
-//        return !(timeTable.getOddnessOfWeek().equals(oddnessOfWeek) || timeTable.getOddnessOfWeek().equals(OddnessOfWeek.ALL)
-//                || (oddnessOfWeek.equals(OddnessOfWeek.ALL) && timeTable.getOddnessOfWeek().equals(OddnessOfWeek.ODD))
-//                || (oddnessOfWeek.equals(OddnessOfWeek.ALL) && timeTable.getOddnessOfWeek().equals(OddnessOfWeek.EVEN))
-//                && timeTable.getDay().equals(dayOfWeek) && timeTable.getPair().equals(pair));
-//    }
+
 
     public Group findGroupByName(Util util, String name){
         for (Group group: util.getGroups()){
@@ -272,20 +242,6 @@ public class TimeTableManager implements Serializable {
         }
         return null;
     }
-
-  public List<TimeTable> getTablesForStudByDayAndOddness(StudentCommunity studentCommunity,
-                                                        OddnessOfWeek oddnessOfWeek){
-      List<TimeTable> timeTables=new ArrayList<>();
-      for (TimeTable table:getTimeTables())
-      {
-          if (table.getOddnessOfWeek().equals(oddnessOfWeek)
-                  &&table.getStudentCommunity().equals(studentCommunity))
-          {
-             timeTables.add(table);
-          }
-      }
-      return timeTables;
-  }
 
     public void addTimetable(TimeTable timeTable) {
         if (canAddTimetable(timeTable)) {
@@ -303,7 +259,6 @@ public class TimeTableManager implements Serializable {
                     time.setClassroom(timeTable.getClassroom());
                     this.getTimeTables().add(time);
                     new TimeTableDao().add(time);
-//                    time.setId(timeTable.getId());
                 }
             }
             {
@@ -312,7 +267,6 @@ public class TimeTableManager implements Serializable {
             }
         }
     }
-//    }
 
     public void addTimetableFromDB(TimeTable timeTable){
         if (canAddTimetable(timeTable))
@@ -358,24 +312,6 @@ public class TimeTableManager implements Serializable {
         return groupNames;
     }
 
-    List<String> getGroupsOfStreamBySubject(Util util, Subject subject){
-        LinkedHashMap<Subject, List<? extends StudentCommunity>> groupsSubgroupsStreams = util.getGroupsSubgroupsStreams();
-        List<Stream> streams = (List<Stream>) groupsSubgroupsStreams.get(subject);
-        Stream streamToAdd=null;
-        List<String> groupNames=new ArrayList<>();
-        for (Stream stream:streams)
-        {
-            if (stream.getSubjects().contains(subject))
-                streamToAdd=stream;
-            break;
-
-        }
-
-        for (Group group:streamToAdd.getGroups()){
-            groupNames.add(group.getName());
-        }
-        return  groupNames;
-    }
 
     public void createSubgroups(){
         Util util =new Util();
@@ -401,7 +337,6 @@ public class TimeTableManager implements Serializable {
             for (TimeTable timeTable:timeTables){
                 timeTables1[pair.ordinal()]=null;
                if (timeTable.getPair().equals(pair)){
-//                   timeTables1.add(pair.ordinal(),timeTable);
                    timeTables1[pair.ordinal()] = timeTable;
                    break;
                }
@@ -409,10 +344,4 @@ public class TimeTableManager implements Serializable {
         }
         return timeTables1;
     }
-
-
-
-//    public void method(Group group){
-//        for (Group )
-//    }
 }
