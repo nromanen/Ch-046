@@ -35,7 +35,8 @@ public class AssignGroupsForUnusedSubjectServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/view/group/unused_subjects.jsp");
+		RequestDispatcher dispatcher = this.getServletContext()
+				.getRequestDispatcher("/WEB-INF/view/group/unused_subjects.jsp");
 		dispatcher.forward(req, resp);
 	}
 

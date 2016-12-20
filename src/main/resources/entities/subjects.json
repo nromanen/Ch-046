@@ -1,102 +1,101 @@
-[
-  {
-    "name": "Algebra",
-    "type": "LECTURE",
-    "course": 2
-  },
-  {
-    "name": "Algebra",
-    "type": "PRACTICE",
-    "course": 2
-  },
-  {
-    "name": "Python",
-    "type": "LECTURE",
-    "course": 2
-  },
-  {
-    "name": "Python",
-    "type": "LAB",
-    "course": 2
-  },
-  {
-    "name": "Python",
-    "type": "PRACTICE",
-    "course": 2
-  },
-  {
-    "name": "Philosophy",
-    "type": "LECTURE",
-    "course": 1
-  },
-  {
-    "name": "Philosophy",
-    "type": "SEMINAR",
-    "course": 1
-  },
-  {
-    "name": "Algebra",
-    "type": "LECTURE",
-    "course": 1
-  },
-  {
-    "name": "Algebra",
-    "type": "PRACTICE",
-    "course": 1
-  },
-  {
-    "name": ".Net",
-    "type": "LECTURE",
-    "course": 3
-  },
-  {
-    "name": ".Net",
-    "type": "PRACTICE",
-    "course": 3
-  },
-  {
-    "name": "C++",
-    "type": "LECTURE",
-    "course": 1
-  },
-  {
-    "name": "C++",
-    "type": "PRACTICE",
-    "course": 1
-  },
-  {
-    "name": "C++",
-    "type": "LAB",
-    "course": 1
-  },
-  {
-    "name": "MA",
-    "type": "LECTURE",
-    "course": 2
-  },
-  {
-    "name": "MA",
-    "type": "PRACTICE",
-    "course": 2
-  },
-  {
-    "name": "MA",
-    "type": "LECTURE",
-    "course": 1
-  },
-  {
-    "name": "MA",
-    "type": "PRACTICE",
-    "course": 1
-  },
-  {
-    "name": "MA",
-    "type": "PRACTICE",
-    "course": 3
-  },
-  {
-    "name": "Transformation",
-    "type": "SEMINAR",
-    "course": 3
-  }
-]
+[ {
+  "id" : 9,
+  "name" : "Algebra",
+  "type" : "PRACTICE",
+  "course" : 1
+}, {
+  "id" : 8,
+  "name" : "Algebra",
+  "type" : "LECTURE",
+  "course" : 1
+}, {
+  "id" : 14,
+  "name" : "C++",
+  "type" : "LAB",
+  "course" : 1
+}, {
+  "id" : 13,
+  "name" : "C++",
+  "type" : "PRACTICE",
+  "course" : 1
+}, {
+  "id" : 12,
+  "name" : "C++",
+  "type" : "LECTURE",
+  "course" : 1
+}, {
+  "id" : 17,
+  "name" : "MA",
+  "type" : "LECTURE",
+  "course" : 1
+}, {
+  "id" : 18,
+  "name" : "MA",
+  "type" : "PRACTICE",
+  "course" : 1
+}, {
+  "id" : 7,
+  "name" : "Philosophy",
+  "type" : "SEMINAR",
+  "course" : 1
+}, {
+  "id" : 6,
+  "name" : "Philosophy",
+  "type" : "LECTURE",
+  "course" : 1
+}, {
+  "id" : 2,
+  "name" : "Algebra",
+  "type" : "PRACTICE",
+  "course" : 2
+}, {
+  "id" : 1,
+  "name" : "Algebra",
+  "type" : "LECTURE",
+  "course" : 2
+}, {
+  "id" : 16,
+  "name" : "MA",
+  "type" : "PRACTICE",
+  "course" : 2
+}, {
+  "id" : 15,
+  "name" : "MA",
+  "type" : "LECTURE",
+  "course" : 2
+}, {
+  "id" : 3,
+  "name" : "Python",
+  "type" : "LECTURE",
+  "course" : 2
+}, {
+  "id" : 5,
+  "name" : "Python",
+  "type" : "PRACTICE",
+  "course" : 2
+}, {
+  "id" : 4,
+  "name" : "Python",
+  "type" : "LAB",
+  "course" : 2
+}, {
+  "id" : 11,
+  "name" : ".Net",
+  "type" : "PRACTICE",
+  "course" : 3
+}, {
+  "id" : 10,
+  "name" : ".Net",
+  "type" : "LECTURE",
+  "course" : 3
+}, {
+  "id" : 19,
+  "name" : "MA",
+  "type" : "PRACTICE",
+  "course" : 3
+}, {
+  "id" : 20,
+  "name" : "Transformation",
+  "type" : "SEMINAR",
+  "course" : 3
+} ]

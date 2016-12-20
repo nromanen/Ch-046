@@ -6,6 +6,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -41,7 +42,9 @@ public class Group {
 	)
 	private List<Subject> subjects;
 
-	public Group() {}
+	public Group() {
+		subjects = new ArrayList<>();
+	}
 
 	public Group(String name, int count, List<Subject> subjects) {
 		this.name = name;

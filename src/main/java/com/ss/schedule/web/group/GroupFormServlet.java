@@ -40,7 +40,8 @@ public class GroupFormServlet extends HttpServlet {
 			req.setAttribute("action", "Add");
 			if (groupId != null) {
 				group = groupService.getGroupById(Long.valueOf(groupId));
-				req.setAttribute("subjects", getCourseSubjectsDoNotUsedInGroup(group.getName().charAt(0) - '0', group.getSubjects()));
+				req.setAttribute("subjects",
+						getCourseSubjectsDoNotUsedInGroup(group.getName().charAt(0) - '0', group.getSubjects()));
 				req.setAttribute("group_subjects", group.getSubjects());
 				req.setAttribute("action", "Update");
 			}
@@ -49,11 +50,13 @@ public class GroupFormServlet extends HttpServlet {
 			//todo
 			e.printStackTrace();
 		}
-		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/view/group/group_form.jsp");
+		RequestDispatcher dispatcher = this.getServletContext()
+				.getRequestDispatcher("/WEB-INF/view/group/group_form.jsp");
 		dispatcher.forward(req, resp);
 	}
 
-	private List<Subject> getCourseSubjectsDoNotUsedInGroup(int course, List<Subject> groupSubject) throws SQLException {
+	private List<Subject> getCourseSubjectsDoNotUsedInGroup(int course, List<Subject> groupSubject)
+			throws SQLException {
 		List<Subject> courseSubjects = subjectService.getSubjectsByCourse(course);
 		List<Subject> subjects = new ArrayList<>();
 		for (Subject subject : courseSubjects) {
@@ -73,7 +76,8 @@ public class GroupFormServlet extends HttpServlet {
 			Group group = getGroup(req);
 			if (GroupFormValidator.hasErrors(session, group) || isGroupExists(session, group)) {
 				setSessionAttributes(session, group);
-				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/view/group/group_form.jsp");
+				RequestDispatcher dispatcher = this.getServletContext()
+						.getRequestDispatcher("/WEB-INF/view/group/group_form.jsp");
 				dispatcher.forward(req, resp);
 				return;
 			} else {
@@ -129,7 +133,8 @@ public class GroupFormServlet extends HttpServlet {
 		session.setAttribute("group", group);
 		session.setAttribute("action", "Add");
 		if (group.getId() != 0) {
-			session.setAttribute("subjects", getCourseSubjectsDoNotUsedInGroup(group.getName().charAt(0) - '0', group.getSubjects()));
+			session.setAttribute("subjects",
+					getCourseSubjectsDoNotUsedInGroup(group.getName().charAt(0) - '0', group.getSubjects()));
 			session.setAttribute("group_subjects", group.getSubjects());
 			session.setAttribute("action", "Update");
 		}

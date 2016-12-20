@@ -41,7 +41,8 @@ public class UnusedSubjectFormServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/view/group/unused_subject_form.jsp");
+		RequestDispatcher dispatcher = this.getServletContext()
+				.getRequestDispatcher("/WEB-INF/view/group/unused_subject_form.jsp");
 		dispatcher.forward(req, resp);
 	}
 
