@@ -16,24 +16,28 @@
        <table class="teacherAddTable" border="0">
                <tr>
              <td> Firstname*</td>
-              <td><input type="text" name="firstname" placeholder="Ivan" value= "${firstname}" /> <br>
+              <td><input type="text" id='firstname' name="firstname" placeholder="Ivan" value= "${firstname}" /> <br>
               <p><c:if test="${error!=null}"><div class="teacheraddError">${error}</div></c:if></p>
+              <span id='firstName_error'></span> 
               </td>
           </tr>
           <tr>
              <td>Lastname*</td>
-              <td><input type="text" name="lastname" placeholder="Ivanov" value= "${lastname}" /> <br>
-               <p><c:if test="${error2!=null}"><div class="teacheraddError">${error2}</div></c:if></p> </td> 
+              <td><input type="text" id='lastname' name="lastname" placeholder="Ivanov" value= "${lastname}" /> <br>
+               <p><c:if test="${error2!=null}"><div class="teacheraddError">${error2}</div></c:if></p> 
+                 <span id='lastName_error'></span> 
+               </td> 
+              
           </tr>
         
        </table>
        <br>
-      
-        <input type="submit" class="button1" value="Add"/>
+        <input type="submit" class="btn disabled" id="whitespace" disabled value="Add"/>
         
        </form>
   </div>
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script> 
+  <script src="assets/js/TeacherValidator.js" ></script>
 </body>
 </html>

@@ -12,6 +12,8 @@ button {
 }
 
 .button1 {
+	font: 100% 'century gothic', arial, sans-serif;
+	color:#646477;
 	width: 100px ; 
 	padding-top:2px;
 	height:24px;
@@ -74,6 +76,16 @@ h1 {
 .teacheraddError {
 	text-align: left;
 	color:#f76c8a;
+}
+
+#firstName_error {
+	font: 'century gothic', arial, sans-serif;	
+	color: #f78ab2;
+	
+}
+#lastName_error{
+	font: 'century gothic', arial, sans-serif;	
+	color: #f78ab2;
 }
 
 
