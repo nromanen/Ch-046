@@ -24,21 +24,22 @@
       <td>  ${teacher.id}</td> <td> <span id='teacherLastName${teacher.id}'>  ${teacher.lastName} </span> </td>
        <td><span id='teacherFirstName${teacher.id}'>  ${teacher.firstName}</span> </td>
         <td>
-        <span class="waves-effect waves-light  btn" onclick='edit(${teacher.id})'  id='teacherEdit'  style="background-color:#9cd1af">Edit</span>
+        <span class="waves-effect waves-light  btn" onclick='edit(${teacher.id})'  id='teacherEdit${teacher.id}'  style="background-color:#9cd1af">Edit</span>
         
          <script>
          function edit(id){
+        	 var teachId = '#teacherEdit'+id;
         	 var teachL = '#teacherLastName'+id;
         	 var teachF = '#teacherFirstName'+id;
         	 $(teachL).attr('contenteditable','true');
              $(teachF).attr('contenteditable','true');
-             $(this).html('save');
+             $(teachId).html('save');
          }
-         $(document).ready(function() {
+        /*  $(document).ready(function() {
         	 $('#teacherEdit').click(function(){
          $('#teacherLastName').attr('contenteditable','true');
          $('#teacherFirstName').attr('contenteditable','true');
-         $(this).html('save');
+         $(this).html('save'); */
         /*  $('tr').css('border', 1);    */ 
         	/*  $('#teacherLastName').contentEditable = "true"; */
 		/* 	 $('#teacherLastName').prop("contentEditable", "true"); */
@@ -52,10 +53,10 @@
         	    	
         	    	$('#teacherEdit').bind('click',
         	    		    function(){
-        	    		        $('#teacherLastName').attr('contentEditable',true); */
+        	    		        $('#teacherLastName').attr('contentEditable',true); 
         	    		    });
         	    	
-        	    }); 
+        	    }); */
         	
 
     </script>
