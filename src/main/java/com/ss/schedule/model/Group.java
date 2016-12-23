@@ -108,6 +108,23 @@ public class Group {
 	}
 
 	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Group: { id: ").append(id)
+				.append(", name: ").append(name)
+				.append(", count: ").append(count)
+				.append(", subjects: [ ");
+		for (int i = 0; i < subjects.size(); i++) {
+			sb.append("{").append(subjects.get(i).toString()).append("}");
+			if (i < subjects.size() - 1) {
+				sb.append(", ");
+			}
+		}
+		sb.append(" ] }");
+		return sb.toString();
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Group)) return false;

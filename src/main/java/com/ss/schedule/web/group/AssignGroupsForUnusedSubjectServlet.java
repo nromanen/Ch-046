@@ -3,6 +3,8 @@ package com.ss.schedule.web.group;
 import com.ss.schedule.model.Subject;
 import com.ss.schedule.service.GroupService;
 import com.ss.schedule.service.SubjectService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +23,7 @@ import java.util.List;
 public class AssignGroupsForUnusedSubjectServlet extends HttpServlet {
 
 	private static final String PROPERTIES_FILE_PATH = "hibernate.cfg.xml";
+	private static final Logger logger = LoggerFactory.getLogger(AssignGroupsForUnusedSubjectServlet.class);
 
 	private GroupService groupService;
 	private SubjectService subjectService;
@@ -30,9 +33,11 @@ public class AssignGroupsForUnusedSubjectServlet extends HttpServlet {
 		try {
 			List<Subject> unusedSubjects = subjectService.getUnusedSubjects();
 			req.setAttribute("subjects", unusedSubjects);
-		} catch (SQLException e) {
+			logger.info("SERVLET: Show all unused subjects request has processed successfully");
+		} catch (SQLException ex) {
+			logger.error("SERVLET: Exception {} occurred", ex.getClass().getSimpleName());
 			//todo
-			e.printStackTrace();
+			ex.printStackTrace();
 		}
 
 		RequestDispatcher dispatcher = this.getServletContext()

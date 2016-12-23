@@ -16,7 +16,6 @@ import static org.testng.Assert.assertEquals;
 public class GroupServiceTest {
 
 	private final String hibernateConfigFilePath = "test_hibernate.cfg.xml";
-	private final String propertiesFilePath = "test_db_connection.properties";
 
 	private GroupService groupService;
 

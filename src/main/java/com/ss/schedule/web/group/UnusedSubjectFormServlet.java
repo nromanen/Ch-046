@@ -4,6 +4,8 @@ import com.ss.schedule.model.Group;
 import com.ss.schedule.model.Subject;
 import com.ss.schedule.service.GroupService;
 import com.ss.schedule.service.SubjectService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,6 +27,7 @@ import java.util.List;
 public class UnusedSubjectFormServlet extends HttpServlet {
 
 	private static final String PROPERTIES_FILE_PATH = "hibernate.cfg.xml";
+	private static final Logger logger = LoggerFactory.getLogger(UnusedSubjectFormServlet.class);
 
 	private GroupService groupService;
 	private SubjectService subjectService;
@@ -36,9 +39,11 @@ public class UnusedSubjectFormServlet extends HttpServlet {
 			List<Group> groups = groupService.getGroupsByCourse(subject.getCourse());
 			req.setAttribute("groups", groups);
 			req.setAttribute("subject", subject);
-		} catch (SQLException e) {
+			logger.info("SERVLET: Show all groups for unused subject request - {} - has processed successfully", subject);
+		} catch (SQLException ex) {
+			logger.error("SERVLET: Exception {} occurred", ex.getClass().getSimpleName());
 			//todo
-			e.printStackTrace();
+			ex.printStackTrace();
 		}
 
 		RequestDispatcher dispatcher = this.getServletContext()
@@ -54,6 +59,7 @@ public class UnusedSubjectFormServlet extends HttpServlet {
 		if (groupIds == null) {
 			req.setAttribute("msg", "No one group was selected! Please select at least one group.");
 			doGet(req, resp);
+			logger.warn("SERVLET: No one group was selected for unused subject");
 			return;
 		} else {
 			try {
@@ -63,7 +69,9 @@ public class UnusedSubjectFormServlet extends HttpServlet {
 				executeUpdateGroups(groups, subject);
 				session.setAttribute("css", "success");
 				session.setAttribute("msg", createMessage(groups, subject));
+				logger.info("SERVLET: {} has added to {} successfully", subject, groups);
 			} catch (SQLException ex) {
+				logger.error("SERVLET: Exception {} occurred", ex.getClass().getSimpleName());
 				//todo
 				ex.printStackTrace();
 				session.setAttribute("css", "danger");

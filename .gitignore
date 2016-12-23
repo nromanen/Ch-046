@@ -4,6 +4,7 @@
 /bin/*
 /out/*
 **/io/*
+/logs/*
 
 *.iml
 *.ipr

@@ -6,6 +6,8 @@ import com.ss.schedule.model.SubjectType;
 import com.ss.schedule.service.GroupService;
 import com.ss.schedule.service.SubjectService;
 import com.ss.schedule.validator.GroupFormValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,6 +29,7 @@ import java.util.List;
 public class GroupFormServlet extends HttpServlet {
 
 	private static final String PROPERTIES_FILE_PATH = "hibernate.cfg.xml";
+	private static final Logger logger = LoggerFactory.getLogger(GroupFormServlet.class);
 
 	private GroupService groupService;
 	private SubjectService subjectService;
@@ -37,22 +40,27 @@ public class GroupFormServlet extends HttpServlet {
 
 		try {
 			Group group = new Group();
-			req.setAttribute("action", "Add");
 			if (groupId != null) {
 				group = groupService.getGroupById(Long.valueOf(groupId));
+				logger.info("SERVLET: Update {}", group);
 				req.setAttribute("subjects",
 						getCourseSubjectsDoNotUsedInGroup(group.getName().charAt(0) - '0', group.getSubjects()));
 				req.setAttribute("group_subjects", group.getSubjects());
 				req.setAttribute("action", "Update");
+			} else {
+				logger.info("SERVLET: Add new group");
+				req.setAttribute("action", "Add");
 			}
 			req.setAttribute("group", group);
-		} catch (SQLException e) {
+		} catch (SQLException ex) {
+			logger.error("SERVLET: Exception {} occurred", ex.getClass().getSimpleName());
 			//todo
-			e.printStackTrace();
+			ex.printStackTrace();
 		}
 		RequestDispatcher dispatcher = this.getServletContext()
 				.getRequestDispatcher("/WEB-INF/view/group/group_form.jsp");
 		dispatcher.forward(req, resp);
+		logger.info("SERVLET: Request has processed successfully");
 	}
 
 	private List<Subject> getCourseSubjectsDoNotUsedInGroup(int course, List<Subject> groupSubject)
@@ -86,13 +94,17 @@ public class GroupFormServlet extends HttpServlet {
 					String groupName = executeAddGroup(req);
 					session.setAttribute("css", "success");
 					session.setAttribute("msg", "Group " + groupName + " has added successfully!");
+					logger.info("SERVLET: Group {} has added successfully", groupName);
 				} else {
 					String groupName = executeUpdateGroup(req);
 					session.setAttribute("css", "success");
 					session.setAttribute("msg", "Group " + groupName + " has updated successfully!");
+					logger.info("SERVLET: Group {} has updated successfully", groupName);
 				}
+
 			}
 		} catch (SQLException ex) {
+			logger.error("SERVLET: Exception {} occurred", ex.getClass().getSimpleName());
 			//todo
 			ex.printStackTrace();
 			session.setAttribute("css", "danger");
@@ -145,16 +157,18 @@ public class GroupFormServlet extends HttpServlet {
 		group.setName(req.getParameter("gr_name").trim());
 		group.setCount(Integer.valueOf(req.getParameter("gr_count").trim()));
 		groupService.addGroup(group);
+		logger.info("SERVLET: Added group info: {}", group);
 		return group.getName();
 	}
 
 	private String executeUpdateGroup(HttpServletRequest req) throws SQLException {
-		Group group = new Group();
-		group.setId(Long.valueOf(req.getParameter("group_id")));
+		Group group = groupService.getGroupById(Long.valueOf(req.getParameter("group_id")));
+		logger.info("SERVLET: Update {}", group);
 		group.setName(req.getParameter("gr_name"));
 		group.setCount(Integer.valueOf(req.getParameter("gr_count")));
 		group.setSubjects(createSubjectsList(req.getParameterValues("gr_subject")));
 		groupService.updateGroup(group);
+		logger.info("SERVLET: Group parameters after update: {}", group);
 		return group.getName();
 	}
 

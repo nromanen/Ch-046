@@ -2,6 +2,8 @@ package com.ss.schedule.web.group;
 
 import com.ss.schedule.model.Group;
 import com.ss.schedule.service.GroupService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +23,7 @@ import java.util.List;
 public class ShowGroupsServlet extends HttpServlet {
 
 	private static final String PROPERTIES_FILE_PATH = "hibernate.cfg.xml";
+	private static final Logger logger = LoggerFactory.getLogger(ShowGroupsServlet.class);
 
 	private GroupService groupService;
 
@@ -29,7 +32,10 @@ public class ShowGroupsServlet extends HttpServlet {
 		List<Group> groups = new ArrayList<>();
 		try {
 			groups = groupService.getAllGroups();
+			logger.info("SERVLET: Show all groups request has precessed successfully");
 		} catch (SQLException ex) {
+			logger.error("SERVLET: Exception {} occurred", ex.getClass().getSimpleName());
+			//todo
 			ex.printStackTrace();
 		}
 		req.setAttribute("groups", groups);

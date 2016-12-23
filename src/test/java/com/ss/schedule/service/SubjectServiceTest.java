@@ -20,7 +20,6 @@ import static org.testng.Assert.assertNotNull;
 public class SubjectServiceTest {
 
 	private final String hibernateConfigFilePath = "test_hibernate.cfg.xml";
-	private final String propertiesFilePath = "test_db_connection.properties";
 
 
 	private SubjectService subjectService;

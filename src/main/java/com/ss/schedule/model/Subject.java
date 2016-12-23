@@ -33,7 +33,8 @@ public class Subject {
 	@Column(name = "course", nullable = false)
 	private int course;
 
-	public Subject() {}
+	public Subject() {
+	}
 
 	public Subject(String name, SubjectType type, int courseNumber) {
 		this.name = name;
@@ -69,6 +70,18 @@ public class Subject {
 		return course;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Subject: { id: ").append(id)
+				.append(", name: ").append(name)
+				.append(", type: ").append(type.toString())
+				.append(", course: ").append(course)
+				.append(" }");
+
+		return sb.toString();
+	}
+
 	public void setCourse(int course) {
 		this.course = course;
 	}
@@ -92,14 +105,5 @@ public class Subject {
 		result = 31 * result + course;
 		result = 31 * result + (type != null ? type.hashCode() : 0);
 		return result;
-	}
-
-	@Override
-	public String toString() {
-		return "Subject{" +
-				"name='" + name + '\'' +
-				", course=" + course +
-				", type=" + type +
-				'}';
 	}
 }

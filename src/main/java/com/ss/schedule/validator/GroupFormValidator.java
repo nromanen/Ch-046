@@ -1,6 +1,8 @@
 package com.ss.schedule.validator;
 
 import com.ss.schedule.model.Group;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpSession;
 import java.util.regex.Matcher;
@@ -11,19 +13,23 @@ import java.util.regex.Pattern;
  */
 public class GroupFormValidator {
 
-	private final static int MIN_GROUP_NAME_NUMBER = 10;
-	private final static int MAX_GROUP_NAME_NUMBER = 59;
-	private final static int MAX_GROUP_COUNT = 100;
+	private static final Logger logger = LoggerFactory.getLogger(GroupFormValidator.class);
+
+	private static final int MIN_GROUP_NAME_NUMBER = 10;
+	private static final int MAX_GROUP_NAME_NUMBER = 59;
+	private static final int MAX_GROUP_COUNT = 100;
 
 	public static boolean hasErrors(HttpSession session, Group group) {
 		boolean isGroupFormDataHasErrors = false;
 
 		if (!isGroupNameValid(session, group)) {
 			isGroupFormDataHasErrors = true;
+			logger.warn("VALIDATOR: Group name - \"{}\" - doesn't valid!", group.getName());
 		}
 
 		if (!isGroupCountValid(session, group)) {
 			isGroupFormDataHasErrors = true;
+			logger.warn("VALIDATOR: Group count - {} - doesn't valid!", group.getCount());
 		}
 
 		return isGroupFormDataHasErrors;
