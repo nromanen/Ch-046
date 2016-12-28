@@ -3,7 +3,9 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" scope="page"/>
 
@@ -25,19 +27,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-inverse">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">University</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li><a href="#">Main</a></li>
-            <li class="active"><a href="${contextPath}/groups">Groups</a></li>
-            <li><a href="#">Subjects</a></li>
-            <li><a href="#">Schedule</a></li>
-        </ul>
-    </div>
-</nav>
+<jsp:include page="../fragments/nav_bar.jsp"/>
 
 <div class="container">
     <div class="jumbotron">
@@ -48,7 +38,6 @@
         <div class="alert alert-${css} alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>${msg}</strong>
-            <c:remove var="msg"/>
         </div>
     </c:if>
 
@@ -69,11 +58,11 @@
                     <th class="vertical-text-center text-center">${subject.type}</th>
                     <th class="vertical-text-center text-center">${subject.course}</th>
                     <th class="vertical-text-center text-center">
-                        <form method="get" action="${contextPath}/groups/unused-subjects/add">
-                            <button class="btn btn-primary" type="submit" name="subject_id"
-                                    value="${subject.id}">Assign groups
+                        <form:form method="get" action="${contextPath}/groups/unused-subjects/${subject.id}/add">
+                            <button class="btn btn-primary" type="submit" name="subject_id">
+                                Assign groups
                             </button>
-                        </form>
+                        </form:form>
                     </th>
                 </tr>
             </c:forEach>

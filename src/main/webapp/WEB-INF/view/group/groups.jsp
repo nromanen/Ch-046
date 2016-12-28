@@ -3,7 +3,9 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" scope="page"/>
 
@@ -15,32 +17,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
+    <spring:url value="/resources" var="resourcesUrl"/>
     <!-- Bootstrap -->
-    <link href="${contextPath}/resources/css/bootstrap.css" rel="stylesheet">
-    <script src="${contextPath}/resources/js/jquery.min.js"></script>
-    <script src="${contextPath}/resources/js/bootstrap.js"></script>
-    <link href="${contextPath}/resources/css/custom.css" rel="stylesheet">
+    <link href="${resourcesUrl}/css/bootstrap.css" rel="stylesheet">
+    <script src="${resourcesUrl}/js/jquery.min.js"></script>
+    <script src="${resourcesUrl}/js/bootstrap.js"></script>
+    <link href="${resourcesUrl}/css/custom.css" rel="stylesheet">
 
-    <script src="resources/js/delete-group.js"></script>
+    <script src="${resourcesUrl}/js/delete-group.js"></script>
 
     <title>Groups</title>
 </head>
 
 <body>
 
-<nav class="navbar navbar-inverse">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">University</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li><a href="#">Main</a></li>
-            <li class="active"><a href="${contextPath}/groups">Groups</a></li>
-            <li><a href="#">Subjects</a></li>
-            <li><a href="#">Schedule</a></li>
-        </ul>
-    </div>
-</nav>
+<jsp:include page="../fragments/nav_bar.jsp"/>
 
 <div class="container">
     <div class="jumbotron">
@@ -51,19 +42,20 @@
         <div class="alert alert-${css} alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>${msg}</strong>
-            <c:remove var="msg"/>
         </div>
     </c:if>
 
     <div class="add col-sm-6">
-        <form method="get" action="${contextPath}/groups/add">
+        <spring:url value="/groups/add" var="groupsAddUrl"/>
+        <form:form method="get" action="${groupsAddUrl}">
             <button type="submit" class="btn btn-lg btn-primary btn-add">Add Group</button>
-        </form>
+        </form:form>
     </div>
     <div class="add col-sm-6">
-        <form method="get" action="${contextPath}/groups/unused-subjects" class="text-right">
+        <spring:url value="/groups/unused-subjects" var="unusedSubjectsUrl"/>
+        <form:form method="get" action="${unusedSubjectsUrl}" class="text-right">
             <button type="submit" class="btn btn-lg btn-primary btn-add btn-unused">Unused Subjects</button>
-        </form>
+        </form:form>
     </div>
 
     <div class="col-sm-12">
@@ -84,17 +76,19 @@
                     <th class="vertical-text-center">
                         <ul class="list-group">
                             <c:forEach var="subject" items="${group.subjects}">
-                                <li class="list-group-item">${subject.name}<span class="badge">${subject.type}</span>
+                                <li class="list-group-item">
+                                        ${subject.name}<span class="badge">${subject.type}</span>
                                 </li>
                             </c:forEach>
                         </ul>
                     </th>
                     <th class="vertical-text-center text-center">
-                        <form method="get" action="${contextPath}/groups/update">
-                            <button class="btn btn-success btn-update btn-action" type="submit" name="group_id"
-                                    value="${group.id}">Update
+                        <spring:url value="/groups/${group.id}/update" var="updateGroupUrl"/>
+                        <form:form method="get" action="${updateGroupUrl}">
+                            <button class="btn btn-success btn-update btn-action" type="submit" name="group_id">
+                                Update
                             </button>
-                        </form>
+                        </form:form>
 
                         <button id="del-btn" class="btn btn-danger btn-action" type="button" name="group_id"
                                 onclick="confirm(${group.id})" data-toggle="modal" data-target="#delete_popup">
@@ -119,13 +113,13 @@
                     <p id="conf-message"></p>
                 </div>
                 <div class="modal-footer">
-                    <form method="post" action="${contextPath}/groups/delete" class="modal-form">
+                    <spring:url value="/groups/delete" var="deleteGroupUrl"/>
+                    <form:form method="post" action="${deleteGroupUrl}" class="modal-form">
                         <button id="conf-button" class="btn btn-success btn-update conf-button" type="submit"
                                 name="group_id">
                             Yes
                         </button>
-                    </form>
-
+                    </form:form>
                     <button type="button" class="btn btn-danger conf-button" data-dismiss="modal">No</button>
                 </div>
             </div>

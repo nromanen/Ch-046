@@ -2,7 +2,9 @@
   Created by IntelliJ IDEA.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" scope="page"/>
 
@@ -14,33 +16,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
+    <spring:url value="/resources" var="resourcesUrl"/>
     <!-- Bootstrap -->
-    <link href="${contextPath}/resources/css/bootstrap.css" rel="stylesheet">
-    <script src="${contextPath}/resources/js/jquery.min.js"></script>
-    <script src="${contextPath}/resources/js/bootstrap.js"></script>
-    <link href="${contextPath}/resources/css/skins/square/green.css" rel="stylesheet">
-    <script src="${contextPath}/resources/js/icheck.js"></script>
-    <script src="${contextPath}/resources/js/unused-subject-form.js"></script>
-    <link href="${contextPath}/resources/css/custom.css" rel="stylesheet">
+    <link href="${resourcesUrl}/css/bootstrap.css" rel="stylesheet">
+    <script src="${resourcesUrl}/js/jquery.min.js"></script>
+    <script src="${resourcesUrl}/js/bootstrap.js"></script>
+    <link href="${resourcesUrl}/css/skins/square/green.css" rel="stylesheet">
+    <script src="${resourcesUrl}/js/icheck.js"></script>
+    <script src="${resourcesUrl}/js/unused-subject-form.js"></script>
+    <link href="${resourcesUrl}/css/custom.css" rel="stylesheet">
 
     <title>Groups</title>
 </head>
 
 <body>
 
-<nav class="navbar navbar-inverse">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">University</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li><a href="#">Main</a></li>
-            <li class="active"><a href="${contextPath}/groups">Groups</a></li>
-            <li><a href="#">Subjects</a></li>
-            <li><a href="#">Schedule</a></li>
-        </ul>
-    </div>
-</nav>
+<jsp:include page="../fragments/nav_bar.jsp"/>
 
 <div class="container">
     <div class="jumbotron">
@@ -55,11 +46,11 @@
          class="alert alert-danger">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <span id="alert-subject">${msg}</span>
-        <c:remove var="msg"/>
     </div>
 
-    <form method="post" action="${contextPath}/groups/unused-subjects/add" onsubmit="return hasCheckedEvenOneGroup()">
-        <input type="hidden" name="subject_id" value="${subject.id}"/>
+    <spring:url value="/groups/unused-subjects/${subject.id}/action" var="actionUnusedSubjectsUrl"/>
+    <form method="post" action="${actionUnusedSubjectsUrl}"
+               onsubmit="return hasCheckedEvenOneGroupSelected()">
 
         <div class="col-sm-12">
             <table class="table table-striped">

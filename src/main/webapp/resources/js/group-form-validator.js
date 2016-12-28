@@ -29,7 +29,7 @@ function validateForm() {
 
     var isFormDataValid = true;
 
-    var groupName = document.group_form.gr_name.value.trim();
+    var groupName = document.getElementById("group_name").value.trim();
     if (!groupName.match(/^\s*\d{2}\s*$/) || (groupName < MIN_GROUP_NAME_NUMBER || groupName > MAX_GROUP_NAME_NUMBER)) {
         document.getElementById("alert-name").innerHTML = "Wrong group name! Group name consists of 2 digits " +
             "from " + MIN_GROUP_NAME_NUMBER + " to " + MAX_GROUP_NAME_NUMBER + " inclusive";
@@ -37,7 +37,7 @@ function validateForm() {
         isFormDataValid = false;
     }
 
-    var groupCount = document.group_form.gr_count.value.trim();
+    var groupCount = document.getElementById("count").value.trim();
     if (groupCount <= 0 || groupCount > MAX_GROUP_COUNT) {
         document.getElementById("alert-count").innerHTML = "Wrong group count! Group count cannot be fewer 1 and " +
             "greater " + MAX_GROUP_COUNT;
@@ -50,7 +50,7 @@ function validateForm() {
 
 function validateUpdateForm() {
     if (validateForm()) {
-        var groupName = document.group_form.gr_name.value.trim();
+        var groupName = document.getElementById("group_name").value.trim();
         if (hasFirstCharacterChanged(groupName)) {
             if (hasAtLeastOneSubjectChecked()) {
                 var msg = document.getElementById("alert-subject");
@@ -72,7 +72,7 @@ function hasFirstCharacterChanged(groupName) {
 }
 
 function hasAtLeastOneSubjectChecked() {
-    var subjects = document.getElementsByName("gr_subject");
+    var subjects = document.getElementsByName("subjects");
     for (var i = 0; i < subjects.length; i++) {
         if (subjects[i].checked) {
             return true;

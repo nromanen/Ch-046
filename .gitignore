@@ -1,10 +1,10 @@
-/.idea/*
-/.gradle/*
-/build/*
-/bin/*
-/out/*
+.idea/*
+.gradle/*
+build/*
+bin/*
+out/*
 **/io/*
-/logs/*
+logs/*
 
 *.iml
 *.ipr

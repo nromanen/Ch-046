@@ -4,35 +4,19 @@ import com.ss.schedule.dao.AbstractDao;
 import com.ss.schedule.model.Group;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Created by vyach on 28.11.2016.
  */
-public class HGroupDao extends AbstractDao<Group> {
 
-	public HGroupDao(String propertiesFilePath) throws SQLException {
-		super(propertiesFilePath);
-	}
+@Repository("groupDao")
+public class HGroupDao extends AbstractDao<Group> implements GroupDao<Group> {
 
 	@Override
-	public void add(Group group) throws SQLException {
-		getCurrentSession().save(group);
-	}
-
-	@Override
-	public void update(Group group) throws SQLException {
-		getCurrentSession().update(group);
-	}
-
-	@Override
-	public void delete(Group group) throws SQLException {
-		getCurrentSession().delete(group);
-	}
-
-	public Group getById(long id) throws SQLException {
+	public Group getById(long id) {
 		String request = "SELECT g FROM Group g WHERE g.id = :id";
 		Session session = getCurrentSession();
 		Query<Group> query = session.createQuery(request);
@@ -41,14 +25,15 @@ public class HGroupDao extends AbstractDao<Group> {
 	}
 
 	@Override
-	public List<Group> getAll() throws SQLException {
+	public List<Group> getAll() {
 		String request = "SELECT g FROM Group g ORDER BY g.name ASC";
 		Session session = getCurrentSession();
 		Query<Group> query = session.createQuery(request);
-		return query.list();
+		return query.getResultList();
 	}
 
-	public List<Group> getGroupsBySubjectId(long subjectId) throws SQLException {
+	@Override
+	public List<Group> getGroupsBySubjectId(long subjectId) {
 		String request = "SELECT g FROM Group g " +
 				"JOIN g.subjects s " +
 				"WHERE s.id = :id " +
@@ -56,18 +41,20 @@ public class HGroupDao extends AbstractDao<Group> {
 		Session session = getCurrentSession();
 		Query<Group> query = session.createQuery(request);
 		query.setParameter("id", subjectId);
-		return query.list();
+		return query.getResultList();
 	}
 
-	public List<Group> getGroupsByCourse(int course) throws SQLException {
+	@Override
+	public List<Group> getGroupsByCourse(int course) {
 		String request = "SELECT g FROM Group g " +
 				"WHERE g.name LIKE '" + course + "%' " +
 				"ORDER BY g.name";
 		Session session = getCurrentSession();
 		Query<Group> query = session.createQuery(request);
-		return query.list();
+		return query.getResultList();
 	}
 
+	@Override
 	public Group getGroupByName(String groupName) {
 		String request = "SELECT g FROM Group g " +
 				"WHERE g.name = :name";

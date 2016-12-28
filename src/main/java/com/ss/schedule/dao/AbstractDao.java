@@ -2,65 +2,31 @@ package com.ss.schedule.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-
-import java.sql.SQLException;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by vyach on 29.11.2016.
  */
-public abstract class AbstractDao<E> {
 
-	private final String propertiesFilePath;
-	private Session currentSession;
-	private Transaction currentTransaction;
-	private static SessionFactory sessionFactory;
+public abstract class AbstractDao<E> implements BaseDao<E> {
 
-	public AbstractDao(String propertiesFilePath) throws SQLException {
-		this.propertiesFilePath = propertiesFilePath;
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	@Override
+	public void add(E entity) {
+		getCurrentSession().save(entity);
 	}
 
-	public abstract void add(E entity) throws SQLException;
-
-	public abstract void update(E entity) throws SQLException;
-
-	public abstract void delete(E entity) throws SQLException;
-
-	public abstract E getById(long id) throws SQLException;
-
-	public abstract List<E> getAll() throws SQLException;
-
-	public Session openCurrentSession() {
-		currentSession = getSessionFactory().openSession();
-		return currentSession;
+	public void update(E entity) {
+		getCurrentSession().update(entity);
 	}
 
-	public Session openCurrentSessionWithTransaction() {
-		currentSession = getSessionFactory().openSession();
-		currentTransaction = currentSession.beginTransaction();
-		return currentSession;
+	public void delete(E entity) {
+		getCurrentSession().delete(entity);
 	}
 
-	private SessionFactory getSessionFactory() {
-		if (sessionFactory == null) {
-			Configuration configuration = new Configuration().configure(propertiesFilePath);
-			sessionFactory = configuration.buildSessionFactory();
-		}
-		return sessionFactory;
-	}
-
-	public void closeCurrentSession() {
-		currentSession.close();
-	}
-
-	public void closeCurrentSessionAndCommitTransaction() {
-		currentTransaction.commit();
-		currentSession.close();
-	}
-
-	public Session getCurrentSession() {
-		return currentSession;
+	protected Session getCurrentSession() {
+		return sessionFactory.getCurrentSession();
 	}
 }

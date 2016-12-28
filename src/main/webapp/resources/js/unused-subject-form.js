@@ -4,7 +4,7 @@
 
 "use strict";
 
-function hasCheckedEvenOneGroup() {
+function hasCheckedEvenOneGroupSelected() {
     var groups = document.getElementsByName("group_id");
     for (var i = 0; i < groups.length; i++) {
         if (groups[i].checked) {

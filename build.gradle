@@ -56,6 +56,10 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-core', version: vers.mockito
 }
 
+configurations.all {
+    exclude group: "commons-logging", module: "commons-logging"
+}
+
 war {
     archiveName = 'schedule.war'
 }

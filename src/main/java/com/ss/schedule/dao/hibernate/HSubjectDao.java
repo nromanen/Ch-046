@@ -5,36 +5,19 @@ import com.ss.schedule.model.Subject;
 import com.ss.schedule.model.SubjectType;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Created by vyach on 28.11.2016.
  */
-public class HSubjectDao extends AbstractDao<Subject> {
 
-	public HSubjectDao(String propertiesFilePath) throws SQLException {
-		super(propertiesFilePath);
-	}
+@Repository("subjectDao")
+public class HSubjectDao extends AbstractDao<Subject> implements SubjectDao<Subject> {
 
 	@Override
-	public void add(Subject subject) throws SQLException {
-		getCurrentSession().save(subject);
-	}
-
-	@Override
-	public void update(Subject subject) throws SQLException {
-		getCurrentSession().update(subject);
-	}
-
-	@Override
-	public void delete(Subject subject) throws SQLException {
-		getCurrentSession().delete(subject);
-	}
-
-	@Override
-	public Subject getById(long id) throws SQLException {
+	public Subject getById(long id) {
 		String request = "SELECT s FROM Subject s " +
 				"WHERE s.id = :id";
 		Session session = getCurrentSession();
@@ -44,15 +27,16 @@ public class HSubjectDao extends AbstractDao<Subject> {
 	}
 
 	@Override
-	public List<Subject> getAll() throws SQLException {
+	public List<Subject> getAll() {
 		String request = "SELECT s FROM Subject s " +
 				"ORDER BY s.course ASC, s.name ASC";
 		Session session = getCurrentSession();
 		Query<Subject> query = session.createQuery(request);
-		return query.list();
+		return query.getResultList();
 	}
 
-	public List<Subject> getSubjectsByGroupId(long groupId) throws SQLException {
+	@Override
+	public List<Subject> getSubjectsByGroupId(long groupId) {
 		String request = "SELECT s FROM Group g " +
 				"JOIN g.subjects s " +
 				"WHERE g.id = :id " +
@@ -60,20 +44,22 @@ public class HSubjectDao extends AbstractDao<Subject> {
 		Session session = getCurrentSession();
 		Query<Subject> query = session.createQuery(request);
 		query.setParameter("id", groupId);
-		return query.list();
+		return query.getResultList();
 	}
 
-	public List<Subject> getSubjectsByCourse(int course) throws SQLException {
+	@Override
+	public List<Subject> getSubjectsByCourse(int course) {
 		String request = "SELECT s FROM Subject s " +
 				"WHERE s.course = :course " +
 				"ORDER BY s.name";
 		Session session = getCurrentSession();
 		Query<Subject> query = session.createQuery(request);
 		query.setParameter("course", course);
-		return query.list();
+		return query.getResultList();
 	}
 
-	public Subject getSubject(String name, SubjectType type, int course) throws SQLException {
+	@Override
+	public Subject getSubject(String name, SubjectType type, int course) {
 		String request = "SELECT s FROM Subject s " +
 				"WHERE lower(s.name) = :name AND s.type = :type AND s.course = :course";
 		Session session = getCurrentSession();
@@ -84,13 +70,14 @@ public class HSubjectDao extends AbstractDao<Subject> {
 		return query.uniqueResult();
 	}
 
-	public List<Subject> getUnusedSubjects() throws SQLException {
+	@Override
+	public List<Subject> getUnusedSubjects() {
 		String request = "SELECT s FROM Group g " +
 				"RIGHT JOIN g.subjects s " +
 				"WHERE g IS NULL " +
 				"ORDER BY s.course, s.name";
 		Session session = getCurrentSession();
-		Query query = session.createQuery(request);
-		return query.list();
+		Query<Subject> query = session.createQuery(request);
+		return query.getResultList();
 	}
 }
