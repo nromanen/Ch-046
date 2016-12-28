@@ -1,15 +1,11 @@
-package main.java.ua.cv.travian.entity;
-
-import java.util.Date;
-import java.util.UUID;
+package ua.cv.tim.model;
 
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.Transient;
-
-import org.apache.commons.lang3.builder.EqualsBuilder;
+import java.util.Date;
+import java.util.UUID;
 
 @MappedSuperclass
 public abstract class UuidEntity {
@@ -20,7 +16,7 @@ public abstract class UuidEntity {
 	private Date lastModified;
 	
 	@PrePersist
-	protected void prePersit() {
+	protected void prePersist() {
 		uuid = UUID.randomUUID().toString();
 		lastModified = new Date();
 	}
@@ -65,7 +61,7 @@ public abstract class UuidEntity {
 		}
 		final UuidEntity otherObject = (UuidEntity) obj;
 
-		return new EqualsBuilder().append(this.uuid, otherObject.uuid).isEquals();
+		return this.uuid.equals(otherObject.uuid);
 	}
 
 }

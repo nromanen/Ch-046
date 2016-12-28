@@ -1,15 +1,15 @@
-package main.java.ua.cv.travian.entity;
+package ua.cv.tim.model;
 
 public enum Specialty {
 
-	Defense("def"), //
-	Offense("off"), //
-	Machinery("mech"),//
+	Defense("def"),
+	Offense("off"),
+	Machinery("mech"),
 	Scouting("scout");
 
 	private String name;
 
-	private Specialty(String name) {
+	Specialty(String name) {
 		this.name = name;
 	}
 
