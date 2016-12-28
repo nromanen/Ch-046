@@ -1,0 +1,91 @@
+button {
+	style="width: 110px ; 
+	height:24px;
+	 text-align: center;
+	 border-radius: 10px 10px 10px 10px; 
+}
+#addbutt {
+	font:bold 100% 'century gothic', arial, sans-serif;
+	background-color: #e8edf4;
+	height:34px;
+	width: 100px ; 
+}
+
+.button1 {
+	font: 100% 'century gothic', arial, sans-serif;
+	color:#646477;
+	width: 130px ; 
+	padding-top:2px;
+	height:24px;
+	 text-align: center;
+	 border-radius: 10px 10px 10px 10px;
+}
+body {
+	font:normal 100% 'century gothic', arial, sans-serif;
+}
+table, th, td {
+	
+    border: 0px solid blue;
+}
+h1 {
+	font:'century gothic',arial;
+}
+.table2, .table2 th, .table2 td {
+	text-align:center;
+	width:30%;
+	 border: 1px solid #26495B;
+	
+}
+.teacherError h1 {
+	text-align:center;
+	
+	font:normal 350% 'century gothic', arial, sans-serif;
+}
+.teacherError, .teacherError p {
+	padding-left:200px;
+	padding-right:200px;
+	text-align:center;
+	font:normal 200% 'century gothic', arial, sans-serif;
+	color:#D6628B;
+	text-align:center;
+}
+.teachAdd h1 {
+	font:normal 200% 'century gothic', arial, sans-serif;
+}
+.teacherAddTable {
+	width:50%;
+}
+
+.teach {
+	
+	margin-left:100px;
+	}
+#subjectView, #subjectView th, #subjectView td {
+	text-align:center;
+	width:30%;
+	border: 1px solid #26495B;
+}
+.mainView {
+	text-align: center;
+	width:50%;
+	margin-left:200px;
+}
+#thaction {
+	padding-left:150px;
+}
+.teacheraddError {
+	text-align: left;
+	color:#f76c8a;
+}
+
+#firstName_error {
+	font: 'century gothic', arial, sans-serif;	
+	color: #f78ab2;
+	
+}
+#lastName_error{
+	font: 'century gothic', arial, sans-serif;	
+	color: #f78ab2;
+}
+
+
