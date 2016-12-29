@@ -10,4 +10,6 @@ public interface CrudDao<E> {
 	void update(E entity);
 
 	void delete(E entity);
+
+
 }

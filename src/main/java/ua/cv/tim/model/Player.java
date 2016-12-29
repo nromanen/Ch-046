@@ -1,19 +1,18 @@
 package ua.cv.tim.model;
 
 import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class Player {
+public class Player implements Serializable {
 
 	@Id
-	@GeneratedValue(generator = "increment")
-	@GenericGenerator(name = "increment", strategy = "increment")
-	private Long id;
+	@JoinColumn(name = "user_uuid")
+	@OneToOne(targetEntity = User.class)
+	private String userUuid;
 
 	@Enumerated(EnumType.STRING)
 	private Race race;
@@ -21,15 +20,15 @@ public class Player {
 	@Formula(value = "(select count(v.uuid) from village v where v.player_uuid=uuid)")
 	private Integer villagesCount;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "player")
-	private List<Village> villages = new ArrayList<>();
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<Village> villages;
 
-	public Long getId() {
-		return id;
+	public String getUserUuid() {
+		return userUuid;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setUserUuid(String userUuid) {
+		this.userUuid = userUuid;
 	}
 
 	public Race getRace() {
