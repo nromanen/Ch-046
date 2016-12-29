@@ -23,6 +23,10 @@ public class Player implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Village> villages;
 
+	@ManyToOne
+	@JoinColumn(name = "alliance_id")
+	private Alliance alliance;
+
 	public String getUserUuid() {
 		return userUuid;
 	}
@@ -53,5 +57,13 @@ public class Player implements Serializable {
 
 	public void setVillagesCount(Integer villagesCount) {
 		this.villagesCount = villagesCount;
+	}
+
+	public Alliance getAlliance() {
+		return alliance;
+	}
+
+	public void setAlliance(Alliance alliance) {
+		this.alliance = alliance;
 	}
 }
