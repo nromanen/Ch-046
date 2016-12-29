@@ -6,6 +6,8 @@ import java.util.List;
 /**
  * Created by vyach on 28.12.2016.
  */
+
+@Entity
 public class User extends UuidEntity {
 
 	@Column(nullable = false, unique = true)

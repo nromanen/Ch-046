@@ -41,7 +41,7 @@ public enum UnitType {
 			Specialty... specialties) {
 		this.race = race;
 		this.name = name;
-		this.atack = atack;
+		this.attack = atack;
 		this.infantryDef = infantryDef;
 		this.cavalryDef = cavalryDef;
 		this.upkeep = upkeep;
@@ -53,7 +53,7 @@ public enum UnitType {
 
 	private String name;
 
-	private Integer atack;
+	private Integer attack;
 
 	private Integer infantryDef;
 
@@ -73,8 +73,8 @@ public enum UnitType {
 		return name;
 	}
 
-	public Integer getAtack() {
-		return atack;
+	public Integer getAttack() {
+		return attack;
 	}
 
 	public Integer getInfantryDef() {
