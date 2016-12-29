@@ -1,16 +1,8 @@
-package main.java.ua.cv.travian.entity;
+package ua.cv.tim.model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "Village", uniqueConstraints = @UniqueConstraint(columnNames = { "xCoord", "yCoord" }))
@@ -26,7 +18,7 @@ public class Village extends UuidEntity implements Comparable<Village> {
 	private Byte wall = 0;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owningVillage")
-	private List<Army> armies = new ArrayList<Army>();
+	private List<Army> armies = new ArrayList<>();
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "armyRequestVillage")
 	private List<Army> armyRequests;
