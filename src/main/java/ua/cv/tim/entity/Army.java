@@ -1,6 +1,13 @@
-package ua.cv.tim.model;
+package main.java.ua.cv.travian.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+import main.java.ua.cv.travian.entity.Village;
 
 @Entity
 public class Army extends UuidEntity implements Comparable<Army> {

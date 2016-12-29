@@ -1,4 +1,5 @@
-package ua.cv.tim.model;
+package main.java.ua.cv.travian.entity;
+
 
 public enum Race {
 	
