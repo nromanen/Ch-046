@@ -22,7 +22,7 @@ import com.ss.validation.TeacherValid;
 @WebServlet("/TeacherInfo")
 public class TeacherInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	 
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -67,32 +67,31 @@ public class TeacherInfo extends HttpServlet {
 		Teacher teacher = new Teacher();
 		TeacherDao td = new TeacherDao();
 		TeacherValid tv = new TeacherValid();
-		
-		if(tv.isNameEmpty(request.getParameter("firstname"))==false || tv.isNameEmpty(request.getParameter("lastname"))==false){
-			error=tv.getError();
+
+		if (tv.isNameEmpty(request.getParameter("firstname")) == false
+				|| tv.isNameEmpty(request.getParameter("lastname")) == false) {
+			error = tv.getError();
 			request.setAttribute("error", error);
 			request.getRequestDispatcher("/WEB-INF/view/TeacherError.jsp").forward(request, response);
-		 }
-		else if (tv.nameMatches(request.getParameter("firstname"),tv.getNamePattern())==false || tv.nameMatches(request.getParameter("lastname"), tv.getNamePattern())==false)
-		{
-			error="not correct data, name and lastname should start from uppercase letter and be no longer than 34 symbols";
-			request.setAttribute("error", error);
-			request.getRequestDispatcher("/WEB-INF/view/TeacherError.jsp").forward(request, response);
-		}
-	//	System.out.println(request.getParameter("lastname")+request.getParameter("firstname"));
-		else if (td.isExist(request.getParameter("lastname"),request.getParameter("firstname"))){
-			error="teacher with same firstname and lastname already exist";
+		} else if (tv.nameMatches(request.getParameter("firstname"), tv.getNamePattern()) == false
+				|| tv.nameMatches(request.getParameter("lastname"), tv.getNamePattern()) == false) {
+			error = "not correct data, name and lastname should start from uppercase letter and be no longer than 34 symbols";
 			request.setAttribute("error", error);
 			request.getRequestDispatcher("/WEB-INF/view/TeacherError.jsp").forward(request, response);
 		}
-		else {
+		// System.out.println(request.getParameter("lastname")+request.getParameter("firstname"));
+		else if (td.isExist(request.getParameter("lastname"), request.getParameter("firstname"))) {
+			error = "teacher with same firstname and lastname already exist";
+			request.setAttribute("error", error);
+			request.getRequestDispatcher("/WEB-INF/view/TeacherError.jsp").forward(request, response);
+		} else {
 			td.update(Integer.parseInt(request.getParameter("teacherId")), request.getParameter("firstname"),
-					request.getParameter("lastname")); 
-		 List<Teacher> list = TeacherDao.getAll();
+					request.getParameter("lastname"));
+			List<Teacher> list = TeacherDao.getAll();
 			request.setAttribute("teachers", list);
 			request.getRequestDispatcher("/WEB-INF/view/test.jsp").forward(request, response);
 		}
-	
+
 	}
 
 }

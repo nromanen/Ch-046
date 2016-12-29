@@ -18,31 +18,35 @@ import com.ss.teacher.Teacher;
 @WebServlet("/DeleteTeacher")
 public class DeleteTeacher extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public DeleteTeacher() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		TeacherDao td = new TeacherDao();
-		td.delete(Integer.parseInt(request.getParameter("teacher")));
-		List<Teacher> list = TeacherDao.getAll();
-        request.setAttribute("teachers",list);
-        request.getRequestDispatcher("/WEB-INF/view/test.jsp").forward(request, response);
+	public DeleteTeacher() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		TeacherDao td = new TeacherDao();
+		td.delete(Integer.parseInt(request.getParameter("teacher")));
+		List<Teacher> list = TeacherDao.getAll();
+		request.setAttribute("teachers", list);
+		request.getRequestDispatcher("/WEB-INF/view/test.jsp").forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 	}
 
 }

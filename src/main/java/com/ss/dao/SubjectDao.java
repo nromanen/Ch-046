@@ -1,6 +1,5 @@
 package com.ss.dao;
 
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,10 +9,8 @@ import java.util.List;
 import com.ss.teacher.Subject;
 import com.ss.teacher.SubjectType;
 
-
-
 public class SubjectDao extends AbstractDao<Subject> {
-	
+
 	public void createTable() {
 
 		try {
@@ -30,14 +27,15 @@ public class SubjectDao extends AbstractDao<Subject> {
 	public void SubjectsToDB(List<Subject> list) throws SQLException {
 
 		for (Subject subject : list) {
-			PreparedStatement s = DBConnector.getConnection().prepareStatement("INSERT INTO subjects (name, type, course) VALUES(?,?,?)");
+			PreparedStatement s = DBConnector.getConnection()
+					.prepareStatement("INSERT INTO subjects (name, type, course) VALUES(?,?,?)");
 			s.setString(1, subject.getName());
 			s.setString(2, subject.getType().toString());
 			s.setInt(3, subject.getCourse());
 			s.executeUpdate();
 		}
 	}
-	
+
 	@Override
 	public List<Subject> getAll() {
 		List<Subject> subjectsList = new ArrayList<>();
@@ -45,7 +43,8 @@ public class SubjectDao extends AbstractDao<Subject> {
 			PreparedStatement ps = DBConnector.getConnection().prepareStatement("SELECT * FROM subjects order by name");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Subject subject = new Subject(rs.getString("name"), SubjectType.valueOf(rs.getString("type")), rs.getInt("course"));
+				Subject subject = new Subject(rs.getString("name"), SubjectType.valueOf(rs.getString("type")),
+						rs.getInt("course"));
 				subject.setId(rs.getInt("id"));
 				subjectsList.add(subject);
 			}
@@ -75,7 +74,8 @@ public class SubjectDao extends AbstractDao<Subject> {
 	public Subject update(Subject subject) {
 		PreparedStatement ps;
 		try {
-			ps = DBConnector.getConnection().prepareStatement("UPDATE teachers set firstname=?,lastname=?,course=? where id=?");
+			ps = DBConnector.getConnection()
+					.prepareStatement("UPDATE teachers set firstname=?,lastname=?,course=? where id=?");
 			ps.setString(1, subject.getName());
 			ps.setString(2, subject.getType().toString());
 			ps.setInt(3, subject.getCourse());
@@ -105,7 +105,8 @@ public class SubjectDao extends AbstractDao<Subject> {
 	@Override
 	public boolean add(Subject subject) {
 		try {
-			PreparedStatement ps = DBConnector.getConnection().prepareStatement("INSERT INTO subjects (name,type,course) VALUES (?,?,?)");
+			PreparedStatement ps = DBConnector.getConnection()
+					.prepareStatement("INSERT INTO subjects (name,type,course) VALUES (?,?,?)");
 			ps.setString(1, subject.getName());
 			ps.setString(2, subject.getType().toString());
 			ps.setInt(3, subject.getCourse());

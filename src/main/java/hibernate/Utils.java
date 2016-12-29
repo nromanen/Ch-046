@@ -12,7 +12,7 @@ public class Utils {
 			Configuration configuration = new Configuration().configure();
 			sessionFactory = configuration.buildSessionFactory();
 		}
-		
+
 		Session session = sessionFactory.openSession();
 		return session;
 	}

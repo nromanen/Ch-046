@@ -56,16 +56,17 @@ public class TeacherDao {
 			ps.setString(1, lastname);
 			ps.setString(2, firstname);
 			ResultSet rs = ps.executeQuery();
-			
+
 			while (rs.next()) {
 				count = rs.getInt("c");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		if(count>0){
+		if (count > 0) {
 			return true;
-		} else return false;
+		} else
+			return false;
 
 	}
 

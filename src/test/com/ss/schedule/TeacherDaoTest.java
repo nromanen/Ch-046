@@ -17,16 +17,17 @@ public class TeacherDaoTest {
 	List<Teacher> teacherList;
 	TeacherDao td = new TeacherDao();
 	Teacher teacher0 = new Teacher("Ivan", "Ivanov", 100);
-	Teacher teacher1 = new Teacher("Ivan", "Ivanov",101);
-	Teacher teacher2 = new Teacher("Ivan", "Ivanova",102);
-	Teacher teacher3 = new Teacher("Ivan", "Ivanovo",103);
+	Teacher teacher1 = new Teacher("Ivan", "Ivanov", 101);
+	Teacher teacher2 = new Teacher("Ivan", "Ivanova", 102);
+	Teacher teacher3 = new Teacher("Ivan", "Ivanovo", 103);
 
 	@BeforeTest
 	public void setUp() {
 		try {
-			PreparedStatement ps = DBConnector.getConnection().prepareStatement("INSERT INTO teachers (firstname,lastname) VALUES (Ivan, Ivanov)");
+			PreparedStatement ps = DBConnector.getConnection()
+					.prepareStatement("INSERT INTO teachers (firstname,lastname) VALUES (Ivan, Ivanov)");
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
 		td.add(teacher1);
@@ -46,12 +47,12 @@ public class TeacherDaoTest {
 		td.add(teacher0);
 		Assert.assertEquals(teacherList.size(), 10);
 	}
-	
+
 	@Test
-	public void getByIdTest() {		
+	public void getByIdTest() {
 		Assert.assertEquals(td.getById(100), teacher0);
 	}
-	
+
 	@Test
 	public void updateTest() {
 		td.update(100, "Ivan", "Lewandowski");
@@ -63,9 +64,7 @@ public class TeacherDaoTest {
 		td.delete(100);
 		Assert.assertEquals(teacherList.size(), 9);
 	}
-	
 
-	
 	@AfterMethod
 	public void afterTest() {
 		td.delete(teacher1.getId());

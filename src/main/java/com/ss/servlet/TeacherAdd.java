@@ -81,7 +81,7 @@ public class TeacherAdd extends HttpServlet {
 			request.setAttribute("error", errorFirstName);
 			request.setAttribute("error2", errorLastName);
 			request.getRequestDispatcher("/WEB-INF/view/AddTeacher.jsp").forward(request, response);
-			
+
 		} else if (td.isExist(request.getParameter("lastname"), request.getParameter("firstname"))) {
 			error = "teacher with same firstname and lastname already exist";
 			request.setAttribute("error", error);
