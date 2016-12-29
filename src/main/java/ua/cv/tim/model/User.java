@@ -6,6 +6,9 @@ import java.util.List;
 /**
  * Created by vyach on 28.12.2016.
  */
+
+@Entity
+@Table(name = "users")
 public class User extends UuidEntity {
 
 	@Column(nullable = false, unique = true)
@@ -17,7 +20,9 @@ public class User extends UuidEntity {
 	@Column(nullable = false, unique = true)
 	private String email;
 
+	@Column
 	@Enumerated(EnumType.STRING)
+	@ElementCollection(targetClass = Role.class)
 	private List<Role> roles;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -12,5 +12,6 @@ logs/*
 
 .classpath
 .project
+.settings
 
 .gradletasknamecash
