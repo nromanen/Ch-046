@@ -5,12 +5,11 @@ bin/*
 out/*
 **/io/*
 logs/*
-
 *.iml
 *.ipr
 *.iws
-
 .classpath
 .project
-
+.settings
 .gradletasknamecash
+/bin/
