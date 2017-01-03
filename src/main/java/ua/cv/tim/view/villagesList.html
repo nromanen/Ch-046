@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+	<title></title>
    <!--Import Google Icon Font-->
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
      
@@ -26,17 +26,18 @@ populateLeader();
 
 
      <link rel="stylesheet" href="style.css" type="text/css">
+
 </head>
 <body>
-  <nav>
+<nav>
     <div class="nav-wrapper">
       <a href="#!" class="brand-logo">Logo</a>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="addAlliance.html">Add alliance</a></li>
-        <li><a href="addUsers.html">Add users</a></li>
-        <li><a href="allUsers.html">All users</a></li>
-        <li><a href="allAlliances.html">All alliances</a></li>
+        <li><a href="addVillage.html">Add village</a></li>
+        <li><a href="villagesList.html">All villages</a></li>
+        <!-- <li><a href="allUsers.html">All users</a></li>
+        <li><a href="allAlliances.html">All alliances</a></li> -->
       </ul>
       <ul class="side-nav" id="mobile-demo">
         <li><a href="sass.html">Show users</a></li>
@@ -46,31 +47,54 @@ populateLeader();
       </ul>
     </div>
   </nav>
-<form>
-  <div class="row container">
-  </div>  
-  <div class="row container">
-    <div class="input-field col s6 offset-s3">
-          <input  id="name" type="text" class="validate">
-          <label for="name">Alliance</label>
-        </div>
 
-        <div class="input-field col s6 offset-s3">
-          <input id="leader_login" type="text" class="validate">
-          <label for="leader_login">Leader's login</label>
-        </div>
+  <table class="bordered">
+  	<thead>
+  		<tr>
+  			<!-- <th>Players</th> -->
+  			<th>Village</th>
+  			<th>Population</th>
+  			<th>X</th>
+  			<th>Y</th>
+  			<th>Capital?</th>
+  			<th>Wall level</th>
+  			<th>Armies</th>
+  			<th>Quantity</th>
+  		</tr>
+  	</thead>
+  	<tr>
+  	<td rowspan="2">Village1</td>
+  	<td rowspan="2">30</td>
+  	<td rowspan="2">35</td>
+  	<td rowspan="2">70</td>
+  	<td rowspan="2">true</td>
+  	<td rowspan="2">50</td>
+  	<td>type1</td>
+  	<td>63</td>
+  	</tr>
 
-        <div class="input-field col s6 offset-s3">
-          <input id="leader_mail" type="text" class="validate">
-          <label for="leader_mail">Leader's e-mail</label>
-        </div>
-         <div class="input-field col s6 offset-s3">
-<button class="btn waves-effect waves-light col offset-s5 " type="submit" name="action">Add
-    <i class="material-icons right">send</i>
-  </button>
-</div>
-  </div>
-  </form>
+  	<tr>
+  	<td>type2</td>
+  	<td>23</td>
+  	</tr>
+
+  	
+  	<tr>
+  	<td rowspan="2">Village1</td>
+  	<td rowspan="2">30</td>
+  	<td rowspan="2">35</td>
+  	<td rowspan="2">70</td>
+  	<td rowspan="2">true</td>
+  	<td rowspan="2">50</td>
+  	<td>type1</td>
+  	<td>63</td>
+  	</tr>
+
+  	<tr>
+  	<td>type2</td>
+  	<td>23</td>
+  	</tr>
+  </table>
 
 </body>
 </html>
