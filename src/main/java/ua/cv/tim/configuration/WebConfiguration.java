@@ -32,5 +32,10 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 		return viewResolver;
 	}
 
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
+	}
+
 
 }
