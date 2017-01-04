@@ -20,9 +20,9 @@ public class User extends UuidEntity {
 	@Column(nullable = false, unique = true)
 	private String email;
 
-	@Column
+	@Column(name = "role")
 	@Enumerated(EnumType.STRING)
-	@ElementCollection(targetClass = Role.class)
+	@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
 	private List<Role> roles;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

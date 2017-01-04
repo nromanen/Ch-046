@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="LOGS_PATH" value="d:\\sigmund69\\GoogleDrive\\Programming\\soft_serve\\travian" scope="context"/>
+    <timestamp key="date" datePattern="dd.MM.yyyy"/>
+
+    <appender name="GEN_STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+            </Pattern>
+
+        </layout>
+    </appender>
+
+    <appender name="GEN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_PATH}\logs\logs.${date}.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>${LOGS_PATH}\logs\%i{}logs.${date}.log</FileNamePattern>
+            <MinIndex>1</MinIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>5MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="GEN_STDOUT" />
+        <appender-ref ref="GEN_FILE" />
+    </root>
+
+</configuration>
