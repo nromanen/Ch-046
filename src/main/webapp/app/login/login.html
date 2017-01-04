@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel">
+                <div class="panel-body">
+                    <span class="label label-danger" *ngIf="error">{{error}}</span>
+                    <form class="form" [formGroup]="loginForm" (ngSubmit)="authenticate($event)">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" required formControlName="username"
+                                   name="username" id="username" placeholder="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" required formControlName="password"
+                                   name="password" id="password" placeholder="password">
+                        </div>
+                        <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

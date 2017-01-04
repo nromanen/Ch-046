@@ -28,6 +28,10 @@ public class User extends UuidEntity {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Player player;
 
+	public User() {
+		prePersist();
+	}
+
 	public String getLogin() {
 		return login;
 	}
@@ -68,5 +72,12 @@ public class User extends UuidEntity {
 		this.player = player;
 	}
 
-
+	@Override
+	public String toString() {
+		return "User{" +
+				"login='" + login + '\'' +
+				", password='" + password + '\'' +
+				", email='" + email + '\'' +
+				'}';
+	}
 }

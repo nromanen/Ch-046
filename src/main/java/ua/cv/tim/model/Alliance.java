@@ -20,10 +20,13 @@ public class Alliance {
     @Column(nullable = false, unique = true)
     private String name;
 
-    private Player leader;
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "alliance")
     private List<Player> players;
+
+
+    @JoinColumn(name = "leader")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private User leader;
 
     public Alliance() {
 
@@ -45,19 +48,28 @@ public class Alliance {
         this.name = name;
     }
 
-    public Player getLeader() {
-        return leader;
-    }
-
-    public void setLeader(Player leader) {
-        this.leader = leader;
-    }
-
     public List<Player> getPlayers() {
         return players;
     }
 
     public void setPlayers(List<Player> players) {
         this.players = players;
+    }
+
+    public User getLeader() {
+        return leader;
+    }
+
+    public void setLeader(User leader) {
+        this.leader = leader;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Alliance{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
