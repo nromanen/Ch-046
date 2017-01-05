@@ -15,3 +15,5 @@ logs/*
 .settings
 
 .gradletasknamecash
+/build/
+/bin/

@@ -3,6 +3,7 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'eclipse'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -30,18 +31,19 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-core', version: vers.hibernate
     compile group: 'postgresql', name: 'postgresql', version: vers.postgresql
 
-    compile group: 'org.springframework', name: 'spring-core', version: vers.spring
+     compile group: 'org.springframework', name: 'spring-core', version: vers.spring
     compile group: 'org.springframework', name: 'spring-web', version: vers.spring
     compile group: 'org.springframework', name: 'spring-webmvc', version: vers.spring
     compile group: 'org.springframework', name: 'spring-tx', version: vers.spring
     compile group: 'org.springframework', name: 'spring-orm', version: vers.spring
-
+    
     compile group: 'org.springframework.security', name: 'spring-security-web', version: vers.spring_security
     compile group: 'org.springframework.security', name: 'spring-security-config', version: vers.spring_security
     compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: vers.spring_security
 
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: vers.servlet
     compile group: 'javax.servlet', name: 'jstl', version: vers.jstl
+    compile group: 'javax.mail', name: 'mail', version: '1.4'
 
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: vers.jackson_core
 
