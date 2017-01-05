@@ -18,5 +18,7 @@
     <h1>Hello. It's a home page</h1><br>
     <spring:url value="/login" var="loginUrl"/>
     <a href="${loginUrl}">login</a>
+    <spring:url value="/logout" var="logoutUrl"/>
+    <a href="${logoutUrl}">logout</a>
 </body>
 </html>

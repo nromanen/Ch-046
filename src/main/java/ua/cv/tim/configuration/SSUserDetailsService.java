@@ -43,7 +43,7 @@ public class SSUserDetailsService implements UserDetailsService {
 	private Set<GrantedAuthority> getAuthorities(User user) {
 		Set<GrantedAuthority> authorities = new HashSet<>();
 		for (Role role : user.getRoles()) {
-			GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.toString());
+			GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_" + role.toString());
 			authorities.add(grantedAuthority);
 		}
 		return authorities;

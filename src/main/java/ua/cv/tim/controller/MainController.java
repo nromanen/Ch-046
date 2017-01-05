@@ -32,7 +32,7 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String showLoginPage() {
+	public String loginPage() {
 		if (isCurrentAuthenticationAnonymous()) {
 			return "login";
 		} else {
@@ -50,12 +50,21 @@ public class MainController {
 		return "logout";
 	}
 
+	@RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
+	public String handleAccessDenied() {
+		if (isCurrentAuthenticationAnonymous()) {
+			return "redirect:/login";
+		} else {
+			return "redirect:/";
+		}
+	}
+
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpServletRequest req, HttpServletResponse resp) {
+	public String logoutPage(HttpServletRequest req, HttpServletResponse resp) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(req, resp, auth);
 		}
-		return "redirect:/";
+		return "redirect:/login?logout";
 	}
 }

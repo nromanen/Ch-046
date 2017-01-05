@@ -30,9 +30,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/", "/login", "/some", "/logout").permitAll()
+				.antMatchers("/some").access("hasRole('USER')")
+				.antMatchers("/", "/login").permitAll()
 				.and()
 				.formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/login")
+				.and()
+				.exceptionHandling().accessDeniedPage("/Access_Denied")
 				.and()
 				.csrf().disable();
 	}
