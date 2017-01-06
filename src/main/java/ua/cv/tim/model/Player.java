@@ -12,7 +12,7 @@ public class Player implements Serializable {
 	@Id
 	@JoinColumn(name = "user_uuid")
 	@OneToOne(targetEntity = User.class)
-	private String userUuid;
+	private User user;
 
 	@Enumerated(EnumType.STRING)
 	private Race race;
@@ -27,12 +27,13 @@ public class Player implements Serializable {
 	@JoinColumn(name = "alliance_id")
 	private Alliance alliance;
 
-	public String getUserUuid() {
-		return userUuid;
+
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserUuid(String userUuid) {
-		this.userUuid = userUuid;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Race getRace() {

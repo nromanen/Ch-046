@@ -5,7 +5,7 @@ bin/*
 out/*
 **/io/*
 logs/*
-src/main/resources/node_modules/*
+src/main/webapp/node_modules/*
 
 *.iml
 *.ipr

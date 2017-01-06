@@ -1,22 +1,16 @@
-import {Component} from '@angular/core';
-import {LoginService} from './login/login.service';
-import {Router} from '@angular/router';
+import {Component} from 'angular2/core';
+import {TodoListComponent} from './todo-list/todo-list.component'
+import {AllianceComponent} from "./alliance/alliance.component";
 
 @Component({
-    selector: 'hmac-app',
-    templateUrl:'./app/app.html',
-    providers: [LoginService]
+    selector: 'my-app',
+    template: `
+        <!--<my-todo-list></my-todo-list> -->
+        <my-alliance></my-alliance>
+    `,
+    directives: [AllianceComponent]
 })
+
 export class AppComponent {
-    constructor(router:Router,loginService:LoginService) {
-        router.events.subscribe(e => {
-            if(e.url !== '/authenticate') {
-                if(!loginService.isAuthenticated()) {
-                    router.navigate(['/authenticate']);
-                } else {
-                    loginService.sendLoginSuccess();
-                }
-            }
-        });
-    }
+
 }

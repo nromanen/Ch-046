@@ -28,6 +28,7 @@ public class User extends UuidEntity {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Player player;
 
+
 	public User() {
 		prePersist();
 	}

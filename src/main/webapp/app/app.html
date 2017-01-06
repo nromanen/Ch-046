@@ -1,4 +1,6 @@
-<div class="container">
-    <header></header>
-    <router-outlet></router-outlet>
-</div>
+<h1>app.html</h1>
+<h1>{{title}}</h1>
+<input placeholder="What needs to be done?" autofocus="">
+<ul>
+    <li *ngFor="#task of tasks"><input type="checkbox" [checked]="task.completed">{{ task.title }}</li>
+</ul>

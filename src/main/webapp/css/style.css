@@ -1,0 +1,147 @@
+body{
+    width: 700px;
+    margin: auto;
+    background-color: white;
+    padding: 0px;
+    font-family: "Roboto", Arial, sans-serif;
+    font-size: 16px;
+
+}
+
+.todo{
+    margin: 32px auto;
+    padding: 25px;
+    background-color: #eee;
+    border: 2px solid #000000;
+    border-right: 10px;
+}
+
+h1{
+    text-align: center;
+}
+
+#task-title {
+    margin: 10px auto;
+    width: 650px;
+    height: 40px;
+    border-radius: 3px;
+    font-size: 16px;
+
+}
+
+#task-title-edit {
+    margin: 0 auto;
+    width: 630px;
+    height: 40px;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+.list {
+    border: 1px solid #ccc;
+    background-color: #eee;
+    margin: 0 -5px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+li {
+
+    box-shadow: 1px 2px 1px #aaa;
+    background-color: white;
+    padding: 5px;
+    margin: 5px 0;
+    height: 50px;
+    cursor: pointer;
+    vertical-align: middle;
+  }
+
+text {
+      display: inline-block;
+      vertical-align: middle;
+      font-weight: bold;
+      font-size: 1.25em;
+    }
+
+
+  li:hover {
+      background-color: #f5f5f5;
+      cursor: default;
+  }
+
+.completed{
+    color: green;
+    text-decoration: line-through;
+}
+
+.delete {
+	display: block;
+	text-align: right;
+    text-decoration: none;
+	margin: auto 0;
+	font-size: 18px;
+	color: #cc9a9a;
+	margin-bottom: 11px;
+	transition: color 0.2s ease-out;
+}
+
+.footer {
+    padding-top: 20px;
+    height: 20px;
+}
+
+.link {
+    position: relative;
+    float: left;
+    width: 160px;
+}
+
+.link-center {
+    position: relative;
+    float: left;
+    width: 320px;
+    text-align: center;;
+}
+
+.link-right {
+    position: relative;
+    float: left;
+    width: 160px;
+    text-align: right;
+}
+
+
+.footer a{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin:  2px 0px 2px 10px;
+    padding:  2px 10px;
+}
+
+.footer a:hover{
+    background-color: #ccc;
+    cursor: default;
+}
+
+.isActive{
+    background-color: #ccc;
+
+}
+
+.footer-info{
+    margin-top: 20px;
+    text-align: center;
+    font-size: 10px;
+    color:#ccc;
+}
+.footer-info a{
+     color: #ccc;
+     text-decoration: underline;
+}
+

@@ -10,12 +10,7 @@ import java.util.List;
  */
 
 @Entity
-public class Alliance {
-
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
+public class Alliance extends UuidEntity {
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -23,21 +18,8 @@ public class Alliance {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "alliance")
     private List<Player> players;
 
-
-    @JoinColumn(name = "leader")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private User leader;
-
     public Alliance() {
-
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+        prePersist();
     }
 
     public String getName() {
@@ -56,19 +38,10 @@ public class Alliance {
         this.players = players;
     }
 
-    public User getLeader() {
-        return leader;
-    }
-
-    public void setLeader(User leader) {
-        this.leader = leader;
-    }
-
-
     @Override
     public String toString() {
         return "Alliance{" +
-                "id=" + id +
+                "id=" + getUuid() +
                 ", name='" + name + '\'' +
                 '}';
     }
