@@ -1,4 +1,4 @@
-package ua.cv.tim.configuration;
+package ua.cv.tim.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
-import ua.cv.tim.service.UserService;
 
 import javax.persistence.NoResultException;
 import java.util.HashSet;

@@ -55,3 +55,7 @@ dependencies {
 configurations.all {
     exclude group: "commons-logging", module: "commons-logging"
 }
+
+war {
+    archiveName = 'travian.war'
+}

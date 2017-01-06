@@ -20,7 +20,7 @@ public class User extends UuidEntity {
 	@Column(nullable = false, unique = true)
 	private String email;
 
-	@Column(name = "role")
+	@Column(name = "roles")
 	@Enumerated(EnumType.STRING)
 	@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
 	private List<Role> roles;

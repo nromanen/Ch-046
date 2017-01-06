@@ -1,9 +1,13 @@
 package ua.cv.tim.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +16,8 @@ import ua.cv.tim.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by vyach on 03.01.2017.
@@ -20,23 +26,20 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class MainController {
 
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+
 	@Autowired
 	private UserService userService;
 
 	@Autowired
 	AuthenticationTrustResolver authenticationTrustResolver;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String showHomePage() {
-		return "index";
-	}
-
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
 	public String loginPage() {
 		if (isCurrentAuthenticationAnonymous()) {
 			return "login";
 		} else {
-			return "redirect:/some";
+			return getRedirectPath();
 		}
 	}
 
@@ -45,18 +48,27 @@ public class MainController {
 		return authenticationTrustResolver.isAnonymous(authentication);
 	}
 
-	@RequestMapping(value = "/some", method = RequestMethod.GET)
-	public String showSomePage() {
-		return "logout";
+	private String getRedirectPath() {
+		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Set<String> authorities = new HashSet<>();
+
+		for (GrantedAuthority authority : principal.getAuthorities()) {
+			authorities.add(authority.getAuthority());
+		}
+
+		if (authorities.contains("ROLE_ADMIN")) {
+			return "redirect:/admin";
+		} else if (authorities.contains("ROLE_LEADER")) {
+			return "redirect:/leader";
+		} else {
+			return "redirect:/user";
+		}
 	}
 
-	@RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
-	public String handleAccessDenied() {
-		if (isCurrentAuthenticationAnonymous()) {
-			return "redirect:/login";
-		} else {
-			return "redirect:/";
-		}
+	@RequestMapping(value = "/some", method = RequestMethod.GET)
+	public String showSomePage(Authentication auth) {
+		logger.info("Authentication name: {}", auth.getName());
+		return "logout";
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -65,6 +77,16 @@ public class MainController {
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(req, resp, auth);
 		}
+
 		return "redirect:/login?logout";
+	}
+
+	@RequestMapping(value = "/access_denied", method = RequestMethod.GET)
+	public String handleAccessDenied() {
+		if (isCurrentAuthenticationAnonymous()) {
+			return "redirect:/login";
+		} else {
+			return getRedirectPath();
+		}
 	}
 }

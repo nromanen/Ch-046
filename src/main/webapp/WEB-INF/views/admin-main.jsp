@@ -1,3 +1,8 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +16,7 @@
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.js"></script>
-    <script src="../js/my.js"></script>
+    <script src="/js/my.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $(".button-collapse").sideNav();
@@ -24,7 +29,7 @@
     </script>
 
 
-    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="/htmlViews/style.css" type="text/css">
 </head>
 <body>
 <nav>

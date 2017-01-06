@@ -16,6 +16,7 @@
 <body>
 <spring:url value="/login" var="loginUrl"/>
 <form action="${loginUrl}" method="post">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <c:if test="${param.error != null}">
         <div>
             <h1>Invalid username or password</h1>

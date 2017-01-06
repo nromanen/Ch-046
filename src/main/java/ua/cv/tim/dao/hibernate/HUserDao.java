@@ -18,6 +18,6 @@ public class HUserDao extends AbstractCrudDao<User> implements UserDao<User> {
 		String request = "select u from User u where u.login = :login";
 		Query<User> query = getCurrentSession().createQuery(request);
 		query.setParameter("login", username);
-		return query.getSingleResult(); // todo throw exception. how would be better: catch there and return null or catch in controller and do something if username does not exist
+		return query.getSingleResult();
 	}
 }
