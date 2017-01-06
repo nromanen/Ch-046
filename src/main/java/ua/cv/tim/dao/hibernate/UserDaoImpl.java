@@ -1,5 +1,7 @@
 package ua.cv.tim.dao.hibernate;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 //import org.hibernate.query.Query;
@@ -21,8 +23,22 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
         query.setParameter("id", uuid);
         User user = (User) query.uniqueResult();
         return user;
-     
-       
-        
+                    
     }
+
+	@Override
+	public List<User> getAll() {
+		Session session = getCurrentSession();
+        Query query = session.createQuery("FROM User ");
+        List<User> users = (List<User>) query.getResultList();
+		return users;
+	}
+	
+	   public User getByMail(String mail) {
+	        Session session = getCurrentSession();
+	        Query query = session.createQuery("FROM User WHERE email=:mail");
+	        query.setParameter("mail", mail);
+	        User user = (User) query.getSingleResult();
+	        return user;	                    
+	    }
 }

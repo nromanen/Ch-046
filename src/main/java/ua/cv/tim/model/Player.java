@@ -12,24 +12,34 @@ public class Player implements Serializable {
 	@Id
 	@JoinColumn(name = "user_uuid")
 	@OneToOne(targetEntity = User.class)
-	private String userUuid;
+	private User user;
 
+	public void setUser(User userUuid) {
+		this.user = userUuid;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "alliance_id")
+	private Alliance alliance;
+	
 	@Enumerated(EnumType.STRING)
 	private Race race;
 
-	@Formula(value = "(select count(v.uuid) from village v where v.player_uuid=uuid)")
+	
+	//Formula(value = "(select count(v.uuid) from village v where v.player_uuid=uuid)")
+	@Transient
 	private Integer villagesCount;
 
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Village> villages;
 
-	public String getUserUuid() {
-		return userUuid;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserUuid(String userUuid) {
+	/*public void setUserUuid(String userUuid) {
 		this.userUuid = userUuid;
-	}
+	}*/
 
 	public Race getRace() {
 		return race;
