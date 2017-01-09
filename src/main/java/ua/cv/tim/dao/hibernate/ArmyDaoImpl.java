@@ -1,6 +1,6 @@
 package ua.cv.tim.dao.hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.HibernateTemplate;
+
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ua.cv.tim.dao.AbstractCrudDao;
 import ua.cv.tim.model.Army;
@@ -8,27 +8,27 @@ import ua.cv.tim.model.Army;
 /**
  * Created by Serhii Starovoit on 1/5/2017 in 5:33 PM.
  */
-@Repository
+@Repository(value = "armyDao")
 public class ArmyDaoImpl extends AbstractCrudDao<Army> implements ArmyDao {
-
-    @Autowired
-    private HibernateTemplate hibernateTemplate;
 
     @Override
     public void add(Army entity) {
-        this.hibernateTemplate.save(entity);
+        this.getCurrentSession().save(entity);
     }
     @Override
     public void update(Army entity) {
-        this.hibernateTemplate.delete(entity);
+        this.getCurrentSession().update(entity);
     }
-
     @Override
     public void delete(Army entity) {
-        this.hibernateTemplate.delete(entity);
+        this.getCurrentSession().delete(entity);
+    }
+    @Override
+    public Army getArmyById(String uuid) {
+        String request = "select a from Army a where a.uuid = :uuid";
+        Query<Army> query = getCurrentSession().createQuery(request);
+        query.setParameter("uuid", uuid);
+        return query.getSingleResult();
     }
 
-    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
-        this.hibernateTemplate = hibernateTemplate;
-    }
 }
