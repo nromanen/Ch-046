@@ -1,5 +1,8 @@
 package ua.cv.tim.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -29,6 +32,7 @@ public class User extends UuidEntity {
 	@ElementCollection(targetClass = Role.class)
 	private List<Role> roles;
 
+    @JsonIgnore
 	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	private Player player;
 

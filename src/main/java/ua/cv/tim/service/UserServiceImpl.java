@@ -8,6 +8,8 @@ import ua.cv.tim.dao.hibernate.UserDao;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.User;
 
+import java.util.List;
+
 /**
  * Created by Oleg on 04.01.2017.
  */
@@ -19,6 +21,21 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     public  long getCount(){
        return userDao.getCount();
+    }
+
+    @Override
+    public User getWithRolesById(String id) {
+        return userDao.getWithRolesById(id);
+    }
+
+    @Override
+    public List<User> getAllWithRoles() {
+        return userDao.getAllWithRoles();
+    }
+
+    @Override
+    public List<User> getAll() {
+        return userDao.getAll();
     }
 
 

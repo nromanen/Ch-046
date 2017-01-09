@@ -27,6 +27,11 @@ ext.vers = [
 ]
 
 dependencies {
+    // https://mvnrepository.com/artifact/org.aspectj/aspectjrt
+    //compile group: 'org.aspectj', name: 'aspectjrt', version: '1.8.9'
+// https://mvnrepository.com/artifact/org.aspectj/aspectjweaver
+    //compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.9'
+
     compile group: 'org.hibernate', name: 'hibernate-core', version: vers.hibernate
     compile group: 'postgresql', name: 'postgresql', version: vers.postgresql
 

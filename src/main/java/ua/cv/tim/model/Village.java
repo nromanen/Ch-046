@@ -1,5 +1,9 @@
 package ua.cv.tim.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +23,15 @@ public class Village extends UuidEntity implements Comparable<Village> {
 	private Boolean isCapital;
 	private Byte wall = 0;
 
+	@JsonBackReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owningVillage")
 	private List<Army> armies = new ArrayList<>();
 
+	@JsonBackReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "armyRequestVillage")
 	private List<Army> armyRequests;
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "player_uuid", nullable = false)
 	private Player player;

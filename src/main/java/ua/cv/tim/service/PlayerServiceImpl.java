@@ -1,5 +1,6 @@
 package ua.cv.tim.service;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,11 +22,12 @@ public class PlayerServiceImpl implements PlayerService {
     @Autowired
      VillageDaoImpl villageDaoImpl;
 
+    @Override
     public void add(Player player){
         playerDaoImpl.add(player);
     }
 
-
+    @Override
     public Player getById(String id){
         Player byId = playerDaoImpl.getById(id);
         return byId;
@@ -35,6 +37,7 @@ public class PlayerServiceImpl implements PlayerService {
         Player byIdWithVillages = playerDaoImpl.getByIdWithVillages(id);
         List<Village> villages = byIdWithVillages.getVillages();
         Village village = villages.get(0);
+        Hibernate.initialize(byIdWithVillages.getUser().getRoles());
         return byIdWithVillages;
     }
 
@@ -46,11 +49,8 @@ public class PlayerServiceImpl implements PlayerService {
         playerDaoImpl.delete(player);
     }
 
-    public void deleteVillage(Player player, Village village){
-        playerDaoImpl.deleteVillageOfPlayer(player,village);
-    }
 
-    public void deleteVillageOfPlayer(Player player, Village village) {
+    public void deleteVillageOfPlayer(Village village) {
         villageDaoImpl.delete(village);
     }
 }

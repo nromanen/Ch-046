@@ -6,9 +6,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.junit.Test;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.configuration.HibernateTestConfig;
-import ua.cv.tim.dao.PlayerDaoImpl;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Race;
 import ua.cv.tim.model.User;
@@ -27,14 +25,14 @@ import java.util.List;
 public class PlayerServiceImplTest {
     @Test
     public void testUpdate() throws Exception {
-        Player lkl = playerServiceImpl.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
+        Player lkl = playerService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
         lkl.setRace(Race.ROMANS);
-        playerServiceImpl.update(lkl);
+        playerService.update(lkl);
     }
 
 
     @Autowired
-    PlayerServiceImpl playerServiceImpl;
+    PlayerService playerService;
 
 
 
@@ -54,39 +52,39 @@ public class PlayerServiceImplTest {
         village.setxCoord((short) 56);
         village.setyCoord((short) 58);
         villages.add(village);
-        playerServiceImpl.add(player);
+        playerService.add(player);
 
     }
 
    @Test
     public void testGetById() throws Exception {
-       Player lkl = playerServiceImpl.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
+       Player lkl = playerService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
        List<Village> villages = lkl.getVillages();
 
    }
 
     @Test
     public void testGetByIdWithVillages() throws Exception {
-        Player byIdWithVillages = playerServiceImpl.getByIdWithVillages("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
+        Player byIdWithVillages = playerService.getByIdWithVillages("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
         List<Village> villages =  byIdWithVillages.getVillages();
     }
 
 
     @Test
     public void testDelete() throws Exception {
-        Player player = playerServiceImpl.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
-        playerServiceImpl.delete(player);
+        Player player = playerService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
+        playerService.delete(player);
     }
 
     @Test
     public void testDeleteVillage() throws Exception {
-        Player player= playerServiceImpl.getById("lkl");
+        Player player= playerService.getById("lkl");
         Village village=new Village();
         village.setUuid("ee65fa8f-472b-4020-ad74-1a6c291afea2");
         village.setPlayer(player);
         village.setxCoord((short) 56);
         village.setyCoord((short) 58);
-        playerServiceImpl.deleteVillageOfPlayer(player,village);
+        playerService.deleteVillageOfPlayer(village);
     }
 
 

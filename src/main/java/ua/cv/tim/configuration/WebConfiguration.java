@@ -16,7 +16,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @EnableWebMvc
 @Configuration
-@EnableAspectJAutoProxy(proxyTargetClass = true)
 @ComponentScan({"ua.cv.tim"})
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 

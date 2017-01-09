@@ -1,5 +1,9 @@
 package ua.cv.tim.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.*;
 import javax.persistence.OrderBy;
 
@@ -14,6 +18,7 @@ public class Player implements Serializable {
 	@Id
 	@JoinColumn(name = "user_uuid")
 	@OneToOne(targetEntity = User.class)
+	@JsonIgnoreProperties("player")
 	private User user;
 
 	@Enumerated(EnumType.STRING)
@@ -22,6 +27,7 @@ public class Player implements Serializable {
 	@Formula(value = "(select count(v.uuid) from village v where v.player_uuid=uuid)")
 	private Integer villagesCount;
 
+	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	@OrderBy("population")
 	private List<Village> villages;
@@ -29,8 +35,6 @@ public class Player implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "alliance_id")
 	private Alliance alliance;
-
-
 
 	public Race getRace() {
 		return race;
