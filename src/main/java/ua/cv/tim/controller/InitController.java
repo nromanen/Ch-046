@@ -18,6 +18,14 @@ public class InitController {
 
         return "index.html";
     }
+
+    @RequestMapping(value = {"/todo"}, method = RequestMethod.GET)
+    public String createTodo() {
+
+        System.out.println("GET /");
+
+        return "index1.html";
+    }
 }
 
 

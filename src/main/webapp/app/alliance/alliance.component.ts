@@ -5,30 +5,36 @@ import {Alliance} from "./alliance";
 
 @Component({
     selector: 'my-alliance',
-    template: `
-         <div class="todo">
-            <h1>ALLIANCE WORK!!!</h1>
-            <h1>TEST ngFOR!!</h1>
-            
-            <div class="list">
-                <ul>
-                    <li>...Start</li>
-                    <li  *ngFor="#al of _allianceService.alliances">{{al.uuid}} {{al.name}} {{al.leaderLogin}} {{al.leaderEmail}}</li>
-                    <li>...End</li>
-                </ul>
-            </div>
-         </div>
-    `,
+    templateUrl: 'app/alliance/alliance.html',
     providers: [AllianceService],
 })
 
 export class AllianceComponent{
 
     alliances: Array<Alliance> = [];
-    title: string = "test";
+
+    selectedAlliance: Alliance = null;
+    name: string;
+    login: string;
+    email: string;
+
+    editName: string;
+    editLogin: string;
+    editEmail: string;
 
     constructor(private _allianceService: AllianceService){
 
+    }
+
+    editAlliance(al: Alliance){
+        this.selectedAlliance = al;
+        this.editName = al.name;
+        this.editLogin = al.leaderLogin;
+        this.editEmail = al.leaderEmail;
+    }
+
+    cancelEditing(){
+        this.selectedAlliance = null;
     }
 
 }

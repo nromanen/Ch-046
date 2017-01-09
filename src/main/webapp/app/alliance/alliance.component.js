@@ -25,12 +25,21 @@ System.register(['angular2/core', "./alliance-service"], function(exports_1, con
                 function AllianceComponent(_allianceService) {
                     this._allianceService = _allianceService;
                     this.alliances = [];
-                    this.title = "test";
+                    this.selectedAlliance = null;
                 }
+                AllianceComponent.prototype.editAlliance = function (al) {
+                    this.selectedAlliance = al;
+                    this.editName = al.name;
+                    this.editLogin = al.leaderLogin;
+                    this.editEmail = al.leaderEmail;
+                };
+                AllianceComponent.prototype.cancelEditing = function () {
+                    this.selectedAlliance = null;
+                };
                 AllianceComponent = __decorate([
                     core_1.Component({
                         selector: 'my-alliance',
-                        template: "\n         <div class=\"todo\">\n            <h1>ALLIANCE WORK!!!</h1>\n            <h1>TEST ngFOR!!</h1>\n            \n            <div class=\"list\">\n                <ul>\n                    <li>...Start</li>\n                    <li  *ngFor=\"#al of _allianceService.alliances\">{{al.uuid}} {{al.name}} {{al.leaderLogin}} {{al.leaderEmail}}</li>\n                    <li>...End</li>\n                </ul>\n            </div>\n         </div>\n    ",
+                        templateUrl: 'app/alliance/alliance.html',
                         providers: [alliance_service_1.AllianceService],
                     }), 
                     __metadata('design:paramtypes', [alliance_service_1.AllianceService])

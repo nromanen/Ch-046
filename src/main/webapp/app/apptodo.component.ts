@@ -1,17 +1,17 @@
 import {Component} from 'angular2/core';
 import {TodoListComponent} from './todo-list/todo-list.component'
-import {AllianceComponent} from "./alliance/alliance.component";
 import {HeaderComponent} from "./header/header.component";
 
+
 @Component({
-    selector: 'my-app',
+    selector: 'my-app-todo',
     template: `
         <my-header></my-header>
-        <my-alliance></my-alliance>
+        <my-todo-list></my-todo-list> 
     `,
-    directives: [AllianceComponent, HeaderComponent]
+    directives: [TodoListComponent, HeaderComponent]
 })
 
-export class AppComponent {
+export class AppTodoComponent {
 
 }

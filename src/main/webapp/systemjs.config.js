@@ -57,7 +57,5 @@
             }
         }
     });
-    System.import('app/main')
-            .then(null, console.error.bind(console));
 })(this);
 

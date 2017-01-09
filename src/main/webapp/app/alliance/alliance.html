@@ -1,0 +1,93 @@
+<div class="row container">
+    <div class="col s12">
+        <h3>Add new Alliance</h3>
+    </div>
+</div>
+<form method="POST" modelAttribute="allianceDTO" action="alliance">
+    <div class="row container">
+        <div class="input-field col s3">
+
+            <label for="name">Alliance</label>
+            <input type="text" name="name" id="name" class="validate" [(ngModel)]="name"/>
+        </div>
+
+        <div class="input-field col s3">
+            <label for="leaderLogin">Leader's login</label>
+            <input type="text" name="leaderLogin" id="leaderLogin" class="validate" [(ngModel)]="login"/>
+        </div>
+
+        <div class="input-field col s3">
+            <label for="leaderEmail">Leader's e-mail</label>
+            <input type="email" name="leaderEmail" id="leaderEmail" class="validate" [(ngModel)]="email"/>
+        </div>
+        <div class="input-field col s3">
+            <button class="btn waves-effect waves-light col offset-s5 " type="submit" name="action">Add alliance
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </div>
+</form>
+<div class="row container">
+    <div class="col s12">
+        <h3>Alliances</h3>
+        <table class="highlight">
+            <thead>
+            <tr>
+                <th data-field="id" class="col s3">Alliance name</th>
+                <th data-field="name">Leader's login</th>
+                <th data-field="price">Leader's email</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="#al of _allianceService.alliances">
+                    <td><div *ngIf="al !== selectedAlliance">{{al.name}}</div>
+                        <div *ngIf="al === selectedAlliance">
+                            <input type="text" name="name" id="editName" class="validate" [(ngModel)]="editName" (keyup.escape)="cancelEditing()"/>
+                        </div>
+                    </td>
+                    <td><div *ngIf="al !== selectedAlliance">{{al.leaderLogin}}</div>
+                        <div *ngIf="al === selectedAlliance">
+                            <input type="text" name="leaderLogin" id="editLeaderLogin" class="validate" [(ngModel)]="editLogin" (keyup.escape)="cancelEditing()"/>
+                        </div>
+                    </td>
+                    <td><div *ngIf="al !== selectedAlliance">{{al.leaderEmail}}</div>
+                        <div *ngIf="al === selectedAlliance">
+                            <input type="email" name="leaderEmail" id="editLeaderEmail" class="validate" [(ngModel)]="editEmail" (keyup.escape)="cancelEditing()"/>
+                        </div>
+                    </td>
+                    <td>
+                        <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s2 " type="submit" name="action" (click)="editAlliance(al)">Edit</button>
+                            <button *ngIf="al === selectedAlliance" class="btn waves-effect waves-light col offset-s5 " type="submit" name="action">Save
+                                <i class="material-icons right">send</i>
+                            </button>
+
+                    </td>
+                    <td>
+                        <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s2 " type="submit" name="action">Delete</button>
+                    </td>
+                </tr>
+            <tr>
+                <td>{{name}}</td>
+                <td>{{login}}</td>
+                <td>{{email}}</td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>{{editName}}</td>
+                <td>{{editLogin}}</td>
+                <td>{{editEmail}}</td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

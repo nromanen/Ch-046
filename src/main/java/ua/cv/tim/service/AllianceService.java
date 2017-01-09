@@ -37,17 +37,17 @@ public class AllianceService {
         AllianceDTOMock.addAlliance(allianceDTO);
     }
 
-    public void updateAlliance(AllianceDTO allianceDTO){
-        AllianceDTOMock.updateAlliances(allianceDTO);
-    }
-
-    public void deleteAlliance(String  id){
-       AllianceDTOMock.delete(id); ;
-    }
-
-    public AllianceDTO getById(String  id){
-        return AllianceDTOMock.getById(id);
-    }
+//    public void updateAlliance(AllianceDTO allianceDTO){
+//        AllianceDTOMock.updateAlliances(allianceDTO);
+//    }
+//
+//    public void deleteAlliance(String  id){
+//       AllianceDTOMock.delete(id); ;
+//    }
+//
+//    public AllianceDTO getById(String  id){
+//        return AllianceDTOMock.getById(id);
+//    }
 
 
 

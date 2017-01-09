@@ -32,31 +32,31 @@ public class AllianceDTOMock {
         return alliances;
     }
 
-    public static void updateAlliances(AllianceDTO allianceDTO){
+//    public static void updateAlliances(AllianceDTO allianceDTO){
+//
+//        alliances.set(getIdByAllianceId(allianceDTO.getUuid()),allianceDTO);
+//    }
 
-        alliances.set(getIdByAllianceId(allianceDTO.getUuid()),allianceDTO);
-    }
+//    public static void delete(String id){
+//        alliances.remove(getIdByAllianceId(id));
+//    }
 
-    public static void delete(String id){
-        alliances.remove(getIdByAllianceId(id));
-    }
+//    private static int getIdByAllianceId(String id){
+//        for (int i = 0; i < alliances.size(); i++){
+//            if(alliances.get(i).getUuid().equals(id)){
+//                return i;
+//            }
+//        }
+//        return -1;
+//    }
 
-    private static int getIdByAllianceId(String id){
-        for (int i = 0; i < alliances.size(); i++){
-            if(alliances.get(i).getUuid().equals(id)){
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public static AllianceDTO getById(String  id){
-        for (AllianceDTO alliance: alliances){
-            if(alliance.getUuid().equals(id)){
-                return alliance;
-            }
-        }
-        return null;
-    }
+//    public static AllianceDTO getById(String  id){
+//        for (AllianceDTO alliance: alliances){
+//            if(alliance.getUuid().equals(id)){
+//                return alliance;
+//            }
+//        }
+//        return null;
+//    }
 
 }

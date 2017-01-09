@@ -15,14 +15,41 @@
 
     <!-- Initialization -->
     <script src="systemjs.config.js"></script>
+    <script>
+        System.import('app/main')
+            .then(null, console.error.bind(console));
+    </script>
+
+
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.css">
+    <!-- Compiled and minified JavaScript -->
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.js"></script>
+    <script src="js/my.js"></script>
+    <script type="text/javascript">
+        $( document ).ready(function(){
+            $(".button-collapse").sideNav();
+            $('select').material_select();
+
+            $('#addAlliance').prop('disabled',true);
+            $('#addLeader').prop('disabled',true);
+            populateLeader();
+        });
+    </script>
+    <style type="text/css">
+        .itm {
+            background: #DDD;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
     <my-app>Loading...</my-app>
-	<div class="footer-info">
-<p>Double-click to edit a task</p>
-<p>Created by using Spring framework and Angular 2</p>
-<p><a href="https://github.com/Ariezz666/todo_angular2_django" target="_blank">GitHub</a></p>
-</div>
 </body>
 </html>
 
