@@ -9,9 +9,10 @@ import ua.cv.tim.model.UuidEntity;
 /**
  * Created by Admin on 03.01.17.
  */
+
 public class AllianceDTO  {
 
-    private String id;
+    private String uuid;
 
     @NotEmpty
     private String name;
@@ -22,14 +23,18 @@ public class AllianceDTO  {
     @NotEmpty
     private String leaderEmail;
 
+    public AllianceDTO() {
+    }
+
     public AllianceDTO(String name, String leaderLogin, String leaderEmail) {
         this.name = name;
         this.leaderLogin = leaderLogin;
         this.leaderEmail = leaderEmail;
     }
 
-    public AllianceDTO() {
-
+    public AllianceDTO(String uuid, String name, String leaderLogin, String leaderEmail) {
+        this(name, leaderLogin, leaderEmail);
+        this.uuid = uuid;
     }
 
     public String getName() {
@@ -54,5 +59,13 @@ public class AllianceDTO  {
 
     public void setLeaderEmail(String leaderEmail) {
         this.leaderEmail = leaderEmail;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

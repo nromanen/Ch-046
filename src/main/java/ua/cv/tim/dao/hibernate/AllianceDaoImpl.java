@@ -15,7 +15,7 @@ import ua.cv.tim.model.Alliance;
 public class AllianceDaoImpl extends AbstractCrudDao<Alliance>  implements AllianceDao{
 
     @Override
-    public Alliance getById(long id) {
+    public Alliance getById(String id) {
         Session session = getCurrentSession();
         Query query = session.createQuery("FROM Alliance WHERE id=:id");
         query.setParameter("id", id);
