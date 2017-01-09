@@ -17,7 +17,7 @@ public class Player implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Race race;
 
-	@Formula(value = "(select count(v.uuid) from village v where v.player_uuid=uuid)")
+	//@Formula(value = "(select count(v.uuid) from village v where v.player_uuid=uuid)")
 	private Integer villagesCount;
 
 	@OneToMany(fetch = FetchType.LAZY)
@@ -66,5 +66,12 @@ public class Player implements Serializable {
 
 	public void setAlliance(Alliance alliance) {
 		this.alliance = alliance;
+	}
+
+	@Override
+	public String toString() {
+		return "Player{" +
+				"user=" + user +
+				'}';
 	}
 }

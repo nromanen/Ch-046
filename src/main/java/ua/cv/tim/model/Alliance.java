@@ -41,8 +41,8 @@ public class Alliance extends UuidEntity {
     @Override
     public String toString() {
         return "Alliance{" +
-                "id=" + getUuid() +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
+                ", players=" + players +
                 '}';
     }
 }

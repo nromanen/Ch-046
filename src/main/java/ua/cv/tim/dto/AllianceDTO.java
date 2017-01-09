@@ -9,7 +9,9 @@ import ua.cv.tim.model.UuidEntity;
 /**
  * Created by Admin on 03.01.17.
  */
-public class AllianceDTO extends UuidEntity {
+public class AllianceDTO {
+
+    private String uuid;
 
     @NotEmpty
     private String name;
@@ -20,15 +22,18 @@ public class AllianceDTO extends UuidEntity {
     @NotEmpty
     private String leaderEmail;
 
+    public AllianceDTO() {
+    }
+
     public AllianceDTO(String name, String leaderLogin, String leaderEmail) {
-        prePersist();
         this.name = name;
         this.leaderLogin = leaderLogin;
         this.leaderEmail = leaderEmail;
     }
 
-    public AllianceDTO() {
-       prePersist();
+    public AllianceDTO(String uuid, String name, String leaderLogin, String leaderEmail) {
+        this(name, leaderLogin, leaderEmail);
+        this.uuid = uuid;
     }
 
     public String getName() {
@@ -53,5 +58,13 @@ public class AllianceDTO extends UuidEntity {
 
     public void setLeaderEmail(String leaderEmail) {
         this.leaderEmail = leaderEmail;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }
