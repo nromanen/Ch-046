@@ -21,6 +21,7 @@ public class Army extends UuidEntity implements Comparable<Army> {
 	private Village armyRequestVillage;
 
 	public Army() {
+		prePersist();
 	}
 
 	public Army(Village village, boolean isArmyAequest) {

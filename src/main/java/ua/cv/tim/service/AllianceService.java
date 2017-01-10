@@ -3,9 +3,9 @@ package ua.cv.tim.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.cv.tim.dao.hibernate.AllianceDao;
-import ua.cv.tim.dao.hibernate.PlayerDao;
-import ua.cv.tim.dao.hibernate.UserDao;
+import ua.cv.tim.dao.AllianceDao;
+import ua.cv.tim.dao.PlayerDao;
+import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.model.*;
 import ua.cv.tim.dto.AllianceDTO;
 

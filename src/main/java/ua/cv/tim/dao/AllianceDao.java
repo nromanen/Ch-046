@@ -1,4 +1,4 @@
-package ua.cv.tim.dao.hibernate;
+package ua.cv.tim.dao;
 
 import ua.cv.tim.dao.CrudDao;
 import ua.cv.tim.model.Alliance;

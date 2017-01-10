@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ua.cv.tim.dao.AbstractCrudDao;
+import ua.cv.tim.dao.AllianceDao;
 import ua.cv.tim.model.Alliance;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 
 @Repository("allianceDao")
-public class AllianceDaoImpl extends AbstractCrudDao<Alliance>  implements AllianceDao{
+public class AllianceDaoImpl extends AbstractCrudDao<Alliance>  implements AllianceDao {
 
     @Override
     public Alliance getById(String id) {

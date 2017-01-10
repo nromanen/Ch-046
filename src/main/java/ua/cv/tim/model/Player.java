@@ -24,7 +24,6 @@ public class Player implements Serializable {
 	@JoinColumn(name = "alliance_id")
 	private Alliance alliance;
 
-
 	public User getUser() {
 		return user;
 	}
