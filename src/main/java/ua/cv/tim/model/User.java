@@ -10,13 +10,10 @@ import java.util.List;
  * Created by vyach on 28.12.2016.
  */
 
-@Entity(name = "user")
+@Entity
 @Table(name = "users")
 public class User extends UuidEntity {
 
-	public User() {
-		prePersist();
-	}
 
 	@Column(nullable = false, unique = true)
 	private String login;
@@ -27,10 +24,17 @@ public class User extends UuidEntity {
 	@Column(nullable = false, unique = true)
 	private String email;
 
-	@Column
+	@Column(name = "roles")
 	@Enumerated(EnumType.STRING)
-	@ElementCollection(targetClass = Role.class)
+	@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
 	private List<Role> roles;
+
+
+	public User() {
+		prePersist();
+	}
+
+
 
     @JsonIgnore
 	@OneToOne( fetch = FetchType.EAGER)

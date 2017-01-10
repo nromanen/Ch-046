@@ -15,7 +15,8 @@ import java.util.List;
 
 @Entity
 public class Player implements Serializable {
-	@Id
+
+    @Id
 	@JoinColumn(name = "user_uuid")
 	@OneToOne(targetEntity = User.class)
 	@JsonIgnoreProperties("player")
@@ -34,6 +35,14 @@ public class Player implements Serializable {
 	@JoinColumn(name = "alliance_id")
 	private Alliance alliance;
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public Race getRace() {
 		return race;
 	}
@@ -50,19 +59,12 @@ public class Player implements Serializable {
 		this.villages = villages;
 	}
 
+
 	public Alliance getAlliance() {
 		return alliance;
 	}
 
 	public void setAlliance(Alliance alliance) {
 		this.alliance = alliance;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 }

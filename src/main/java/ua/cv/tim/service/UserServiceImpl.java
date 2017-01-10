@@ -41,6 +41,11 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         return userDao.getAll();
     }
 
+    @Override
+    public User getUserByUsername(String username) {
+        return userDao.getUserByUsername(username);
+    }
+
 
     @Override
     public User getById(String id) {

@@ -3,24 +3,18 @@ package ua.cv.tim.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by vyach on 29.12.2016.
  */
+@Transactional
 public abstract class AbstractCrudDao<E> implements CrudDao<E> {
+
 	@Autowired
-private Class<E> clazz;
-
-	public AbstractCrudDao(Class<E> clazz) {
-		this.clazz = clazz;
-	}
-
-	public AbstractCrudDao(){}
-	
-	@Autowired
-	public SessionFactory sessionFactory;
-
-
+	@Qualifier("sessionFactory")
+	private SessionFactory sessionFactory;
 
 	@Override
 	public void add(E entity) {
@@ -39,5 +33,9 @@ private Class<E> clazz;
 
 	protected Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 }
