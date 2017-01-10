@@ -1,10 +1,6 @@
 package ua.cv.tim.dto;
 
-
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import ua.cv.tim.model.UuidEntity;
-
 
 /**
  * Created by Admin on 03.01.17.

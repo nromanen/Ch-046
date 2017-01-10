@@ -11,11 +11,11 @@ export class Alliance {
 
 
 
-    constructor(uuid: string, name: string, leaderLogin: string, leaderEmail: string){
+    constructor( name: string, leaderLogin: string, leaderEmail: string){
         this.name = name;
         this.leaderEmail = leaderEmail;
         this.leaderLogin = leaderLogin;
-        this.uuid = uuid;
+
     }
 
 

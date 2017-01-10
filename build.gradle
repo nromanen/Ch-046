@@ -4,16 +4,15 @@ version '1.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'war'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 repositories {
     mavenCentral()
     maven { url "https://clojars.org/repo" }
 }
 
 ext.vers = [
-//        hibernate: '5.2.5.Final',
-        hibernate: '5.1.0.Final',
+        hibernate: '5.2.5.Final',
         postgresql: '9.3-1102.jdbc41',
         spring: '4.3.5.RELEASE',
         spring_security: '4.2.0.RELEASE',

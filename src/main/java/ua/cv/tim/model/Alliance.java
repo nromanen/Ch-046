@@ -15,7 +15,7 @@ public class Alliance extends UuidEntity {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "alliance")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "alliance", orphanRemoval = true)
     private List<Player> players;
 
     public Alliance() {
@@ -38,11 +38,4 @@ public class Alliance extends UuidEntity {
         this.players = players;
     }
 
-    @Override
-    public String toString() {
-        return "Alliance{" +
-                "name='" + name + '\'' +
-                ", players=" + players +
-                '}';
-    }
 }

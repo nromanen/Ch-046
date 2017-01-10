@@ -49,18 +49,12 @@ public class Player implements Serializable {
 		this.villages = villages;
 	}
 
+
 	public Alliance getAlliance() {
 		return alliance;
 	}
 
 	public void setAlliance(Alliance alliance) {
 		this.alliance = alliance;
-	}
-
-	@Override
-	public String toString() {
-		return "Player{" +
-				"user=" + user +
-				'}';
 	}
 }

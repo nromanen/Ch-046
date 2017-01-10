@@ -15,8 +15,7 @@ import {Component} from 'angular2/core';
         <a href="#!" class="brand-logo">Logo</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
-            <li><a href="todo">Todo</a></li>
-            <li><a href="/">Alliances</a></li>
+            <li><a href="/alliance">Alliances</a></li>
             <li><a href="#">Jingle</a></li>
             <li><a href="#">Mobile</a></li>
         </ul>

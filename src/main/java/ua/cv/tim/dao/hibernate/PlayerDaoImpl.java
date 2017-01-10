@@ -10,8 +10,5 @@ import ua.cv.tim.model.Player;
 
 @Repository("playerDao")
 public class PlayerDaoImpl extends AbstractCrudDao<Player> implements PlayerDao {
-    @Override
-    public Player getById(String uuid) {
-        return null;
-    }
+
 }

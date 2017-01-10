@@ -8,5 +8,5 @@ import ua.cv.tim.model.Player;
  */
 public interface PlayerDao extends CrudDao<Player> {
 
-    Player getById(String uuid);
+
 }

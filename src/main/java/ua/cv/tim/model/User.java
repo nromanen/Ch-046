@@ -72,13 +72,4 @@ public class User extends UuidEntity {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
-
-	@Override
-	public String toString() {
-		return "User{" +
-				"login='" + login + '\'' +
-				", password='" + password + '\'' +
-				", email='" + email + '\'' +
-				'}';
-	}
 }

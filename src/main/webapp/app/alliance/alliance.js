@@ -9,11 +9,10 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             Alliance = (function () {
-                function Alliance(uuid, name, leaderLogin, leaderEmail) {
+                function Alliance(name, leaderLogin, leaderEmail) {
                     this.name = name;
                     this.leaderEmail = leaderEmail;
                     this.leaderLogin = leaderLogin;
-                    this.uuid = uuid;
                 }
                 return Alliance;
             }());

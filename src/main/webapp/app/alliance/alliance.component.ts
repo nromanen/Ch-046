@@ -1,6 +1,7 @@
 import {Component} from 'angular2/core'
 import {AllianceService} from "./alliance-service";
 import {Alliance} from "./alliance";
+import {logInfo} from "typings/dist/support/cli";
 
 
 @Component({
@@ -33,8 +34,28 @@ export class AllianceComponent{
         this.editEmail = al.leaderEmail;
     }
 
+    deleteAlliance(al: Alliance){
+        this._allianceService.deleteAlliance(al);
+    }
+
     cancelEditing(){
         this.selectedAlliance = null;
+    }
+
+    addAlliance(){
+        console.log("AddAlliance");
+        var newAlliance = new Alliance(this.name, this.login, this.email);
+        this.name = "";
+        this.login = "";
+        this.email = "";
+        this._allianceService.addAlliance(newAlliance);
+
+    }
+
+    updateAlliance() {
+        console.log("update alliance")
+        var updatedAlliance = new Alliance(this.editName, this.editLogin, this.editEmail);
+        this._allianceService.updateAlliance(this.selectedAlliance, updatedAlliance);
     }
 
 }

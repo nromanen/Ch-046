@@ -1,4 +1,4 @@
-System.register(['angular2/core', "./alliance-service"], function(exports_1, context_1) {
+System.register(['angular2/core', "./alliance-service", "./alliance"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', "./alliance-service"], function(exports_1, con
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, alliance_service_1;
+    var core_1, alliance_service_1, alliance_1;
     var AllianceComponent;
     return {
         setters:[
@@ -19,6 +19,9 @@ System.register(['angular2/core', "./alliance-service"], function(exports_1, con
             },
             function (alliance_service_1_1) {
                 alliance_service_1 = alliance_service_1_1;
+            },
+            function (alliance_1_1) {
+                alliance_1 = alliance_1_1;
             }],
         execute: function() {
             AllianceComponent = (function () {
@@ -33,8 +36,24 @@ System.register(['angular2/core', "./alliance-service"], function(exports_1, con
                     this.editLogin = al.leaderLogin;
                     this.editEmail = al.leaderEmail;
                 };
+                AllianceComponent.prototype.deleteAlliance = function (al) {
+                    this._allianceService.deleteAlliance(al);
+                };
                 AllianceComponent.prototype.cancelEditing = function () {
                     this.selectedAlliance = null;
+                };
+                AllianceComponent.prototype.addAlliance = function () {
+                    console.log("AddAlliance");
+                    var newAlliance = new alliance_1.Alliance(this.name, this.login, this.email);
+                    this.name = "";
+                    this.login = "";
+                    this.email = "";
+                    this._allianceService.addAlliance(newAlliance);
+                };
+                AllianceComponent.prototype.updateAlliance = function () {
+                    console.log("update alliance");
+                    var updatedAlliance = new alliance_1.Alliance(this.editName, this.editLogin, this.editEmail);
+                    this._allianceService.updateAlliance(this.selectedAlliance, updatedAlliance);
                 };
                 AllianceComponent = __decorate([
                     core_1.Component({

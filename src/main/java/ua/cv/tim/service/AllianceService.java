@@ -6,8 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.hibernate.AllianceDao;
 import ua.cv.tim.dao.hibernate.PlayerDao;
 import ua.cv.tim.dao.hibernate.UserDao;
-import ua.cv.tim.mock.AllianceDTOMock;
-import ua.cv.tim.mock.TaskMock;
 import ua.cv.tim.model.*;
 import ua.cv.tim.dto.AllianceDTO;
 
@@ -22,8 +20,6 @@ import java.util.List;
 @Transactional
 public class AllianceService {
 
-    private String id;
-
     @Autowired
     private AllianceDao allianceDao;
 
@@ -33,21 +29,23 @@ public class AllianceService {
     @Autowired
     private PlayerDao playerDao;
 
-
-
-
-
     public List<AllianceDTO> getAll(){
+        List<Alliance> alliances = allianceDao.getAll();
+        List<AllianceDTO> allianceDTOS = new ArrayList<>();
 
-//        allianceDao.getAll();
-        return AllianceDTOMock.getAlliances();
+        for (Alliance alliance: alliances){
+            User leader = null;
+            for(Player player : alliance.getPlayers()){
+                if (player.getUser().getRoles().contains(Role.LEADER)){
+                    leader = player.getUser();
+                }
+            }
+            allianceDTOS.add(new AllianceDTO(alliance.getUuid(), alliance.getName(), leader.getLogin(), leader.getEmail()));
+        }
+        return allianceDTOS;
     }
 
     public void addAlliane(AllianceDTO allianceDTO){
-        System.out.println("SERVICE ADD WORK");
-
-//        AllianceDTOMock.addAlliance(allianceDTO);
-
         Alliance alliance = new Alliance();
         alliance.setName(allianceDTO.getName());
 
@@ -64,134 +62,58 @@ public class AllianceService {
 
         Player player = new Player();
         player.setUser(user);
-
         playerDao.add(player);
-
         user.setPlayer(player);
-
-
         List<Player> players = new ArrayList<>();
         players.add(player);
-
         alliance.setPlayers(players);
-
         allianceDao.add(alliance);
-
         player.setAlliance(alliance);
-
-
-        this.id = alliance.getUuid();
     }
 
     public void updateAlliance(AllianceDTO allianceDTO){
 
+        Alliance alliance = allianceDao.getById(allianceDTO.getUuid());
 
-        Alliance alliance = allianceDao.getById(this.id);
+        alliance.setName(allianceDTO.getName());
 
-        alliance.setName("NEWTESTUPDATENAME");
+        User leader = null;
 
-        alliance.getPlayers().get(0).getUser().setLogin("NEWTESTLOGIN");
-        alliance.getPlayers().get(0).getUser().setPassword("EMAILNEWEST");
+        for(Player player : alliance.getPlayers()){
+            if (player.getUser().getRoles().contains(Role.LEADER)){
+                leader = player.getUser();
+            }
+        }
+
+        leader.setLogin(allianceDTO.getLeaderLogin());
+        leader.setPassword(allianceDTO.getLeaderEmail());
 
         allianceDao.update(alliance);
-
-
-
-        //AllianceDTOMock.updateAlliances(allianceDTO);
     }
 
     public void deleteAlliance(String  id){
 
-        Alliance alliance = allianceDao.getById(this.id);
+        Alliance alliance = allianceDao.getById(id);
+
+        System.out.println(alliance);
+
+
         if (alliance != null){
+            for (Player player: alliance.getPlayers()){
+                System.out.println("before delete");
+                userDao.delete(player.getUser());
+                System.out.println("after delete");
+                //playerDao.delete(player);
+            }
             allianceDao.delete(alliance);
         }
-       //AllianceDTOMock.delete(id);
     }
 
-    public AllianceDTO getById(String  uuid){
+    public Alliance getById(String  uuid){
 
-        System.out.println(id);
+        System.out.println(uuid);
 
-        Alliance getAlliance = allianceDao.getById(this.id);
+        return allianceDao.getById(uuid);
 
-        System.out.println(getAlliance);
-
-        return null;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    @Autowired
-////    @Qualifier("AllianceDao")
-//    private AllianceDao allianceDao;
-//
-//    @Autowired
-//    private UserService userService;
-//
-//    public void addAlliance(AllianceDTO allianceDTO) {
-//        User leader = new User();
-//        leader.setLogin(allianceDTO.getLeaderLogin());
-//        leader.setEmail(allianceDTO.getLeaderEmail());
-//        List<Role> roles = new ArrayList<>();
-//        roles.add(Role.LEADER);
-//        roles.add(Role.USER);
-//        leader.setPassword("kjdhcbnsmxmojads");
-//
-//
-//        userService.addUser(leader);
-//
-//        Alliance alliance = new Alliance();
-//        alliance.setName(allianceDTO.getName());
-//
-//        List<User> players = new ArrayList<>();
-//        alliance.setUsers(players);
-//        allianceDao.add(alliance);
-//    }
-//
-//    public void updateAlliance(AllianceDTO alliance) {
-//
-////        User user = userService.getByName(alliance.getLeaderLogin());
-////        user.setEmail(alliance.getLeaderEmail());
-////        user.setLogin(alliance.getLeaderLogin());
-////        userService.updateUser(user);
-//
-////        Alliance alliance1 = allianceDao.getByName(alliance.getName());
-////        alliance1.setName(alliance.getName());
-////        allianceDao.update(alliance1);
-//    }
-//
-//    public void deleteAlliance(Alliance alliance) {
-//        allianceDao.delete(alliance);
-//    }
-//
-//    public Alliance getById(long id) {
-//        return allianceDao.getById(id);
-//    }
-
 }

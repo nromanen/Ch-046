@@ -50,6 +50,39 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx'], function(exports_
                         _this.alliances = response;
                     }, function (error) { return console.log(error); });
                 };
+                AllianceService.prototype.addAlliance = function (alliance) {
+                    var body = JSON.stringify({ name: alliance.name, leaderLogin: alliance.leaderLogin, leaderEmail: alliance.leaderEmail });
+                    var headers = new http_1.Headers();
+                    headers.append('Content-Type', 'application/json');
+                    headers.append('X-CSRFToken', this.getCookie('csrftoken'));
+                    this._http.post('/allianceDTO', body, {
+                        headers: headers
+                    }).map(function (res) { return res.json(); })
+                        .subscribe(function (response) { return console.log('Alliance created successful'); }, function (error) { return console.log(error); });
+                    this.getFromServer();
+                    this.getFromServer();
+                };
+                AllianceService.prototype.deleteAlliance = function (alliance) {
+                    this.alliances.splice(this.alliances.indexOf(alliance), 1);
+                    var headers = new http_1.Headers();
+                    headers.append('Content-Type', 'application/json');
+                    headers.append('X-CSRFToken', this.getCookie('csrftoken'));
+                    var url = '/allianceDTO/' + alliance.uuid;
+                    this._http.delete(url, {
+                        headers: headers
+                    }).subscribe(function (response) { return console.log('Alliance deleted, id = ' + alliance.uuid); }, function (error) { return console.log(error); });
+                };
+                AllianceService.prototype.updateAlliance = function (alliance, newAlliance) {
+                    this.alliances[this.alliances.indexOf(alliance)] = newAlliance;
+                    var body = JSON.stringify({ name: newAlliance.name, leaderLogin: newAlliance.leaderLogin, leaderEmail: newAlliance.leaderEmail });
+                    var headers = new http_1.Headers();
+                    headers.append('Content-Type', 'application/json');
+                    headers.append('X-CSRFToken', this.getCookie('csrftoken'));
+                    var url = '/allianceDTO/' + alliance.uuid;
+                    this._http.put(url, body, {
+                        headers: headers
+                    }).subscribe(function (response) { return console.log('Alliance updated, id = ' + alliance.uuid); }, function (error) { return console.log(error); });
+                };
                 AllianceService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http])
@@ -60,29 +93,4 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx'], function(exports_
         }
     }
 });
-//
-//
-// import {Injectable, provide} from 'angular2/core';
-// import {Http, Headers} from 'angular2/http';
-// import 'rxjs/Rx';
-// import {Alliance} from './alliance';
-//
-// @Injectable()
-// export class AllianceService {
-//
-//     alliances: Array<Alliance> = [];
-//
-//
-//     constructor(private _http: Http){
-//         this.alliances[0] = new Alliance("test_id", "test_name", "test_leaderLogin", "test_leaderEmail");
-//         this.alliances[1] = new Alliance("test_id2", "test_name2", "test_leaderLogin2", "test_leaderEmail2");
-//         this.alliances[2] = new Alliance("test_id3", "test_name3", "test_leaderLogin3", "test_leaderEmail3");
-//     }
-//
-//
-//     getAlliances() : any {
-//         return this.alliances;
-//     }
-//
-// }
 //# sourceMappingURL=alliance-service.js.map
