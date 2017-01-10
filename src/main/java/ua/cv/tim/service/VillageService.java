@@ -9,8 +9,9 @@ import ua.cv.tim.model.Village;
 /**
  * Created by Oleg on 05.01.2017.
  */
-@Transactional
+
 @Service
+@Transactional
 public class VillageService {
     @Autowired
     private VillageDao villageDao;

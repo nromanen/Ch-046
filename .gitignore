@@ -1,6 +1,7 @@
 .idea/*
 .gradle/*
 build/*
+classes/*
 bin/*
 out/*
 **/io/*

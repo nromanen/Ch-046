@@ -88,8 +88,6 @@ public class UserServiceImplTest {
     public void testDelete() throws Exception {
         long sizeBefore=userService.getCount();
         User user = userService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
-        User user1 = userService.getById("c804b1ac-2841-4369-9eca-9726a34585c2");
-//        userService.delete(user1);
         userService.delete(user);
         long sizeAfter=userService.getCount();
         assertEquals(sizeBefore-sizeAfter,1);

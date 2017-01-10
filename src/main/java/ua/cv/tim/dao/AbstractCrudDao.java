@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by vyach on 29.12.2016.
  */
-@Transactional
+
 public abstract class AbstractCrudDao<E> implements CrudDao<E> {
     @Autowired
     @Qualifier("sessionFactory")
