@@ -74,9 +74,14 @@ public class UserServiceImplTest {
 
     @Test
     public void testUpdate() throws Exception {
-        User user = userService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
+
+        User user = new User();
+        user.setUuid("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
+        user.setLogin("login");
+        user.setPassword("password");
         user.setEmail("olleg12@ukr.net");
         userService.updateUser(user);
+
     }
 
     @Test

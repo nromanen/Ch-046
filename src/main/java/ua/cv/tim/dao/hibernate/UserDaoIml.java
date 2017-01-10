@@ -13,7 +13,6 @@ import java.util.List;
  * Created by Oleg on 04.01.2017.
  */
 @Repository
-
 public class UserDaoIml extends AbstractCrudDao<User> implements UserDao {
 
 
