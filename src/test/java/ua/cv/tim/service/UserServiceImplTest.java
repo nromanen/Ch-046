@@ -66,7 +66,7 @@ public class UserServiceImplTest {
         user.setLastModified(new Date());
         user.setEmail("oh");
         user.setRoles(roles);
-        userService.addUser(user);
+        userService.add(user);
         long sizeAfter=userService.getCount();
         assertEquals(sizeAfter-sizeBefore,1);
 
@@ -80,7 +80,7 @@ public class UserServiceImplTest {
         user.setLogin("login");
         user.setPassword("password");
         user.setEmail("olleg12@ukr.net");
-        userService.updateUser(user);
+        userService.update(user);
 
     }
 
@@ -90,7 +90,7 @@ public class UserServiceImplTest {
         User user = userService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
         User user1 = userService.getById("c804b1ac-2841-4369-9eca-9726a34585c2");
 //        userService.delete(user1);
-        userService.deleteUser(user);
+        userService.delete(user);
         long sizeAfter=userService.getCount();
         assertEquals(sizeBefore-sizeAfter,1);
     }
