@@ -14,6 +14,6 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showAdminMainPage() {
-		return "user-main";
+		return "user-main.jsp";
 	}
 }

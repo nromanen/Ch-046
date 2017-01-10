@@ -37,7 +37,7 @@ public class MainController {
 	@RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
 	public String loginPage() {
 		if (isCurrentAuthenticationAnonymous()) {
-			return "login";
+			return "login.jsp";
 		} else {
 			return getRedirectPath();
 		}
@@ -68,7 +68,7 @@ public class MainController {
 	@RequestMapping(value = "/some", method = RequestMethod.GET)
 	public String showSomePage(Authentication auth) {
 		logger.info("Authentication name: {}", auth.getName());
-		return "logout";
+		return "logout.jsp";
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

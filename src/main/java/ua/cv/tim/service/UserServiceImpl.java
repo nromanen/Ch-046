@@ -15,7 +15,7 @@ import ua.cv.tim.model.User;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private UserDao<User> userDao;
+	private UserDao userDao;
 
 	@Override
 	public void addUser(User user) {

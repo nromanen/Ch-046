@@ -21,7 +21,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({"ua.cv.tim.service"})
+@ComponentScan({"ua.cv.tim"})
 @PropertySource(value = { "classpath:hibernate.properties" })
 public class HibernateConfiguration {
 

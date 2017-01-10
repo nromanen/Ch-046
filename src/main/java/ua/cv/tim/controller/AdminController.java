@@ -14,6 +14,6 @@ public class AdminController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showAdminMainPage() {
-		return "admin-main";
+		return "admin-main.jsp";
 	}
 }

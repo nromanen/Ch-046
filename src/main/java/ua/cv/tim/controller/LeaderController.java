@@ -14,6 +14,6 @@ public class LeaderController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showAdminMainPage() {
-		return "leader-main";
+		return "leader-main.jsp";
 	}
 }
