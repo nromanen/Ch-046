@@ -43,7 +43,7 @@ public class UserRESTController {
 
     @RequestMapping(value = "/user",method = RequestMethod.POST)
     public ResponseEntity<Void> addUser(@RequestBody User user,UriComponentsBuilder ucBuilder){
-        userService.addUser(user);
+        userService.add(user);
         HttpHeaders headers=new HttpHeaders();
         headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getUuid()).toUri());
         return new ResponseEntity<>(headers,HttpStatus.CREATED);
@@ -57,7 +57,7 @@ public class UserRESTController {
         }
         currentUser.setLogin(user.getLogin());
         currentUser.setPassword(user.getPassword());
-        userService.updateUser(currentUser);
+        userService.update(currentUser);
         return new ResponseEntity<>(currentUser,HttpStatus.OK);
     }
 
@@ -70,7 +70,7 @@ public class UserRESTController {
         user.setUuid(id);
 //        if (user==null)
 //            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        userService.deleteUser(user);
+        userService.delete(user);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

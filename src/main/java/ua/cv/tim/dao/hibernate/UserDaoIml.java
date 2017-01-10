@@ -1,7 +1,9 @@
 package ua.cv.tim.dao.hibernate;
 
 import org.hibernate.Hibernate;
+import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ua.cv.tim.dao.AbstractCrudDao;
 import ua.cv.tim.dao.UserDao;
@@ -55,6 +57,11 @@ public class UserDaoIml extends AbstractCrudDao<User> implements UserDao {
 
     @Override
     public User getByMail(String mail) {
-        return null;
+        Session session = getCurrentSession();
+        Query query = session.createQuery("FROM User WHERE email=:mail");
+        query.setParameter("mail", mail);
+        User user = (User) query.getSingleResult();
+        return user;
+
     }
 }
