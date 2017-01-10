@@ -3,7 +3,7 @@ package ua.cv.tim.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.cv.tim.dao.hibernate.VillageDao;
+import ua.cv.tim.dao.VillageDao;
 import ua.cv.tim.model.Village;
 
 /**

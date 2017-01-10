@@ -8,7 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import org.springframework.test.context.web.WebAppConfiguration;
 import ua.cv.tim.configuration.HibernateConfiguration;
-import ua.cv.tim.dao.hibernate.UserDao;
+import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
 
@@ -66,16 +66,17 @@ public class UserServiceImplTest {
         user.setLastModified(new Date());
         user.setEmail("oh");
         user.setRoles(roles);
-        userService.add(user);
+        userService.addUser(user);
         long sizeAfter=userService.getCount();
         assertEquals(sizeAfter-sizeBefore,1);
+
     }
 
     @Test
     public void testUpdate() throws Exception {
         User user = userService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
         user.setEmail("olleg12@ukr.net");
-        userService.update(user);
+        userService.updateUser(user);
     }
 
     @Test
@@ -84,7 +85,7 @@ public class UserServiceImplTest {
         User user = userService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
         User user1 = userService.getById("c804b1ac-2841-4369-9eca-9726a34585c2");
 //        userService.delete(user1);
-        userService.delete(user);
+        userService.deleteUser(user);
         long sizeAfter=userService.getCount();
         assertEquals(sizeBefore-sizeAfter,1);
     }

@@ -4,8 +4,8 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.cv.tim.dao.PlayerDaoImpl;
-import ua.cv.tim.dao.VillageDaoImpl;
+import ua.cv.tim.dao.PlayerDao;
+import ua.cv.tim.dao.VillageDao;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Village;
 
@@ -18,23 +18,23 @@ import java.util.List;
 @Transactional
 public class PlayerServiceImpl implements PlayerService {
     @Autowired
-    PlayerDaoImpl playerDaoImpl;
+    PlayerDao playerDao;
     @Autowired
-     VillageDaoImpl villageDaoImpl;
+    VillageDao villageDao;
 
     @Override
     public void add(Player player){
-        playerDaoImpl.add(player);
+        playerDao.add(player);
     }
 
     @Override
     public Player getById(String id){
-        Player byId = playerDaoImpl.getById(id);
+        Player byId = playerDao.getById(id);
         return byId;
     }
 
     public Player getByIdWithVillages(String id){
-        Player byIdWithVillages = playerDaoImpl.getByIdWithVillages(id);
+        Player byIdWithVillages = playerDao.getByIdWithVillages(id);
         List<Village> villages = byIdWithVillages.getVillages();
         Village village = villages.get(0);
         Hibernate.initialize(byIdWithVillages.getUser().getRoles());
@@ -42,15 +42,15 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     public void update(Player player){
-        playerDaoImpl.update(player);
+        playerDao.update(player);
     }
 
     public void delete(Player player){
-        playerDaoImpl.delete(player);
+        playerDao.delete(player);
     }
 
 
     public void deleteVillageOfPlayer(Village village) {
-        villageDaoImpl.delete(village);
+        villageDao.delete(village);
     }
 }
