@@ -69,7 +69,7 @@ public class UserController {
 		}
 		
 
-		@RequestMapping(value="/", method = RequestMethod.GET)
+		@RequestMapping(value="/leader", method = RequestMethod.GET)
 		public ModelAndView getAllUsers() {
 			
 			ModelAndView model = new ModelAndView("leaderMainPage");
