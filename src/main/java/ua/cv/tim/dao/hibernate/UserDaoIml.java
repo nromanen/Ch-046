@@ -52,4 +52,9 @@ public class UserDaoIml extends AbstractCrudDao<User> implements UserDao {
         query.setParameter("login", username);
         return query.getSingleResult();
     }
+
+    @Override
+    public User getByMail(String mail) {
+        return null;
+    }
 }

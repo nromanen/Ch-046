@@ -25,7 +25,7 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
 
 	@Override
 	public long getCount() {
-		return (long) getCurrentSession().createCriteria(User.class).setProjection(Projections.rowCount()).uniqueResult();;
+		return (long) getCurrentSession().createCriteria(User.class).setProjection(Projections.rowCount()).uniqueResult();
 	}
 
 	@Override
@@ -44,13 +44,13 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
 		return users;
 	}
 
-	   public User getByMail(String mail) {
+    public User getByMail(String mail) {
 	        Session session = getCurrentSession();
 	        Query query = session.createQuery("FROM User WHERE email=:mail");
 	        query.setParameter("mail", mail);
 	        User user = (User) query.getSingleResult();
 	        return user;
-	    }
+    }
 
 	@Override
 	public User getById(String uuid) {
