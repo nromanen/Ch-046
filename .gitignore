@@ -5,6 +5,7 @@ bin/*
 out/*
 **/io/*
 logs/*
+src/main/webapp/node_modules/*
 
 *.iml
 *.ipr
@@ -17,3 +18,4 @@ logs/*
 .gradletasknamecash
 /build/
 /bin/
+/.gradle/

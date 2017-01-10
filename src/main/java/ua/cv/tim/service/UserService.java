@@ -9,49 +9,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ua.cv.tim.dao.hibernate.PlayerDao;
-import ua.cv.tim.dao.hibernate.UserDao;
+import ua.cv.tim.dao.PlayerDao;
+import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.dao.hibernate.UserDaoImpl;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Race;
 import ua.cv.tim.model.User;
 
-@Service("userService")
-@Transactional
-public class UserService {
-	@Autowired
-	private UserDao userDao;
+import ua.cv.tim.model.User;
 
-	@Autowired
-	private PlayerDao playerDao;
-	
+/**
+ * Created by vyach on 03.01.2017.
+ */
+public interface UserService {
 
-	public void add(User user) {
-		userDao.add(user);
-		Player player = new Player();
-		player.setUser(user);
-		user.setPlayer(player);
-		playerDao.add(player);
+	User getUserByUsername(String username);
 
-	}
+	void add(User user);
 
-	public List<User> getAll() {
-		return userDao.getAll();
-	}
+	List<User> getAll();
 
-	public void update(User user) {
-		userDao.update(user);
-	}
+	void update(User user);
 
-	public void delete(User user) {
-		userDao.delete(user);
-	}
+	void delete(User user);
 
-	public boolean isUnique(User user) {
-		if(userDao.getByMail(user.getEmail())!=null)
-		{
-			return false;
-		}
-		else return true;
-	}
+	boolean isUnique(User user);
 }

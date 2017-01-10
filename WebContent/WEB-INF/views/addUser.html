@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="row container">
-<form action="/tim-getter/submitUserForm" method="post" >
+<form action="submitUserForm" method="post" >
  <div class="input-field col s6 offset-s3"> 
 <input type="text" id="mail" class="input-field col s6 offset-s1" name="email" placeholder="email"  style="width:300px;" /><span id="mail_error" style="color:red;"></span><br>
 <input type="text"  class="input-field col s3 offset-s1" name="login" placeholder="user name" style="width:300px;"/><br>
@@ -20,13 +20,13 @@
   <input type="checkbox" id="test5" name="Role" value="LEADER"/>
       <label for="test5">Leader</label>    
     </p><br>
- <input type="submit" class="btn waves-effect waves-teal "id="whitespace" onclick="showToast('User added successfully', 3000)" disabled value="Add"/>
+ <input type="submit" class="btn waves-effect waves-teal "id="whitespace" onclick="showToast('User added successfully', 3000)" value="Add"/>
  
- <!-- <input type="submit"  id="whitespace" class="btn waves-effect waves-teal " onclick="showToast('User added successfully', 3000)" disabled value="Add" /> -->
+ <!-- <input type="submit"  id="whitespace" class="btn waves-effect waves-teal " onclick="showToast('User added successfully', 3000)" disabled value="Add" />  onclick="showToast('User added successfully', 3000)"  -->
  </div>
  </div>
  </form>  
  </div>
-  <script src="js/UserValidator.js" ></script>
+  <script src="/js/UserValidator.js" ></script>
 </body>
 </html>

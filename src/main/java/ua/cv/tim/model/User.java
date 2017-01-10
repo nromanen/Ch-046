@@ -10,8 +10,8 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User extends UuidEntity {
-	
-	public User(){
+
+	public User() {
 		prePersist();
 	}
 
@@ -24,9 +24,9 @@ public class User extends UuidEntity {
 	@Column(nullable = false, unique = true)
 	private String email;
 
-	@Column
+	@Column(name = "roles")
 	@Enumerated(EnumType.STRING)
-	@ElementCollection(targetClass = Role.class)
+	@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
 	private List<Role> roles;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -71,6 +71,4 @@ public class User extends UuidEntity {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
-
-
 }

@@ -14,32 +14,23 @@ public class Player implements Serializable {
 	@OneToOne(targetEntity = User.class)
 	private User user;
 
-	public void setUser(User userUuid) {
-		this.user = userUuid;
-	}
+	@Enumerated(EnumType.STRING)
+	private Race race;
+
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<Village> villages;
 
 	@ManyToOne
 	@JoinColumn(name = "alliance_id")
 	private Alliance alliance;
-	
-	@Enumerated(EnumType.STRING)
-	private Race race;
-
-	
-	//Formula(value = "(select count(v.uuid) from village v where v.player_uuid=uuid)")
-	@Transient
-	private Integer villagesCount;
-
-	@OneToMany(fetch = FetchType.LAZY)
-	private List<Village> villages;
 
 	public User getUser() {
 		return user;
 	}
 
-	/*public void setUserUuid(String userUuid) {
-		this.userUuid = userUuid;
-	}*/
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public Race getRace() {
 		return race;
@@ -57,11 +48,12 @@ public class Player implements Serializable {
 		this.villages = villages;
 	}
 
-	public Integer getVillagesCount() {
-		return villagesCount;
+
+	public Alliance getAlliance() {
+		return alliance;
 	}
 
-	public void setVillagesCount(Integer villagesCount) {
-		this.villagesCount = villagesCount;
+	public void setAlliance(Alliance alliance) {
+		this.alliance = alliance;
 	}
 }

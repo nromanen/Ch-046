@@ -1,13 +1,12 @@
-package ua.cv.tim.dao.hibernate;
+package ua.cv.tim.dao;
 
-import ua.cv.tim.dao.AbstractCrudDao;
 import ua.cv.tim.dao.CrudDao;
 import ua.cv.tim.model.Player;
-import ua.cv.tim.model.User;
 
+/**
+ * Created by Admin on 09.01.17.
+ */
 public interface PlayerDao extends CrudDao<Player> {
 
-			
-	}
 
-
+}

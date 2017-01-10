@@ -3,11 +3,9 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'eclipse'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-
 repositories {
     mavenCentral()
     maven { url "https://clojars.org/repo" }
@@ -31,12 +29,13 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-core', version: vers.hibernate
     compile group: 'postgresql', name: 'postgresql', version: vers.postgresql
 
-     compile group: 'org.springframework', name: 'spring-core', version: vers.spring
+    compile group: 'org.springframework', name: 'spring-core', version: vers.spring
     compile group: 'org.springframework', name: 'spring-web', version: vers.spring
     compile group: 'org.springframework', name: 'spring-webmvc', version: vers.spring
     compile group: 'org.springframework', name: 'spring-tx', version: vers.spring
     compile group: 'org.springframework', name: 'spring-orm', version: vers.spring
-    
+    compile group: 'org.springframework', name: 'spring-test', version: '4.3.0.RELEASE'
+
     compile group: 'org.springframework.security', name: 'spring-security-web', version: vers.spring_security
     compile group: 'org.springframework.security', name: 'spring-security-config', version: vers.spring_security
     compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: vers.spring_security
@@ -45,6 +44,9 @@ dependencies {
     compile group: 'javax.servlet', name: 'jstl', version: vers.jstl
     compile group: 'javax.mail', name: 'mail', version: '1.4'
 
+    compile group: 'javax.validation', name: 'validation-api', version: '1.1.0.Final'
+    compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.1.3.Final'
+
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: vers.jackson_core
 
     compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: vers.slf4j_bridge
@@ -52,8 +54,13 @@ dependencies {
 
     testCompile group: 'org.testng', name: 'testng', version: vers.testng
     testCompile group: 'org.mockito', name: 'mockito-core', version: vers.mockito
+    testCompile group: 'junit', name: 'junit', version: 4.12
 }
 
 configurations.all {
     exclude group: "commons-logging", module: "commons-logging"
+}
+
+war {
+    archiveName = 'travian.war'
 }

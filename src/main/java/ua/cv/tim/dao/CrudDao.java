@@ -11,5 +11,6 @@ public interface CrudDao<E> {
 
 	void delete(E entity);
 
+//	E getById(long id);
 
 }

@@ -1,5 +1,6 @@
 package ua.cv.tim.controller;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +24,8 @@ import ua.cv.tim.service.PlayerService;
 import ua.cv.tim.service.UserService;
 import ua.cv.tim.utils.SendMail;
 
-
 @Controller
+@RequestMapping(value = "/user")
 public class UserController {
 	
 	@Autowired
@@ -34,11 +35,16 @@ public class UserController {
 	private SendMail sendMail;
 	
 		
+	@RequestMapping(method = RequestMethod.GET)
+	public String showAdminMainPage() {
+		return "user-main.jsp";
+	}
+	
 	
 		@RequestMapping(value="/add", method = RequestMethod.GET)
 		public ModelAndView addUserForm() {
 			
-			ModelAndView model = new ModelAndView("addUser");
+			ModelAndView model = new ModelAndView("addUser.html");
 			return model;
 		}
 			
@@ -63,7 +69,7 @@ public class UserController {
 				System.out.println("something gone wrong");
 				e.printStackTrace();
 			}
-			ModelAndView model = new ModelAndView("leaderMainPage");
+			ModelAndView model = new ModelAndView("leaderMainPage.html");
 			System.out.println("User added succesfully "+user.getUuid()+user.getLogin());
 			return model;
 		}
@@ -72,7 +78,7 @@ public class UserController {
 		@RequestMapping(value="/leader", method = RequestMethod.GET)
 		public ModelAndView getAllUsers() {
 			
-			ModelAndView model = new ModelAndView("leaderMainPage");
+			ModelAndView model = new ModelAndView("leaderMainPage.html");
 			
 			return model;
 		}
