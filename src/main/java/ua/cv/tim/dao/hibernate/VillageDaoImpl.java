@@ -12,6 +12,6 @@ import ua.cv.tim.model.Village;
 public class VillageDaoImpl extends AbstractCrudDao<Village> implements VillageDao {
     @Override
     public Village getById(String id) {
-        return (Village) getCurrentSession().get(Village.class,id);
+        return  getCurrentSession().get(Village.class,id);
     }
 }

@@ -49,7 +49,6 @@ public class PlayerServiceImpl implements PlayerService {
         playerDao.delete(player);
     }
 
-
     public void deleteVillageOfPlayer(Village village) {
         villageDao.delete(village);
     }

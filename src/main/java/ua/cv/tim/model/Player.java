@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.*;
+
 import javax.persistence.OrderBy;
 
 import javax.persistence.*;
@@ -17,54 +18,54 @@ import java.util.List;
 public class Player implements Serializable {
 
     @Id
-	@JoinColumn(name = "user_uuid")
-	@OneToOne(targetEntity = User.class)
-	@JsonIgnoreProperties("player")
-	private User user;
+    @JoinColumn(name = "user_uuid")
+    @OneToOne(targetEntity = User.class)
+    @JsonIgnoreProperties("player")
+    private User user;
 
-	@Enumerated(EnumType.STRING)
-	private Race race;
-
-
-	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
-	@OrderBy("population")
-	private List<Village> villages;
-
-	@ManyToOne
-	@JoinColumn(name = "alliance_id")
-	private Alliance alliance;
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Race getRace() {
-		return race;
-	}
-
-	public void setRace(Race race) {
-		this.race = race;
-	}
-
-	public List<Village> getVillages() {
-		return villages;
-	}
-
-	public void setVillages(List<Village> villages) {
-		this.villages = villages;
-	}
+    @Enumerated(EnumType.STRING)
+    private Race race;
 
 
-	public Alliance getAlliance() {
-		return alliance;
-	}
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OrderBy("population")
+    private List<Village> villages;
 
-	public void setAlliance(Alliance alliance) {
-		this.alliance = alliance;
-	}
+    @ManyToOne
+    @JoinColumn(name = "alliance_id")
+    private Alliance alliance;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Race getRace() {
+        return race;
+    }
+
+    public void setRace(Race race) {
+        this.race = race;
+    }
+
+    public List<Village> getVillages() {
+        return villages;
+    }
+
+    public void setVillages(List<Village> villages) {
+        this.villages = villages;
+    }
+
+
+    public Alliance getAlliance() {
+        return alliance;
+    }
+
+    public void setAlliance(Alliance alliance) {
+        this.alliance = alliance;
+    }
 }

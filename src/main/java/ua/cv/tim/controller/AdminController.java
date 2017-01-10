@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
-
-	@RequestMapping(method = RequestMethod.GET)
-	public String showAdminMainPage() {
-		return "alliances.html";
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public String showAdminMainPage() {
+        return "alliances.html";
+    }
 }

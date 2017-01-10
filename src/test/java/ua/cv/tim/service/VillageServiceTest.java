@@ -23,10 +23,9 @@ public class VillageServiceTest {
     @Autowired
     VillageService villageService;
 
-
     @Test
     public void testAdd() throws Exception {
-        Village village=new Village();
+        Village village = new Village();
         village.setxCoord((short) 56);
         village.setyCoord((short) 85);
         village.setName("Village1");
@@ -35,9 +34,9 @@ public class VillageServiceTest {
         village.setUuid("5dd0b0f2-810e-44d0-b11b-66d2e0f32bbe");
         village.setPopulation((short) 98);
         village.setPlayer(playerServiceImpl.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7"));
-        String village_id=village.getUuid();
+        String village_id = village.getUuid();
         villageService.add(village);
-        assertEquals(village,villageService.getById(village_id));
+        assertEquals(village, villageService.getById(village_id));
     }
 
     @Test

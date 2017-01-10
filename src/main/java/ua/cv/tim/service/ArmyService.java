@@ -8,11 +8,8 @@ import ua.cv.tim.model.Army;
 public interface ArmyService {
 
     void add(Army army);
-
     void update(Army army);
-
     void delete(Army army);
-
     Army getArmyById(String uuid);
 
 }

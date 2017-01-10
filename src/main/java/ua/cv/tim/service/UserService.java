@@ -26,16 +26,10 @@ import java.util.List;
 public interface UserService {
 
 	User getUserByUsername(String username);
-
 	void add(User user);
-
-
 	void update(User user);
-
 	void delete(User user);
-
 	boolean isUnique(User user);
-
 	long getCount();
 	User getWithRolesById(String id);
 	List<User> getAllWithRoles();

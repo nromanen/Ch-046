@@ -18,15 +18,12 @@ public class VillageService {
     public void add(Village village){
         villageDao.add(village);
     }
-
     public void update(Village village){
         villageDao.update(village);
     }
-
     public void delete(Village village){
         villageDao.delete(village);
     }
-
     public Village getById(String id){
        return villageDao.getById(id);
     }

@@ -6,11 +6,8 @@ package ua.cv.tim.service;
 public interface ServiceInterface<E> {
 
     void add(E entity);
-
     void update(E entity);
-
     void delete(E entity);
-
     E getById(String id);
 
 }
