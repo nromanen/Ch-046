@@ -43,6 +43,7 @@ dependencies {
 
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: vers.servlet
     compile group: 'javax.servlet', name: 'jstl', version: vers.jstl
+    compile group: 'javax.mail', name: 'mail', version: '1.4'
 
     compile group: 'javax.validation', name: 'validation-api', version: '1.1.0.Final'
     compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.1.3.Final'

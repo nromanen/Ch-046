@@ -1,19 +1,41 @@
 package ua.cv.tim.dao.hibernate;
 
-import org.hibernate.Query;
+
+import java.util.List;
+
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ua.cv.tim.dao.AbstractCrudDao;
-import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.model.User;
+import ua.cv.tim.dao.UserDao;
+
 
 
 /**
  * Created by rmochetc on 03.01.2017.
+
  */
 
 @Repository("userDao")
 public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
+
+
+	@Override
+	public List<User> getAll() {
+		Session session = getCurrentSession();
+        Query query = session.createQuery("FROM User ");
+        List<User> users = (List<User>) query.getResultList();
+		return users;
+	}
+	
+	   public User getByMail(String mail) {
+	        Session session = getCurrentSession();
+	        Query query = session.createQuery("FROM User WHERE email=:mail");
+	        query.setParameter("mail", mail);
+	        User user = (User) query.getSingleResult();
+	        return user;	                    
+	    }
 
 	@Override
 	public User getById(String uuid) {
@@ -31,4 +53,5 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
 		query.setParameter("login", username);
 		return query.getSingleResult();
 	}
+
 }

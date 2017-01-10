@@ -16,3 +16,6 @@ src/main/webapp/node_modules/*
 .settings
 
 .gradletasknamecash
+/build/
+/bin/
+/.gradle/

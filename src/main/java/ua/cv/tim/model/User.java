@@ -11,6 +11,10 @@ import java.util.List;
 @Table(name = "users")
 public class User extends UuidEntity {
 
+	public User() {
+		prePersist();
+	}
+
 	@Column(nullable = false, unique = true)
 	private String login;
 
@@ -27,11 +31,6 @@ public class User extends UuidEntity {
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Player player;
-
-
-	public User() {
-		prePersist();
-	}
 
 	public String getLogin() {
 		return login;
