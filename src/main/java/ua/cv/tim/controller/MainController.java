@@ -65,12 +65,6 @@ public class MainController {
 		}
 	}
 
-	@RequestMapping(value = "/some", method = RequestMethod.GET)
-	public String showSomePage(Authentication auth) {
-		logger.info("Authentication name: {}", auth.getName());
-		return "logout.jsp";
-	}
-
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logoutPage(HttpServletRequest req, HttpServletResponse resp) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

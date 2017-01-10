@@ -6,6 +6,7 @@ apply plugin: 'war'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
 repositories {
     mavenCentral()
     maven { url "https://clojars.org/repo" }
