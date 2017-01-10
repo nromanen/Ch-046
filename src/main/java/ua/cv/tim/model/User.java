@@ -15,6 +15,8 @@ import java.util.List;
 public class User extends UuidEntity {
 
 
+
+
 	@Column(nullable = false, unique = true)
 	private String login;
 
@@ -29,6 +31,10 @@ public class User extends UuidEntity {
 	@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
 	private List<Role> roles;
 
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Player player;
+
 
 	public User() {
 		prePersist();
@@ -36,9 +42,7 @@ public class User extends UuidEntity {
 
 
 
-    @JsonIgnore
-	@OneToOne( fetch = FetchType.EAGER)
-	private Player player;
+
 
 	public String getLogin() {
 		return login;

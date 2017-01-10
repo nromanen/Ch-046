@@ -1,6 +1,8 @@
 package ua.cv.tim.dao;
 
 import ua.cv.tim.dao.CrudDao;
+import java.util.List;
+
 import ua.cv.tim.model.User;
 
 import java.util.List;
@@ -15,4 +17,5 @@ public interface UserDao extends CrudDao<User> {
         User getById(String id);
         List<User> getAllWithRoles();
         User getUserByUsername(String username);
+        User getByMail(String mail);
 }

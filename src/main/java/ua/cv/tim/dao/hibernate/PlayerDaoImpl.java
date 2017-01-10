@@ -10,10 +10,8 @@ import ua.cv.tim.model.Village;
 
 import java.util.List;
 
-/**
- * Created by Oleg on 04.01.2017.
- */
-@Repository
+
+@Repository("playerDao")
 public class PlayerDaoImpl extends AbstractCrudDao<Player> implements PlayerDao {
 
 @Autowired

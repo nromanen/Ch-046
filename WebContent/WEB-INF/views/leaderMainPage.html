@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<title>User's List</title>
+</head>
+<body>
+<div class="row container">
+   <div class="input-field col s6 offset-s3">
+<table>
+  	<thead>
+  		<tr>
+  			<th>Login</th>
+  			<th>E-mail</th>
+  			<th>Alliance</th>
+  		</tr>
+  	</thead>
+  	<tbody>
+  		<tr>
+  			<td>Loyhggpin1</td>
+  			<td>Email1@ukr.net</td>
+  			<td>Alliance1</td>
+  			<td> 
+  			    <a class="waves-effect waves-light  btn"  style="background-color:#9cd1af">
+            <i class="small material-icons">mode_edit</i></a>       
+     <a class="waves-effect waves-light  btn"  onclick="return confirm('User will be deleted Press cancel if not sure')" style="background-color:#f21036;width=10px;">
+       <i class="small material-icons" style="padding-top:2px;">delete</i></a></td>   		
+  		</tr>
+  	</tbody>
+  	<tbody>
+  		<tr>
+  			<td>Qdjkhwegin1</td>
+  			<td>Email@ukr.net</td>
+  			<td>Alliance1</td>
+  			  <td> 
+  			    <a class="waves-effect waves-light  btn"  style="background-color:#9cd1af">
+            <i class="small material-icons">mode_edit</i></a>       
+     <a class="waves-effect waves-light  btn"  onclick="return confirm('User will be deleted Press cancel if not sure')" style="background-color:#f21036;width=10px;">
+       <i class="small material-icons" style="padding-top:2px;">delete</i></a></td>   			
+  		</tr>
+  	</tbody>
+  </table>
+  </div>
+  </div>
+  <div class="row container">
+   <div class="input-field col s6 offset-s3 center-align">
+<form action="user/add" method="get" > 
+ <input type="submit"  class="btn waves-effect waves-teal " value="Add" />
+ </form>
+ </div>
+ </div> 
+</body>
+</html>

@@ -14,14 +14,12 @@ public abstract class UuidEntity {
 	private String uuid;
 
 	private Date lastModified;
-	
-	@PrePersist
+
 	protected void prePersist() {
 		uuid = UUID.randomUUID().toString();
 		lastModified = new Date();
 	}
 
-	@PreUpdate
 	protected void preUpdate() {
 		lastModified = new Date();
 	}
@@ -34,7 +32,6 @@ public abstract class UuidEntity {
 		this.uuid = uuid;
 	}
 
-	
 	public Date getLastModified() {
 		return lastModified;
 	}
@@ -53,10 +50,10 @@ public abstract class UuidEntity {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof UuidEntity == false) {
+		if (obj instanceof UuidEntity == false) {
 			return false;
 		}
-		if(this == obj) {
+		if (this == obj) {
 			return true;
 		}
 		final UuidEntity otherObject = (UuidEntity) obj;
