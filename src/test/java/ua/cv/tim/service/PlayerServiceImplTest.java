@@ -6,7 +6,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.junit.Test;
 import org.springframework.test.context.web.WebAppConfiguration;
-import ua.cv.tim.configuration.HibernateTestConfig;
+import ua.cv.tim.configuration.HibernateConfiguration;
+
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Race;
 import ua.cv.tim.model.User;
@@ -21,12 +22,12 @@ import java.util.List;
  */
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {HibernateTestConfig.class})
+@ContextConfiguration(classes = {HibernateConfiguration.class})
 public class PlayerServiceImplTest {
     @Test
     public void testUpdate() throws Exception {
         Player lkl = playerService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
-        lkl.setRace(Race.ROMANS);
+        lkl.setRace(Race.GAULS);
         playerService.update(lkl);
     }
 
@@ -67,6 +68,8 @@ public class PlayerServiceImplTest {
     public void testGetByIdWithVillages() throws Exception {
         Player byIdWithVillages = playerService.getByIdWithVillages("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
         List<Village> villages =  byIdWithVillages.getVillages();
+        Player player = playerService.getByIdWithVillages("7564d81e-b4c7-440f-8f55-ea8938ec0f37");
+
     }
 
 

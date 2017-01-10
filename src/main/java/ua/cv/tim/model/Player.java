@@ -24,8 +24,6 @@ public class Player implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Race race;
 
-	@Formula(value = "(select count(v.uuid) from village v where v.player_uuid=uuid)")
-	private Integer villagesCount;
 
 	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
@@ -50,14 +48,6 @@ public class Player implements Serializable {
 
 	public void setVillages(List<Village> villages) {
 		this.villages = villages;
-	}
-
-	public Integer getVillagesCount() {
-		return villagesCount;
-	}
-
-	public void setVillagesCount(Integer villagesCount) {
-		this.villagesCount = villagesCount;
 	}
 
 	public Alliance getAlliance() {

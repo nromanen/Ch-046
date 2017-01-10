@@ -39,6 +39,11 @@ public class UserDaoIml extends AbstractCrudDao<User> implements UserDao {
     }
 
     @Override
+    public User getById(String id) {
+        return  getCurrentSession().get(User.class,id);
+    }
+
+    @Override
     public List<User> getAllWithRoles() {
         List<User> list = getCurrentSession().createCriteria(User.class).list();
         Hibernate.initialize(list.get(0).getRoles());

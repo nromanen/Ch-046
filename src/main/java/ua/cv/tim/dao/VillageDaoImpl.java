@@ -12,4 +12,9 @@ public class VillageDaoImpl extends AbstractCrudDao<Village> implements VillageD
     public VillageDaoImpl(Class<Village> clazz) {
         super(clazz);
     }
+
+    @Override
+    public Village getById(String id) {
+        return (Village) getCurrentSession().get(Village.class,id);
+    }
 }

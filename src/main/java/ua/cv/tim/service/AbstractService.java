@@ -10,26 +10,24 @@ import ua.cv.tim.dao.AbstractCrudDao;
  */
 @Service
 @Transactional
-public abstract class AbstractService<E> implements ServiceInterface<E> {
+public abstract class AbstractService<E>  {
     @Autowired
     AbstractCrudDao<E> abstractCrudDao;
-    @Override
+
     public void add(E entity) {
          abstractCrudDao.add(entity);
     }
 
-    @Override
+
     public void update(E entity) {
         abstractCrudDao.update(entity);
     }
 
-    @Override
+
     public void delete(E entity) {
         abstractCrudDao.delete(entity);
     }
 
-    @Override
-    public E getById(String id) {
-        return abstractCrudDao.getById(id);
-    }
+
+
 }

@@ -28,6 +28,11 @@ VillageDao villageDao;
     }
 
     @Override
+    public Player getById(String id) {
+        return (Player) getCurrentSession().get(Player.class,id);
+    }
+
+    @Override
     public Player getByIdWithVillages(String id) {
         Player player = getById(id);
         List<Village> villages = player.getVillages();

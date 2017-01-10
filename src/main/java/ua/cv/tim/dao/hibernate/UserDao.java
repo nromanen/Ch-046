@@ -12,5 +12,6 @@ public interface UserDao extends CrudDao<User> {
         long getCount();
         User getWithRolesById(String id);
         List<User> getAll();
+        User getById(String id);
         List<User> getAllWithRoles();
 }

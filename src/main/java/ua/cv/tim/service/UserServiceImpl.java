@@ -1,5 +1,6 @@
 package ua.cv.tim.service;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +31,9 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     @Override
     public List<User> getAllWithRoles() {
-        return userDao.getAllWithRoles();
+        List<User> allWithRoles = userDao.getAllWithRoles();
+        Hibernate.initialize(allWithRoles.get(0).getRoles());
+        return allWithRoles;
     }
 
     @Override
@@ -39,4 +42,8 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     }
 
 
+    @Override
+    public User getById(String id) {
+        return userDao.getById(id);
+    }
 }

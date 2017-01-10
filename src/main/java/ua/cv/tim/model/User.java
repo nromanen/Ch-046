@@ -10,7 +10,7 @@ import java.util.List;
  * Created by vyach on 28.12.2016.
  */
 
-@Entity
+@Entity(name = "user")
 @Table(name = "users")
 public class User extends UuidEntity {
 
@@ -33,7 +33,7 @@ public class User extends UuidEntity {
 	private List<Role> roles;
 
     @JsonIgnore
-	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+	@OneToOne( fetch = FetchType.EAGER)
 	private Player player;
 
 	public String getLogin() {

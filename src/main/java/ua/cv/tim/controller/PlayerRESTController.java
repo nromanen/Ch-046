@@ -1,6 +1,6 @@
 package ua.cv.tim.controller;
 
-import com.sun.deploy.net.HttpResponse;
+//import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -61,7 +61,7 @@ public class PlayerRESTController {
             current_player.setUser(player.getUser());
             current_player.setVillages(player.getVillages());
             current_player.setAlliance(player.getAlliance());
-            current_player.setVillagesCount(player.getVillagesCount());
+
             return new ResponseEntity<>(current_player,HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

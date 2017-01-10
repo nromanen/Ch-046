@@ -14,14 +14,13 @@ private Class<E> clazz;
 	public AbstractCrudDao(Class<E> clazz) {
 		this.clazz = clazz;
 	}
+
+	public AbstractCrudDao(){}
 	
 	@Autowired
 	public SessionFactory sessionFactory;
 
-	@Override
-	public E getById(String id) {
-		return getCurrentSession().get(clazz,id);
-	}
+
 
 	@Override
 	public void add(E entity) {

@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import org.springframework.test.context.web.WebAppConfiguration;
-import ua.cv.tim.configuration.HibernateTestConfig;
+import ua.cv.tim.configuration.HibernateConfiguration;
 import ua.cv.tim.dao.hibernate.UserDao;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
@@ -24,7 +24,7 @@ import static org.junit.Assert.assertEquals;
  */
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {HibernateTestConfig.class})
+@ContextConfiguration(classes = {HibernateConfiguration.class})
 public class UserServiceImplTest {
     @Test
     public void getAllWithRoles() throws Exception {
@@ -82,7 +82,8 @@ public class UserServiceImplTest {
     public void testDelete() throws Exception {
         long sizeBefore=userService.getCount();
         User user = userService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
-
+        User user1 = userService.getById("c804b1ac-2841-4369-9eca-9726a34585c2");
+//        userService.delete(user1);
         userService.delete(user);
         long sizeAfter=userService.getCount();
         assertEquals(sizeBefore-sizeAfter,1);

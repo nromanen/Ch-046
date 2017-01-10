@@ -6,7 +6,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.junit.Test;
-import ua.cv.tim.configuration.HibernateTestConfig;
+import ua.cv.tim.configuration.HibernateConfiguration;
 import ua.cv.tim.model.Village;
 
 import static org.testng.Assert.*;
@@ -16,10 +16,10 @@ import static org.testng.Assert.*;
  */
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {HibernateTestConfig.class})
+@ContextConfiguration(classes = {HibernateConfiguration.class})
 public class VillageServiceTest {
     @Autowired
-    PlayerServiceImpl playerServiceImpl;
+    PlayerService playerServiceImpl;
     @Autowired
     VillageService villageService;
 
@@ -56,6 +56,7 @@ public class VillageServiceTest {
 
     @Test
     public void testGetById() throws Exception {
+        Village village = villageService.getById("5dd0b0f2-810e-44d0-b11b-66d2e0f32bbe");
 
     }
 
