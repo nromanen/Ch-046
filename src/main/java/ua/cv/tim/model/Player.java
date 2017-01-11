@@ -15,9 +15,8 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class Player implements Serializable {
+ public class Player extends UuidEntity implements Serializable {
 
-    @Id
     @JoinColumn(name = "user_uuid")
     @OneToOne(targetEntity = User.class)
     @JsonIgnoreProperties("player")
@@ -67,5 +66,9 @@ public class Player implements Serializable {
 
     public void setAlliance(Alliance alliance) {
         this.alliance = alliance;
+    }
+
+    public Player(){
+        prePersist();
     }
 }

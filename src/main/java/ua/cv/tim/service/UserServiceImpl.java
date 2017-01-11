@@ -34,11 +34,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void add(User user) {
 		userDao.add(user);
-		Player player = new Player();
-		player.setUser(user);
-		user.setPlayer(player);
-		playerDao.add(player);
-
 	}
 	@Override
 	public List<User> getAll() {

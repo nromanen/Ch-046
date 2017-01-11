@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,10 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User extends UuidEntity {
-
-
-
+public class User extends UuidEntity implements Serializable {
 
 	@Column(nullable = false, unique = true)
 	private String login;
@@ -32,7 +30,8 @@ public class User extends UuidEntity {
 	private List<Role> roles;
 
 	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(/*cascade = CascadeType.ALL,*/ fetch = FetchType.EAGER)
+	@Transient
 	private Player player;
 
 	public User() {
