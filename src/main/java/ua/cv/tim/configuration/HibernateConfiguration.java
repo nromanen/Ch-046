@@ -34,7 +34,11 @@ public class HibernateConfiguration {
 		sessionFactory.setDataSource(dataSource());
 		sessionFactory.setPackagesToScan(new String[] { "ua.cv.tim.model" });
 		sessionFactory.setHibernateProperties(getHibernateProperties());
+
+
 		return sessionFactory;
+
+
 	}
 
 	@Bean

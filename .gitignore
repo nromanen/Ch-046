@@ -1,6 +1,7 @@
 .idea/*
 .gradle/*
 build/*
+classes/*
 bin/*
 out/*
 **/io/*
@@ -16,3 +17,6 @@ src/main/webapp/node_modules/*
 .settings
 
 .gradletasknamecash
+/build/
+/bin/
+/.gradle/

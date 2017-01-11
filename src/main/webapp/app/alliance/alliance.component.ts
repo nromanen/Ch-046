@@ -1,7 +1,6 @@
 import {Component} from 'angular2/core'
 import {AllianceService} from "./alliance-service";
 import {Alliance} from "./alliance";
-import {logInfo} from "typings/dist/support/cli";
 
 
 @Component({

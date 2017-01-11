@@ -33,6 +33,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/some").access("hasRole('USER')")
 				.antMatchers("/logout").authenticated()
 				.antMatchers("/admin**").access("hasRole('ADMIN')")
+				.antMatchers("/allianceDTO*").permitAll()
 				.antMatchers("/leader**").access("hasRole('LEADER')")
 				.antMatchers("/user**").access("hasRole('LEADER') or hasRole('USER')")
 				.antMatchers("/", "/login").permitAll()
@@ -40,6 +41,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/login")
 				.and()
 				.exceptionHandling().accessDeniedPage("/access_denied");
+
+//        http.csrf().disable();
+
+
+ /*       CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding("UTF-8");
+        filter.setForceEncoding(true);
+        http.addFilterBefore(filter, CsrfFilter.class);
+*/
 	}
 
 	@Bean

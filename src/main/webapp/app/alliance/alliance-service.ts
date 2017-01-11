@@ -2,7 +2,6 @@ import {Injectable, provide} from 'angular2/core';
 import {Http, Headers} from 'angular2/http';
 import 'rxjs/Rx';
 import {Alliance} from './alliance';
-import {getAllDebugNodes} from "angular2/src/core/debug/debug_node";
 
 
 @Injectable()
@@ -12,10 +11,6 @@ export class AllianceService {
 
 
     constructor(private _http: Http){
-        // this.alliances[0] = new Alliance("test_id", "test_name", "test_leaderLogin", "test_leaderEmail");
-        // this.alliances[0] = new Alliance("test_id2", "test_name2", "test_leaderLogin2", "test_leaderEmail2");
-        // this.alliances[0] = new Alliance("test_id3", "test_name3", "test_leaderLogin3", "test_leaderEmail3");
-
         this.getFromServer();
     }
 
@@ -26,6 +21,7 @@ export class AllianceService {
             return parts.pop().split(";").shift();
     }
 
+
     getAlliances() : any {
         return this.alliances;
     }
@@ -33,7 +29,7 @@ export class AllianceService {
 
     getFromServer(){
         console.log("it works");
-        this._http.get('/allianceDTO')
+        this._http.get('allianceDTO')
             .map(res => res.json())
             .subscribe(
                 response => {
@@ -50,7 +46,7 @@ export class AllianceService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('X-CSRFToken', this.getCookie('csrftoken'));
-        this._http.post('/allianceDTO', body, {
+        this._http.post('allianceDTO', body, {
             headers: headers
         }).map(res => res.json())
             .subscribe(
@@ -68,7 +64,7 @@ export class AllianceService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('X-CSRFToken', this.getCookie('csrftoken'));
-        const url = '/allianceDTO/'+ alliance.uuid;
+        const url = 'allianceDTO/'+ alliance.uuid;
         this._http.delete(url, {
             headers: headers
         }).subscribe(
@@ -86,13 +82,14 @@ export class AllianceService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('X-CSRFToken', this.getCookie('csrftoken'));
-        const url = '/allianceDTO/'+ alliance.uuid ;
+        const url = 'allianceDTO/'+ alliance.uuid ;
         this._http.put(url, body, {
             headers: headers
         }).subscribe(
-            response => console.log('Alliance updated, id = ' + alliance.uuid),
+            response => console.log('Alliance updated, id = ' + alliance.uuid + ', status = ' + response.status),
             error => console.log(error)
         );
+
     }
 
 
