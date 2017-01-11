@@ -15,7 +15,6 @@ import java.util.List;
 
 @Repository("allianceDao")
 public class AllianceDaoImpl extends AbstractCrudDao<Alliance>  implements AllianceDao {
-
     @Override
     public Alliance getById(String id) {
         Session session = getCurrentSession();
