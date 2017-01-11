@@ -12,19 +12,8 @@ import ua.cv.tim.model.Army;
 @Repository(value = "armyDao")
 public class ArmyDaoImpl extends AbstractCrudDao<Army> implements ArmyDao {
 
-    @Override
-    public void add(Army entity) {
-        this.getCurrentSession().save(entity);
-    }
-    @Override
-    public void update(Army entity) {
-        this.getCurrentSession().update(entity);
-    }
-    @Override
-    public void delete(Army entity) {
-        this.getCurrentSession().delete(entity);
-    }
-    @Override
+
+
     public Army getArmyById(String uuid) {
         String request = "select a from Army a where a.uuid = :uuid";
         Query<Army> query = getCurrentSession().createQuery(request);
