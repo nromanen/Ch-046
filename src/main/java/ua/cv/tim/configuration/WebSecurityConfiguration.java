@@ -42,7 +42,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 				.exceptionHandling().accessDeniedPage("/access_denied");
 
-//        http.csrf().disable();
+        http.csrf().disable();
 
 
  /*       CharacterEncodingFilter filter = new CharacterEncodingFilter();

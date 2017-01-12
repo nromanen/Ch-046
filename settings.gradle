@@ -1,6 +1,2 @@
-include 'shared'
-include 'api'
-include 'services:webservice'
-
 rootProject.name = 'tim-getter'
 

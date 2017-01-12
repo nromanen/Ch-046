@@ -1,12 +1,16 @@
 import {Component} from 'angular2/core'
-import {AllianceService} from "./alliance-service";
+// import {AllianceService} from "./alliance-service";
 import {Alliance} from "./alliance";
+import {AllianceService} from "../../services/alliacne/alliance-service";
+import {ErrorMessage} from "../modal_window/modal";
+import {ViewChild} from "angular2/src/core/metadata";
 
 
 @Component({
     selector: 'my-alliance',
-    templateUrl: 'app/alliance/alliance.html',
+    templateUrl: 'components/alliance/testmodal.html',
     providers: [AllianceService],
+    directives: [ErrorMessage],
 })
 
 export class AllianceComponent{
@@ -22,8 +26,15 @@ export class AllianceComponent{
     editLogin: string;
     editEmail: string;
 
+    @ViewChild(ErrorMessage) errorMsg: ErrorMessage;  // ErrorMessage is a ViewChild
+
     constructor(private _allianceService: AllianceService){
 
+    }
+
+    ontest(){
+        console.log("ontest");
+        this.errorMsg.showErrorMessage("Are you sure you want to delete this alliance?");
     }
 
     editAlliance(al: Alliance){

@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AdminController {
     @RequestMapping(method = RequestMethod.GET)
     public String showAdminMainPage() {
-        return "test.html";
+        return "alliances.html";
     }
 }

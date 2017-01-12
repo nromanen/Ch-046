@@ -40,7 +40,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="#al of _allianceService.alliances">
+            <tr *ngFor="#al of _allianceService.alliances" (dblclick)="editAlliance(al)">
                 <td class="col s3"><div *ngIf="al !== selectedAlliance" style="margin: 15px 0;">{{al.name}}</div>
                     <div *ngIf="al === selectedAlliance">
                         <input type="text" name="name" id="editName" class="validate" [(ngModel)]="editName" (keyup.escape)="cancelEditing()" (keyup.enter)="updateAlliance()"/>

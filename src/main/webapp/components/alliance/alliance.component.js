@@ -1,4 +1,4 @@
-System.register(['angular2/core', "./alliance-service", "./alliance"], function(exports_1, context_1) {
+System.register(['angular2/core', "./alliance", "../../services/alliacne/alliance-service", "../modal_window/modal", "angular2/src/core/metadata"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,18 +10,24 @@ System.register(['angular2/core', "./alliance-service", "./alliance"], function(
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, alliance_service_1, alliance_1;
+    var core_1, alliance_1, alliance_service_1, modal_1, metadata_1;
     var AllianceComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
+            function (alliance_1_1) {
+                alliance_1 = alliance_1_1;
+            },
             function (alliance_service_1_1) {
                 alliance_service_1 = alliance_service_1_1;
             },
-            function (alliance_1_1) {
-                alliance_1 = alliance_1_1;
+            function (modal_1_1) {
+                modal_1 = modal_1_1;
+            },
+            function (metadata_1_1) {
+                metadata_1 = metadata_1_1;
             }],
         execute: function() {
             AllianceComponent = (function () {
@@ -30,6 +36,10 @@ System.register(['angular2/core', "./alliance-service", "./alliance"], function(
                     this.alliances = [];
                     this.selectedAlliance = null;
                 }
+                AllianceComponent.prototype.ontest = function () {
+                    console.log("ontest");
+                    this.errorMsg.showErrorMessage("Are you sure you want to delete this alliance?");
+                };
                 AllianceComponent.prototype.editAlliance = function (al) {
                     this.selectedAlliance = al;
                     this.editName = al.name;
@@ -55,11 +65,16 @@ System.register(['angular2/core', "./alliance-service", "./alliance"], function(
                     var updatedAlliance = new alliance_1.Alliance(this.editName, this.editLogin, this.editEmail);
                     this._allianceService.updateAlliance(this.selectedAlliance, updatedAlliance);
                 };
+                __decorate([
+                    metadata_1.ViewChild(modal_1.ErrorMessage), 
+                    __metadata('design:type', modal_1.ErrorMessage)
+                ], AllianceComponent.prototype, "errorMsg", void 0);
                 AllianceComponent = __decorate([
                     core_1.Component({
                         selector: 'my-alliance',
-                        templateUrl: 'app/alliance/alliance.html',
+                        templateUrl: 'components/alliance/testmodal.html',
                         providers: [alliance_service_1.AllianceService],
+                        directives: [modal_1.ErrorMessage],
                     }), 
                     __metadata('design:paramtypes', [alliance_service_1.AllianceService])
                 ], AllianceComponent);

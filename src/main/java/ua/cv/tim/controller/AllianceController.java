@@ -18,12 +18,12 @@ import java.util.List;
 
 @RestController
 public class AllianceController {
-    @Autowired
-    private AllianceService service;
+            @Autowired
+            private AllianceService service;
 
-    @RequestMapping(value = "/allianceDTO", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<AllianceDTO>> listAllAlliances() {
-        List<AllianceDTO> alliances = service.getAll();
+            @RequestMapping(value = "/allianceDTO", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+            public ResponseEntity<List<AllianceDTO>> listAllAlliances() {
+                List<AllianceDTO> alliances = service.getAll();
         if (alliances.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
