@@ -38,11 +38,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 				.formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/login")
 				.and()
-				.exceptionHandling().accessDeniedPage("/access_denied");
+				.exceptionHandling().accessDeniedPage("/access_denied")
+				.and()
+				.csrf().disable(); 	
 	}
 
 	@Bean
 	public AuthenticationTrustResolver getAuthenticationTrustResolver() {
 		return new AuthenticationTrustResolverImpl();
 	}
+	
 }

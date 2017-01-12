@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.PlayerDao;
 import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.dao.hibernate.UserDaoImpl;
+import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Race;
 import ua.cv.tim.model.User;
@@ -25,7 +26,7 @@ public interface UserService {
 
 	User getUserByUsername(String username);
 
-	void add(User user);
+	void add(UserDTO userDTO);
 
 	List<User> getAll();
 
