@@ -1,11 +1,12 @@
 package ua.cv.tim.service;
 
-import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.junit.Test;
+
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.testng.annotations.Test;
 import ua.cv.tim.configuration.HibernateConfiguration;
 
 import ua.cv.tim.model.Player;
@@ -21,7 +22,6 @@ import java.util.List;
  * Created by Oleg on 04.01.2017.
  */
 @WebAppConfiguration
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {HibernateConfiguration.class})
 public class PlayerServiceImplTest {
     @Test
