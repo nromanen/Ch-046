@@ -14,11 +14,13 @@ public abstract class UuidEntity {
 
     private Date lastModified;
 
+    @PrePersist
     protected void prePersist() {
         uuid = UUID.randomUUID().toString();
         lastModified = new Date();
     }
 
+    @PreUpdate
     protected void preUpdate() {
         lastModified = new Date();
     }

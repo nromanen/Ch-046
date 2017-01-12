@@ -29,6 +29,8 @@ ext.vers = [
 dependencies {
     compile group: 'org.hibernate', name: 'hibernate-core', version: vers.hibernate
     compile group: 'postgresql', name: 'postgresql', version: vers.postgresql
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: vers.hibernate
+
 
     compile group: 'org.springframework', name: 'spring-core', version: vers.spring
     compile group: 'org.springframework', name: 'spring-web', version: vers.spring

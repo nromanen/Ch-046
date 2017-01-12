@@ -1,10 +1,13 @@
 package ua.cv.tim.service;
 
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.testng.annotations.Test;
 import ua.cv.tim.configuration.HibernateConfiguration;
+
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Race;
 import ua.cv.tim.model.User;
@@ -22,7 +25,7 @@ import java.util.List;
 public class PlayerServiceImplTest {
     @Test
     public void testUpdate() throws Exception {
-        Player lkl = playerService.getById("4a08fc7d-f32a-4524-af12-438c4206d4b6");
+        Player lkl = playerService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
         lkl.setRace(Race.GAULS);
         playerService.update(lkl);
     }
@@ -43,7 +46,7 @@ public class PlayerServiceImplTest {
         player.setRace(Race.GAULS);
         player.setVillages(villages);
         User user=new User();
-        user.setUuid("4a08fc7d-f32a-4524-af12-438c4206d4b6");
+        user.setUuid("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
         player.setUser(user);
         village.setPlayer(player);
         village.setxCoord((short) 56);
@@ -55,7 +58,7 @@ public class PlayerServiceImplTest {
 
    @Test
     public void testGetById() throws Exception {
-       Player lkl = playerService.getById("2e5a8d1c-1776-45ff-891f-3f79296c0b12");
+       Player lkl = playerService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
        List<Village> villages = lkl.getVillages();
 
    }

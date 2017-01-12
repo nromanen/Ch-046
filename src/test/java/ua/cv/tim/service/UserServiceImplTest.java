@@ -1,9 +1,12 @@
 package ua.cv.tim.service;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.testng.annotations.Test;
 import ua.cv.tim.configuration.HibernateConfiguration;
 import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.model.Role;
@@ -13,12 +16,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+
 
 /**
  * Created by Oleg on 04.01.2017.
  */
 @WebAppConfiguration
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {HibernateConfiguration.class})
 public class UserServiceImplTest {
     @Test
@@ -28,7 +33,7 @@ public class UserServiceImplTest {
 
     @Test
     public void getAll() throws Exception {
-        List<User> all = userService.getAll();
+
     }
 
     @Test
@@ -60,6 +65,7 @@ public class UserServiceImplTest {
         user.setUuid("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
         user.setLastModified(new Date());
         user.setEmail("oh");
+        user.setRoles(roles);
         userService.add(user);
         long sizeAfter=userService.getCount();
         assertEquals(sizeAfter-sizeBefore,1);
@@ -68,7 +74,7 @@ public class UserServiceImplTest {
 
     @Test
     public void testUpdate() throws Exception {
-        
+
         User user = new User();
         user.setUuid("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
         user.setLogin("login");

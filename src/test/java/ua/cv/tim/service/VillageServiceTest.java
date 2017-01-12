@@ -1,18 +1,21 @@
 package ua.cv.tim.service;
 
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.testng.annotations.Test;
+import org.junit.Test;
 import ua.cv.tim.configuration.HibernateConfiguration;
 import ua.cv.tim.model.Village;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.*;
 
 /**
  * Created by Oleg on 05.01.2017.
  */
 @WebAppConfiguration
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {HibernateConfiguration.class})
 public class VillageServiceTest {
     @Autowired
@@ -30,7 +33,7 @@ public class VillageServiceTest {
         village.setIsCapital(true);
         village.setUuid("5dd0b0f2-810e-44d0-b11b-66d2e0f32bbe");
         village.setPopulation((short) 98);
-        village.setPlayer(playerServiceImpl.getById("4a08fc7d-f32a-4524-af12-438c4206d4b6"));
+        village.setPlayer(playerServiceImpl.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7"));
         String village_id = village.getUuid();
         villageService.add(village);
         assertEquals(village, villageService.getById(village_id));
