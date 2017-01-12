@@ -31,7 +31,7 @@ public class User extends UuidEntity implements Serializable {
 
 	@JsonIgnore
 	@OneToOne(/*cascade = CascadeType.ALL,*/ fetch = FetchType.EAGER)
-	@Transient
+
 	private Player player;
 
 	public User() {

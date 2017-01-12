@@ -33,7 +33,7 @@ public class UserServiceImplTest {
 
     @Test
     public void getAll() throws Exception {
-
+        List<User> all = userService.getAll();
     }
 
     @Test

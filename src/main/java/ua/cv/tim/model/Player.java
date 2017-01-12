@@ -27,7 +27,7 @@ import java.util.List;
 
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "player")
     @OrderBy("population")
     private List<Village> villages;
 

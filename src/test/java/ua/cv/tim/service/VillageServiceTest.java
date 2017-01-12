@@ -33,7 +33,7 @@ public class VillageServiceTest {
         village.setIsCapital(true);
         village.setUuid("5dd0b0f2-810e-44d0-b11b-66d2e0f32bbe");
         village.setPopulation((short) 98);
-        village.setPlayer(playerServiceImpl.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7"));
+        village.setPlayer(playerServiceImpl.getById("4a08fc7d-f32a-4524-af12-438c4206d4b6"));
         String village_id = village.getUuid();
         villageService.add(village);
         assertEquals(village, villageService.getById(village_id));
