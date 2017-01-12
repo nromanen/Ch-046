@@ -8,7 +8,7 @@ import {ViewChild} from "angular2/src/core/metadata";
 
 @Component({
     selector: 'my-alliance',
-    templateUrl: 'components/alliance/testmodal.html',
+    templateUrl: 'components/alliance/alliance.html',
     providers: [AllianceService],
     directives: [ErrorMessage],
 })

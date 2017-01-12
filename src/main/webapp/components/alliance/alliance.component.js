@@ -72,7 +72,7 @@ System.register(['angular2/core', "./alliance", "../../services/alliacne/allianc
                 AllianceComponent = __decorate([
                     core_1.Component({
                         selector: 'my-alliance',
-                        templateUrl: 'components/alliance/testmodal.html',
+                        templateUrl: 'components/alliance/alliance.html',
                         providers: [alliance_service_1.AllianceService],
                         directives: [modal_1.ErrorMessage],
                     }), 
