@@ -29,6 +29,8 @@ ext.vers = [
 dependencies {
     compile group: 'org.hibernate', name: 'hibernate-core', version: vers.hibernate
     compile group: 'postgresql', name: 'postgresql', version: vers.postgresql
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: vers.hibernate
+
 
     compile group: 'org.springframework', name: 'spring-core', version: vers.spring
     compile group: 'org.springframework', name: 'spring-web', version: vers.spring
@@ -49,9 +51,15 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.1.3.Final'
 
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: vers.jackson_core
+// https://mvnrepository.com/artifact/junit/junit
+    compile group: 'junit', name: 'junit', version: '4.12'
 
     compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: vers.slf4j_bridge
     compile group: 'ch.qos.logback', name: 'logback-classic', version: vers.logback
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-test
+    compile group: 'org.springframework', name: 'spring-test', version: '4.3.5.RELEASE'
+
 
     testCompile group: 'org.testng', name: 'testng', version: vers.testng
     testCompile group: 'org.mockito', name: 'mockito-core', version: vers.mockito

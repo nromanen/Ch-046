@@ -7,6 +7,7 @@ import ua.cv.tim.dao.AbstractCrudDao;
 import ua.cv.tim.dao.AllianceDao;
 import ua.cv.tim.model.Alliance;
 
+import javax.persistence.OrderBy;
 import java.util.List;
 
 /**
@@ -27,6 +28,7 @@ public class AllianceDaoImpl extends AbstractCrudDao<Alliance>  implements Allia
 
 
     @Override
+    @OrderBy("name")
     public List<Alliance> getAll() {
         Session session = getCurrentSession();
         Query query = session.createQuery("select a FROM Alliance a");

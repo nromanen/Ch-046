@@ -27,7 +27,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 HeaderComponent = __decorate([
                     core_1.Component({
                         selector: 'my-header',
-                        template: "\n<nav>\n    <div class=\"nav-wrapper\">\n        <a href=\"#!\" class=\"brand-logo\">Logo</a>\n        <a href=\"#\" data-activates=\"mobile-demo\" class=\"button-collapse\"><i class=\"material-icons\">menu</i></a>\n        <ul class=\"right hide-on-med-and-down\">\n            <li><a href=\"/alliance\">Alliances</a></li>\n            <li><a href=\"#\">Jingle</a></li>\n            <li><a href=\"#\">Mobile</a></li>\n        </ul>\n        <ul class=\"side-nav\" id=\"mobile-demo\">\n            <li><a href=\"#\">Show users</a></li>\n            <li><a href=\"#\">Add users</a></li>\n            <li><a href=\"#l\">Javascript</a></li>\n            <li><a href=\"#l\">Mobile</a></li>\n        </ul>\n    </div>\n</nav>\n\n    ",
+                        templateUrl: 'components/header/header.html',
                     }), 
                     __metadata('design:paramtypes', [])
                 ], HeaderComponent);

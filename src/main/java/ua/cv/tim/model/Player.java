@@ -8,6 +8,9 @@ import org.hibernate.annotations.*;
 
 import javax.persistence.OrderBy;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.OrderBy;
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
