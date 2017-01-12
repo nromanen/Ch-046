@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+<button onclick="send()">Get</button>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+<script>
+    function send(){
+        var alliance = {name : 'testName1', leaderLogin: 'testLeaderName1', leaderEmail: 'testLeaderEmail1'};
+        $.ajax({
+            type : "POST", // http method
+            url : "allianceDTO", // the endpoint
+            contentType: "application/json; charset=utf-8",
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: JSON.stringify(alliance),
+            success : function(json) {
+                console.log(json);
+                console.log("success");
+            }
+        });
+    }
+</script>
+</body>
+</html>
