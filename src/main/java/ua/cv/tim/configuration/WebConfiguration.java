@@ -3,15 +3,12 @@ package ua.cv.tim.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-<<<<<<< HEAD
-=======
+
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
->>>>>>> master
-import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 /**
@@ -41,14 +38,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 		configurer.enable();
 	}
 
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {
 
-		registry
-				.addMapping("/**")
-				.allowedOrigins("http://localhost:8080")
-				.allowedMethods("GET", "POST", "PUT", "DELETE");
-	}
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
