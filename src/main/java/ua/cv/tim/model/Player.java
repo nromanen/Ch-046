@@ -65,6 +65,6 @@ import java.util.List;
     }
 
     public Player(){
-        prePersist();
+
     }
 }
