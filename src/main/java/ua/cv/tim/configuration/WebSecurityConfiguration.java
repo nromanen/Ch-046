@@ -40,7 +40,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 				.exceptionHandling().accessDeniedPage("/access_denied")
 				.and()
-				.csrf().disable(); 	
+				.csrf().disable();
+
 	}
 
 	@Bean

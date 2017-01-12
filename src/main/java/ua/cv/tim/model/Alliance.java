@@ -10,7 +10,9 @@ import java.util.List;
  */
 
 @Entity
+
 public class Alliance extends UuidEntity {
+
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -19,7 +21,7 @@ public class Alliance extends UuidEntity {
     private List<Player> players;
 
     public Alliance() {
-        prePersist();
+//        prePersist();
     }
 
     public String getName() {

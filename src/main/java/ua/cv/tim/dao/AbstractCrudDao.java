@@ -9,34 +9,29 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by vyach on 29.12.2016.
  */
-@Transactional
+
 public abstract class AbstractCrudDao<E> implements CrudDao<E> {
+    @Autowired
+    @Qualifier("sessionFactory")
+    private SessionFactory sessionFactory;
 
-	@Autowired
-	@Qualifier("sessionFactory")
-	private SessionFactory sessionFactory;
+    @Override
+    public void add(E entity) {
+        getCurrentSession().save(entity);
+    }
 
-	@Override
-	public void add(E entity) {
-		getCurrentSession().save(entity);
-	}
+    @Override
+    public void update(E entity) {
+        getCurrentSession().update(entity);
+    }
 
-	@Override
-	public void update(E entity) {
-		getCurrentSession().update(entity);
-	}
+    @Override
+    public void delete(E entity) {
+        getCurrentSession().delete(entity);
+    }
 
-	@Override
-	public void delete(E entity) {
-		getCurrentSession().delete(entity);
-	}
+    protected Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
+    }
 
-
-	protected Session getCurrentSession() {
-		return sessionFactory.getCurrentSession();
-	}
-
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-}
+    }

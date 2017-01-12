@@ -24,9 +24,6 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx'], function(exports_
         execute: function() {
             AllianceService = (function () {
                 function AllianceService(_http) {
-                    // this.alliances[0] = new Alliance("test_id", "test_name", "test_leaderLogin", "test_leaderEmail");
-                    // this.alliances[0] = new Alliance("test_id2", "test_name2", "test_leaderLogin2", "test_leaderEmail2");
-                    // this.alliances[0] = new Alliance("test_id3", "test_name3", "test_leaderLogin3", "test_leaderEmail3");
                     this._http = _http;
                     this.alliances = [];
                     this.getFromServer();
@@ -42,8 +39,8 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx'], function(exports_
                 };
                 AllianceService.prototype.getFromServer = function () {
                     var _this = this;
-                    console.log("it works");
-                    this._http.get('/allianceDTO')
+                    console.log("it works from another path");
+                    this._http.get('allianceDTO')
                         .map(function (res) { return res.json(); })
                         .subscribe(function (response) {
                         console.log(response);
@@ -55,7 +52,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx'], function(exports_
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
                     headers.append('X-CSRFToken', this.getCookie('csrftoken'));
-                    this._http.post('/allianceDTO', body, {
+                    this._http.post('allianceDTO', body, {
                         headers: headers
                     }).map(function (res) { return res.json(); })
                         .subscribe(function (response) { return console.log('Alliance created successful'); }, function (error) { return console.log(error); });
@@ -67,7 +64,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx'], function(exports_
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
                     headers.append('X-CSRFToken', this.getCookie('csrftoken'));
-                    var url = '/allianceDTO/' + alliance.uuid;
+                    var url = 'allianceDTO/' + alliance.uuid;
                     this._http.delete(url, {
                         headers: headers
                     }).subscribe(function (response) { return console.log('Alliance deleted, id = ' + alliance.uuid); }, function (error) { return console.log(error); });
@@ -78,10 +75,10 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx'], function(exports_
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
                     headers.append('X-CSRFToken', this.getCookie('csrftoken'));
-                    var url = '/allianceDTO/' + alliance.uuid;
+                    var url = 'allianceDTO/' + alliance.uuid;
                     this._http.put(url, body, {
                         headers: headers
-                    }).subscribe(function (response) { return console.log('Alliance updated, id = ' + alliance.uuid); }, function (error) { return console.log(error); });
+                    }).subscribe(function (response) { return console.log('Alliance updated, id = ' + alliance.uuid + ', status = ' + response.status); }, function (error) { return console.log(error); });
                 };
                 AllianceService = __decorate([
                     core_1.Injectable(), 

@@ -1,11 +1,14 @@
 .idea/*
 .gradle/*
 build/*
+classes/*
 bin/*
 out/*
 **/io/*
 logs/*
 src/main/webapp/node_modules/*
+WebContent/*
+web/*
 
 *.iml
 *.ipr

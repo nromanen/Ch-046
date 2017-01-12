@@ -19,6 +19,8 @@ import ua.cv.tim.model.User;
 
 import ua.cv.tim.model.User;
 
+import java.util.List;
+
 /**
  * Created by vyach on 03.01.2017.
  */
@@ -28,11 +30,14 @@ public interface UserService {
 
 	void add(UserDTO userDTO);
 
-	List<User> getAll();
+	void add(User user);
 
 	void update(User user);
-
 	void delete(User user);
-
 	boolean isUnique(User user);
+	long getCount();
+	User getWithRolesById(String id);
+	List<User> getAllWithRoles();
+	List<User> getAll();
+	User getById(String id);
 }

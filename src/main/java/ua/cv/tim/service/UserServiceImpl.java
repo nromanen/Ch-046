@@ -17,8 +17,10 @@ import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
 import ua.cv.tim.utils.SendMail;
 
+import java.util.List;
+
 /**
- * Created by vyach on 03.01.2017.
+ * Created by Oleg on 04.01.2017.
  */
 
 @Service("userService")
@@ -86,4 +88,26 @@ public class UserServiceImpl implements UserService {
 		}
 		else return true;
 	}
+
+    @Override
+    public long getCount() {
+        return userDao.getCount();
+    }
+
+    @Override
+    public User getWithRolesById(String id) {
+        return userDao.getWithRolesById(id);
+    }
+
+    @Override
+    public List<User> getAllWithRoles() {
+        return userDao.getAllWithRoles();
+    }
+
+
+
+    @Override
+    public User getById(String id) {
+        return userDao.getById(id);
+    }
 }
