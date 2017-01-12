@@ -1,12 +1,9 @@
 package ua.cv.tim.service;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.testng.annotations.Test;
 import ua.cv.tim.configuration.HibernateConfiguration;
 import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.model.Role;
@@ -16,14 +13,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by Oleg on 04.01.2017.
  */
 @WebAppConfiguration
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {HibernateConfiguration.class})
 public class UserServiceImplTest {
     @Test

@@ -6,11 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +19,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/user/", method = RequestMethod.GET)
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> allWithRoles = userService.getAllWithRoles();
         if (allWithRoles.isEmpty()) {

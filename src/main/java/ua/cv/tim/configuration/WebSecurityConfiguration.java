@@ -30,26 +30,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/some").access("hasRole('USER')")
 				.antMatchers("/logout").authenticated()
 				.antMatchers("/admin**").access("hasRole('ADMIN')")
-				.antMatchers("/allianceDTO*").permitAll()
 				.antMatchers("/leader**").access("hasRole('LEADER')")
 				.antMatchers("/user**").access("hasRole('LEADER') or hasRole('USER')")
 				.antMatchers("/", "/login").permitAll()
 				.and()
 				.formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/login")
 				.and()
-				.exceptionHandling().accessDeniedPage("/access_denied");
-
-        http.csrf().disable();
-
-
- /*       CharacterEncodingFilter filter = new CharacterEncodingFilter();
-        filter.setEncoding("UTF-8");
-        filter.setForceEncoding(true);
-        http.addFilterBefore(filter, CsrfFilter.class);
-*/
+				.exceptionHandling().accessDeniedPage("/access_denied")
+				.and()
+				.csrf().disable();
 	}
 
 	@Bean
