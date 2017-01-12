@@ -12,13 +12,22 @@ import ua.cv.tim.model.Army;
 @Repository(value = "armyDao")
 public class ArmyDaoImpl extends AbstractCrudDao<Army> implements ArmyDao {
 
-
-
+    @Override
     public Army getArmyById(String uuid) {
         String request = "select a from Army a where a.uuid = :uuid";
         Query<Army> query = getCurrentSession().createQuery(request);
         query.setParameter("uuid", uuid);
         return query.getSingleResult();
     }
+
+    public Army getById(String id) {
+        return getCurrentSession().get(Army.class, id);
+    }
+
+
+
+
+
+
 
 }
