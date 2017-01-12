@@ -41,10 +41,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.exceptionHandling().accessDeniedPage("/access_denied")
 				.and()
 				.csrf().disable();
+
 	}
 
 	@Bean
 	public AuthenticationTrustResolver getAuthenticationTrustResolver() {
 		return new AuthenticationTrustResolverImpl();
 	}
+	
 }
