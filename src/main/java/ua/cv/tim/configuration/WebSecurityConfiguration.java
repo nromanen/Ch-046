@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+<<<<<<< HEAD
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -27,6 +28,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService);
     }
 
+=======
+	@Autowired
+	private UserDetailsService userDetailsService;
+
+	@Autowired
+	protected void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService);
+	}
+>>>>>>> master
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -42,10 +52,18 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.exceptionHandling().accessDeniedPage("/access_denied")
 				.and()
 				.csrf().disable();
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 	}
 
 	@Bean
 	public AuthenticationTrustResolver getAuthenticationTrustResolver() {
 		return new AuthenticationTrustResolverImpl();
 	}
+<<<<<<< HEAD
+=======
+	
+>>>>>>> master
 }

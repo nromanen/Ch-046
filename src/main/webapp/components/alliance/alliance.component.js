@@ -76,9 +76,10 @@ System.register(['angular2/core', "./alliance", "../../services/alliacne/allianc
                         providers: [alliance_service_1.AllianceService],
                         directives: [modal_1.ErrorMessage],
                     }), 
-                    __metadata('design:paramtypes', [alliance_service_1.AllianceService])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof alliance_service_1.AllianceService !== 'undefined' && alliance_service_1.AllianceService) === 'function' && _a) || Object])
                 ], AllianceComponent);
                 return AllianceComponent;
+                var _a;
             }());
             exports_1("AllianceComponent", AllianceComponent);
         }

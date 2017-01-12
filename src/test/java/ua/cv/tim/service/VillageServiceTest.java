@@ -1,5 +1,6 @@
 package ua.cv.tim.service;
 
+<<<<<<< HEAD
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -10,12 +11,25 @@ import ua.cv.tim.configuration.HibernateConfiguration;
 import ua.cv.tim.model.Village;
 
 import static org.testng.Assert.*;
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.testng.annotations.Test;
+import ua.cv.tim.configuration.HibernateConfiguration;
+import ua.cv.tim.model.Village;
+
+import static org.testng.Assert.assertEquals;
+>>>>>>> master
 
 /**
  * Created by Oleg on 05.01.2017.
  */
 @WebAppConfiguration
+<<<<<<< HEAD
 @RunWith(SpringJUnit4ClassRunner.class)
+=======
+>>>>>>> master
 @ContextConfiguration(classes = {HibernateConfiguration.class})
 public class VillageServiceTest {
     @Autowired
