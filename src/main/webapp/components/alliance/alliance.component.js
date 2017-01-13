@@ -1,4 +1,4 @@
-System.register(['angular2/core', "./alliance", "../../services/alliacne/alliance-service", "../modal_window/modal", "angular2/src/core/metadata"], function(exports_1, context_1) {
+System.register(['angular2/core', "./alliance", "../modal_window/modal", "angular2/src/core/metadata", "../../services/alliance/alliance-service"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', "./alliance", "../../services/alliacne/allianc
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, alliance_1, alliance_service_1, modal_1, metadata_1;
+    var core_1, alliance_1, modal_1, metadata_1, alliance_service_1;
     var AllianceComponent;
     return {
         setters:[
@@ -20,14 +20,14 @@ System.register(['angular2/core', "./alliance", "../../services/alliacne/allianc
             function (alliance_1_1) {
                 alliance_1 = alliance_1_1;
             },
-            function (alliance_service_1_1) {
-                alliance_service_1 = alliance_service_1_1;
-            },
             function (modal_1_1) {
                 modal_1 = modal_1_1;
             },
             function (metadata_1_1) {
                 metadata_1 = metadata_1_1;
+            },
+            function (alliance_service_1_1) {
+                alliance_service_1 = alliance_service_1_1;
             }],
         execute: function() {
             AllianceComponent = (function () {
@@ -76,10 +76,9 @@ System.register(['angular2/core', "./alliance", "../../services/alliacne/allianc
                         providers: [alliance_service_1.AllianceService],
                         directives: [modal_1.ErrorMessage],
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof alliance_service_1.AllianceService !== 'undefined' && alliance_service_1.AllianceService) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [alliance_service_1.AllianceService])
                 ], AllianceComponent);
                 return AllianceComponent;
-                var _a;
             }());
             exports_1("AllianceComponent", AllianceComponent);
         }
