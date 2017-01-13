@@ -9,6 +9,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ua.cv.tim.dao.AbstractCrudDao;
+import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
 import ua.cv.tim.dao.UserDao;
 
@@ -28,7 +29,7 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     @Override
     public User getWithRolesById(String id) {
         User user = getCurrentSession().get(User.class, id);
-        Hibernate.initialize(user.getRoles());
+        List<Role> roles = user.getRoles();
         return user;
 
     }
@@ -60,7 +61,9 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
 
     @Override
     public List<User> getAllWithRoles() {
-        List<User> allWithRoles = getCurrentSession().createCriteria(User.class).list();
+
+        Query query = getCurrentSession().createQuery("FROM User ");
+        List<User> allWithRoles = (List<User>) query.getResultList();
         for (User user : allWithRoles)
             Hibernate.initialize(user.getRoles());
         return allWithRoles;
