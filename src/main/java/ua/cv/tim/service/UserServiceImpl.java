@@ -16,6 +16,8 @@ import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
 import ua.cv.tim.utils.SendMail;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -27,6 +29,8 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+	
 	@Autowired
 	private UserDao userDao;
 
@@ -61,10 +65,9 @@ public class UserServiceImpl implements UserService {
 		try {
 			sendMail.send(user.getEmail(), "Travian user's info",
 					"Your login is" + user.getLogin() + " and password: " + user.getPassword()+"  role "+user.getRoles());
-			System.out.println("Password has been send on users mail");
-		} catch (MessagingException e) {
-			System.out.println("something gone wrong");
-			e.printStackTrace();
+			logger.info("Password {} has been sent on user's e-mail {}" , user.getPassword(), user.getEmail());
+        } catch (MessagingException e) {
+            logger.error("The e-mail hasn't been sent {}", e);
 		}
 
 	}
@@ -110,4 +113,9 @@ public class UserServiceImpl implements UserService {
     public User getById(String id) {
         return userDao.getById(id);
     }
+	@Override
+	public void add(User user) {
+		// TODO Auto-generated method stub
+		
+	}
 }

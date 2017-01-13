@@ -2,6 +2,9 @@ package ua.cv.tim.controller;
 
 
 import java.util.ArrayList;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.model.Player;
@@ -38,10 +43,13 @@ import ua.cv.tim.service.PlayerService;
 import ua.cv.tim.service.UserService;
 import ua.cv.tim.utils.SendMail;
 
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+	
 	@Autowired
 	private UserService userService;
 
@@ -59,12 +67,12 @@ public class UserController {
 
 	@RequestMapping(value = "/submitUserForm",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<UserDTO> submitUserForm(@RequestBody UserDTO userDTO) {
-		System.out.println("UserMail "+userDTO.getEmail());
-		System.out.println("UserLogin "+userDTO.getLogin());
-		System.out.println("UserPassword "+userDTO.getPassword());
-		System.out.println("User Role  "+userDTO.getRole());		
+		logger.info("UserMail {}" ,userDTO.getEmail());
+		logger.info("UserLogin {}" ,userDTO.getLogin());
+		logger.info("UserPassword {}" ,userDTO.getPassword());
+		logger.info("User Role {}" ,userDTO.getRole());
 		userService.add(userDTO);
-		System.out.println("User added succesfully " + " Login "+userDTO.getLogin());
+		logger.info("User added succesfully {}" ,userDTO.getLogin());
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 
