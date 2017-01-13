@@ -21,46 +21,50 @@ import java.util.List;
  * Created by Oleg on 07.01.2017.
  */
 
+
+
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-    @Autowired
-    private UserService userService;
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-//    @RequestMapping(method = RequestMethod.GET)
-//    public String showAdminMainPage() {
-//        return "user-main.jsp";
-//    }
+	@Autowired
+	private UserService userService;
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public ModelAndView addUserForm() {
+	@RequestMapping(method = RequestMethod.GET)
+	public String showAdminMainPage() {
+		return "user-main.jsp";
+	}
 
-        ModelAndView model = new ModelAndView("addUser.html");
-        return model;
-    }
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public ModelAndView addUserForm() {
 
-    @RequestMapping(value = "/submitUserForm", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<UserDTO> submitUserForm(@RequestBody UserDTO userDTO) {
-        logger.info("UserMail {}", userDTO.getEmail());
-        logger.info("UserLogin {}",userDTO.getLogin());
-        logger.info("UserPassword {}", userDTO.getPassword());
-        logger.info("User Role {}" , userDTO.getRole());
-        userService.add(userDTO);
-        logger.info("User added succesfully Login {}" , userDTO.getLogin());
-        return new ResponseEntity<>(userDTO, HttpStatus.OK);
-    }
+		ModelAndView model = new ModelAndView("addUser.html");
+		return model;
+	}
 
-    @RequestMapping(value = "/leader", method = RequestMethod.GET)
-    public ModelAndView getAllUsers2() {
+	@RequestMapping(value = "/submitUserForm",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<UserDTO> submitUserForm(@RequestBody UserDTO userDTO) {
+		logger.info("UserMail {}" ,userDTO.getEmail());
+		logger.info("UserLogin {}" ,userDTO.getLogin());
+		logger.info("UserPassword {}" ,userDTO.getPassword());
+		logger.info("User Role {}" ,userDTO.getRole());
+		userService.add(userDTO);
+		logger.info("User added succesfully {}" ,userDTO.getLogin());
+		return new ResponseEntity<>(userDTO, HttpStatus.OK);
+	}
 
-        ModelAndView model = new ModelAndView("leaderMainPage.html");
+	@RequestMapping(value = "/leader", method = RequestMethod.GET)
+	public ModelAndView getAllUsers2() {
 
-        return model;
-    }
+		ModelAndView model = new ModelAndView("leaderMainPage.html");
 
-    @RequestMapping( method = RequestMethod.GET)
+		return model;
+	}
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> allWithRoles = userService.getAllWithRoles();
         if (allWithRoles.isEmpty()) {
@@ -69,7 +73,7 @@ public class UserController {
         return new ResponseEntity<>(allWithRoles, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public ResponseEntity<User> getById(@PathVariable("id") String id) {
         User user = userService.getWithRolesById(id);
         if (user == null) {
@@ -98,7 +102,7 @@ public class UserController {
         return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteUser(@PathVariable(name = "id") String id) {
         User user = userService.getById(id);
         user.setUuid(id);

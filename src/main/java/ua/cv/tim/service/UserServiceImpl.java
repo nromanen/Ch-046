@@ -18,6 +18,7 @@ import ua.cv.tim.utils.SendMail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
  * Created by Oleg on 04.01.2017.
  */
@@ -26,7 +27,8 @@ import org.slf4j.LoggerFactory;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
 	@Autowired
 	private UserDao userDao;
 	@Autowired
@@ -39,38 +41,35 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserByUsername(username);
 	}
 	@Override
+	public void add(UserDTO userDTO) {
+		User user = new User();
+		user.setEmail(userDTO.getEmail());
+		user.setLogin(userDTO.getLogin());
+		user.setPassword(userDTO.getPassword());
+		List<Role> roles = new ArrayList<>();
+		roles.add(Role.USER);
+		if (userDTO.getRole() != null) {
+			roles.add(Role.LEADER);
+		}
+		user.setRoles(roles);
+		userDao.add(user);
+		Player player = new Player();
+		player.setUser(user);
+		user.setPlayer(player);
+		playerDao.add(player);
+
+		try {
+			sendMail.send(user.getEmail(), "Travian user's info",
+					"Your login is" + user.getLogin() + " and password: " + user.getPassword() + "  role " + user.getRoles());
+			logger.info("Password {} has been sent on user's e-mail {}", user.getPassword(), user.getEmail());
+		} catch (MessagingException e) {
+			logger.error("The e-mail hasn't been sent {}", e);
+		}
+	}
 	public void add(User user) {
 		userDao.add(user);
 	}
 
-    @Override
-    public void add(UserDTO userDTO) {
-        User user = new User();
-        user.setEmail(userDTO.getEmail());
-        user.setLogin(userDTO.getLogin());
-        user.setPassword(userDTO.getPassword());
-        List<Role> roles = new ArrayList<>();
-        roles.add(Role.USER);
-        if (userDTO.getRole() != null) {
-            roles.add(Role.LEADER);
-        }
-        user.setRoles(roles);
-        userDao.add(user);
-        Player player = new Player();
-        player.setUser(user);
-        user.setPlayer(player);
-        playerDao.add(player);
-
-        try {
-            sendMail.send(user.getEmail(), "Travian user's info",
-                    "Your login is" + user.getLogin() + " and password: " + user.getPassword()+"  role "+user.getRoles());
-            logger.info("Password {} has been sent on user's e-mail {}" , user.getPassword(), user.getEmail());
-        } catch (MessagingException e) {
-            logger.error("The e-mail hasn't been sent {}", e);
-
-        }
-
-    }
 
 
 
