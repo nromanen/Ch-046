@@ -22,3 +22,5 @@ web/*
 /build/
 /bin/
 /.gradle/
+.idea/
+org/
