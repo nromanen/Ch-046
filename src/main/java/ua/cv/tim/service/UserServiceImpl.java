@@ -1,14 +1,8 @@
 package ua.cv.tim.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import ua.cv.tim.dao.PlayerDao;
 import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.dto.UserDTO;
@@ -17,6 +11,8 @@ import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
 import ua.cv.tim.utils.SendMail;
 
+import javax.mail.MessagingException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,6 +64,12 @@ public class UserServiceImpl implements UserService {
 		}
 
 	}
+
+	@Override
+	public void add(User user) {
+
+	}
+
 	@Override
 	public List<User> getAll() {
 		return userDao.getAll();
