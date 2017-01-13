@@ -2,10 +2,11 @@ package ua.cv.tim.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.testng.annotations.Test;
-
 import ua.cv.tim.configuration.HibernateConfiguration;
+import ua.cv.tim.configuration.WebConfiguration;
 import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
@@ -14,15 +15,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
-
+import static org.testng.Assert.*;
 
 /**
- * Created by Oleg on 04.01.2017.
+ * Created by okunetc on 12.01.2017.
  */
+
 @WebAppConfiguration
-@ContextConfiguration(classes = {HibernateConfiguration.class})
-public class UserServiceImplTest {
+@ContextConfiguration(classes = {HibernateConfiguration.class, WebConfiguration.class})
+public class UserServiceImplTest  extends AbstractTestNGSpringContextTests {
+
     @Test
     public void getAllWithRoles() throws Exception {
         List<User> allWithRoles = userService.getAllWithRoles();
@@ -95,10 +97,6 @@ public class UserServiceImplTest {
         User user = userService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
 
     }
-
-
-
-
 
 
 }

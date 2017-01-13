@@ -5,6 +5,7 @@ package ua.cv.tim.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import ua.cv.tim.configuration.HibernateConfiguration;
@@ -20,7 +21,7 @@ import static org.testng.Assert.assertEquals;
  */
 @WebAppConfiguration
 @ContextConfiguration(classes = {HibernateConfiguration.class})
-public class VillageServiceTest {
+public class VillageServiceTest extends AbstractTestNGSpringContextTests{
     @Autowired
     PlayerService playerServiceImpl;
     @Autowired

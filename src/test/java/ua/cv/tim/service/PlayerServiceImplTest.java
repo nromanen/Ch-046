@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.testng.annotations.Test;
 import ua.cv.tim.configuration.HibernateConfiguration;
@@ -23,7 +24,7 @@ import java.util.List;
  */
 @WebAppConfiguration
 @ContextConfiguration(classes = {HibernateConfiguration.class})
-public class PlayerServiceImplTest {
+public class PlayerServiceImplTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testUpdate() throws Exception {
         Player lkl = playerService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
