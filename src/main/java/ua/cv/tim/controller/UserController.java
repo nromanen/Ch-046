@@ -29,10 +29,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String showAdminMainPage() {
-        return "user-main.jsp";
-    }
+//    @RequestMapping(method = RequestMethod.GET)
+//    public String showAdminMainPage() {
+//        return "user-main.jsp";
+//    }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public ModelAndView addUserForm() {
@@ -60,7 +60,7 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(value = "/user/", method = RequestMethod.GET)
+    @RequestMapping( method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> allWithRoles = userService.getAllWithRoles();
         if (allWithRoles.isEmpty()) {
@@ -69,7 +69,7 @@ public class UserController {
         return new ResponseEntity<>(allWithRoles, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<User> getById(@PathVariable("id") String id) {
         User user = userService.getWithRolesById(id);
         if (user == null) {
@@ -98,7 +98,7 @@ public class UserController {
         return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteUser(@PathVariable(name = "id") String id) {
         User user = userService.getById(id);
         user.setUuid(id);

@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.configuration.HibernateConfiguration;
 import ua.cv.tim.model.Village;
 
@@ -18,6 +19,7 @@ import static org.testng.Assert.assertEquals;
 /**
  * Created by Oleg on 05.01.2017.
  */
+@Transactional
 @WebAppConfiguration
 @ContextConfiguration(classes = {HibernateConfiguration.class})
 public class VillageServiceImpTest extends AbstractTestNGSpringContextTests{

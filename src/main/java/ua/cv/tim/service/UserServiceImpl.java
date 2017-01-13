@@ -39,7 +39,6 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserByUsername(username);
 	}
 	@Override
-
 	public void add(User user) {
 		userDao.add(user);
 	}
@@ -83,9 +82,11 @@ public class UserServiceImpl implements UserService {
 	public void update(User user) {
 		userDao.update(user);
 	}
+
+
 	@Override
 	public void delete(User user) {
-		userDao.delete(user);
+	    userDao.delete(user);
 	}
 	@Override
 	public boolean isUnique(User user) {
@@ -116,5 +117,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getById(String id) {
         return userDao.getById(id);
+    }
+
+    @Override
+    public void deleteById(String id) {
+        User byId = userDao.getById(id);
+        userDao.delete(byId);
     }
 }

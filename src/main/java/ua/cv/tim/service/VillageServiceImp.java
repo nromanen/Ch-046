@@ -16,43 +16,24 @@ public class VillageServiceImp implements  VillageService{
     @Autowired
     private VillageDao villageDao;
 
-    @Override
-    public void add(Village village) {
 
+    @Override
+    public void add(Village village){
+        villageDao.add(village);
     }
 
     @Override
-    public void update(Village village) {
-
+    public void update(Village village){
+        villageDao.update(village);
     }
 
     @Override
-    public void delete(Village village) {
-
+    public void delete(Village village){
+        villageDao.delete(village);
     }
 
     @Override
-    public Village getById(String id) {
-        return null;
+    public Village getById(String id){
+       return villageDao.getById(id);
     }
-
-//    @Override
-//    public void add(Village village){
-//        villageDao.add(village);
-//    }
-//
-//    @Override
-//    public void update(Village village){
-//        villageDao.update(village);
-//    }
-//
-//    @Override
-//    public void delete(Village village){
-//        villageDao.delete(village);
-//    }
-//
-//    @Override
-//    public Village getById(String id){
-//       return villageDao.getById(id);
-//    }
 }
