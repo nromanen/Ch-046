@@ -22,51 +22,45 @@
         </div>
         <div class="input-field col s3">
             <button class="btn waves-effect waves-light col offset-s5 " name="action" (click)="addAlliance()" >Add alliance
-                <i class="material-icons right">send</i>
             </button>
         </div>
     </div>
 </form>
-<div class="row container">
+<div class="row container" *ngIf="_allianceService.alliances.length !== 0">
     <div class="col s12">
         <h3>Alliances</h3>
         <table class="highlight">
+
             <thead>
             <tr>
-                <th data-field="id">Alliance name</th>
-                <th data-field="name">Leader's login</th>
-                <th data-field="price">Leader's email</th>
-                <th></th>
-                <th></th>
+                <th class="col s3"><div style="margin: 15px 0;">Alliance name</div></th>
+                <th class="col s3"><div style="margin: 15px 0;">Leader's login</div></th>
+                <th class="col s3"><div  style="margin: 15px 0;">Leader's email</div></th>
+                <th class="col s3"><div style="margin: 15px 0;">Action</div></th>
             </tr>
             </thead>
-
             <tbody>
-            <tr *ngFor="#al of _allianceService.alliances">
-                <td><div *ngIf="al !== selectedAlliance">{{al.name}}</div>
+            <tr *ngFor="#al of _allianceService.alliances" (dblclick)="editAlliance(al)">
+                <td class="col s3"><div *ngIf="al !== selectedAlliance" style="margin: 15px 0;">{{al.name}}</div>
                     <div *ngIf="al === selectedAlliance">
                         <input type="text" name="name" id="editName" class="validate" [(ngModel)]="editName" (keyup.escape)="cancelEditing()" (keyup.enter)="updateAlliance()"/>
                     </div>
                 </td>
-                <td><div *ngIf="al !== selectedAlliance">{{al.leaderLogin}}</div>
+                <td class="col s3"><div *ngIf="al !== selectedAlliance"  style="margin: 15px 0;">{{al.leaderLogin}}</div>
                     <div *ngIf="al === selectedAlliance">
                         <input type="text" name="leaderLogin" id="editLeaderLogin" class="validate" [(ngModel)]="editLogin" (keyup.escape)="cancelEditing()" (keyup.enter)="updateAlliance()"/>
                     </div>
                 </td>
-                <td><div *ngIf="al !== selectedAlliance">{{al.leaderEmail}}</div>
+                <td class="col s3"><div *ngIf="al !== selectedAlliance"  style="margin: 15px 0;">{{al.leaderEmail}}</div>
                     <div *ngIf="al === selectedAlliance">
                         <input type="email" name="leaderEmail" id="editLeaderEmail" class="validate" [(ngModel)]="editEmail" (keyup.escape)="cancelEditing()" (keyup.enter)="updateAlliance()"/>
                     </div>
                 </td>
-                <td>
-                    <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s2 " type="submit" name="action" (click)="editAlliance(al)">Edit</button>
-                    <button *ngIf="al === selectedAlliance" class="btn waves-effect waves-light col offset-s2 " type="submit" name="action" (click)="updateAlliance()">Save
-                        <i class="material-icons right">send</i>
-                    </button>
-
-                </td>
-                <td>
-                    <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s2 " type="submit" name="action" (click)="deleteAlliance(al)">Delete</button>
+                <td class="col s3" style="text-align: center">
+                    <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="editAlliance(al)"  style="margin-top: 5px;">Edit</button>
+                    <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="deleteAlliance(al)"  style="margin-top: 5px">Delete</button>
+                    <button *ngIf="al === selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="updateAlliance()"  style="margin-top: 5px">Save</button>
+                    <button *ngIf="al === selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="cancelEditing()"  style="margin-top: 5px">Cancel</button>
                 </td>
             </tr>
             </tbody>
