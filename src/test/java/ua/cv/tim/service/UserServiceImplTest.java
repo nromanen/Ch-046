@@ -32,7 +32,7 @@ public class UserServiceImplTest  extends AbstractTestNGSpringContextTests {
 
     @Test
     public void getAll() throws Exception {
-
+        List<User> all = userService.getAll();
     }
 
     @Test
@@ -75,7 +75,7 @@ public class UserServiceImplTest  extends AbstractTestNGSpringContextTests {
     public void testUpdate() throws Exception {
 
         User user = new User();
-        user.setUuid("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
+        user.setUuid("1e2381a4-6e22-457f-875d-932f546b1c08");
         user.setLogin("login");
         user.setPassword("password");
         user.setEmail("olleg12@ukr.net");

@@ -48,7 +48,7 @@ public class PlayerServiceImplTest extends AbstractTestNGSpringContextTests {
         player.setRace(Race.GAULS);
         player.setVillages(villages);
         User user=new User();
-        user.setUuid("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
+        user.setUuid("1e2381a4-6e22-457f-875d-932f546b1c08");
         player.setUser(user);
         village.setPlayer(player);
         village.setxCoord((short) 56);
@@ -60,16 +60,16 @@ public class PlayerServiceImplTest extends AbstractTestNGSpringContextTests {
 
    @Test
     public void testGetById() throws Exception {
-       Player lkl = playerService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
+       Player lkl = playerService.getById("77e0708b-0207-46e3-b521-b2ed1998e2b6");
        List<Village> villages = lkl.getVillages();
 
    }
 
     @Test
     public void testGetByIdWithVillages() throws Exception {
-        Player byIdWithVillages = playerService.getByIdWithVillages("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
+        Player byIdWithVillages = playerService.getByIdWithVillages("77e0708b-0207-46e3-b521-b2ed1998e2b6");
         List<Village> villages =  byIdWithVillages.getVillages();
-        Player player = playerService.getByIdWithVillages("7564d81e-b4c7-440f-8f55-ea8938ec0f37");
+
 
     }
 
