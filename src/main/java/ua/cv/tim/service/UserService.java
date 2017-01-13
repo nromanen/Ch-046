@@ -38,6 +38,8 @@ public interface UserService {
 	long getCount();
 	User getWithRolesById(String id);
 	List<User> getAllWithRoles();
+
 	List<User> getAll();
+
 	User getById(String id);
 }
