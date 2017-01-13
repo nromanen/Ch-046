@@ -1,7 +1,7 @@
 import {Component} from 'angular2/core'
 // import {AllianceService} from "./alliance-service";
 import {Alliance} from "./alliance";
-import {AllianceService} from "../../services/alliacne/alliance-service";
+import {AllianceService} from "../../services/alliance/alliance-service";
 import {ErrorMessage} from "../modal_window/modal";
 import {ViewChild} from "angular2/src/core/metadata";
 
