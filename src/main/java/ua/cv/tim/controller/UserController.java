@@ -1,12 +1,17 @@
 package ua.cv.tim.controller;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponentsBuilder;
+import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.UserService;
 
@@ -16,29 +21,13 @@ import java.util.List;
  * Created by Oleg on 07.01.2017.
  */
 
-
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-
-import ua.cv.tim.dto.UserDTO;
-import ua.cv.tim.model.Player;
-import ua.cv.tim.model.Role;
-import ua.cv.tim.model.User;
-import ua.cv.tim.service.PlayerService;
-import ua.cv.tim.service.UserService;
-import ua.cv.tim.utils.SendMail;
-
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
 
-	@Autowired
-	private UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String showAdminMainPage() {
@@ -52,14 +41,14 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(value = "/submitUserForm",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/submitUserForm", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UserDTO> submitUserForm(@RequestBody UserDTO userDTO) {
-        System.out.println("UserMail "+userDTO.getEmail());
-        System.out.println("UserLogin "+userDTO.getLogin());
-        System.out.println("UserPassword "+userDTO.getPassword());
-        System.out.println("User Role  "+userDTO.getRole());
+        logger.info("UserMail {}", userDTO.getEmail());
+        logger.info("UserLogin {}",userDTO.getLogin());
+        logger.info("UserPassword {}", userDTO.getPassword());
+        logger.info("User Role {}" , userDTO.getRole());
         userService.add(userDTO);
-        System.out.println("User added succesfully " + " Login "+userDTO.getLogin());
+        logger.info("User added succesfully Login {}" , userDTO.getLogin());
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 

@@ -65,9 +65,6 @@ public class SendMail {
         If set to false, the QUIT command is sent and the connection is immediately closed. If set
         to true (the default), causes the transport to wait for the response to the QUIT command.
 
-        ref :   http://java.sun.com/products/javamail/javadocs/com/sun/mail/smtp/package-summary.html
-                http://forum.java.sun.com/thread.jspa?threadID=5205249
-                smtpsend.java - demo program from javamail
         */
         props.put("mail.smtps.quitwait", "false");
 

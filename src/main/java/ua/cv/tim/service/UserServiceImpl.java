@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ua.cv.tim.controller.UserController;
 import ua.cv.tim.dao.PlayerDao;
 import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.dto.UserDTO;
@@ -14,7 +15,8 @@ import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
 import ua.cv.tim.utils.SendMail;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by Oleg on 04.01.2017.
@@ -24,6 +26,7 @@ import ua.cv.tim.utils.SendMail;
 @Transactional
 public class UserServiceImpl implements UserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 	@Autowired
 	private UserDao userDao;
 	@Autowired
@@ -62,10 +65,10 @@ public class UserServiceImpl implements UserService {
         try {
             sendMail.send(user.getEmail(), "Travian user's info",
                     "Your login is" + user.getLogin() + " and password: " + user.getPassword()+"  role "+user.getRoles());
-            System.out.println("Password has been send on users mail");
+            logger.info("Password {} has been sent on user's e-mail {}" , user.getPassword(), user.getEmail());
         } catch (MessagingException e) {
-            System.out.println("something gone wrong");
-            e.printStackTrace();
+            logger.error("The e-mail hasn't been sent {}", e);
+
         }
 
     }

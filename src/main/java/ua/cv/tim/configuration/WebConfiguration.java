@@ -38,8 +38,6 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 		configurer.enable();
 	}
 
-
-
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry
