@@ -7,12 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import ua.cv.tim.model.Village;
-import ua.cv.tim.model.Village;
 import ua.cv.tim.service.VillageService;
-import ua.cv.tim.service.UserService;
-import ua.cv.tim.service.VillageService;
-
-import java.util.List;
 
 /**
  * Created by Oleg on 08.01.2017.
@@ -21,11 +16,11 @@ import java.util.List;
 @RestController
 public class VillagesController {
     @Autowired
-    VillageService villageService;
+    VillageService villageServiceImp;
 
     @RequestMapping(value = "/village/{id}",method = RequestMethod.GET)
     public ResponseEntity<Village> getVillageById(@PathVariable(name = "id")String id){
-        Village village=villageService.getById(id);
+        Village village= villageServiceImp.getById(id);
         if (village==null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(village,HttpStatus.OK);
@@ -33,7 +28,7 @@ public class VillagesController {
 
     @RequestMapping(value = "/village/",method = RequestMethod.POST)
     public ResponseEntity<Village> addVillage(@RequestBody Village village, UriComponentsBuilder builder){
-        villageService.add(village);
+        villageServiceImp.add(village);
         HttpHeaders headers=new HttpHeaders();
         headers.setLocation(builder.path("/village/{id}").buildAndExpand(village.getUuid()).toUri());
         return new ResponseEntity<>(headers,HttpStatus.CREATED);
@@ -41,7 +36,7 @@ public class VillagesController {
 
     @RequestMapping(value = "/village/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Village> updateVillage(@PathVariable(name = "id") String id, @RequestBody Village village){
-        Village current_village=villageService.getById(id);
+        Village current_village= villageServiceImp.getById(id);
         if (current_village!=null) {
             current_village.setName(village.getName());
             current_village.setxCoord(village.getxCoord());
@@ -60,11 +55,11 @@ public class VillagesController {
 
     @RequestMapping(value = "/village/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<Village> deleteVillage(@PathVariable(name = "id") String id){
-        Village Village = villageService.getById(id);
+        Village Village = villageServiceImp.getById(id);
         if (Village==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        villageService.delete(Village);
+        villageServiceImp.delete(Village);
         return new ResponseEntity<>(Village,HttpStatus.NO_CONTENT);
     }
 }
