@@ -1,8 +1,9 @@
+import {Component} from "@angular/core";
 /**
  * Created by rmochetc on 12.01.2017.
  */
 
-import { Component } from 'angular2/core';
+
 @Component({
     selector: 'app-modal',
     //templateUrl: 'components/modal_window/modal.html',

@@ -33,6 +33,9 @@ public class AllianceController {
     @RequestMapping(value = "/allianceDTO", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AllianceDTO> createAlliance(@RequestBody AllianceDTO allianceDTO) {
         service.addAlliane(allianceDTO);
+
+        allianceDTO.setUuid(service.getIdByName(allianceDTO.getName()));
+
         return new ResponseEntity<>(allianceDTO, HttpStatus.OK);
     }
 

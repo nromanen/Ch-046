@@ -71,6 +71,10 @@ public class AllianceService {
         player.setAlliance(alliance);
     }
 
+    public String getIdByName(String name){
+        return allianceDao.getIdByName(name);
+    }
+
     public void updateAlliance(AllianceDTO allianceDTO){
 
         Alliance alliance = allianceDao.getById(allianceDTO.getUuid());

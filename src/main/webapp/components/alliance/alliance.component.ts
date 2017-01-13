@@ -1,21 +1,19 @@
-import {Component} from 'angular2/core'
-// import {AllianceService} from "./alliance-service";
+
 import {Alliance} from "./alliance";
-import {AllianceService} from "../../services/alliance/alliance-service";
-import {ErrorMessage} from "../modal_window/modal";
-import {ViewChild} from "angular2/src/core/metadata";
+// import {ErrorMessage} from "../modal_window/modal";
+import {Component} from "@angular/core";
+import {AllianceService} from "../services/alliance-service";
 
 
 @Component({
     selector: 'my-alliance',
     templateUrl: 'components/alliance/alliance.html',
-    providers: [AllianceService],
-    directives: [ErrorMessage],
+    // providers: [AllianceService],
 })
 
 export class AllianceComponent{
 
-    alliances: Array<Alliance> = [];
+    alliances: Array<Alliance> = [new Alliance('Valhala', 'borg', 'test@net.com'), new Alliance('Torr', 'viking', 'test@nmetacom')];
 
     selectedAlliance: Alliance = null;
     name: string;
@@ -26,46 +24,55 @@ export class AllianceComponent{
     editLogin: string;
     editEmail: string;
 
-    @ViewChild(ErrorMessage) errorMsg: ErrorMessage;  // ErrorMessage is a ViewChild
-
+   // @ViewChild(ErrorMessage) errorMsg: ErrorMessage;  // ErrorMessage is a ViewChild
+   //
     constructor(private _allianceService: AllianceService){
 
     }
 
-    ontest(){
+    static ontest(){
         console.log("ontest");
-        this.errorMsg.showErrorMessage("Are you sure you want to delete this alliance?");
+        // this.errorMsg.showErrorMessage("Are you sure you want to delete this alliance?");
     }
 
     editAlliance(al: Alliance){
         this.selectedAlliance = al;
-        this.editName = al.name;
-        this.editLogin = al.leaderLogin;
-        this.editEmail = al.leaderEmail;
+        this.editName = "TestUpdate";
+        this.editLogin = "TestUpdateLogin";
+        this.editEmail = "TestUpdate@Email.com";
     }
 
     deleteAlliance(al: Alliance){
         this._allianceService.deleteAlliance(al);
+        // this.alliances.splice(this.alliances.indexOf(al), 1);
     }
 
     cancelEditing(){
         this.selectedAlliance = null;
     }
 
+
+
     addAlliance(){
         console.log("AddAlliance");
-        var newAlliance = new Alliance(this.name, this.login, this.email);
+        let newAlliance = new Alliance(this.name, this.login, this.email);
         this.name = "";
         this.login = "";
         this.email = "";
         this._allianceService.addAlliance(newAlliance);
+        // this.alliances.push(newAlliance);
 
     }
 
     updateAlliance() {
-        console.log("update alliance")
-        var updatedAlliance = new Alliance(this.editName, this.editLogin, this.editEmail);
+        console.log("update alliance");
+
+        let updatedAlliance = new Alliance(this.editName, this.editLogin, this.editEmail);
+        updatedAlliance.uuid = this.selectedAlliance.uuid;
+        console.log(updatedAlliance);
         this._allianceService.updateAlliance(this.selectedAlliance, updatedAlliance);
+        this.selectedAlliance = null;
+        // this.alliances[this.alliances.indexOf(this.selectedAlliance)] = updatedAlliance;
     }
 
 }

@@ -25,6 +25,7 @@ public class PlayerServiceImplTest {
         Player lkl = playerService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
         lkl.setRace(Race.GAULS);
         playerService.update(lkl);
+
     }
 
 
