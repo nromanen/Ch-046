@@ -22,7 +22,7 @@ public class ArmyServiceImplTest extends AbstractTestNGSpringContextTests {
     @Test
     public void getArmyById() {
         armyService.getArmyById("4046c02c-24e5-486b-8127-2848da877ba6");
-        System.out.print(armyService.getArmyById("4046c02c-24e5-486b-8127-2848da877ba6"));
+
     }
 
 
