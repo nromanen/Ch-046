@@ -19,35 +19,13 @@
                     <td class="col s3"><div *ngIf="al !== selectedAlliance"  style="margin: 15px 0;">{{al.leaderLogin}}</div></td>
                     <td class="col s3"><div *ngIf="al !== selectedAlliance"  style="margin: 15px 0;">{{al.leaderEmail}}</div></td>
                     <td class="col s3" style="text-align: center">
-                    <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="editAlliance(al)"  style="margin-top: 5px;">Edit</button>
-                    <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="deleteAlliance(al)"  style="margin-top: 5px">Delete</button>
-                </td>
+                        <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="editAlliance(al)"  style="margin-top: 5px;">Edit</button>
+                        <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="deleteAlliance(al)"  style="margin-top: 5px">Delete</button>
+                    </td>
                 </div>
-                <div *ngIf="al === selectedAlliance">
-                    <td class="col s3">
-                    <div>
-                        <input type="text" name="name" id="editName" class="validate" (keyup.escape)="cancelEditing()" (keyup.enter)="updateAlliance() "/>
-                    </div>
-                </td>
-                <td class="col s3">
-                    <div>
-                        <input type="text" name="leaderLogin" id="editLeaderLogin" class="validate" (keyup.escape)="cancelEditing()" (keyup.enter)="updateAlliance()"/>
-                    </div>
-                </td>
-                <td class="col s3">
-                    <div >
-                        <input type="email" name="leaderEmail" id="editLeaderEmail" class="validate" (keyup.escape)="cancelEditing()" (keyup.enter)="updateAlliance()"/>
-                    </div>
-                </td>
-                <td class="col s3" style="text-align: center">
-                    <button *ngIf="al === selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="updateAlliance()"  style="margin-top: 5px">Save</button>
-                    <button *ngIf="al === selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="cancelEditing()"  style="margin-top: 5px">Cancel</button>
-                </td>
-                </div>
-
+                <edit-alliance *ngIf="al === selectedAlliance" [editedAlliance] = "selectedAlliance" (notify)='onNotify($event)'></edit-alliance>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
-

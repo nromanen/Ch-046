@@ -36,11 +36,11 @@ System.register(["./alliance", "@angular/core", "../services/alliance-service"],
                     console.log("ontest");
                     // this.errorMsg.showErrorMessage("Are you sure you want to delete this alliance?");
                 };
+                AllianceComponent.prototype.onNotify = function (alliance) {
+                    this.selectedAlliance = alliance;
+                };
                 AllianceComponent.prototype.editAlliance = function (al) {
                     this.selectedAlliance = al;
-                    this.editName = "TestUpdate";
-                    this.editLogin = "TestUpdateLogin";
-                    this.editEmail = "TestUpdate@Email.com";
                 };
                 AllianceComponent.prototype.deleteAlliance = function (al) {
                     this._allianceService.deleteAlliance(al);
@@ -57,15 +57,6 @@ System.register(["./alliance", "@angular/core", "../services/alliance-service"],
                     this.email = "";
                     this._allianceService.addAlliance(newAlliance);
                     // this.alliances.push(newAlliance);
-                };
-                AllianceComponent.prototype.updateAlliance = function () {
-                    console.log("update alliance");
-                    var updatedAlliance = new alliance_1.Alliance(this.editName, this.editLogin, this.editEmail);
-                    updatedAlliance.uuid = this.selectedAlliance.uuid;
-                    console.log(updatedAlliance);
-                    this._allianceService.updateAlliance(this.selectedAlliance, updatedAlliance);
-                    this.selectedAlliance = null;
-                    // this.alliances[this.alliances.indexOf(this.selectedAlliance)] = updatedAlliance;
                 };
                 return AllianceComponent;
             }());

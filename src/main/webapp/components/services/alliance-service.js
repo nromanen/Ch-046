@@ -26,6 +26,7 @@ System.register(["rxjs/Rx", "@angular/http", "@angular/core"], function (exports
             AllianceService = (function () {
                 function AllianceService(_http) {
                     this._http = _http;
+                    this.url = 'admin/allianceDTO/';
                     this.alliances = null;
                     this.getFromServer();
                 }
@@ -35,7 +36,7 @@ System.register(["rxjs/Rx", "@angular/http", "@angular/core"], function (exports
                 AllianceService.prototype.getFromServer = function () {
                     var _this = this;
                     console.log("it works from another path");
-                    this._http.get('allianceDTO')
+                    this._http.get(this.url)
                         .map(function (res) { return res.json(); })
                         .subscribe(function (response) {
                         console.log(response);
@@ -47,7 +48,7 @@ System.register(["rxjs/Rx", "@angular/http", "@angular/core"], function (exports
                     var body = JSON.stringify({ name: alliance.name, leaderLogin: alliance.leaderLogin, leaderEmail: alliance.leaderEmail });
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
-                    this._http.post('allianceDTO', body, {
+                    this._http.post(this.url, body, {
                         headers: headers
                     }).map(function (res) { return res.json(); })
                         .subscribe(function (response) {
@@ -59,8 +60,7 @@ System.register(["rxjs/Rx", "@angular/http", "@angular/core"], function (exports
                     var _this = this;
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
-                    var url = 'allianceDTO/' + alliance.uuid;
-                    this._http.delete(url, {
+                    this._http.delete(this.url + alliance.uuid, {
                         headers: headers
                     }).subscribe(function (response) {
                         console.log('Alliance deleted, id = ' + alliance.uuid);
@@ -72,8 +72,7 @@ System.register(["rxjs/Rx", "@angular/http", "@angular/core"], function (exports
                     var body = JSON.stringify({ name: newAlliance.name, leaderLogin: newAlliance.leaderLogin, leaderEmail: newAlliance.leaderEmail });
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
-                    var url = 'allianceDTO/' + alliance.uuid;
-                    this._http.put(url, body, {
+                    this._http.put(this.url + alliance.uuid, body, {
                         headers: headers
                     }).subscribe(function (response) {
                         console.log('Alliance updated, id = ' + alliance.uuid + ', status = ' + response.status);

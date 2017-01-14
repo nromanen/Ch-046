@@ -9,6 +9,7 @@ import {Alliance} from "../alliance/alliance";
 @Injectable()
 export class AllianceService {
 
+    url = 'admin/allianceDTO/';
     alliances: Array<Alliance> = null;
 
     constructor(private _http: Http){
@@ -22,7 +23,7 @@ export class AllianceService {
 
     getFromServer(){
         console.log("it works from another path");
-        this._http.get('allianceDTO')
+        this._http.get(this.url)
             .map(res => res.json())
             .subscribe(
                 response => {
@@ -38,7 +39,7 @@ export class AllianceService {
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        this._http.post('allianceDTO', body, {
+        this._http.post(this.url, body, {
             headers: headers
         }).map(res => res.json())
             .subscribe(
@@ -54,8 +55,7 @@ export class AllianceService {
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        const url = 'allianceDTO/'+ alliance.uuid;
-        this._http.delete(url, {
+        this._http.delete(this.url + alliance.uuid, {
             headers: headers
         }).subscribe(
             response =>{
@@ -72,8 +72,7 @@ export class AllianceService {
         const body = JSON.stringify({name: newAlliance.name, leaderLogin: newAlliance.leaderLogin, leaderEmail: newAlliance.leaderEmail});
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        const url = 'allianceDTO/'+ alliance.uuid ;
-        this._http.put(url, body, {
+        this._http.put(this.url + alliance.uuid, body, {
             headers: headers
         }).subscribe(
             response => {

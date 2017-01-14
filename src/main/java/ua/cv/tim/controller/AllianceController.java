@@ -21,7 +21,7 @@ public class AllianceController {
     @Autowired
     private AllianceService service;
 
-    @RequestMapping(value = "/allianceDTO", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/admin/allianceDTO", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<AllianceDTO>> listAllAlliances() {
         List<AllianceDTO> alliances = service.getAll();
         if (alliances.isEmpty()) {
@@ -30,7 +30,7 @@ public class AllianceController {
         return new ResponseEntity<>(alliances, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/allianceDTO", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/admin/allianceDTO", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AllianceDTO> createAlliance(@RequestBody AllianceDTO allianceDTO) {
         service.addAlliane(allianceDTO);
 
@@ -39,7 +39,7 @@ public class AllianceController {
         return new ResponseEntity<>(allianceDTO, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/allianceDTO/{id}", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/admin/allianceDTO/{id}", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AllianceDTO> updateAlliance(@PathVariable("id") String uuid, @RequestBody AllianceDTO allianceDTO) {
 
         if (service.getById(uuid) == null) {
@@ -50,7 +50,7 @@ public class AllianceController {
         return new ResponseEntity<>(allianceDTO, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/allianceDTO/{id}", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/admin/allianceDTO/{id}", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AllianceDTO> deleteAlliance(@PathVariable("id") String uuid) {
         if (service.getById(uuid) == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

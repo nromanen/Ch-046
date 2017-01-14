@@ -8,6 +8,7 @@ import {AllianceComponent} from "./alliance/alliance.component";
 import {HeaderComponent} from "./header/header.component";
 import {AllianceService} from "./services/alliance-service";
 import {AllianceForm} from "./alliance/addalliance.component";
+import {EditAllianceComponent} from "./alliance/editalliance.component";
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import {AllianceForm} from "./alliance/addalliance.component";
         AppComponent,
         AllianceComponent,
         HeaderComponent,
-        AllianceForm
+        AllianceForm,
+        EditAllianceComponent
     ],
     providers: [
         AllianceService

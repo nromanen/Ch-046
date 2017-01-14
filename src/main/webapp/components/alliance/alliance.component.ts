@@ -3,6 +3,7 @@ import {Alliance} from "./alliance";
 // import {ErrorMessage} from "../modal_window/modal";
 import {Component} from "@angular/core";
 import {AllianceService} from "../services/alliance-service";
+import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 
 
 @Component({
@@ -20,26 +21,26 @@ export class AllianceComponent{
     login: string;
     email: string;
 
-    editName: string;
-    editLogin: string;
-    editEmail: string;
-
    // @ViewChild(ErrorMessage) errorMsg: ErrorMessage;  // ErrorMessage is a ViewChild
    //
+
     constructor(private _allianceService: AllianceService){
 
     }
+
 
     static ontest(){
         console.log("ontest");
         // this.errorMsg.showErrorMessage("Are you sure you want to delete this alliance?");
     }
 
+    onNotify(alliance : Alliance){
+        this.selectedAlliance = alliance;
+    }
+
+
     editAlliance(al: Alliance){
         this.selectedAlliance = al;
-        this.editName = "TestUpdate";
-        this.editLogin = "TestUpdateLogin";
-        this.editEmail = "TestUpdate@Email.com";
     }
 
     deleteAlliance(al: Alliance){
@@ -64,15 +65,5 @@ export class AllianceComponent{
 
     }
 
-    updateAlliance() {
-        console.log("update alliance");
-
-        let updatedAlliance = new Alliance(this.editName, this.editLogin, this.editEmail);
-        updatedAlliance.uuid = this.selectedAlliance.uuid;
-        console.log(updatedAlliance);
-        this._allianceService.updateAlliance(this.selectedAlliance, updatedAlliance);
-        this.selectedAlliance = null;
-        // this.alliances[this.alliances.indexOf(this.selectedAlliance)] = updatedAlliance;
-    }
 
 }
