@@ -1,27 +1,20 @@
-import {Injectable, provide} from 'angular2/core';
-import {Http, Headers} from 'angular2/http';
-import 'rxjs/Rx';
-import {Alliance} from "../../components/alliance/alliance";
 
+import 'rxjs/Rx';
+
+import {Http, Headers} from "@angular/http";
+import {Injectable} from "@angular/core";
+import {Alliance} from "../alliance/alliance";
 
 
 @Injectable()
 export class AllianceService {
 
-    alliances: Array<Alliance> = [];
-
+    url = 'admin/allianceDTO/';
+    alliances: Array<Alliance> = new Array<Alliance>();
 
     constructor(private _http: Http){
         this.getFromServer();
     }
-
-    private getCookie(name) {
-        let value = "; " + document.cookie;
-        let parts = value.split("; " + name + "=");
-        if (parts.length == 2)
-            return parts.pop().split(";").shift();
-    }
-
 
     getAlliances() : any {
         return this.alliances;
@@ -30,12 +23,15 @@ export class AllianceService {
 
     getFromServer(){
         console.log("it works from another path");
-        this._http.get('allianceDTO')
+        this._http.get(this.url)
             .map(res => res.json())
             .subscribe(
                 response => {
                     console.log(response);
-                    this.alliances =  response;
+                    if (response != null){
+                        this.alliances =  response;
+                    }
+
                 },
                 error => console.log(error)
             );
@@ -46,52 +42,47 @@ export class AllianceService {
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        headers.append('X-CSRFToken', this.getCookie('csrftoken'));
-        this._http.post('allianceDTO', body, {
+        this._http.post(this.url, body, {
             headers: headers
         }).map(res => res.json())
             .subscribe(
-                response => console.log('Alliance created successful'),
+                response => {
+                    console.log('Alliance created successful');
+                    this.alliances.push(response);
+                },
                 error => console.log(error)
             );
-        this.getFromServer();
-        this.getFromServer();
     }
 
     deleteAlliance(alliance: Alliance){
 
-        this.alliances.splice(this.alliances.indexOf(alliance), 1);
-
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        headers.append('X-CSRFToken', this.getCookie('csrftoken'));
-        const url = 'allianceDTO/'+ alliance.uuid;
-        this._http.delete(url, {
+        this._http.delete(this.url + alliance.uuid, {
             headers: headers
         }).subscribe(
-            response => console.log('Alliance deleted, id = ' + alliance.uuid),
+            response =>{
+                console.log('Alliance deleted, id = ' + alliance.uuid);
+                this.alliances.splice(this.alliances.indexOf(alliance), 1);
+            },
             error => console.log(error)
         );
-
     }
 
     updateAlliance(alliance: Alliance, newAlliance: Alliance){
 
-        this.alliances[this.alliances.indexOf(alliance)] = newAlliance;
 
         const body = JSON.stringify({name: newAlliance.name, leaderLogin: newAlliance.leaderLogin, leaderEmail: newAlliance.leaderEmail});
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        headers.append('X-CSRFToken', this.getCookie('csrftoken'));
-        const url = 'allianceDTO/'+ alliance.uuid ;
-        this._http.put(url, body, {
+        this._http.put(this.url + alliance.uuid, body, {
             headers: headers
         }).subscribe(
-            response => console.log('Alliance updated, id = ' + alliance.uuid + ', status = ' + response.status),
+            response => {
+                console.log('Alliance updated, id = ' + alliance.uuid + ', status = ' + response.status);
+                this.alliances[this.alliances.indexOf(alliance)] = newAlliance;
+            },
             error => console.log(error)
         );
-
     }
-
-
 }

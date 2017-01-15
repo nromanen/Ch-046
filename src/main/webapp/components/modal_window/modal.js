@@ -1,7 +1,4 @@
-/**
- * Created by rmochetc on 12.01.2017.
- */
-System.register(['angular2/core'], function(exports_1, context_1) {
+System.register(["@angular/core"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -14,36 +11,56 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var ErrorMessage;
+    var ConfirmComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            ErrorMessage = (function () {
-                function ErrorMessage() {
+            /**
+             * Created by rmochetc on 12.01.2017.
+             */
+            ConfirmComponent = (function () {
+                function ConfirmComponent() {
+                    this.notify = new core_1.EventEmitter();
                 }
-                ErrorMessage.prototype.showErrorMessage = function (msg) {
+                // private ErrorMsg: string;
+                // public ErrorMessageIsVisible: boolean;
+                ConfirmComponent.prototype.showErrorMessage = function () {
                     console.log("show message");
-                    console.log(msg);
-                    this.ErrorMsg = msg;
-                    this.ErrorMessageIsVisible = true;
+                    // this.ErrorMsg = "TEST";
+                    // this.ErrorMessageIsVisible = true;
+                    // console.log(this.ErrorMessageIsVisible);
                 };
-                ErrorMessage.prototype.hideErrorMsg = function () {
-                    this.ErrorMessageIsVisible = false;
+                ConfirmComponent.prototype.onConfirm = function () {
+                    this.notify.emit(true);
                 };
-                ErrorMessage = __decorate([
+                ConfirmComponent.prototype.onCancel = function () {
+                    this.notify.emit(false);
+                };
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', String)
+                ], ConfirmComponent.prototype, "confirmMsg", void 0);
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', (typeof (_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)
+                ], ConfirmComponent.prototype, "notify", void 0);
+                ConfirmComponent = __decorate([
                     core_1.Component({
                         selector: 'app-modal',
                         //templateUrl: 'components/modal_window/modal.html',
-                        template: "\n\n<!-- Modal Structure -->\n<div *ngIf=\"ErrorMessageIsVisible\" style=\"z-index: 999;display: block;opacity: 0.5;position: fixed; top: -100px; left: 0; bottom: 0; right: 0; height: 125%; width: 100%; background: #000;\">\n    <div style=\"\n    z-index: 1003;\n    color: black;\n    display: block;\n    opacity: 1;\n    transform: scaleX(1);\n    top: 10%;\n    position: fixed;\n    left: 0;\n    right: 0;\n    background-color: #fafafa;\n    padding: 0;\n    max-height: 70%;\n    width: 55%;\n    margin: auto;\n    overflow-y: auto;\n    border-radius: 2px;\n    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);\">\n <div style=\"padding: 24px; opacity: 1;\n    box-sizing: inherit;\n    display: block;\">\n        <h4 style=\"    margin-top: 0;\n    font-size: 2.28rem;\n    line-height: 110%;\n    margin: 1.14rem 0 0.912rem 0;\n    font-weight: 400;\n    box-sizing: inherit;\n    display: block;\">Confinm this action</h4>\n        <p>{{ErrorMsg}}</p>\n    </div>\n    <div class=\"modal-footer\">\n        <a href=\"#!\" (click)=\"hideErrorMsg()\" class=\" modal-action modal-close waves-effect waves-green btn-flat\" style=\"float: right; margin: 6px 0; opacity: 1;\">Agree</a>\n        <a href=\"#!\" (click)=\"hideErrorMsg()\" class=\" modal-action modal-close waves-effect waves-green btn-flat\" style=\"float: right; margin: 6px 0; opacity: 1;\">Disagree</a>\n    </div>\n    </div>\n</div>\n\n\n"
+                        template: "\n    <div id=\"dialogoverlay\"></div>\n<div id=\"dialogbox\">\n    <div>\n        <div id=\"dialogboxhead\">Confirm</div>\n        <div id=\"dialogboxbody\">{{confirmMsg}}</div>\n        <div id=\"dialogboxfoot\"><button class='btn btn-danger' (click) = \"onConfirm()\">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-success' (click) = \"onCancel()\">Cancel</button></div>\n    </div>\n</div>\n\n",
+                        styles: ["#dialogoverlay{\n    display: block;\n    opacity: .8;\n    position: fixed;\n    top: 0px;\n    left: 0px;\n    background: black;\n    width: 100%;\n    height: 100%;\n    z-index: 10;\n}\n#dialogbox{\n    display: block;\n    position: absolute;\n    background: #fff;\n    border-radius:7px;\n    width:550px;\n    z-index: 10;\n     top: 20%;\n  left: 35%;\n}\n#dialogbox > div{ background: #d4e1d9; margin:8px; }\n#dialogbox > div > #dialogboxhead{ background: #fff; font-size:24px; padding:10px; color: #000000;  border-bottom: 1px solid lightgray;}\n#dialogbox > div > #dialogboxbody{ background: #fff; font-size:19px; padding:20px; color: #000000; border-bottom: 1px solid lightgray;}\n#dialogbox > div > #dialogboxfoot{ background: #fff; padding:10px; text-align:right; }"
+                        ]
                     }), 
                     __metadata('design:paramtypes', [])
-                ], ErrorMessage);
-                return ErrorMessage;
+                ], ConfirmComponent);
+                return ConfirmComponent;
+                var _a;
             }());
-            exports_1("ErrorMessage", ErrorMessage);
+            exports_1("ConfirmComponent", ConfirmComponent);
         }
     }
 });

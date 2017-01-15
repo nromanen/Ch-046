@@ -20,6 +20,7 @@ import ua.cv.tim.model.User;
 import ua.cv.tim.model.User;
 
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * Created by vyach on 03.01.2017.
@@ -40,4 +41,5 @@ public interface UserService {
 	List<User> getAllWithRoles();
 	List<User> getAll();
 	User getById(String id);
+	void deleteById(String id);
 }

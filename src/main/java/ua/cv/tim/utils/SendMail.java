@@ -2,9 +2,8 @@ package ua.cv.tim.utils;
 
 import com.sun.mail.smtp.SMTPTransport;
 
+import ua.cv.tim.configuration.EmailConfiguration;
 
-
-import java.security.Security;
 import java.util.Date;
 import java.util.Properties;
 import javax.mail.Message;
@@ -14,13 +13,16 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("sendMail")
 public class SendMail {
 	
-	final static String sender = "olleg1285@gmail.com";
-	final static String password = "zenogi65";
+
+	@Autowired
+	private EmailConfiguration emailConfig;
+
 	 /**
      * Send email using GMail SMTP server.
      *
@@ -32,8 +34,8 @@ public class SendMail {
      * @throws AddressException if the email address parse failed
      * @throws MessagingException if the connection is dead or not in the connected state or if the message is not a MimeMessage
      */
-    public static void send( String recipientEmail, String title, String message) throws AddressException, MessagingException {
-    	SendMail.send(recipientEmail, "", title, message);
+    public void send( String recipientEmail, String title, String message) throws AddressException, MessagingException {
+    	send(recipientEmail, "", title, message);
     }
 
     /**
@@ -48,30 +50,15 @@ public class SendMail {
      * @throws AddressException if the email address parse failed
      * @throws MessagingException if the connection is dead or not in the connected state or if the message is not a MimeMessage
      */
-    private static void send(String recipientEmail, String ccEmail, String title, String message) throws AddressException, MessagingException {
-      // Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+    private void send(String recipientEmail, String ccEmail, String title, String message) throws AddressException, MessagingException {
+
+    	Properties properties = emailConfig.getEmailProperties();
+
+    	 String sender = properties.getProperty("senderEmail");
+    	 String password = properties.getProperty("EmailPassword");
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 
-        // Get a Properties object
-        Properties props = System.getProperties();
-        props.setProperty("mail.smtps.host", "smtp.gmail.com");
-        props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
-        props.setProperty("mail.smtp.socketFactory.fallback", "false");
-        props.setProperty("mail.smtp.port", "465");
-        props.setProperty("mail.smtp.socketFactory.port", "465");
-        props.setProperty("mail.smtps.auth", "true");
-
-        /*
-        If set to false, the QUIT command is sent and the connection is immediately closed. If set
-        to true (the default), causes the transport to wait for the response to the QUIT command.
-
-        ref :   http://java.sun.com/products/javamail/javadocs/com/sun/mail/smtp/package-summary.html
-                http://forum.java.sun.com/thread.jspa?threadID=5205249
-                smtpsend.java - demo program from javamail
-        */
-        props.put("mail.smtps.quitwait", "false");
-
-        Session session = Session.getInstance(props, null);
+        Session session = Session.getInstance(properties, null);
 
         // -- Create a new message --
         final MimeMessage msg = new MimeMessage(session);

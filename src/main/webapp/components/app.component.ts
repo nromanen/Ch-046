@@ -1,14 +1,13 @@
-import {Component} from 'angular2/core';
-import {LeaderManageComponent} from "./leader/leader.manage.component";
+import {AllianceComponent} from "./alliance/alliance.component";
 import {HeaderComponent} from "./header/header.component";
+import {Component} from "@angular/core";
 
 @Component({
     selector: 'my-app',
     template: `
         <my-header></my-header>
-        <leader-manage></leader-manage>
+        <my-alliance></my-alliance>
     `,
-    directives: [LeaderManageComponent, HeaderComponent]
 })
 
 export class AppComponent {

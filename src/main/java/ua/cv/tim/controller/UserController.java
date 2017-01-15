@@ -1,6 +1,8 @@
 package ua.cv.tim.controller;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,13 +21,17 @@ import java.util.List;
  * Created by Oleg on 07.01.2017.
  */
 
+
+
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
 	@Autowired
 	private UserService userService;
-
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showAdminMainPage() {
@@ -34,13 +40,19 @@ public class UserController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public ModelAndView addUserForm() {
+
 		ModelAndView model = new ModelAndView("addUser.html");
 		return model;
 	}
 
 	@RequestMapping(value = "/submitUserForm",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<UserDTO> submitUserForm(@RequestBody UserDTO userDTO) {
+		logger.info("UserMail {}" ,userDTO.getEmail());
+		logger.info("UserLogin {}" ,userDTO.getLogin());
+		logger.info("UserPassword {}" ,userDTO.getPassword());
+		logger.info("User Role {}" ,userDTO.getRole());
 		userService.add(userDTO);
+		logger.info("User added succesfully {}" ,userDTO.getLogin());
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 

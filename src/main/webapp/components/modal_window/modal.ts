@@ -1,70 +1,73 @@
+import {Component, Input, Output, EventEmitter} from "@angular/core";
+import {Alliance} from "../alliance/alliance";
 /**
  * Created by rmochetc on 12.01.2017.
  */
 
-import { Component } from 'angular2/core';
+
 @Component({
     selector: 'app-modal',
     //templateUrl: 'components/modal_window/modal.html',
     template: `
-
-<!-- Modal Structure -->
-<div *ngIf="ErrorMessageIsVisible" style="z-index: 999;display: block;opacity: 0.5;position: fixed; top: -100px; left: 0; bottom: 0; right: 0; height: 125%; width: 100%; background: #000;">
-    <div style="
-    z-index: 1003;
-    color: black;
-    display: block;
-    opacity: 1;
-    transform: scaleX(1);
-    top: 10%;
-    position: fixed;
-    left: 0;
-    right: 0;
-    background-color: #fafafa;
-    padding: 0;
-    max-height: 70%;
-    width: 55%;
-    margin: auto;
-    overflow-y: auto;
-    border-radius: 2px;
-    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);">
- <div style="padding: 24px; opacity: 1;
-    box-sizing: inherit;
-    display: block;">
-        <h4 style="    margin-top: 0;
-    font-size: 2.28rem;
-    line-height: 110%;
-    margin: 1.14rem 0 0.912rem 0;
-    font-weight: 400;
-    box-sizing: inherit;
-    display: block;">Confinm this action</h4>
-        <p>{{ErrorMsg}}</p>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" (click)="hideErrorMsg()" class=" modal-action modal-close waves-effect waves-green btn-flat" style="float: right; margin: 6px 0; opacity: 1;">Agree</a>
-        <a href="#!" (click)="hideErrorMsg()" class=" modal-action modal-close waves-effect waves-green btn-flat" style="float: right; margin: 6px 0; opacity: 1;">Disagree</a>
-    </div>
+    <div id="dialogoverlay"></div>
+<div id="dialogbox">
+    <div>
+        <div id="dialogboxhead">Confirm</div>
+        <div id="dialogboxbody">{{confirmMsg}}</div>
+        <div id="dialogboxfoot"><button class='btn btn-danger' (click) = "onConfirm()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-success' (click) = "onCancel()">Cancel</button></div>
     </div>
 </div>
 
-
-`
+`,
+    styles: [`#dialogoverlay{
+    display: block;
+    opacity: .8;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background: black;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+#dialogbox{
+    display: block;
+    position: absolute;
+    background: #fff;
+    border-radius:7px;
+    width:550px;
+    z-index: 10;
+     top: 20%;
+  left: 35%;
+}
+#dialogbox > div{ background: #d4e1d9; margin:8px; }
+#dialogbox > div > #dialogboxhead{ background: #fff; font-size:24px; padding:10px; color: #000000;  border-bottom: 1px solid lightgray;}
+#dialogbox > div > #dialogboxbody{ background: #fff; font-size:19px; padding:20px; color: #000000; border-bottom: 1px solid lightgray;}
+#dialogbox > div > #dialogboxfoot{ background: #fff; padding:10px; text-align:right; }`
+]
 })
-export class ErrorMessage
+export class ConfirmComponent
 {
-    private ErrorMsg: string;
-    public ErrorMessageIsVisible: boolean;
+    @Input() confirmMsg: string;
+    @Output() notify: EventEmitter<boolean> = new EventEmitter<boolean>();
+    // private ErrorMsg: string;
+    // public ErrorMessageIsVisible: boolean;
 
-    showErrorMessage(msg: string)
+    showErrorMessage()
     {
         console.log("show message");
-        console.log(msg);
-        this.ErrorMsg = msg;
-        this.ErrorMessageIsVisible = true;
+        // this.ErrorMsg = "TEST";
+        // this.ErrorMessageIsVisible = true;
+        // console.log(this.ErrorMessageIsVisible);
     }
 
-    hideErrorMsg()
+    onConfirm()
     {
-        this.ErrorMessageIsVisible = false;
+        this.notify.emit(true);
+    }
+
+    onCancel()
+    {
+        this.notify.emit(false);
     }
 }
