@@ -9,6 +9,7 @@ import {HeaderComponent} from "./header/header.component";
 import {AllianceService} from "./services/alliance-service";
 import {AllianceForm} from "./alliance/addalliance.component";
 import {EditAllianceComponent} from "./alliance/editalliance.component";
+import {ConfirmComponent} from "./modal_window/modal";
 
 @NgModule({
     imports: [
@@ -22,10 +23,14 @@ import {EditAllianceComponent} from "./alliance/editalliance.component";
         AllianceComponent,
         HeaderComponent,
         AllianceForm,
-        EditAllianceComponent
+        EditAllianceComponent,
+        ConfirmComponent
+
     ],
     providers: [
-        AllianceService
+        AllianceService,
+        ConfirmComponent
+
     ],
     bootstrap: [AppComponent]
 })

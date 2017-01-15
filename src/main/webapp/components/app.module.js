@@ -1,4 +1,4 @@
-System.register(["@angular/core", "@angular/platform-browser", "@angular/http", "@angular/forms", "./app.component", "./alliance/alliance.component", "./header/header.component", "./services/alliance-service", "./alliance/addalliance.component", "./alliance/editalliance.component"], function (exports_1, context_1) {
+System.register(["@angular/core", "@angular/platform-browser", "@angular/http", "@angular/forms", "./app.component", "./alliance/alliance.component", "./header/header.component", "./services/alliance-service", "./alliance/addalliance.component", "./alliance/editalliance.component", "./modal_window/modal"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7,7 +7,7 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, platform_browser_1, http_1, forms_1, app_component_1, alliance_component_1, header_component_1, alliance_service_1, addalliance_component_1, editalliance_component_1, AppModule;
+    var core_1, platform_browser_1, http_1, forms_1, app_component_1, alliance_component_1, header_component_1, alliance_service_1, addalliance_component_1, editalliance_component_1, modal_1, AppModule;
     return {
         setters: [
             function (core_1_1) {
@@ -39,6 +39,9 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
             },
             function (editalliance_component_1_1) {
                 editalliance_component_1 = editalliance_component_1_1;
+            },
+            function (modal_1_1) {
+                modal_1 = modal_1_1;
             }
         ],
         execute: function () {
@@ -60,10 +63,12 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
                         alliance_component_1.AllianceComponent,
                         header_component_1.HeaderComponent,
                         addalliance_component_1.AllianceForm,
-                        editalliance_component_1.EditAllianceComponent
+                        editalliance_component_1.EditAllianceComponent,
+                        modal_1.ConfirmComponent
                     ],
                     providers: [
-                        alliance_service_1.AllianceService
+                        alliance_service_1.AllianceService,
+                        modal_1.ConfirmComponent
                     ],
                     bootstrap: [app_component_1.AppComponent]
                 })

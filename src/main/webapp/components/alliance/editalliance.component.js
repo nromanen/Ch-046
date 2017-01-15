@@ -52,14 +52,18 @@ System.register(["@angular/core", "./alliance", "@angular/forms", "../services/a
                     updatedAlliance.uuid = this.editedAlliance.uuid;
                     console.log(updatedAlliance);
                     this._allianceService.updateAlliance(this.editedAlliance, updatedAlliance);
-                    this.editForm.setValue({
-                        allianceName: null,
-                        leaderLogin: null,
-                        leaderEmail: null
-                    });
-                    for (var name_1 in this.editForm.controls) {
-                        this.editForm.controls[name_1].setErrors(null);
-                    }
+                    //
+                    // this.editForm.setValue({
+                    //     allianceName : null,
+                    //     leaderLogin : null,
+                    //     leaderEmail : null
+                    // });
+                    // for (let name in this.editForm.controls) {
+                    //     this.editForm.controls[name].setErrors(null);
+                    // }
+                    this.notify.emit(null);
+                };
+                EditAllianceComponent.prototype.cancelEditing = function () {
                     this.notify.emit(null);
                 };
                 return EditAllianceComponent;

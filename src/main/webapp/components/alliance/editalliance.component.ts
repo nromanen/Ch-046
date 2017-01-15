@@ -44,18 +44,21 @@ export class EditAllianceComponent {
         updatedAlliance.uuid = this.editedAlliance.uuid;
         console.log(updatedAlliance);
         this._allianceService.updateAlliance(this.editedAlliance, updatedAlliance);
-
-        this.editForm.setValue({
-            allianceName : null,
-            leaderLogin : null,
-            leaderEmail : null
-        });
-        for (let name in this.editForm.controls) {
-            this.editForm.controls[name].setErrors(null);
-        }
+        //
+        // this.editForm.setValue({
+        //     allianceName : null,
+        //     leaderLogin : null,
+        //     leaderEmail : null
+        // });
+        // for (let name in this.editForm.controls) {
+        //     this.editForm.controls[name].setErrors(null);
+        // }
         this.notify.emit(null);
     }
 
+    cancelEditing(){
+        this.notify.emit(null);
+    }
 
 
 

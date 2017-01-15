@@ -43,30 +43,12 @@ System.register(["@angular/core", "./alliance", "../services/alliance-service", 
                         'leaderEmail': [null, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(this.EMAIL_REGEXP)])]
                     });
                 }
-                // constructor(fb: FormBuilder, private _allianceService: AllianceService){
-                //     this.complexForm = fb.group({
-                //         'firstName' : [null, Validators.required],
-                //         'lastName': [null,  Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(10)])],
-                //         'gender' : [null, Validators.required],
-                //         'hiking' : [false],
-                //         'running' : [false],
-                //         'swimming' : [false]
-                //     });
-                //     console.log(this.complexForm);
-                // }
                 AllianceForm.prototype.submitForm = function (value) {
                     console.log("Complex form: " + value);
                     console.log(value.allianceName);
                     var newAlliance = new alliance_1.Alliance(value.allianceName, value.leaderLogin, value.leaderEmail);
                     this._allianceService.addAlliance(newAlliance);
-                    this.complexForm.setValue({
-                        allianceName: null,
-                        leaderLogin: null,
-                        leaderEmail: null
-                    });
-                    for (var name_1 in this.complexForm.controls) {
-                        this.complexForm.controls[name_1].setErrors(null);
-                    }
+                    this.complexForm.reset();
                 };
                 return AllianceForm;
             }());

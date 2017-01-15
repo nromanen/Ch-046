@@ -25,25 +25,35 @@ System.register(["./alliance", "@angular/core", "../services/alliance-service"],
         ],
         execute: function () {
             AllianceComponent = (function () {
-                // @ViewChild(ErrorMessage) errorMsg: ErrorMessage;  // ErrorMessage is a ViewChild
+                // @ViewChild(ConfirmComponent) confirmDelete: ConfirmComponent;  // ErrorMessage is a ViewChild
                 //
                 function AllianceComponent(_allianceService) {
                     this._allianceService = _allianceService;
                     this.alliances = [new alliance_1.Alliance('Valhala', 'borg', 'test@net.com'), new alliance_1.Alliance('Torr', 'viking', 'test@nmetacom')];
                     this.selectedAlliance = null;
+                    this.deletedAlliance = null;
                 }
-                AllianceComponent.ontest = function () {
+                AllianceComponent.prototype.ontest = function () {
                     console.log("ontest");
-                    // this.errorMsg.showErrorMessage("Are you sure you want to delete this alliance?");
                 };
                 AllianceComponent.prototype.onNotify = function (alliance) {
                     this.selectedAlliance = alliance;
+                };
+                AllianceComponent.prototype.onNotifyDelete = function (confitmation) {
+                    if (confitmation) {
+                        this._allianceService.deleteAlliance(this.deletedAlliance);
+                    }
+                    this.deletedAlliance = null;
                 };
                 AllianceComponent.prototype.editAlliance = function (al) {
                     this.selectedAlliance = al;
                 };
                 AllianceComponent.prototype.deleteAlliance = function (al) {
-                    this._allianceService.deleteAlliance(al);
+                    console.log("ontest delete");
+                    this.confirmMsg = "Are you sure you want to delete alliance " + al.name + "?";
+                    this.deletedAlliance = al;
+                    // this.confirmDelete.showErrorMessage();
+                    //this._allianceService.deleteAlliance(al);
                     // this.alliances.splice(this.alliances.indexOf(al), 1);
                 };
                 AllianceComponent.prototype.cancelEditing = function () {
