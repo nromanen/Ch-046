@@ -1,6 +1,6 @@
 <add-alliance></add-alliance>
 <app-modal *ngIf="deletedAlliance !== null" [confirmMsg] = "confirmMsg" (notify)='onNotifyDelete($event)'></app-modal>
-<div class="row container" *ngIf="alliances.length !== 0">
+<div class="row container" *ngIf="_allianceService.alliances.length !== 0">
     <div class="col s12">
         <h3>Alliances</h3>
         <table class="highlight">

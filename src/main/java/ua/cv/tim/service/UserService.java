@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.PlayerDao;
 import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.dao.hibernate.UserDaoImpl;
+import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Race;
 import ua.cv.tim.model.User;
@@ -19,6 +20,7 @@ import ua.cv.tim.model.User;
 import ua.cv.tim.model.User;
 
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * Created by vyach on 03.01.2017.
@@ -26,7 +28,11 @@ import java.util.List;
 public interface UserService {
 
 	User getUserByUsername(String username);
+
+	void add(UserDTO userDTO);
+
 	void add(User user);
+
 	void update(User user);
 	void delete(User user);
 	boolean isUnique(User user);
@@ -35,4 +41,5 @@ public interface UserService {
 	List<User> getAllWithRoles();
 	List<User> getAll();
 	User getById(String id);
+	void deleteById(String id);
 }

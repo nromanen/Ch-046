@@ -10,7 +10,7 @@ import {Alliance} from "../alliance/alliance";
 export class AllianceService {
 
     url = 'admin/allianceDTO/';
-    alliances: Array<Alliance> = null;
+    alliances: Array<Alliance> = new Array<Alliance>();
 
     constructor(private _http: Http){
         this.getFromServer();
@@ -28,7 +28,10 @@ export class AllianceService {
             .subscribe(
                 response => {
                     console.log(response);
-                    this.alliances =  response;
+                    if (response != null){
+                        this.alliances =  response;
+                    }
+
                 },
                 error => console.log(error)
             );
