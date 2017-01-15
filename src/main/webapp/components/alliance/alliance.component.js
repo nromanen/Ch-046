@@ -1,4 +1,4 @@
-System.register(['angular2/core', "./alliance", "../../services/alliacne/alliance-service", "../modal_window/modal", "angular2/src/core/metadata"], function(exports_1, context_1) {
+System.register(['angular2/core', "./alliance", "../../services/alliance/alliance-service", "../modal_window/modal", "angular2/src/core/metadata"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {

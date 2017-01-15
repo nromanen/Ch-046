@@ -38,6 +38,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 				.formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/login")
 				.and()
+				.logout().invalidateHttpSession(true)
+				.and()
 				.exceptionHandling().accessDeniedPage("/access_denied")
 				.and()
 				.csrf().disable();
