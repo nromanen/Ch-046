@@ -1,12 +1,5 @@
 package ua.cv.tim.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.*;
-
-import javax.persistence.OrderBy;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -18,9 +11,8 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class Player implements Serializable {
+ public class Player extends UuidEntity implements Serializable {
 
-    @Id
     @JoinColumn(name = "user_uuid")
     @OneToOne(targetEntity = User.class)
     @JsonIgnoreProperties("player")
@@ -31,7 +23,7 @@ public class Player implements Serializable {
 
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "player")
     @OrderBy("population")
     private List<Village> villages;
 
@@ -70,5 +62,9 @@ public class Player implements Serializable {
 
     public void setAlliance(Alliance alliance) {
         this.alliance = alliance;
+    }
+
+    public Player(){
+
     }
 }

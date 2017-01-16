@@ -1,11 +1,17 @@
 package ua.cv.tim.service;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.testng.annotations.Test;
+
 import ua.cv.tim.configuration.HibernateConfiguration;
 import ua.cv.tim.model.Village;
+
+import org.testng.annotations.Test;
+
 
 import static org.testng.Assert.assertEquals;
 
@@ -14,7 +20,7 @@ import static org.testng.Assert.assertEquals;
  */
 @WebAppConfiguration
 @ContextConfiguration(classes = {HibernateConfiguration.class})
-public class VillageServiceTest {
+public class VillageServiceImpTest extends AbstractTestNGSpringContextTests{
     @Autowired
     PlayerService playerServiceImpl;
     @Autowired
@@ -30,15 +36,15 @@ public class VillageServiceTest {
         village.setIsCapital(true);
         village.setUuid("5dd0b0f2-810e-44d0-b11b-66d2e0f32bbe");
         village.setPopulation((short) 98);
-        village.setPlayer(playerServiceImpl.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7"));
+        village.setPlayer(playerServiceImpl.getById("77e0708b-0207-46e3-b521-b2ed1998e2b6"));
         String village_id = village.getUuid();
         villageService.add(village);
-        assertEquals(village, villageService.getById(village_id));
+
     }
 
     @Test
     public void testUpdate() throws Exception {
-        Village village = villageService.getById("5dd0b0f2-810e-44d0-b11b-66d2e0f32bbe");
+        Village village = villageService.getById("1e70681a-6e67-4d7e-b66b-475df975c9f7");
         village.setName("chernivtsi");
         villageService.update(village);
 
@@ -46,7 +52,7 @@ public class VillageServiceTest {
 
     @Test
     public void testDelete() throws Exception {
-        Village village = villageService.getById("5dd0b0f2-810e-44d0-b11b-66d2e0f32bbe");
+        Village village = villageService.getById("1e70681a-6e67-4d7e-b66b-475df975c9f7");
         villageService.delete(village);
     }
 

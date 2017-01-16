@@ -21,7 +21,7 @@ public class Alliance extends UuidEntity {
     private List<Player> players;
 
     public Alliance() {
-//        prePersist();
+
     }
 
     public String getName() {

@@ -11,5 +11,5 @@ public interface ArmyService {
     void update(Army army);
     void delete(Army army);
     Army getArmyById(String uuid);
-
+    Army getById(String uuid);
 }

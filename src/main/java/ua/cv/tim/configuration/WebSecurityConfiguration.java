@@ -19,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+
+
 	@Autowired
 	private UserDetailsService userDetailsService;
 
@@ -48,5 +50,5 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public AuthenticationTrustResolver getAuthenticationTrustResolver() {
 		return new AuthenticationTrustResolverImpl();
 	}
-	
+
 }
