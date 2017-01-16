@@ -35,6 +35,7 @@ public class PlayerController {
     @RequestMapping(value = "/player/{id}", method = RequestMethod.GET)
     public ResponseEntity<Player> getPlayerById(@PathVariable(name = "id") String id) {
         Player player = playerService.getByIdWithVillages(id);
+
         if (player == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(player, HttpStatus.OK);

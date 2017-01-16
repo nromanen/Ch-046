@@ -10,13 +10,43 @@ import {AllianceService} from "./services/alliance-service";
 import {AllianceForm} from "./alliance/addalliance.component";
 import {EditAllianceComponent} from "./alliance/editalliance.component";
 import {ConfirmComponent} from "./modal_window/modal";
+import {RouterModule,ActivatedRoute} from "@angular/router";
+import {PlayerComponent} from "./player/player.component";
+import {PlayerList} from "./player/playerList.component";
+import {PlayerRow} from "./player/playerRow.component";
+import {PlayerHeader} from "./player/playerHeader.component";
+import {PlayerService} from "./services/player.service";
 
 @NgModule({
     imports: [
         BrowserModule,
         HttpModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        RouterModule.forRoot([
+            {
+                path:'player',
+                component: PlayerComponent
+            },
+            {
+                path:'admin',
+                component:AllianceComponent
+            },
+            {
+                path: 'admin/',
+                redirectTo:'admin',
+                pathMatch:'full'
+            },
+            {
+                path: 'user',
+                redirectTo:'player',
+                pathMatch:'full'
+            },
+            {
+                path:'user/:id',
+                component:PlayerComponent
+            }
+        ])
     ],
     declarations: [
         AppComponent,
@@ -24,12 +54,17 @@ import {ConfirmComponent} from "./modal_window/modal";
         HeaderComponent,
         AllianceForm,
         EditAllianceComponent,
-        ConfirmComponent
-
+        ConfirmComponent,
+        PlayerComponent,
+        PlayerList,
+        PlayerRow,
+        PlayerHeader,
+        ActivatedRoute
     ],
     providers: [
         AllianceService,
-        ConfirmComponent
+        ConfirmComponent,
+        PlayerService
 
     ],
     bootstrap: [AppComponent]

@@ -24,8 +24,9 @@ System.register(["rxjs/Rx", "@angular/http", "@angular/core"], function (exports
         ],
         execute: function () {
             AllianceService = (function () {
-                function AllianceService(_http) {
+                function AllianceService(_http, params) {
                     this._http = _http;
+                    this.params = params;
                     this.url = 'admin/allianceDTO/';
                     this.alliances = new Array();
                     this.getFromServer();
@@ -85,7 +86,7 @@ System.register(["rxjs/Rx", "@angular/http", "@angular/core"], function (exports
             }());
             AllianceService = __decorate([
                 core_1.Injectable(),
-                __metadata("design:paramtypes", [http_1.Http])
+                __metadata("design:paramtypes", [http_1.Http, Object])
             ], AllianceService);
             exports_1("AllianceService", AllianceService);
         }

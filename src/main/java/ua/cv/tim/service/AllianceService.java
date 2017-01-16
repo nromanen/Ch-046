@@ -1,6 +1,7 @@
 package ua.cv.tim.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.AllianceDao;
@@ -44,7 +45,7 @@ public class AllianceService {
         }
         return allianceDTOS;
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void addAlliane(AllianceDTO allianceDTO){
         Alliance alliance = new Alliance();
         alliance.setName(allianceDTO.getName());

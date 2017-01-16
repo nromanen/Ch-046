@@ -7,7 +7,7 @@ System.register(["@angular/core"], function (exports_1, context_1) {
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, AppComponent;
+    var core_1, PlayerRow;
     return {
         setters: [
             function (core_1_1) {
@@ -15,19 +15,19 @@ System.register(["@angular/core"], function (exports_1, context_1) {
             }
         ],
         execute: function () {
-            AppComponent = (function () {
-                function AppComponent() {
+            PlayerRow = (function () {
+                function PlayerRow() {
                 }
-                return AppComponent;
+                return PlayerRow;
             }());
-            AppComponent = __decorate([
+            PlayerRow = __decorate([
                 core_1.Component({
-                    selector: 'my-app',
-                    template: "\n        <!--<my-header></my-header>-->\n        <!--<my-alliance></my-alliance>-->\n        <!--<a routerLink=\"/player\">Player</a>-->\n   <router-outlet></router-outlet>\n   <!--<a routerLink=\"/admin\">Alliance</a>-->\n   <router-outlet></router-outlet>\n    ",
+                    selector: 'player-row',
+                    template: "\n    <tbody>\n    <tr >\n        <td rowspan=\"2\">Village1</td>\n        <td rowspan=\"2\">30</td>\n        <td rowspan=\"2\">35</td>\n        <td rowspan=\"2\">70</td>\n        <td rowspan=\"2\">true</td>\n        <td rowspan=\"2\">50</td>\n        <td>type1</td>\n        <td>63</td>\n    </tr>\n\n    <tr>\n        <td>type2</td>\n        <td>23</td>\n    </tr>\n    </tbody>"
                 })
-            ], AppComponent);
-            exports_1("AppComponent", AppComponent);
+            ], PlayerRow);
+            exports_1("PlayerRow", PlayerRow);
         }
     };
 });
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=playerRow.component.js.map
