@@ -19,10 +19,10 @@ import org.springframework.stereotype.Service;
 @Service("sendMail")
 public class SendMail {
 	
-		
+
 	@Autowired
 	private EmailConfiguration emailConfig;
-		
+
 	 /**
      * Send email using GMail SMTP server.
      *
@@ -51,15 +51,15 @@ public class SendMail {
      * @throws MessagingException if the connection is dead or not in the connected state or if the message is not a MimeMessage
      */
     private void send(String recipientEmail, String ccEmail, String title, String message) throws AddressException, MessagingException {
-     
+
     	Properties properties = emailConfig.getEmailProperties();
-    	
+
     	 String sender = properties.getProperty("senderEmail");
     	 String password = properties.getProperty("EmailPassword");
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-        
+
         Session session = Session.getInstance(properties, null);
-        
+
         // -- Create a new message --
         final MimeMessage msg = new MimeMessage(session);
 

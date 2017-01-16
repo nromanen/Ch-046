@@ -4,16 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import ua.cv.tim.model.Player;
-import ua.cv.tim.model.User;
 import ua.cv.tim.model.Village;
 import ua.cv.tim.service.PlayerService;
 import ua.cv.tim.service.VillageService;
 
-import java.net.HttpRetryException;
 import java.util.List;
 
 /**
@@ -23,7 +20,7 @@ import java.util.List;
 @RestController
 public class PlayerController {
     @Autowired
-    VillageService villageService;
+    VillageService villageServiceImp;
 
     @Autowired
     PlayerService playerService;
@@ -38,6 +35,7 @@ public class PlayerController {
     @RequestMapping(value = "/player/{id}", method = RequestMethod.GET)
     public ResponseEntity<Player> getPlayerById(@PathVariable(name = "id") String id) {
         Player player = playerService.getByIdWithVillages(id);
+
         if (player == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(player, HttpStatus.OK);

@@ -2,13 +2,12 @@ package ua.cv.tim.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ua.cv.tim.controller.UserController;
 import ua.cv.tim.dao.PlayerDao;
 import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.dto.UserDTO;
@@ -19,7 +18,6 @@ import ua.cv.tim.utils.SendMail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
 
 /**
  * Created by Oleg on 04.01.2017.
@@ -30,13 +28,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-	
-	@Autowired
-	private UserDao userDao;
 
 	@Autowired
+	private UserDao userDao;
+	@Autowired
 	private PlayerDao playerDao;
-	
 	@Autowired
 	private SendMail sendMail;
 
@@ -61,16 +57,22 @@ public class UserServiceImpl implements UserService {
 		player.setUser(user);
 		user.setPlayer(player);
 		playerDao.add(player);
-		
+
 		try {
 			sendMail.send(user.getEmail(), "Travian user's info",
-					"Your login is" + user.getLogin() + " and password: " + user.getPassword()+"  role "+user.getRoles());
-			logger.info("Password {} has been sent on user's e-mail {}" , user.getPassword(), user.getEmail());
-        } catch (MessagingException e) {
-            logger.error("The e-mail hasn't been sent {}", e);
+					"Your login is" + user.getLogin() + " and password: " + user.getPassword() + "  role " + user.getRoles());
+			logger.info("Password {} has been sent on user's e-mail {}", user.getPassword(), user.getEmail());
+		} catch (MessagingException e) {
+			logger.error("The e-mail hasn't been sent {}", e);
 		}
-
 	}
+	public void add(User user) {
+		userDao.add(user);
+	}
+
+
+
+
 	@Override
 	public List<User> getAll() {
 		return userDao.getAll();
@@ -79,9 +81,11 @@ public class UserServiceImpl implements UserService {
 	public void update(User user) {
 		userDao.update(user);
 	}
+
+
 	@Override
 	public void delete(User user) {
-		userDao.delete(user);
+	    userDao.delete(user);
 	}
 	@Override
 	public boolean isUnique(User user) {
@@ -113,9 +117,10 @@ public class UserServiceImpl implements UserService {
     public User getById(String id) {
         return userDao.getById(id);
     }
-	@Override
-	public void add(User user) {
-		// TODO Auto-generated method stub
-		
-	}
+
+    @Override
+    public void deleteById(String id) {
+        User byId = userDao.getById(id);
+        userDao.delete(byId);
+    }
 }

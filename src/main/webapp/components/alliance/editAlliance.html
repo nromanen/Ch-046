@@ -1,0 +1,26 @@
+<div (keyup.escape)="cancelEditing()">
+    <form [formGroup]="editForm" (ngSubmit)="updateAlliance(editForm.value)" >
+        <td class="col s3">
+            <div>
+                <input type="text" name="allianceName" id="editName" class="validate" [formControl]="editForm.controls['allianceName']"/>
+                <div style="color: red; font-size: 14px;" *ngIf="!editForm.controls['allianceName'].valid && editForm.controls['allianceName'].touched">{{NAME_ERROR}}</div>
+            </div>
+        </td>
+        <td class="col s3">
+            <div>
+                <input type="text" name="leaderLogin" id="editLeaderLogin" class="validate"  [formControl]="editForm.controls['leaderLogin']"/>
+                <div style="color: red; font-size: 14px;" *ngIf="!editForm.controls['leaderLogin'].valid && editForm.controls['leaderLogin'].touched">{{LOGIN_ERROR}}</div>
+            </div>
+        </td>
+        <td class="col s3">
+            <div >
+                <input type="text" id="editLeaderEmail" class="validate"  [formControl]="editForm.controls['leaderEmail']"/>
+                <div style="color: red; font-size: 14px;" *ngIf="!editForm.controls['leaderEmail'].valid && editForm.controls['leaderEmail'].touched">{{EMAIL_ERROR}}</div>
+            </div>
+        </td>
+        <td class="col s3" style="text-align: center">
+            <button *ngIf="al === selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action"   style="margin-top: 5px" [disabled]="!editForm.valid">Save</button>
+            <button *ngIf="al === selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="button" name="action" (click)="cancelEditing()"  style="margin-top: 5px">Cancel</button>
+        </td>
+    </form>
+</div>
