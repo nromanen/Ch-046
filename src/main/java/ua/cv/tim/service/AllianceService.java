@@ -52,7 +52,7 @@ public class AllianceService {
         User user = new User();
         user.setLogin(allianceDTO.getLeaderLogin());
         user.setEmail(allianceDTO.getLeaderEmail());
-        user.setPassword("test");
+        user.setPassword("111");
         List<Role> roles = new ArrayList<>();
         roles.add(Role.USER);
         roles.add(Role.LEADER);

@@ -52,10 +52,8 @@ System.register(["@angular/core"], function (exports_1, context_1) {
             ConfirmComponent = __decorate([
                 core_1.Component({
                     selector: 'app-modal',
-                    //templateUrl: 'components/modal_window/modal.html',
-                    template: "\n    <div id=\"dialogoverlay\"></div>\n<div id=\"dialogbox\">\n    <div>\n        <div id=\"dialogboxhead\">Confirm</div>\n        <div id=\"dialogboxbody\">{{confirmMsg}}</div>\n        <div id=\"dialogboxfoot\"><button class='btn btn-danger' (click) = \"onConfirm()\">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-success' (click) = \"onCancel()\">Cancel</button></div>\n    </div>\n</div>\n\n",
-                    styles: ["#dialogoverlay{\n    display: block;\n    opacity: .8;\n    position: fixed;\n    top: 0px;\n    left: 0px;\n    background: black;\n    width: 100%;\n    height: 100%;\n    z-index: 10;\n}\n#dialogbox{\n    display: block;\n    position: absolute;\n    background: #fff;\n    border-radius:7px;\n    width:550px;\n    z-index: 10;\n     top: 20%;\n  left: 35%;\n}\n#dialogbox > div{ background: #d4e1d9; margin:8px; }\n#dialogbox > div > #dialogboxhead{ background: #fff; font-size:24px; padding:10px; color: #000000;  border-bottom: 1px solid lightgray;}\n#dialogbox > div > #dialogboxbody{ background: #fff; font-size:19px; padding:20px; color: #000000; border-bottom: 1px solid lightgray;}\n#dialogbox > div > #dialogboxfoot{ background: #fff; padding:10px; text-align:right; }"
-                    ]
+                    templateUrl: 'components/modal_window/modal.html',
+                    styleUrls: ['components/modal_window/modal.css']
                 })
             ], ConfirmComponent);
             exports_1("ConfirmComponent", ConfirmComponent);

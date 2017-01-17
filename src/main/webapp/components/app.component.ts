@@ -6,7 +6,7 @@ import {Component} from "@angular/core";
     selector: 'my-app',
     template: `
         <my-header></my-header>
-        <my-alliance></my-alliance>
+         <router-outlet></router-outlet>
     `,
 })
 

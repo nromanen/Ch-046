@@ -1,6 +1,6 @@
 <add-alliance></add-alliance>
 <app-modal *ngIf="deletedAlliance !== null" [confirmMsg] = "confirmMsg" (notify)='onNotifyDelete($event)'></app-modal>
-<div class="row container" *ngIf="_allianceService.alliances.length !== 0">
+<div class="row container" >
     <div class="col s12">
         <h3>Alliances</h3>
         <table class="highlight">
@@ -14,20 +14,41 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let al of _allianceService.alliances" (dblclick)="editAlliance(al)">
+            <tr *ngFor="let al of alliances" (dblclick)="editAlliance(al)">
                 <div *ngIf="al !== selectedAlliance">
                     <td class="col s3"><div  style="margin: 15px 0;">{{al.name}}</div></td>
                     <td class="col s3"><div *ngIf="al !== selectedAlliance"  style="margin: 15px 0;">{{al.leaderLogin}}</div></td>
                     <td class="col s3"><div *ngIf="al !== selectedAlliance"  style="margin: 15px 0;">{{al.leaderEmail}}</div></td>
                     <td class="col s3" style="text-align: center">
                         <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="editAlliance(al)"  style="margin-top: 5px;">Edit</button>
-                        <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="deleteAlliance(al)"  style="margin-top: 5px">Delete</button>
+                        <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="deleteAlliance(al)"  style="margin-top: 5px; background-color: red;">Delete</button>
                     </td>
                 </div>
                 <edit-alliance *ngIf="al === selectedAlliance" [editedAlliance] = "selectedAlliance" (notify)='onNotify($event)'></edit-alliance>
             </tr>
             </tbody>
         </table>
+        <br>
+
+
+        <ul class="pagination center">
+            <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(1)">First</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(pager.currentPage - 1)"><i class="material-icons">chevron_left</i></a>
+            </li>
+            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a (click)="setPage(page)">{{page}}</a>
+            </li>
+
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.currentPage + 1)"><i class="material-icons">chevron_right</i></a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.totalPages)">Last</a>
+            </li>
+        </ul>
     </div>
 </div>
 

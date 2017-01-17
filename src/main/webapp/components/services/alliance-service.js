@@ -10,10 +10,11 @@ System.register(["rxjs/Rx", "@angular/http", "@angular/core"], function (exports
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var http_1, core_1, AllianceService;
+    var http_1, core_1, Rx_1, AllianceService;
     return {
         setters: [
-            function (_1) {
+            function (Rx_1_1) {
+                Rx_1 = Rx_1_1;
             },
             function (http_1_1) {
                 http_1 = http_1_1;
@@ -26,12 +27,52 @@ System.register(["rxjs/Rx", "@angular/http", "@angular/core"], function (exports
             AllianceService = (function () {
                 function AllianceService(_http) {
                     this._http = _http;
+                    // {{pageContext.request.contextPath}};
                     this.url = 'admin/allianceDTO/';
                     this.alliances = new Array();
-                    this.getFromServer();
                 }
+                // getAlliances (): Observable<Alliance[]> {
+                //     return this._http.get(this.url)
+                //         .map(this.extractData);
+                //         // .catch(this.handleError);
+                // }
                 AllianceService.prototype.getAlliances = function () {
-                    return this.alliances;
+                    // ...using get request
+                    return this._http.get(this.url).
+                        map(this.extractData)
+                        .catch(this.handleError);
+                };
+                AllianceService.prototype.extractData = function (res) {
+                    var body = res.json();
+                    console.log(body);
+                    return body || {};
+                };
+                AllianceService.prototype.handleError = function (error) {
+                    // In a real world app, we might use a remote logging infrastructure
+                    var errMsg;
+                    if (error instanceof http_1.Response) {
+                        var body = error.json() || '';
+                        var err = body.error || JSON.stringify(body);
+                        errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+                    }
+                    else {
+                        errMsg = error.message ? error.message : error.toString();
+                    }
+                    console.error(errMsg);
+                    return Rx_1.Observable.throw(errMsg);
+                };
+                AllianceService.prototype.ngOnInit = function () {
+                    var _this = this;
+                    // get dummy data
+                    console.log("OnInit service");
+                    this._http.get(this.url)
+                        .map(function (res) { return res.json(); })
+                        .subscribe(function (response) {
+                        console.log(response);
+                        if (response != null) {
+                            _this.alliances = response;
+                        }
+                    }, function (error) { return console.log(error); });
                 };
                 AllianceService.prototype.getFromServer = function () {
                     var _this = this;

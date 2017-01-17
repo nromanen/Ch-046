@@ -1,40 +1,41 @@
 
 import {Alliance} from "./alliance";
-// import {ErrorMessage} from "../modal_window/modal";
-import {Component, ViewChild} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {AllianceService} from "../services/alliance-service";
-import {FormBuilder, Validators, FormGroup} from "@angular/forms";
-import {ConfirmComponent} from "../modal_window/modal";
-
+import {PagerService} from "../services/pager.service";
+import {Http, Headers} from "@angular/http";
 
 @Component({
     selector: 'my-alliance',
     templateUrl: 'components/alliance/alliance.html',
-    // providers: [AllianceService],
+    styleUrls: ['components/alliance/alliance.css']
 })
 
-export class AllianceComponent{
+export class AllianceComponent implements OnInit{
 
-    alliances: Array<Alliance> = [new Alliance('Valhala', 'borg', 'test@net.com'), new Alliance('Torr', 'viking', 'test@nmetacom')];
+    alliances: Array<Alliance> ;
+    errorMessage: string;
+
+
+    private allAlliance: any[];
+
+    pager: any = {};
+
+    pagedAlliance: any[];
 
     selectedAlliance: Alliance = null;
     deletedAlliance: Alliance = null;
-    name: string;
-    login: string;
-    email: string;
 
     confirmMsg: string;
 
-   // @ViewChild(ConfirmComponent) confirmDelete: ConfirmComponent;  // ErrorMessage is a ViewChild
-   //
+    url = 'admin/allianceDTO/';
 
-    constructor(private _allianceService: AllianceService){
-
+    constructor(private _http: Http, private _allianceService: AllianceService, private pagerService: PagerService){
     }
 
-
-    ontest(){
-        console.log("ontest");
+    ngOnInit() {
+        this.getAlliances();
+        //this.setPage(1);
     }
 
     onNotify(alliance : Alliance){
@@ -46,6 +47,7 @@ export class AllianceComponent{
             this._allianceService.deleteAlliance(this.deletedAlliance);
         }
         this.deletedAlliance = null;
+        this.setPage(this.pager.currentPage);
     }
 
     editAlliance(al: Alliance){
@@ -57,26 +59,34 @@ export class AllianceComponent{
         this.confirmMsg = "Are you sure you want to delete alliance " + al.name + "?";
         this.deletedAlliance = al;
 
-        // this.confirmDelete.showErrorMessage();
-        //this._allianceService.deleteAlliance(al);
-        // this.alliances.splice(this.alliances.indexOf(al), 1);
     }
 
     cancelEditing(){
         this.selectedAlliance = null;
     }
 
+    setPage(page: number) {
+        if (page < 1 || page > this.pager.totalPages) {
+            return;
+        }
+
+        // get pager object from service
+        this.pager = this.pagerService.getPager(this.alliances.length, page);
+
+        // get current page of items
+        this.pagedAlliance = this.allAlliance.slice(this.pager.startIndex, this.pager.endIndex + 1);
+    }
 
 
-    addAlliance(){
-        console.log("AddAlliance");
-        let newAlliance = new Alliance(this.name, this.login, this.email);
-        this.name = "";
-        this.login = "";
-        this.email = "";
-        this._allianceService.addAlliance(newAlliance);
-        // this.alliances.push(newAlliance);
 
+    getAlliances() {
+        this._allianceService.getAlliances()
+            .subscribe(
+                alliances => this.alliances = alliances,
+                error =>  this.errorMessage = <any>error
+            );
+        console.log("subscribe");
+        console.log(this.alliances);
     }
 
 

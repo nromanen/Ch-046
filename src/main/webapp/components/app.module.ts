@@ -10,13 +10,18 @@ import {AllianceService} from "./services/alliance-service";
 import {AllianceForm} from "./alliance/addalliance.component";
 import {EditAllianceComponent} from "./alliance/editalliance.component";
 import {ConfirmComponent} from "./modal_window/modal";
+import {RoutesModule} from "./app.routers";
+import {Users} from "./users/users.component";
+import {Village} from "./vailage/village.componrnt";
+import {PagerService} from "./services/pager.service";
 
 @NgModule({
     imports: [
         BrowserModule,
         HttpModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        RoutesModule
     ],
     declarations: [
         AppComponent,
@@ -24,13 +29,14 @@ import {ConfirmComponent} from "./modal_window/modal";
         HeaderComponent,
         AllianceForm,
         EditAllianceComponent,
-        ConfirmComponent
+        ConfirmComponent,
+        Users,
+        Village
 
     ],
     providers: [
         AllianceService,
-        ConfirmComponent
-
+        PagerService
     ],
     bootstrap: [AppComponent]
 })

@@ -6,6 +6,7 @@ import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 @Component({
     selector: 'add-alliance',
     templateUrl: 'components/alliance/allianceForm.html',
+
 })
 
 export class AllianceForm{

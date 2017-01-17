@@ -1,3 +1,6 @@
+/**
+ * Created by rmochetc on 15.01.2017.
+ */
 System.register(["@angular/core"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7,27 +10,29 @@ System.register(["@angular/core"], function (exports_1, context_1) {
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, AppComponent;
+    var core_1, Users;
     return {
         setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             }
         ],
-        execute: function () {
-            AppComponent = (function () {
-                function AppComponent() {
+        execute: function () {/**
+             * Created by rmochetc on 15.01.2017.
+             */
+            Users = (function () {
+                function Users() {
                 }
-                return AppComponent;
+                return Users;
             }());
-            AppComponent = __decorate([
+            Users = __decorate([
                 core_1.Component({
-                    selector: 'my-app',
-                    template: "\n        <my-header></my-header>\n         <router-outlet></router-outlet>\n    ",
+                    selector: 'add-users',
+                    template: "Test users",
                 })
-            ], AppComponent);
-            exports_1("AppComponent", AppComponent);
+            ], Users);
+            exports_1("Users", Users);
         }
     };
 });
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=users.component.js.map
