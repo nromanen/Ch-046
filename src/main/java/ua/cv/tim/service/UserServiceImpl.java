@@ -30,13 +30,13 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-	
+
 	@Autowired
 	private UserDao userDao;
 
 	@Autowired
 	private PlayerDao playerDao;
-	
+
 	@Autowired
 	private SendMail sendMail;
 
@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
 	public User getUserByUsername(String username) {
 		return userDao.getUserByUsername(username);
 	}
+
 	@Override
 	public void add(UserDTO userDTO) {
 		User user = new User();
@@ -61,61 +62,68 @@ public class UserServiceImpl implements UserService {
 		player.setUser(user);
 		user.setPlayer(player);
 		playerDao.add(player);
-		
-		try {
-			sendMail.send(user.getEmail(), "Travian user's info",
-					"Your login is" + user.getLogin() + " and password: " + user.getPassword()+"  role "+user.getRoles());
-			logger.info("Password {} has been sent on user's e-mail {}" , user.getPassword(), user.getEmail());
-        } catch (MessagingException e) {
-            logger.error("The e-mail hasn't been sent {}", e);
-		}
+		sendEmail(user);
 
 	}
+
 	@Override
 	public List<User> getAll() {
 		return userDao.getAll();
 	}
+
 	@Override
 	public void update(User user) {
 		userDao.update(user);
 	}
+
 	@Override
 	public void delete(User user) {
 		userDao.delete(user);
 	}
+
 	@Override
 	public boolean isUnique(User user) {
-		if(userDao.getByMail(user.getEmail())!=null)
-		{
+		if (userDao.getByMail(user.getEmail()) != null) {
 			return false;
-		}
-		else return true;
+		} else
+			return true;
 	}
 
-    @Override
-    public long getCount() {
-        return userDao.getCount();
-    }
+	@Override
+	public long getCount() {
+		return userDao.getCount();
+	}
 
-    @Override
-    public User getWithRolesById(String id) {
-        return userDao.getWithRolesById(id);
-    }
+	@Override
+	public User getWithRolesById(String id) {
+		return userDao.getWithRolesById(id);
+	}
 
-    @Override
-    public List<User> getAllWithRoles() {
-        return userDao.getAllWithRoles();
-    }
+	@Override
+	public List<User> getAllWithRoles() {
+		return userDao.getAllWithRoles();
+	}
 
+	@Override
+	public User getById(String id) {
+		return userDao.getById(id);
+	}
 
-
-    @Override
-    public User getById(String id) {
-        return userDao.getById(id);
-    }
 	@Override
 	public void add(User user) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void sendEmail(User user) {
+		try {
+			sendMail.send(user.getEmail(), "Travian user's info", "Your login is" + user.getLogin() + " and password: "
+					+ user.getPassword() + "  role " + user.getRoles());
+			logger.info("Password {} has been sent on user's e-mail {}", user.getPassword(), user.getEmail());
+		} catch (MessagingException e) {
+			logger.error("The e-mail hasn't been sent {}", e);
+		}
+
 	}
 }

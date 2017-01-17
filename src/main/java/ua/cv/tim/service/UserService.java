@@ -22,7 +22,7 @@ import ua.cv.tim.model.User;
 import java.util.List;
 
 /**
- * Created by vyach on 03.01.2017.
+ * Updated by mmaksymtc on 07.01.2017.
  */
 public interface UserService {
 
@@ -42,4 +42,6 @@ public interface UserService {
 	List<User> getAll();
 
 	User getById(String id);
+	
+	void sendEmail(User user);
 }
