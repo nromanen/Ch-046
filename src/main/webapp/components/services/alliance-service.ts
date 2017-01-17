@@ -12,7 +12,7 @@ export class AllianceService {
     url = 'admin/allianceDTO/';
     alliances: Array<Alliance> = new Array<Alliance>();
 
-    constructor(private _http: Http, private params:RouteParams){
+    constructor(private _http: Http){
         this.getFromServer();
     }
 

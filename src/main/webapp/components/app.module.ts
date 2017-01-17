@@ -10,7 +10,7 @@ import {AllianceService} from "./services/alliance-service";
 import {AllianceForm} from "./alliance/addalliance.component";
 import {EditAllianceComponent} from "./alliance/editalliance.component";
 import {ConfirmComponent} from "./modal_window/modal";
-import {RouterModule,ActivatedRoute} from "@angular/router";
+import {RouterModule} from "@angular/router";
 import {PlayerComponent} from "./player/player.component";
 import {PlayerList} from "./player/playerList.component";
 import {PlayerRow} from "./player/playerRow.component";
@@ -25,7 +25,7 @@ import {PlayerService} from "./services/player.service";
         ReactiveFormsModule,
         RouterModule.forRoot([
             {
-                path:'player',
+                path:'player/:id',
                 component: PlayerComponent
             },
             {
@@ -38,13 +38,9 @@ import {PlayerService} from "./services/player.service";
                 pathMatch:'full'
             },
             {
-                path: 'user',
-                redirectTo:'player',
+                path: 'user/:id',
+                redirectTo:'player/:id',
                 pathMatch:'full'
-            },
-            {
-                path:'user/:id',
-                component:PlayerComponent
             }
         ])
     ],
@@ -59,7 +55,7 @@ import {PlayerService} from "./services/player.service";
         PlayerList,
         PlayerRow,
         PlayerHeader,
-        ActivatedRoute
+
     ],
     providers: [
         AllianceService,

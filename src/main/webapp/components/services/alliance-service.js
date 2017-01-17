@@ -1,5 +1,6 @@
-System.register(["rxjs/Rx", "@angular/http", "@angular/core"], function (exports_1, context_1) {
+System.register(['rxjs/Rx', "@angular/http", "@angular/core"], function(exports_1, context_1) {
     "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,24 +10,21 @@ System.register(["rxjs/Rx", "@angular/http", "@angular/core"], function (exports
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var __moduleName = context_1 && context_1.id;
-    var http_1, core_1, AllianceService;
+    var http_1, core_1;
+    var AllianceService;
     return {
-        setters: [
-            function (_1) {
-            },
+        setters:[
+            function (_1) {},
             function (http_1_1) {
                 http_1 = http_1_1;
             },
             function (core_1_1) {
                 core_1 = core_1_1;
-            }
-        ],
-        execute: function () {
+            }],
+        execute: function() {
             AllianceService = (function () {
-                function AllianceService(_http, params) {
+                function AllianceService(_http) {
                     this._http = _http;
-                    this.params = params;
                     this.url = 'admin/allianceDTO/';
                     this.alliances = new Array();
                     this.getFromServer();
@@ -82,14 +80,14 @@ System.register(["rxjs/Rx", "@angular/http", "@angular/core"], function (exports
                         _this.alliances[_this.alliances.indexOf(alliance)] = newAlliance;
                     }, function (error) { return console.log(error); });
                 };
+                AllianceService = __decorate([
+                    core_1.Injectable(), 
+                    __metadata('design:paramtypes', [http_1.Http])
+                ], AllianceService);
                 return AllianceService;
             }());
-            AllianceService = __decorate([
-                core_1.Injectable(),
-                __metadata("design:paramtypes", [http_1.Http, Object])
-            ], AllianceService);
             exports_1("AllianceService", AllianceService);
         }
-    };
+    }
 });
 //# sourceMappingURL=alliance-service.js.map
