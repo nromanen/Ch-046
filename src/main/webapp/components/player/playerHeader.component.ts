@@ -12,9 +12,7 @@ import {Component} from "@angular/core";
 <ul class="right hide-on-med-and-down">
 <li><a href="addVillage.html">Add village</a></li>
 <li><a href="villagesList.html">All villages</a></li>
-<li><a routerLink="/admin" routerLinkActive="active">Crisis Center</a></li>
-<!-- <li><a href="allUsers.html">All users</a></li>
-<li><a href="allAlliances.html">All alliances</a></li> -->
+<li><a href="/logout" >Log out</a></li>
 </ul>
 <ul class="side-nav" id="mobile-demo">
 <li><a href="sass.html">Show users</a></li>

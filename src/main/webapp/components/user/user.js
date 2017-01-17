@@ -1,20 +1,20 @@
 System.register([], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var Player;
+    var User;
     return {
         setters: [],
         execute: function () {
             /**
-             * Created by Oleg on 14.01.2017.
+             * Created by okunetc on 17.01.2017.
              */
-            Player = (function () {
-                function Player() {
+            User = (function () {
+                function User() {
                 }
-                return Player;
+                return User;
             }());
-            exports_1("Player", Player);
+            exports_1("User", User);
         }
     };
 });
-//# sourceMappingURL=player.js.map
+//# sourceMappingURL=user.js.map

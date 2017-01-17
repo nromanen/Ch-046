@@ -24,11 +24,13 @@ public class Village extends UuidEntity implements Comparable<Village> {
 	private Boolean isCapital;
 	private Byte wall = 0;
 
-	@JsonBackReference
+//	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owningVillage")
 	private List<Army> armies = new ArrayList<>();
 
-	@JsonBackReference
+//	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "armyRequestVillage")
 	private List<Army> armyRequests;
 

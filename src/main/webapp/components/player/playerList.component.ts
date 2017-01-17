@@ -3,13 +3,10 @@
  */
 import {PlayerRow} from "./playerRow.component";
 import {Player} from "./player";
-import {Component} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 @Component
 ({
     selector: 'player-list',
-
-    inputs:['players'],
-    // templateUrl:'components/player/playerList.html'
     template: `
 <table>
 <thead >
@@ -25,14 +22,14 @@ import {Component} from "@angular/core";
     </tr>
     </thead>
     
-     <tbody *ngFor="let p of players">
+     <tbody *ngFor="let v of player.villages">
     <tr >
-        <td rowspan="2">Village1</td>
-        <td rowspan="2">30</td>
-        <td rowspan="2">35</td>
-        <td rowspan="2">70</td>
-        <td rowspan="2">true</td>
-        <td rowspan="2">50</td>
+        <td rowspan="2">{{v.name}}</td>
+        <td rowspan="2">{{v.population}}</td>
+        <td rowspan="2">{{v.xCoord}}</td>
+        <td rowspan="2">{{v.yCoord}}</td>
+        <td rowspan="2">{{v.isCapital}}</td>
+        <td rowspan="2">{{v.wall}}</td>
         <td>type1</td>
         <td>63</td>
     </tr>
@@ -45,10 +42,14 @@ import {Component} from "@angular/core";
 </table>
 `
 })
-export class PlayerList {
- players:Player[];
+export class PlayerList implements OnInit{
+    ngOnInit(): void {
+        console.log(this.player);
+    }
+ @Input('player') player:Player;
     constructor(){
-        console.log(this.players);
+
+
     }
 
 }

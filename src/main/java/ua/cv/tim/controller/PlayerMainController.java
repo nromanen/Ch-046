@@ -19,9 +19,7 @@ public class PlayerMainController {
     UserService userService;
     @RequestMapping(method= RequestMethod.GET)
     public String showPlayerMainPage(){
-//        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        User userByUsername = userService.getUserByUsername(principal.getUsername());
-//        String uuid = userByUsername.getUuid();
+
         return "villagesList.html";
     }
 }

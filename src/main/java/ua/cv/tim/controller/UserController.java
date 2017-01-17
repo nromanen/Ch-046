@@ -33,10 +33,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-//	@RequestMapping(method = RequestMethod.GET)
-//	public String showAdminMainPage() {
-//		return "user-main.jsp";
-//	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public ModelAndView addUserForm() {

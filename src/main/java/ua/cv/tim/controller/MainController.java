@@ -59,7 +59,7 @@ UserService userService;
             return "redirect:/leader";
         } else {
             User userByUsername = userService.getUserByUsername(principal.getUsername());
-            return "redirect:/user" + "/" + userByUsername.getUuid();
+            return "redirect:/user" + "/" + userByUsername.getPlayer().getUuid();
         }
     }
 

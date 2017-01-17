@@ -42,9 +42,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/logout").authenticated()
-				.antMatchers("/admin**").access("hasRole('ADMIN')")
-				.antMatchers("/leader**").access("hasRole('LEADER')")
-				.antMatchers("/user**").access("hasRole('LEADER') or hasRole('USER')")
+				.antMatchers("/admin**/**").access("hasRole('ADMIN')")
+				.antMatchers("/leader**/**").access("hasRole('LEADER')")
+				.antMatchers("/user**/**").access("hasRole('LEADER') or hasRole('USER')")
 				.antMatchers("/", "/login").permitAll()
 				.and()
 				.formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/login")
