@@ -6,11 +6,11 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             User = (function () {
-                function User(login, password, email, alliance) {
+                function User(login, email, uuid, alliance) {
+                    this.uuid = uuid || null;
                     this.login = login;
-                    this.password = password;
                     this.email = email;
-                    this.alliance = alliance;
+                    this.alliance = alliance || null;
                 }
                 return User;
             }());

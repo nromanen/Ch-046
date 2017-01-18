@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponentsBuilder;
 import ua.cv.tim.dto.UserDTO;
+import ua.cv.tim.dto.UserInfoDTO;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.UserService;
 
@@ -20,9 +21,6 @@ import java.util.List;
 /**
  * Created by Oleg on 07.01.2017.
  */
-
-
-
 
 @RestController
 @RequestMapping(value = "/user")
@@ -38,7 +36,7 @@ public class UserController {
 		return "user-main.jsp";
 	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	@RequestMapping(value = "/addd", method = RequestMethod.GET)
 	public ModelAndView addUserForm() {
 
 		ModelAndView model = new ModelAndView("addUser.html");
@@ -86,13 +84,13 @@ public class UserController {
     public ResponseEntity<Void> addUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
         userService.add(user);
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getUuid()).toUri());
+        headers.setLocation(ucBuilder.path("/member/{id}").buildAndExpand(user.getUuid()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
     public ResponseEntity<User> updateUser(@PathVariable("id") String id, @RequestBody User user) {
-        User currentUser = userService.getWithRolesById(id);
+		User currentUser = userService.getWithRolesById(id);
         if (currentUser == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -102,15 +100,44 @@ public class UserController {
         return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteUser(@PathVariable(name = "id") String id) {
-        User user = userService.getById(id);
-        user.setUuid(id);
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        userService.delete(user);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		logger.info("UserController.deleteUser() method is working. User id: {}", id);
+        userService.deleteById(id);
+		logger.info("UserController.deleteUser() user has deleted");
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+	// v.kruhlov realizations
+	@RequestMapping(value = "/alliance-users/{allianceName}")
+	public ResponseEntity<List<UserInfoDTO>> getUsersByAlliance(@PathVariable(name = "allianceName") String allianceName) {
+		logger.info("UserController.getUsersByAlliance() method is working. Alliance name: {}", allianceName);
+		List<UserInfoDTO> allianceUsers = userService.getUsersByAlliance(allianceName);
+		logger.info("Users from DB: {}", allianceUsers);
+		return new ResponseEntity<>(allianceUsers, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserInfoDTO> addAllianceMember(@RequestBody UserInfoDTO member) {
+		logger.info("UserController.addAllianceMember() method is working. Alliance name: {}", member.toString());
+		userService.addAllianceMember(member);
+		User user = userService.getUserByUsername(member.getLogin());
+		member.setUuid(user.getUuid());
+		logger.info("UserController.getUsersByAlliance() method return: {}", member); // todo не сохраняет Player в service т.к. не вытащен Alliance
+		return new ResponseEntity<>(member, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<User> updateMember(@PathVariable("id") String id, @RequestBody UserInfoDTO user) {
+		logger.info("UserController.updateUser() method is working. User id: {}, user body: {}", id, user);
+		User currentUser = userService.getById(id);
+		if (currentUser == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		currentUser.setLogin(user.getLogin());
+		currentUser.setEmail(user.getEmail());
+		userService.update(currentUser);
+		return new ResponseEntity<>(currentUser, HttpStatus.OK);
+	}
 
 }

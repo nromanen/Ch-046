@@ -55,10 +55,9 @@ System.register(["@angular/core", "./alliance", "../services/alliance-service", 
                         selector: 'add-alliance',
                         templateUrl: 'components/alliance/allianceForm.html',
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof forms_1.FormBuilder !== 'undefined' && forms_1.FormBuilder) === 'function' && _a) || Object, alliance_service_1.AllianceService])
+                    __metadata('design:paramtypes', [forms_1.FormBuilder, alliance_service_1.AllianceService])
                 ], AllianceForm);
                 return AllianceForm;
-                var _a;
             }());
             exports_1("AllianceForm", AllianceForm);
         }

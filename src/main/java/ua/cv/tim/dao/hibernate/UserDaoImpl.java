@@ -1,6 +1,5 @@
 package ua.cv.tim.dao.hibernate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -72,9 +71,16 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     @Override
     public User getUserByUsername(String username) {
         String request = "select u from User u where u.login = :login";
-        org.hibernate.query.Query<User> query = getCurrentSession().createQuery(request);
+        Query<User> query = getCurrentSession().createQuery(request);
         query.setParameter("login", username);
         return query.getSingleResult();
     }
 
+    @Override
+    public List<User> getUsersByAlliance(String allianceName) {
+        String request = "select u from User u where u.player.alliance.name = :name";
+        Query<User> query = getCurrentSession().createQuery(request);
+        query.setParameter("name", allianceName);
+        return query.list();
+    }
 }

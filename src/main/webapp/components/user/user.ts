@@ -1,15 +1,14 @@
 export class User {
+    uuid: string;
     login: string;
-    password: string;
     email: string;
     alliance: string;
-    uuid: string;
 
-
-    constructor(login:string, password:string, email:string, alliance:string) {
+    constructor(login:string, email:string, uuid?:string, alliance?:string) {
+        this.uuid = uuid || null;
         this.login = login;
-        this.password = password;
         this.email = email;
-        this.alliance = alliance;
+        this.alliance = alliance || null;
     }
+    
 }

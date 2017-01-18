@@ -1,5 +1,6 @@
 package ua.cv.tim.dao.hibernate;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -44,5 +45,12 @@ public class AllianceDaoImpl extends AbstractCrudDao<Alliance>  implements Allia
         query.setParameter("name", name);
         String uuid = (String) query.uniqueResult();
         return uuid;
+    }
+
+    @Override
+    public Alliance getAllianceByName(String allianceName) {
+        Query<Alliance> query = getCurrentSession().createQuery("select a from Alliance a where a.name = :name");
+        query.setParameter("name", allianceName);
+        return query.getSingleResult();
     }
 }

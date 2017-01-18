@@ -1,6 +1,5 @@
 package ua.cv.tim.dao;
 
-import ua.cv.tim.dao.CrudDao;
 import ua.cv.tim.model.Alliance;
 
 import java.util.List;
@@ -14,5 +13,6 @@ public interface AllianceDao extends CrudDao<Alliance> {
     List<Alliance> getAll();
     String getIdByName(String name);
 
+    Alliance getAllianceByName(String allianceName);
 }
 

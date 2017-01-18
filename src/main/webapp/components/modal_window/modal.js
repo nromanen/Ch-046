@@ -45,7 +45,7 @@ System.register(["@angular/core"], function(exports_1, context_1) {
                 ], ConfirmComponent.prototype, "confirmMsg", void 0);
                 __decorate([
                     core_1.Output(), 
-                    __metadata('design:type', (typeof (_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)
+                    __metadata('design:type', core_1.EventEmitter)
                 ], ConfirmComponent.prototype, "notify", void 0);
                 ConfirmComponent = __decorate([
                     core_1.Component({
@@ -58,7 +58,6 @@ System.register(["@angular/core"], function(exports_1, context_1) {
                     __metadata('design:paramtypes', [])
                 ], ConfirmComponent);
                 return ConfirmComponent;
-                var _a;
             }());
             exports_1("ConfirmComponent", ConfirmComponent);
         }

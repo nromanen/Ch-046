@@ -75,17 +75,16 @@ System.register(["@angular/core", "./alliance", "@angular/forms", "../services/a
                 ], EditAllianceComponent.prototype, "editedAlliance", void 0);
                 __decorate([
                     core_1.Output(), 
-                    __metadata('design:type', (typeof (_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)
+                    __metadata('design:type', core_1.EventEmitter)
                 ], EditAllianceComponent.prototype, "notify", void 0);
                 EditAllianceComponent = __decorate([
                     core_1.Component({
                         selector: 'edit-alliance',
                         templateUrl: 'components/alliance/editAlliance.html',
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_b = typeof forms_1.FormBuilder !== 'undefined' && forms_1.FormBuilder) === 'function' && _b) || Object, alliance_service_1.AllianceService])
+                    __metadata('design:paramtypes', [forms_1.FormBuilder, alliance_service_1.AllianceService])
                 ], EditAllianceComponent);
                 return EditAllianceComponent;
-                var _a, _b;
             }());
             exports_1("EditAllianceComponent", EditAllianceComponent);
         }

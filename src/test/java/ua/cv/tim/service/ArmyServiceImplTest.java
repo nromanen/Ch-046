@@ -1,12 +1,11 @@
 package ua.cv.tim.service;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.testng.annotations.Test;
 import ua.cv.tim.configuration.HibernateConfiguration;
 
-import static org.junit.Assert.*;
 
 /**
  * Created by okunetc on 12.01.2017.
