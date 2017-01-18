@@ -1,6 +1,5 @@
-System.register(["@angular/core", "../services/currentPlayer.service"], function(exports_1, context_1) {
+System.register(["@angular/core", "../services/currentVillage.service"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,36 +9,37 @@ System.register(["@angular/core", "../services/currentPlayer.service"], function
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, currentPlayer_service_1;
-    var EditVillageComponent;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, currentVillage_service_1, EditVillageComponent;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (currentPlayer_service_1_1) {
-                currentPlayer_service_1 = currentPlayer_service_1_1;
-            }],
-        execute: function() {
-            /**
-             * Created by Oleg on 17.01.2017.
-             */
+            function (currentVillage_service_1_1) {
+                currentVillage_service_1 = currentVillage_service_1_1;
+            }
+        ],
+        execute: function () {
             EditVillageComponent = (function () {
-                function EditVillageComponent(currPlayerService) {
-                    this.currPlayerService = currPlayerService;
-                    console.log(this.currPlayerService.player);
+                function EditVillageComponent(currVillageService) {
+                    this.currVillageService = currVillageService;
+                    this.village = currVillageService.village;
                 }
-                EditVillageComponent = __decorate([
-                    core_1.Component({
-                        selector: 'edit-village',
-                        template: "\n    <player-head></player-head>\n    <div>hello{{currPlayerService.player.password}}</div>"
-                    }), 
-                    __metadata('design:paramtypes', [currentPlayer_service_1.CurrPlayerService])
-                ], EditVillageComponent);
+                EditVillageComponent.prototype.ngOnInit = function () {
+                    console.log(this.village.isCapital);
+                };
                 return EditVillageComponent;
             }());
+            EditVillageComponent = __decorate([
+                core_1.Component({
+                    selector: 'edit-village',
+                    template: "<player-head></player-head>\n<div>hello</div>\n<div class=\"container\">\n    <div class=\"row\">\n        <form class=\"col s12\" #f=\"ngForm\" novalidate>\n            <div class=\"row\">\n                <div class=\"input-field col s6 offset-s3\">\n                    <input value=\"{{village.name}}\" id=\"name\" type=\"text\" class=\"validate\" #newName>\n                    <label class=\"active\" for=\"name\">Name</label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"input-field col s6 offset-s3\">\n                    <input value=\"{{village.xCoord}}\" id=\"xCoord\" type=\"text\" class=\"validate\" #newX>\n                    <label class=\"active\" for=\"xCoord\">X coordinate</label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"input-field col s6 offset-s3\">\n                    <input value=\"{{village.yCoord}}\" id=\"yCoord\" type=\"text\" class=\"validate\" #newY>\n                    <label class=\"active\" for=\"yCoord\">Y coordinate</label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"input-field col s6 offset-s3\">\n                    <input value=\"{{village.population}}\" id=\"population\" type=\"text\" class=\"validate\" #newPopulation>\n                    <label class=\"active\" for=\"population\">Population</label>\n                </div>\n            </div>\n\n\n            <div class=\"row\">\n                <div class=\"input-field col s6 offset-s3\">\n                    <input value=\"{{village.wall}}\" id=\"isCapital\" type=\"text\" class=\"validate\" #newWall>\n                    <label class=\"active\" for=\"isCapital\">Wall</label>\n                </div>\n            </div>\n\n            \n\n            <div class=\"row\">\n                <div class=\"input-field col s6 offset-s3\">\n                    <div class=\"switch\">\n                        <label>\n                            No\n                            <input type=\"checkbox\" name=\"isCapital\" required (ngModel)=\"village.isCapital()\">\n                            <span class=\"lever\"></span>\n                            Yes\n                        </label>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"col offset-s5\">\n                    <button class=\"btn waves-effect waves-light\" style=\"margin-top: 27px\">Save</button>\n                </div>\n            </div>\n        </form>\n    </div>\n</div>\n"
+                }),
+                __metadata("design:paramtypes", [currentVillage_service_1.CurrVillageService])
+            ], EditVillageComponent);
             exports_1("EditVillageComponent", EditVillageComponent);
         }
-    }
+    };
 });
 //# sourceMappingURL=editViallage.component.js.map

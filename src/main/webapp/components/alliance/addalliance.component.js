@@ -1,6 +1,5 @@
-System.register(["@angular/core", "./alliance", "../services/alliance-service", "@angular/forms"], function(exports_1, context_1) {
+System.register(["@angular/core", "./alliance", "../services/alliance-service", "@angular/forms"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,10 +9,10 @@ System.register(["@angular/core", "./alliance", "../services/alliance-service", 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, alliance_1, alliance_service_1, forms_1;
-    var AllianceForm;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, alliance_1, alliance_service_1, forms_1, AllianceForm;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
@@ -25,8 +24,9 @@ System.register(["@angular/core", "./alliance", "../services/alliance-service", 
             },
             function (forms_1_1) {
                 forms_1 = forms_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             AllianceForm = (function () {
                 function AllianceForm(fb, _allianceService) {
                     this.fb = fb;
@@ -50,17 +50,17 @@ System.register(["@angular/core", "./alliance", "../services/alliance-service", 
                     this._allianceService.addAlliance(newAlliance);
                     this.complexForm.reset();
                 };
-                AllianceForm = __decorate([
-                    core_1.Component({
-                        selector: 'add-alliance',
-                        templateUrl: 'components/alliance/allianceForm.html',
-                    }), 
-                    __metadata('design:paramtypes', [forms_1.FormBuilder, alliance_service_1.AllianceService])
-                ], AllianceForm);
                 return AllianceForm;
             }());
+            AllianceForm = __decorate([
+                core_1.Component({
+                    selector: 'add-alliance',
+                    templateUrl: 'components/alliance/allianceForm.html',
+                }),
+                __metadata("design:paramtypes", [forms_1.FormBuilder, alliance_service_1.AllianceService])
+            ], AllianceForm);
             exports_1("AllianceForm", AllianceForm);
         }
-    }
+    };
 });
 //# sourceMappingURL=addalliance.component.js.map

@@ -9,7 +9,7 @@ import {Component, OnInit} from "@angular/core";
 import {PlayerService} from "../services/player.service";
 import {ActivatedRoute, Params} from "@angular/router";
 import {Village} from "../village/village";
-import {CurrPlayerService} from "../services/currentPlayer.service";
+import {CurrVillageService} from "../services/currentVillage.service";
 @Component({
     selector: 'player',
     template:`
@@ -21,7 +21,7 @@ import {CurrPlayerService} from "../services/currentPlayer.service";
  export class PlayerComponent implements OnInit{
     player:Player;
     id;
-    constructor(private currPlayerService:CurrPlayerService,private playerService:PlayerService,private route:ActivatedRoute){
+    constructor(private currPlayerService:CurrVillageService, private playerService:PlayerService, private route:ActivatedRoute){
         this.route.params.subscribe((param:any)=>
         {
             this.id=param['id'];
@@ -43,7 +43,7 @@ import {CurrPlayerService} from "../services/currentPlayer.service";
                 player=>{
                     this.player=player;
                     console.log(this.player);
-                    this.currPlayerService.player=this.player;
+                    // this.currPlayerService.village=this.player;
                 }
             );
     }

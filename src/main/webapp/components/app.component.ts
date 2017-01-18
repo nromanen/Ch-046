@@ -1,7 +1,7 @@
 import {AllianceComponent} from "./alliance/alliance.component";
 import {HeaderComponent} from "./header/header.component";
 import {Component} from "@angular/core";
-import {CurrPlayerService} from "./services/currentPlayer.service";
+import {CurrVillageService} from "./services/currentVillage.service";
 
 @Component({
     selector: 'my-app',
@@ -12,7 +12,7 @@ import {CurrPlayerService} from "./services/currentPlayer.service";
 })
 
 export class AppComponent {
-constructor(currPlayerService:CurrPlayerService){
+constructor(currPlayerService:CurrVillageService){
 
 }
 }

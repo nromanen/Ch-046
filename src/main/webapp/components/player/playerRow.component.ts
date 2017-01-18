@@ -1,4 +1,5 @@
-import {Component} from "@angular/core";
+import {Component, Input, OnInit, EventEmitter} from "@angular/core";
+import {Village} from "../village/village";
 /**
  * Created by Oleg on 14.01.2017.
  */
@@ -6,25 +7,24 @@ import {Component} from "@angular/core";
 @Component
 ({
     selector:'player-row',
+    outputs:['editClick'],
     template:`
-    <tbody>
-    <tr >
-        <td rowspan="2">Village1</td>
-        <td rowspan="2">30</td>
-        <td rowspan="2">35</td>
-        <td rowspan="2">70</td>
-        <td rowspan="2">true</td>
-        <td rowspan="2">50</td>
-        <td>type1</td>
-        <td>63</td>
-    </tr>
-
-    <tr>
-        <td>type2</td>
-        <td>23</td>
-    </tr>
-    </tbody>`
+             <a (click)="edit()" routerLink="/edit"><button class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" style="margin-top: 5px;"
+        >Edit</button></a>
+`
 })
-export class PlayerRow{
+export class PlayerRow implements OnInit{
+    ngOnInit(): void {
+        console.log(this.v);
+    }
+    @Input() v:Village;
+    editClick:EventEmitter<Village>;
+    edit(){
+        console.log('clicked');
+        this.editClick.emit(this.v);
+    }
 
+    constructor(){
+        this.editClick=new EventEmitter<Village>();
+    }
 }

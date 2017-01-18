@@ -1,6 +1,5 @@
-System.register(["@angular/core", "./services/currentPlayer.service"], function(exports_1, context_1) {
+System.register(["@angular/core", "./services/currentVillage.service"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,31 +9,32 @@ System.register(["@angular/core", "./services/currentPlayer.service"], function(
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, currentPlayer_service_1;
-    var AppComponent;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, currentVillage_service_1, AppComponent;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (currentPlayer_service_1_1) {
-                currentPlayer_service_1 = currentPlayer_service_1_1;
-            }],
-        execute: function() {
+            function (currentVillage_service_1_1) {
+                currentVillage_service_1 = currentVillage_service_1_1;
+            }
+        ],
+        execute: function () {
             AppComponent = (function () {
                 function AppComponent(currPlayerService) {
                 }
-                AppComponent = __decorate([
-                    core_1.Component({
-                        selector: 'my-app',
-                        template: "\n   <router-outlet></router-outlet>\n   <!--<router-outlet name=\"editRouter\"></router-outlet>-->\n    ",
-                    }), 
-                    __metadata('design:paramtypes', [currentPlayer_service_1.CurrPlayerService])
-                ], AppComponent);
                 return AppComponent;
             }());
+            AppComponent = __decorate([
+                core_1.Component({
+                    selector: 'my-app',
+                    template: "\n   <router-outlet></router-outlet>\n   <!--<router-outlet name=\"editRouter\"></router-outlet>-->\n    ",
+                }),
+                __metadata("design:paramtypes", [currentVillage_service_1.CurrVillageService])
+            ], AppComponent);
             exports_1("AppComponent", AppComponent);
         }
-    }
+    };
 });
 //# sourceMappingURL=app.component.js.map

@@ -1,13 +1,15 @@
 /**
  * Created by rmochetc on 06.01.2017.
  */
-System.register([], function(exports_1, context_1) {
+System.register([], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var Alliance;
     return {
-        setters:[],
-        execute: function() {
+        setters: [],
+        execute: function () {/**
+             * Created by rmochetc on 06.01.2017.
+             */
             Alliance = (function () {
                 function Alliance(name, leaderLogin, leaderEmail) {
                     this.name = name;
@@ -18,6 +20,6 @@ System.register([], function(exports_1, context_1) {
             }());
             exports_1("Alliance", Alliance);
         }
-    }
+    };
 });
 //# sourceMappingURL=alliance.js.map

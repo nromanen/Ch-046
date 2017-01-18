@@ -1,9 +1,8 @@
 /**
  * Created by okunetc on 16.01.2017.
  */
-System.register(["@angular/core", "@angular/http", "@angular/router"], function(exports_1, context_1) {
+System.register(["@angular/core", "@angular/http", "@angular/router"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -13,10 +12,10 @@ System.register(["@angular/core", "@angular/http", "@angular/router"], function(
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, router_1;
-    var PlayerService;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, http_1, router_1, PlayerService;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
@@ -25,8 +24,11 @@ System.register(["@angular/core", "@angular/http", "@angular/router"], function(
             },
             function (router_1_1) {
                 router_1 = router_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {/**
+             * Created by okunetc on 16.01.2017.
+             */
             PlayerService = (function () {
                 function PlayerService(_http, _activatedRoute) {
                     this._http = _http;
@@ -38,14 +40,14 @@ System.register(["@angular/core", "@angular/http", "@angular/router"], function(
                     return this._http.get(this.url)
                         .map(function (res) { return res.json(); });
                 };
-                PlayerService = __decorate([
-                    core_1.Injectable(), 
-                    __metadata('design:paramtypes', [http_1.Http, router_1.ActivatedRoute])
-                ], PlayerService);
                 return PlayerService;
             }());
+            PlayerService = __decorate([
+                core_1.Injectable(),
+                __metadata("design:paramtypes", [http_1.Http, router_1.ActivatedRoute])
+            ], PlayerService);
             exports_1("PlayerService", PlayerService);
         }
-    }
+    };
 });
 //# sourceMappingURL=player.service.js.map
