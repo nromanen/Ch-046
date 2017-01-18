@@ -1,4 +1,4 @@
-System.register(["@angular/core", "./services/currentPlayer.service"], function(exports_1, context_1) {
+System.register(["@angular/core", "../services/currentPlayer.service"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11,7 +11,7 @@ System.register(["@angular/core", "./services/currentPlayer.service"], function(
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, currentPlayer_service_1;
-    var AppComponent;
+    var EditVillageComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -21,20 +21,25 @@ System.register(["@angular/core", "./services/currentPlayer.service"], function(
                 currentPlayer_service_1 = currentPlayer_service_1_1;
             }],
         execute: function() {
-            AppComponent = (function () {
-                function AppComponent(currPlayerService) {
+            /**
+             * Created by Oleg on 17.01.2017.
+             */
+            EditVillageComponent = (function () {
+                function EditVillageComponent(currPlayerService) {
+                    this.currPlayerService = currPlayerService;
+                    console.log(this.currPlayerService.player);
                 }
-                AppComponent = __decorate([
+                EditVillageComponent = __decorate([
                     core_1.Component({
-                        selector: 'my-app',
-                        template: "\n   <router-outlet></router-outlet>\n   <!--<router-outlet name=\"editRouter\"></router-outlet>-->\n    ",
+                        selector: 'edit-village',
+                        template: "\n    <player-head></player-head>\n    <div>hello{{currPlayerService.player.password}}</div>"
                     }), 
                     __metadata('design:paramtypes', [currentPlayer_service_1.CurrPlayerService])
-                ], AppComponent);
-                return AppComponent;
+                ], EditVillageComponent);
+                return EditVillageComponent;
             }());
-            exports_1("AppComponent", AppComponent);
+            exports_1("EditVillageComponent", EditVillageComponent);
         }
     }
 });
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=editViallage.component.js.map

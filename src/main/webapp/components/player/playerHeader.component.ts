@@ -13,6 +13,7 @@ import {Component} from "@angular/core";
 <li><a href="addVillage.html">Add village</a></li>
 <li><a href="villagesList.html">All villages</a></li>
 <li><a href="/logout" >Log out</a></li>
+<li><a routerLink="/edit" routerLinkActive="active">Crisis Center</a></li>
 </ul>
 <ul class="side-nav" id="mobile-demo">
 <li><a href="sass.html">Show users</a></li>

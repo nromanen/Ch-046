@@ -16,6 +16,8 @@ import {PlayerList} from "./player/playerList.component";
 import {PlayerRow} from "./player/playerRow.component";
 import {PlayerHeader} from "./player/playerHeader.component";
 import {PlayerService} from "./services/player.service";
+import {EditVillageComponent} from "./village/editViallage.component";
+import {CurrPlayerService} from "./services/currentPlayer.service";
 
 @NgModule({
     imports: [
@@ -40,7 +42,13 @@ import {PlayerService} from "./services/player.service";
             {
                 path: 'user/:id',
                 redirectTo:'player/:id',
-                pathMatch:'full'
+                pathMatch:'full',
+
+            },
+            {
+                path:'edit',
+                component:EditVillageComponent,
+                // outlet:'editRouter'
             }
         ])
     ],
@@ -55,13 +63,13 @@ import {PlayerService} from "./services/player.service";
         PlayerList,
         PlayerRow,
         PlayerHeader,
-
+        EditVillageComponent
     ],
     providers: [
         AllianceService,
         ConfirmComponent,
-        PlayerService
-
+        PlayerService,
+        CurrPlayerService
     ],
     bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-System.register(["@angular/core", "./services/currentPlayer.service"], function(exports_1, context_1) {
+System.register(["@angular/core"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,31 +10,32 @@ System.register(["@angular/core", "./services/currentPlayer.service"], function(
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, currentPlayer_service_1;
-    var AppComponent;
+    var core_1;
+    var CurrPlayerService;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (currentPlayer_service_1_1) {
-                currentPlayer_service_1 = currentPlayer_service_1_1;
             }],
         execute: function() {
-            AppComponent = (function () {
-                function AppComponent(currPlayerService) {
+            /**
+             * Created by Oleg on 18.01.2017.
+             */
+            CurrPlayerService = (function () {
+                function CurrPlayerService() {
+                    console.log(this.player);
                 }
-                AppComponent = __decorate([
-                    core_1.Component({
-                        selector: 'my-app',
-                        template: "\n   <router-outlet></router-outlet>\n   <!--<router-outlet name=\"editRouter\"></router-outlet>-->\n    ",
-                    }), 
-                    __metadata('design:paramtypes', [currentPlayer_service_1.CurrPlayerService])
-                ], AppComponent);
-                return AppComponent;
+                CurrPlayerService.prototype.ngOnInit = function () {
+                    console.log(this.player);
+                };
+                CurrPlayerService = __decorate([
+                    core_1.Injectable(), 
+                    __metadata('design:paramtypes', [])
+                ], CurrPlayerService);
+                return CurrPlayerService;
             }());
-            exports_1("AppComponent", AppComponent);
+            exports_1("CurrPlayerService", CurrPlayerService);
         }
     }
 });
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=currentPlayer.service.js.map

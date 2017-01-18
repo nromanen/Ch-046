@@ -1,8 +1,9 @@
 /**
  * Created by okunetc on 13.01.2017.
  */
-System.register(["@angular/core", "../services/player.service", "@angular/router"], function (exports_1, context_1) {
+System.register(["@angular/core", "../services/player.service", "@angular/router", "../village/village", "../services/currentPlayer.service"], function(exports_1, context_1) {
     "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -12,10 +13,10 @@ System.register(["@angular/core", "../services/player.service", "@angular/router
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var __moduleName = context_1 && context_1.id;
-    var core_1, player_service_1, router_1, PlayerComponent;
+    var core_1, player_service_1, router_1, village_1, currentPlayer_service_1;
+    var PlayerComponent;
     return {
-        setters: [
+        setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
@@ -24,14 +25,18 @@ System.register(["@angular/core", "../services/player.service", "@angular/router
             },
             function (router_1_1) {
                 router_1 = router_1_1;
-            }
-        ],
-        execute: function () {/**
-             * Created by okunetc on 13.01.2017.
-             */
+            },
+            function (village_1_1) {
+                village_1 = village_1_1;
+            },
+            function (currentPlayer_service_1_1) {
+                currentPlayer_service_1 = currentPlayer_service_1_1;
+            }],
+        execute: function() {
             PlayerComponent = (function () {
-                function PlayerComponent(playerService, route) {
+                function PlayerComponent(currPlayerService, playerService, route) {
                     var _this = this;
+                    this.currPlayerService = currPlayerService;
                     this.playerService = playerService;
                     this.route = route;
                     this.route.params.subscribe(function (param) {
@@ -39,25 +44,31 @@ System.register(["@angular/core", "../services/player.service", "@angular/router
                         _this.playerService.url = _this.playerService.url + _this.id;
                     });
                 }
+                PlayerComponent.prototype.f = function () {
+                    console.log('clicked');
+                    console.log(this.player);
+                    this.player.villages.push(new village_1.Village);
+                };
                 PlayerComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this.playerService.getById()
                         .subscribe(function (player) {
                         _this.player = player;
                         console.log(_this.player);
+                        _this.currPlayerService.player = _this.player;
                     });
                 };
+                PlayerComponent = __decorate([
+                    core_1.Component({
+                        selector: 'player',
+                        template: "\n<player-head></player-head>\n<player-list *ngIf=\"player\" [player]=\"player\"></player-list>\n<button (click)=\"f()\"></button>\n"
+                    }), 
+                    __metadata('design:paramtypes', [currentPlayer_service_1.CurrPlayerService, player_service_1.PlayerService, router_1.ActivatedRoute])
+                ], PlayerComponent);
                 return PlayerComponent;
             }());
-            PlayerComponent = __decorate([
-                core_1.Component({
-                    selector: 'player',
-                    template: "\n<player-head></player-head>\n<player-list *ngIf=\"player\" [player]=\"player\"></player-list>\n"
-                }),
-                __metadata("design:paramtypes", [player_service_1.PlayerService, router_1.ActivatedRoute])
-            ], PlayerComponent);
             exports_1("PlayerComponent", PlayerComponent);
         }
-    };
+    }
 });
 //# sourceMappingURL=player.component.js.map

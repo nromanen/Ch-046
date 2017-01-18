@@ -1,5 +1,6 @@
-System.register(["./alliance", "@angular/core", "../services/alliance-service"], function (exports_1, context_1) {
+System.register(["./alliance", "@angular/core", "../services/alliance-service"], function(exports_1, context_1) {
     "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,10 +10,10 @@ System.register(["./alliance", "@angular/core", "../services/alliance-service"],
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var __moduleName = context_1 && context_1.id;
-    var alliance_1, core_1, alliance_service_1, AllianceComponent;
+    var alliance_1, core_1, alliance_service_1;
+    var AllianceComponent;
     return {
-        setters: [
+        setters:[
             function (alliance_1_1) {
                 alliance_1 = alliance_1_1;
             },
@@ -21,9 +22,8 @@ System.register(["./alliance", "@angular/core", "../services/alliance-service"],
             },
             function (alliance_service_1_1) {
                 alliance_service_1 = alliance_service_1_1;
-            }
-        ],
-        execute: function () {
+            }],
+        execute: function() {
             AllianceComponent = (function () {
                 // @ViewChild(ConfirmComponent) confirmDelete: ConfirmComponent;  // ErrorMessage is a ViewChild
                 //
@@ -68,17 +68,17 @@ System.register(["./alliance", "@angular/core", "../services/alliance-service"],
                     this._allianceService.addAlliance(newAlliance);
                     // this.alliances.push(newAlliance);
                 };
+                AllianceComponent = __decorate([
+                    core_1.Component({
+                        selector: 'my-alliance',
+                        templateUrl: 'components/alliance/alliance.html',
+                    }), 
+                    __metadata('design:paramtypes', [alliance_service_1.AllianceService])
+                ], AllianceComponent);
                 return AllianceComponent;
             }());
-            AllianceComponent = __decorate([
-                core_1.Component({
-                    selector: 'my-alliance',
-                    templateUrl: 'components/alliance/alliance.html',
-                }),
-                __metadata("design:paramtypes", [alliance_service_1.AllianceService])
-            ], AllianceComponent);
             exports_1("AllianceComponent", AllianceComponent);
         }
-    };
+    }
 });
 //# sourceMappingURL=alliance.component.js.map

@@ -24,14 +24,16 @@ import {Component, Input, OnInit} from "@angular/core";
     
      <tbody *ngFor="let v of player.villages">
     <tr >
-        <td rowspan="2">{{v.name}}</td>
-        <td rowspan="2">{{v.population}}</td>
-        <td rowspan="2">{{v.xCoord}}</td>
-        <td rowspan="2">{{v.yCoord}}</td>
-        <td rowspan="2">{{v.isCapital}}</td>
-        <td rowspan="2">{{v.wall}}</td>
+        <!--<td rowspan="2">{{v.name}}</td>-->
+        <!--<td rowspan="2">{{v.population}}</td>-->
+        <!--<td rowspan="2">{{v.xCoord}}</td>-->
+        <!--<td rowspan="2">{{v.yCoord}}</td>-->
+        <!--<td rowspan="2">{{v.isCapital}}</td>-->
+        <!--<td rowspan="2">{{v.wall}}</td>-->
         <td>type1</td>
         <td>63</td>
+        <td> <button class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" style="margin-top: 5px;">Edit</button>
+             </td>
     </tr>
 
     <tr>
