@@ -6,58 +6,94 @@ import {Player} from "./player";
 import {Component, Input, OnInit} from "@angular/core";
 import {Village} from "../village/village";
 import {CurrVillageService} from "../services/currentVillage.service";
+import {UnitType} from "../UnitType/unitType";
+import {Army} from "../army/army";
 @Component
 ({
     selector: 'player-list',
-    template: `
-<table>
-<thead >
-    <tr>
-        <th>Village</th>
-        <th>Population</th>
-        <th>X</th>
-        <th>Y</th>
-        <th>Capital?</th>
-        <th>Wall level</th>
-        <th>Armies</th>
-        <th>Quantity</th>
-    </tr>
-    </thead>
-    
-     <tbody *ngFor="let v of player.villages">
-    <tr>
-        <td rowspan="3">{{v.name}}</td>
-        <td rowspan="3">{{v.population}}</td>
-        <td rowspan="3">{{v.xCoord}}</td>
-        <td rowspan="3">{{v.yCoord}}</td>
-        <td rowspan="3">{{v.isCapital}}</td>
-        <td rowspan="3">{{v.wall}}</td>
-        <td>type1</td>
-        <td>63</td>
-        <td><player-row [v]="v" (editClick)="wasEdited($event)"></player-row></td>
-   
-    </tr>
-    
-    <tr>
-        <td>type2</td>
-        <td>23</td>
-    </tr>
-    <tr>
-        <td>type2</td>
-        <td>23</td>
-    </tr>
-    </tbody>
-</table>
+    template: `<div class="row ">
+    <table>
+        <thead>
+        <tr>
+            <th>Village</th>
+            <th>Population</th>
+            <th>X</th>
+            <th>Y</th>
+            <th>Capital?</th>
+            <th>Wall level</th>
+            <td><img src="images/Gauls/GalFal.gif"></td>
+            <td><img src="images/Gauls/GalSwordsman.gif"></td>
+            <td><img src="images/Gauls/GalPathFinder.gif"></td>
+            <td><img src="images/Gauls/GalTewtThunder.gif"></td>
+            <td><img src="images/Gauls/GalDruid.gif"></td>
+            <td><img src="images/Gauls/Edui.gif"></td>
+            <td><img src="images/Gauls/GalRam.gif"></td>
+            <td><img src="images/Gauls/GalCatapult.gif"></td>
+            <td><img src="images/Gauls/GaLeader.gif"></td>
+            <td><img src="images/Germans/Clubswinger.gif"></td>
+            <td><img src="images/Germans/Spearman.gif"></td>
+            <td><img src="images/Germans/Toporshchik.gif"></td>
+            <td><img src="images/Germans/Skaut.gif"></td>
+            <td><img src="images/Germans/Paladin.gif"></td>
+            <td><img src="images/Germans/Tevtonskaya-konnitsa.gif"></td>
+            <td><img src="images/Germans/Taran-ger.gif"></td>
+            <td><img src="images/Germans/Katapulta-ger.gif"></td>
+            <td><img src="images/Germans/Leader.gif"></td>
+            <td><img src="images/Rome/Legioner.gif"></td>
+            <td><img src="images/Rome/Praetorian.gif"></td>
+            <td><img src="images/Rome/Imperianets.gif"></td>
+            <td><img src="images/Rome/Konnyy-razvedchik.gif"></td>
+            <td><img src="images/Rome/Konnitsa-imperatora.gif"></td>
+            <td><img src="images/Rome/Konnitsa-Tsezarya.gif"></td>
+            <td><img src="images/Rome/Taran-rim.gif"></td>
+            <td><img src="images/Rome/Ognennaya-katapulta.gif"></td>
+            <td><img src="images/Rome/Senator.gif"></td>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let v of player.villages">
+            <td>{{v.name}}</td>
+            <td>{{v.population}}</td>
+            <td>{{v.xCoord}}</td>
+            <td>{{v.yCoord}}</td>
+            <td>{{v.isCapital}}</td>
+            <td>{{v.wall}}</td>
+           
+            <td *ngFor="let u of unitValues">
+                <army-cell [type]="u" [village]="v" ></army-cell>
+            </td>
+            <!--<td><player-row [v]="v" (editClick)="wasEdited($event)"></player-row></td>-->
+            
+            <tr my-tr>
+            </tr>
+        </tbody>
+    </table>
+    <button (click)="g()">degfdfg</button>
+</div>
 `
 })
 export class PlayerList implements OnInit{
     ngOnInit(): void {
-        console.log(this.player);
+        console.log(UnitType.Legionnaire);
+        console.log(this.player.villages[0].armies[0].type);
+        console.log(UnitType[UnitType.Legionnaire]==this.player.villages[0].armies[0].type.toString());
+
     }
  @Input('player') player:Player;
-
+    unitTYPE:UnitType;
+    unitValues:Array<string>;
+    selectedVillage:Village;
     constructor(private currVillageService:CurrVillageService){
-
+        this.unitValues=[];
+        this.selectedVillage=null;
+        for (let m in UnitType){
+            if (typeof UnitType[m] === 'number'){
+                this.unitValues.push(m);
+            }
+        }
+        console.log(this.unitValues);
     }
 
     wasEdited(village:Village){
@@ -66,4 +102,11 @@ export class PlayerList implements OnInit{
         this.currVillageService.village=village;
     }
 
+    g(){
+        this.player.villages[0].name="vill6";
+    }
+
+    showForm(){
+
+    }
 }

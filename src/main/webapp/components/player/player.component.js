@@ -57,7 +57,6 @@ System.register(["@angular/core", "../services/player.service", "@angular/router
                         .subscribe(function (player) {
                         _this.player = player;
                         console.log(_this.player);
-                        // this.currPlayerService.village=this.player;
                     });
                 };
                 return PlayerComponent;
@@ -65,7 +64,7 @@ System.register(["@angular/core", "../services/player.service", "@angular/router
             PlayerComponent = __decorate([
                 core_1.Component({
                     selector: 'player',
-                    template: "\n<player-head></player-head>\n<player-list *ngIf=\"player\" [player]=\"player\"></player-list>\n<button (click)=\"f()\"></button>\n"
+                    template: "\n<player-head></player-head>\n<player-list *ngIf=\"player\" [player]=\"player\"></player-list>\n<button *ngIf=\"true\" (click)=\"f()\" ></button>\n"
                 }),
                 __metadata("design:paramtypes", [currentVillage_service_1.CurrVillageService, player_service_1.PlayerService, router_1.ActivatedRoute])
             ], PlayerComponent);

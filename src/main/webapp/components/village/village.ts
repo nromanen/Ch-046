@@ -1,3 +1,4 @@
+import {Army} from "../army/army";
 /**
  * Created by okunetc on 17.01.2017.
  */
@@ -8,4 +9,5 @@ export class Village{
     population:number;
     isCapital:boolean;
     wall:number;
+    armies:Array<Army>;
 }

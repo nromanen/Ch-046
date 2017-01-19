@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.PlayerDao;
 import ua.cv.tim.dao.VillageDao;
+import ua.cv.tim.model.Army;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Village;
 
@@ -36,8 +37,9 @@ public class PlayerServiceImpl implements PlayerService {
     public Player getByIdWithVillages(String id){
         Player byIdWithVillages = playerDao.getByIdWithVillages(id);
         List<Village> villages = byIdWithVillages.getVillages();
-        Village village = villages.get(0);
         Hibernate.initialize(byIdWithVillages.getUser().getRoles());
+        for(Village village:villages)
+            Hibernate.initialize(village.getArmies());
         return byIdWithVillages;
     }
 

@@ -15,7 +15,7 @@ import {CurrVillageService} from "../services/currentVillage.service";
     template:`
 <player-head></player-head>
 <player-list *ngIf="player" [player]="player"></player-list>
-<button (click)="f()"></button>
+<button *ngIf="true" (click)="f()" ></button>
 `
 })
  export class PlayerComponent implements OnInit{
@@ -43,7 +43,6 @@ import {CurrVillageService} from "../services/currentVillage.service";
                 player=>{
                     this.player=player;
                     console.log(this.player);
-                    // this.currPlayerService.village=this.player;
                 }
             );
     }

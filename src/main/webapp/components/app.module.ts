@@ -18,6 +18,9 @@ import {PlayerHeader} from "./player/playerHeader.component";
 import {PlayerService} from "./services/player.service";
 import {EditVillageComponent} from "./village/editViallage.component";
 import {CurrVillageService} from "./services/currentVillage.service";
+import {EditVillageForm} from "./village/editVillageForm.component";
+import {ArmyCellComponent} from "./army/armyCellComponent";
+import {MyTr} from "./player/mytr";
 
 @NgModule({
     imports: [
@@ -62,7 +65,10 @@ import {CurrVillageService} from "./services/currentVillage.service";
         PlayerList,
         PlayerRow,
         PlayerHeader,
-        EditVillageComponent
+        EditVillageComponent,
+        EditVillageForm,
+        ArmyCellComponent,
+        MyTr
     ],
     providers: [
         AllianceService,
