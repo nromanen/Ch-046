@@ -62,4 +62,8 @@ import java.util.List;
     public void setAlliance(Alliance alliance) {
         this.alliance = alliance;
     }
+
+    public Player(){
+
+    }
 }

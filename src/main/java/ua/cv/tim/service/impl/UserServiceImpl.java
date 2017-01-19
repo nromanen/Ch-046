@@ -19,6 +19,7 @@ import ua.cv.tim.utils.SendMail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 
 /**
  * Created by Oleg on 04.01.2017.
@@ -32,8 +33,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
+
 	@Autowired
 	private PlayerDao playerDao;
+
 	@Autowired
 	private SendMail sendMail;
 

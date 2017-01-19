@@ -33,8 +33,13 @@ public class ArmyServiceImpl implements ArmyService {
     }
 
     @Override
-    public Army getArmyById(String uuid) { armyDao.getArmyById(uuid);
-        return null;
+    public Army getArmyById(String uuid) {
+        return armyDao.getArmyById(uuid);
+    }
+
+    @Override
+    public Army getById(String uuid)  {
+        return armyDao.getById(uuid);
     }
 
     public void setArmyDao(ArmyDao armyDao) {
