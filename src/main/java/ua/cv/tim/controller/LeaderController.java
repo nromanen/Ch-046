@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LeaderController {
     @RequestMapping(method = RequestMethod.GET)
     public String showAdminMainPage() {
-        return "leaderMainPage.html";
+        return "index.html";
     }
 }

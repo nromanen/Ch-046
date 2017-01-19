@@ -1,4 +1,4 @@
-System.register(["@angular/core", "./alliance", "../services/alliance-service", "@angular/forms"], function (exports_1, context_1) {
+System.register(["@angular/core", "./alliance", "@angular/forms"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,7 +10,7 @@ System.register(["@angular/core", "./alliance", "../services/alliance-service", 
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, alliance_1, alliance_service_1, forms_1, AllianceForm;
+    var core_1, alliance_1, forms_1, AllianceForm;
     return {
         setters: [
             function (core_1_1) {
@@ -19,18 +19,15 @@ System.register(["@angular/core", "./alliance", "../services/alliance-service", 
             function (alliance_1_1) {
                 alliance_1 = alliance_1_1;
             },
-            function (alliance_service_1_1) {
-                alliance_service_1 = alliance_service_1_1;
-            },
             function (forms_1_1) {
                 forms_1 = forms_1_1;
             }
         ],
         execute: function () {
             AllianceForm = (function () {
-                function AllianceForm(fb, _allianceService) {
+                function AllianceForm(fb) {
                     this.fb = fb;
-                    this._allianceService = _allianceService;
+                    this.notify = new core_1.EventEmitter();
                     this.EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
                     this.ALLIANCE_NAME = /^[a-z]{3,9}$/;
                     this.USER_LOGIN = /^[a-z1-9]{3,9}$/;
@@ -47,17 +44,21 @@ System.register(["@angular/core", "./alliance", "../services/alliance-service", 
                     console.log("Complex form: " + value);
                     console.log(value.allianceName);
                     var newAlliance = new alliance_1.Alliance(value.allianceName, value.leaderLogin, value.leaderEmail);
-                    this._allianceService.addAlliance(newAlliance);
+                    this.notify.emit(newAlliance);
                     this.complexForm.reset();
                 };
                 return AllianceForm;
             }());
+            __decorate([
+                core_1.Output(),
+                __metadata("design:type", core_1.EventEmitter)
+            ], AllianceForm.prototype, "notify", void 0);
             AllianceForm = __decorate([
                 core_1.Component({
                     selector: 'add-alliance',
                     templateUrl: 'components/alliance/allianceForm.html',
                 }),
-                __metadata("design:paramtypes", [forms_1.FormBuilder, alliance_service_1.AllianceService])
+                __metadata("design:paramtypes", [forms_1.FormBuilder])
             ], AllianceForm);
             exports_1("AllianceForm", AllianceForm);
         }

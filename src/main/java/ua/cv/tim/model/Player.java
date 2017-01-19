@@ -55,7 +55,6 @@ import java.util.List;
         this.villages = villages;
     }
 
-
     public Alliance getAlliance() {
         return alliance;
     }

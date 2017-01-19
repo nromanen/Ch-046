@@ -6,14 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent }  from './app.component';
 import {AllianceComponent} from "./alliance/alliance.component";
 import {HeaderComponent} from "./header/header.component";
-import {AllianceService} from "./services/alliance-service";
+
 import {AllianceForm} from "./alliance/addalliance.component";
 import {EditAllianceComponent} from "./alliance/editalliance.component";
 import {ConfirmComponent} from "./modal_window/modal";
 import {RoutesModule} from "./app.routers";
-import {Users} from "./users/users.component";
-import {Village} from "./vailage/village.componrnt";
 import {PagerService} from "./services/pager.service";
+import {AllianceService} from "./services/alliance/alliance-service";
+import {TimerComponent} from "./timer/timer.component";
 
 @NgModule({
     imports: [
@@ -21,7 +21,7 @@ import {PagerService} from "./services/pager.service";
         HttpModule,
         FormsModule,
         ReactiveFormsModule,
-        RoutesModule
+        RoutesModule,
     ],
     declarations: [
         AppComponent,
@@ -30,8 +30,7 @@ import {PagerService} from "./services/pager.service";
         AllianceForm,
         EditAllianceComponent,
         ConfirmComponent,
-        Users,
-        Village
+        TimerComponent,
 
     ],
     providers: [

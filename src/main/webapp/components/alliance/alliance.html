@@ -1,7 +1,18 @@
-<add-alliance></add-alliance>
+<my-header></my-header>
 <app-modal *ngIf="deletedAlliance !== null" [confirmMsg] = "confirmMsg" (notify)='onNotifyDelete($event)'></app-modal>
 <div class="row container" >
     <div class="col s12">
+        <div *ngIf="successMessage != null" class="card green lighten-5">
+            <div class="card-content green-text">
+                <p>{{successMessage}} <span (click)="closeSuccess()" class="right" style="cursor: pointer;">x</span></p>
+            </div>
+        </div>
+        <div class="card red lighten-4">
+            <div *ngIf="errorMessage != null" class="card-content red-text">
+                <p>{{errorMessage}} <span (click)="closeError()" class="right" style="cursor: pointer;">x</span></p>
+
+            </div>
+        </div>
         <h3>Alliances</h3>
         <table class="highlight">
 
@@ -21,34 +32,19 @@
                     <td class="col s3"><div *ngIf="al !== selectedAlliance"  style="margin: 15px 0;">{{al.leaderEmail}}</div></td>
                     <td class="col s3" style="text-align: center">
                         <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="editAlliance(al)"  style="margin-top: 5px;">Edit</button>
-                        <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="deleteAlliance(al)"  style="margin-top: 5px; background-color: red;">Delete</button>
+                        <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 red" type="submit" name="action" (click)="deleteAlliance(al)"  style="margin-top: 5px;">Delete</button>
                     </td>
                 </div>
-                <edit-alliance *ngIf="al === selectedAlliance" [editedAlliance] = "selectedAlliance" (notify)='onNotify($event)'></edit-alliance>
+                <edit-alliance *ngIf="al === selectedAlliance" [editedAlliance] = "selectedAlliance" (notify)='onNotifyUpdate($event)'></edit-alliance>
             </tr>
             </tbody>
         </table>
         <br>
-
-
-        <ul class="pagination center">
-            <li [ngClass]="{disabled:pager.currentPage === 1}">
-                <a (click)="setPage(1)">First</a>
-            </li>
-            <li [ngClass]="{disabled:pager.currentPage === 1}">
-                <a (click)="setPage(pager.currentPage - 1)"><i class="material-icons">chevron_left</i></a>
-            </li>
-            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
-                <a (click)="setPage(page)">{{page}}</a>
-            </li>
-
-            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                <a (click)="setPage(pager.currentPage + 1)"><i class="material-icons">chevron_right</i></a>
-            </li>
-            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                <a (click)="setPage(pager.totalPages)">Last</a>
-            </li>
-        </ul>
     </div>
+    <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" *ngIf ="!addNewAlliance" (click)="newAlliance()"><i class="material-icons">add</i></a>
+    <add-alliance *ngIf="addNewAlliance" (notify)='onNotifyCreate($event)'></add-alliance>
+    <br>
+    <h3>Timer</h3>
+    <my-timer inputDate="January 20, 2017 12:00:00">Loading...</my-timer>
 </div>
 

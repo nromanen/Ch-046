@@ -1,9 +1,8 @@
 
 import {Alliance} from "./alliance";
 import {Component, OnInit} from "@angular/core";
-import {AllianceService} from "../services/alliance-service";
-import {PagerService} from "../services/pager.service";
-import {Http, Headers} from "@angular/http";
+import {AllianceService} from "../services/alliance/alliance-service";
+
 
 @Component({
     selector: 'my-alliance',
@@ -11,43 +10,89 @@ import {Http, Headers} from "@angular/http";
     styleUrls: ['components/alliance/alliance.css']
 })
 
+
+
 export class AllianceComponent implements OnInit{
 
     alliances: Array<Alliance> ;
-    errorMessage: string;
-
-
-    private allAlliance: any[];
-
-    pager: any = {};
-
-    pagedAlliance: any[];
+    errorMessage: string = null;
+    successMessage: string = null;
+    addNewAlliance: boolean = false;
 
     selectedAlliance: Alliance = null;
     deletedAlliance: Alliance = null;
 
     confirmMsg: string;
 
-    url = 'admin/allianceDTO/';
 
-    constructor(private _http: Http, private _allianceService: AllianceService, private pagerService: PagerService){
+    constructor(private _allianceService: AllianceService){
     }
 
     ngOnInit() {
         this.getAlliances();
-        //this.setPage(1);
     }
 
-    onNotify(alliance : Alliance){
-        this.selectedAlliance = alliance;
+    newAlliance(){
+        this.addNewAlliance = true;
+    }
+
+    closeSuccess(){
+        this.successMessage = null;
+    }
+
+    closeError(){
+        this.errorMessage = null;
+    }
+
+    onNotifyUpdate(alliance : Alliance){
+        if (alliance !== null){
+            console.log(alliance);
+            this._allianceService.updateAlliance(alliance)
+                .subscribe(
+                    resp => {
+                        this.alliances[this.alliances.indexOf(this.selectedAlliance)] = resp;
+                        this.successMessage = "Alliance updated successfully";
+                        this.errorMessage = null;
+                        this.selectedAlliance = null;
+                    },
+                    error =>  {
+
+                        this.errorMessage = <any>error;
+                        this.successMessage = null;
+                        this.selectedAlliance = null;
+                    }
+                );
+        } else {
+
+            this.selectedAlliance = alliance;
+        }
     }
 
     onNotifyDelete(confitmation : boolean){
         if (confitmation){
-            this._allianceService.deleteAlliance(this.deletedAlliance);
+            if(this._allianceService.deleteAlliance(this.deletedAlliance)){
+                this.alliances.splice(this.alliances.indexOf(this.deletedAlliance), 1);
+                this.successMessage = "Alliance deleted successfully";
+                this.errorMessage = null;
+            }
         }
         this.deletedAlliance = null;
-        this.setPage(this.pager.currentPage);
+    }
+    onNotifyCreate(alliance : Alliance){
+
+        this._allianceService.addAlliance(alliance)
+            .subscribe(
+                resp => {
+                    this.alliances.push(resp);
+                    this.successMessage = "Alliance added successfully";
+                    this.errorMessage = null;
+                },
+                error =>  {
+                    this.errorMessage = <any>error;
+                    this.successMessage = null;
+                }
+            );
+        this.addNewAlliance = false;
     }
 
     editAlliance(al: Alliance){
@@ -65,29 +110,12 @@ export class AllianceComponent implements OnInit{
         this.selectedAlliance = null;
     }
 
-    setPage(page: number) {
-        if (page < 1 || page > this.pager.totalPages) {
-            return;
-        }
-
-        // get pager object from service
-        this.pager = this.pagerService.getPager(this.alliances.length, page);
-
-        // get current page of items
-        this.pagedAlliance = this.allAlliance.slice(this.pager.startIndex, this.pager.endIndex + 1);
-    }
-
-
-
     getAlliances() {
         this._allianceService.getAlliances()
             .subscribe(
                 alliances => this.alliances = alliances,
                 error =>  this.errorMessage = <any>error
             );
-        console.log("subscribe");
-        console.log(this.alliances);
     }
-
 
 }

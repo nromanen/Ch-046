@@ -4,10 +4,12 @@
 
 export class Alliance {
 
+    allianceUuid: string;
+    leaderUuid: string;
     name: string;
     leaderLogin: string;
     leaderEmail: string;
-    uuid: string;
+
 
 
 

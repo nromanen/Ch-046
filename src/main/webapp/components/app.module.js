@@ -1,4 +1,4 @@
-System.register(["@angular/core", "@angular/platform-browser", "@angular/http", "@angular/forms", "./app.component", "./alliance/alliance.component", "./header/header.component", "./services/alliance-service", "./alliance/addalliance.component", "./alliance/editalliance.component", "./modal_window/modal", "./app.routers", "./users/users.component", "./vailage/village.componrnt", "./services/pager.service"], function (exports_1, context_1) {
+System.register(["@angular/core", "@angular/platform-browser", "@angular/http", "@angular/forms", "./app.component", "./alliance/alliance.component", "./header/header.component", "./alliance/addalliance.component", "./alliance/editalliance.component", "./modal_window/modal", "./app.routers", "./services/pager.service", "./services/alliance/alliance-service", "./timer/timer.component"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7,7 +7,7 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, platform_browser_1, http_1, forms_1, app_component_1, alliance_component_1, header_component_1, alliance_service_1, addalliance_component_1, editalliance_component_1, modal_1, app_routers_1, users_component_1, village_componrnt_1, pager_service_1, AppModule;
+    var core_1, platform_browser_1, http_1, forms_1, app_component_1, alliance_component_1, header_component_1, addalliance_component_1, editalliance_component_1, modal_1, app_routers_1, pager_service_1, alliance_service_1, timer_component_1, AppModule;
     return {
         setters: [
             function (core_1_1) {
@@ -31,9 +31,6 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
             function (header_component_1_1) {
                 header_component_1 = header_component_1_1;
             },
-            function (alliance_service_1_1) {
-                alliance_service_1 = alliance_service_1_1;
-            },
             function (addalliance_component_1_1) {
                 addalliance_component_1 = addalliance_component_1_1;
             },
@@ -46,14 +43,14 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
             function (app_routers_1_1) {
                 app_routers_1 = app_routers_1_1;
             },
-            function (users_component_1_1) {
-                users_component_1 = users_component_1_1;
-            },
-            function (village_componrnt_1_1) {
-                village_componrnt_1 = village_componrnt_1_1;
-            },
             function (pager_service_1_1) {
                 pager_service_1 = pager_service_1_1;
+            },
+            function (alliance_service_1_1) {
+                alliance_service_1 = alliance_service_1_1;
+            },
+            function (timer_component_1_1) {
+                timer_component_1 = timer_component_1_1;
             }
         ],
         execute: function () {
@@ -69,7 +66,7 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
                         http_1.HttpModule,
                         forms_1.FormsModule,
                         forms_1.ReactiveFormsModule,
-                        app_routers_1.RoutesModule
+                        app_routers_1.RoutesModule,
                     ],
                     declarations: [
                         app_component_1.AppComponent,
@@ -78,8 +75,7 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
                         addalliance_component_1.AllianceForm,
                         editalliance_component_1.EditAllianceComponent,
                         modal_1.ConfirmComponent,
-                        users_component_1.Users,
-                        village_componrnt_1.Village
+                        timer_component_1.TimerComponent,
                     ],
                     providers: [
                         alliance_service_1.AllianceService,

@@ -1,4 +1,4 @@
-System.register(["@angular/core", "./alliance", "@angular/forms", "../services/alliance-service"], function (exports_1, context_1) {
+System.register(["@angular/core", "./alliance", "@angular/forms"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,7 +10,7 @@ System.register(["@angular/core", "./alliance", "@angular/forms", "../services/a
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, alliance_1, forms_1, alliance_service_1, EditAllianceComponent;
+    var core_1, alliance_1, forms_1, EditAllianceComponent;
     return {
         setters: [
             function (core_1_1) {
@@ -21,16 +21,12 @@ System.register(["@angular/core", "./alliance", "@angular/forms", "../services/a
             },
             function (forms_1_1) {
                 forms_1 = forms_1_1;
-            },
-            function (alliance_service_1_1) {
-                alliance_service_1 = alliance_service_1_1;
             }
         ],
         execute: function () {
             EditAllianceComponent = (function () {
-                function EditAllianceComponent(fb, _allianceService) {
-                    this.fb = fb;
-                    this._allianceService = _allianceService;
+                function EditAllianceComponent(formBuilder) {
+                    this.formBuilder = formBuilder;
                     this.notify = new core_1.EventEmitter();
                     this.EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
                     this.ALLIANCE_NAME = /^[a-z]{3,9}$/;
@@ -40,28 +36,18 @@ System.register(["@angular/core", "./alliance", "@angular/forms", "../services/a
                     this.LOGIN_ERROR = "Enter from 3 to 10 letters";
                 }
                 EditAllianceComponent.prototype.ngOnInit = function () {
-                    this.editForm = this.fb.group({
+                    this.editForm = this.formBuilder.group({
                         'allianceName': [this.editedAlliance.name, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(this.ALLIANCE_NAME)])],
                         'leaderLogin': [this.editedAlliance.leaderLogin, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(this.USER_LOGIN)])],
                         'leaderEmail': [this.editedAlliance.leaderEmail, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(this.EMAIL_REGEXP)])]
                     });
                 };
                 EditAllianceComponent.prototype.updateAlliance = function (value) {
-                    console.log("Edit form: " + value);
+                    console.log(value);
                     var updatedAlliance = new alliance_1.Alliance(value.allianceName, value.leaderLogin, value.leaderEmail);
-                    updatedAlliance.uuid = this.editedAlliance.uuid;
-                    console.log(updatedAlliance);
-                    this._allianceService.updateAlliance(this.editedAlliance, updatedAlliance);
-                    //
-                    // this.editForm.setValue({
-                    //     allianceName : null,
-                    //     leaderLogin : null,
-                    //     leaderEmail : null
-                    // });
-                    // for (let name in this.editForm.controls) {
-                    //     this.editForm.controls[name].setErrors(null);
-                    // }
-                    this.notify.emit(null);
+                    updatedAlliance.allianceUuid = this.editedAlliance.allianceUuid;
+                    updatedAlliance.leaderUuid = this.editedAlliance.leaderUuid;
+                    this.notify.emit(updatedAlliance);
                 };
                 EditAllianceComponent.prototype.cancelEditing = function () {
                     this.notify.emit(null);
@@ -81,7 +67,7 @@ System.register(["@angular/core", "./alliance", "@angular/forms", "../services/a
                     selector: 'edit-alliance',
                     templateUrl: 'components/alliance/editAlliance.html',
                 }),
-                __metadata("design:paramtypes", [forms_1.FormBuilder, alliance_service_1.AllianceService])
+                __metadata("design:paramtypes", [forms_1.FormBuilder])
             ], EditAllianceComponent);
             exports_1("EditAllianceComponent", EditAllianceComponent);
         }

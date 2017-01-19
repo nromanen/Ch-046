@@ -1,4 +1,4 @@
-package ua.cv.tim.service;
+package ua.cv.tim.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
+import ua.cv.tim.service.UserService;
 import ua.cv.tim.utils.SendMail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByUsername(String username) {
-		return userDao.getUserByUsername(username);
+		return userDao.getUserByUsername(username, null);
 	}
 	@Override
 	public void add(UserDTO userDTO) {
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService {
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.USER);
 		if (userDTO.getRole() != null) {
-			roles.add(Role.LEADER);
+			roles.add(userDTO.getRole());
 		}
 		user.setRoles(roles);
 		userDao.add(user);
@@ -71,8 +72,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 
-
-
 	@Override
 	public List<User> getAll() {
 		return userDao.getAll();
@@ -87,13 +86,18 @@ public class UserServiceImpl implements UserService {
 	public void delete(User user) {
 	    userDao.delete(user);
 	}
+
 	@Override
 	public boolean isUnique(User user) {
-		if(userDao.getByMail(user.getEmail())!=null)
-		{
+
+
+		if (userDao.getUserByUsername(user.getLogin(), user.getUuid()) !=null) {
 			return false;
 		}
-		else return true;
+		if(userDao.getByMail(user.getEmail(), user.getUuid())!=null ) {
+			return false;
+		}
+		return true;
 	}
 
     @Override

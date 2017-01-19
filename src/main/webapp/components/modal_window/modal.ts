@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from "@angular/core";
+import {Component, Input, Output, EventEmitter, HostListener} from "@angular/core";
 import {Alliance} from "../alliance/alliance";
 /**
  * Created by rmochetc on 12.01.2017.
@@ -17,12 +17,11 @@ export class ConfirmComponent
     // private ErrorMsg: string;
     // public ErrorMessageIsVisible: boolean;
 
-    showErrorMessage()
-    {
-        console.log("show message");
-        // this.ErrorMsg = "TEST";
-        // this.ErrorMessageIsVisible = true;
-        // console.log(this.ErrorMessageIsVisible);
+    @HostListener('window:keydown', ['$event'])
+    keyboardInput(event: any) {
+        if (event.key === "Escape"){
+            this.onCancel();
+        }
     }
 
     onConfirm()

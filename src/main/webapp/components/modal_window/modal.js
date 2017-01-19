@@ -27,11 +27,10 @@ System.register(["@angular/core"], function (exports_1, context_1) {
                 }
                 // private ErrorMsg: string;
                 // public ErrorMessageIsVisible: boolean;
-                ConfirmComponent.prototype.showErrorMessage = function () {
-                    console.log("show message");
-                    // this.ErrorMsg = "TEST";
-                    // this.ErrorMessageIsVisible = true;
-                    // console.log(this.ErrorMessageIsVisible);
+                ConfirmComponent.prototype.keyboardInput = function (event) {
+                    if (event.key === "Escape") {
+                        this.onCancel();
+                    }
                 };
                 ConfirmComponent.prototype.onConfirm = function () {
                     this.notify.emit(true);
@@ -49,6 +48,12 @@ System.register(["@angular/core"], function (exports_1, context_1) {
                 core_1.Output(),
                 __metadata("design:type", core_1.EventEmitter)
             ], ConfirmComponent.prototype, "notify", void 0);
+            __decorate([
+                core_1.HostListener('window:keydown', ['$event']),
+                __metadata("design:type", Function),
+                __metadata("design:paramtypes", [Object]),
+                __metadata("design:returntype", void 0)
+            ], ConfirmComponent.prototype, "keyboardInput", null);
             ConfirmComponent = __decorate([
                 core_1.Component({
                     selector: 'app-modal',
