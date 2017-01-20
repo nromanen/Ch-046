@@ -13,22 +13,24 @@ import ua.cv.tim.dao.PlayerDao;
 import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.dao.hibernate.UserDaoImpl;
 import ua.cv.tim.dto.UserDTO;
+import ua.cv.tim.dto.UserInfoDTO;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Race;
 import ua.cv.tim.model.User;
 
 import ua.cv.tim.model.User;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 /**
- * Updated by mmaksymtc on 07.01.2017.
+ * Created by vyach on 03.01.2017.
  */
 public interface UserService {
 
 	User getUserByUsername(String username);
 
-	void add(UserDTO userDTO);
+	void add(UserDTO userDTO) throws MessagingException;
 
 	void add(User user);
 
@@ -38,10 +40,10 @@ public interface UserService {
 	long getCount();
 	User getWithRolesById(String id);
 	List<User> getAllWithRoles();
-
 	List<User> getAll();
-
 	User getById(String id);
-	
-	void sendEmail(User user);
+    void addAllianceMember(UserInfoDTO member) throws MessagingException;
+    List<UserInfoDTO> getUsersByAlliance(String allianceName);
+    void deleteById(String id);
+
 }

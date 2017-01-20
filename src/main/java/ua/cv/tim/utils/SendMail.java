@@ -18,73 +18,56 @@ import org.springframework.stereotype.Service;
 
 @Service("sendMail")
 public class SendMail {
-
+	
+		
 	@Autowired
 	private EmailConfiguration emailConfig;
 
-	/**
-	 * Send email using GMail SMTP server.
-	 *
-	 * @param username
-	 *            GMail username
-	 * @param password
-	 *            GMail password
-	 * @param recipientEmail
-	 *            TO recipient
-	 * @param title
-	 *            title of the message
-	 * @param message
-	 *            message to be sent
-	 * @throws AddressException
-	 *             if the email address parse failed
-	 * @throws MessagingException
-	 *             if the connection is dead or not in the connected state or if
-	 *             the message is not a MimeMessage
-	 */
-	public void send(String recipientEmail, String title, String message) throws AddressException, MessagingException {
-		send(recipientEmail, "", title, message);
-	}
+	 /**
+     * Send email using GMail SMTP server.
+     *
+     * @param username GMail username
+     * @param password GMail password
+     * @param recipientEmail TO recipient
+     * @param title title of the message
+     * @param message message to be sent
+     * @throws AddressException if the email address parse failed
+     * @throws MessagingException if the connection is dead or not in the connected state or if the message is not a MimeMessage
+     */
+    public void send( String recipientEmail, String title, String message) throws AddressException, MessagingException {
+    	send(recipientEmail, "", title, message);
+    }
 
-	/**
-	 * Send email using GMail SMTP server.
-	 *
-	 * @param username
-	 *            GMail username
-	 * @param password
-	 *            GMail password
-	 * @param recipientEmail
-	 *            TO recipient
-	 * @param ccEmail
-	 *            CC recipient. Can be empty if there is no CC recipient
-	 * @param title
-	 *            title of the message
-	 * @param message
-	 *            message to be sent
-	 * @throws AddressException
-	 *             if the email address parse failed
-	 * @throws MessagingException
-	 *             if the connection is dead or not in the connected state or if
-	 *             the message is not a MimeMessage
-	 */
-	private void send(String recipientEmail, String ccEmail, String title, String message)
-			throws AddressException, MessagingException {
+    /**
+     * Send email using GMail SMTP server.
+     *
+     * @param username GMail username
+     * @param password GMail password
+     * @param recipientEmail TO recipient
+     * @param ccEmail CC recipient. Can be empty if there is no CC recipient
+     * @param title title of the message
+     * @param message message to be sent
+     * @throws AddressException if the email address parse failed
+     * @throws MessagingException if the connection is dead or not in the connected state or if the message is not a MimeMessage
+     */
+    private void send(String recipientEmail, String ccEmail, String title, String message) throws AddressException, MessagingException {
 
-		Properties properties = emailConfig.getEmailProperties();
+    	Properties properties = emailConfig.getEmailProperties();
 
-		String sender = properties.getProperty("senderEmail");
-		String password = properties.getProperty("EmailPassword");
-		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+    	 String sender = properties.getProperty("senderEmail");
+    	 String password = properties.getProperty("EmailPassword");
+        final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 
-		Session session = Session.getInstance(properties, null);
+        Session session = Session.getInstance(properties, null);
 
-		// -- Create a new message --
-		final MimeMessage msg = new MimeMessage(session);
+        // -- Create a new message --
+        final MimeMessage msg = new MimeMessage(session);
 
 		/*
 		 * If set to false, the QUIT command is sent and the connection is
 		 * immediately closed. If set to true (the default), causes the
 		 * transport to wait for the response to the QUIT command.
-		 * 
+		 *
 		 */
 
 		msg.setFrom(new InternetAddress(sender));
@@ -105,3 +88,5 @@ public class SendMail {
 		t.close();
 	}
 }
+
+

@@ -1,18 +1,8 @@
-<h1>MOdal</h1>
-<div *ngIf="ErrorMessageIsVisible" class="modal fade show in danger" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Error</h4>
-            </div>
-            <div class="modal-body">
-                <p>{{ErrorMsg}}</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" (click)="hideErrorMsg()">Close</button>
-            </div>
-        </div>
+<div id="dialogoverlay"></div>
+<div id="dialogbox" >
+    <div >
+        <div id="dialogboxhead">Confirm</div>
+        <div id="dialogboxbody">{{confirmMsg}}</div>
+        <div id="dialogboxfoot"><button class='btn btn-danger' (click) = "onConfirm()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-success' (click) = "onCancel()">Cancel</button></div>
     </div>
 </div>
