@@ -24,6 +24,7 @@ System.register(['@angular/core', "../services/user.service"], function(exports_
             LeaderManagerComponent = (function () {
                 function LeaderManagerComponent(userService) {
                     this.userService = userService;
+                    this.selectedMember = null;
                     console.log("LeaderManagerComponent constructor is working");
                 }
                 LeaderManagerComponent.prototype.ngOnInit = function () {
@@ -34,27 +35,40 @@ System.register(['@angular/core', "../services/user.service"], function(exports_
                     var _this = this;
                     console.log("LeaderManagerComponent.getUsersByAlliance() method is working");
                     this.userService.getUsersByAlliance()
-                        .subscribe(function (users) {
-                        _this.users = users;
-                        console.log(JSON.stringify(users));
+                        .subscribe(function (allianceMembers) {
+                        _this.allianceMembers = allianceMembers;
+                        console.log(JSON.stringify(allianceMembers));
                     }, function (error) { return console.log(error); });
+                };
+                LeaderManagerComponent.prototype.selectMember = function (member) {
+                    console.log("AllianceMembersComponent.selectMember() method is working.");
+                    this.selectedMember = member;
                 };
                 LeaderManagerComponent.prototype.addMember = function (member) {
                     var _this = this;
                     console.log("LeaderManagerComponent.addMember() method is working");
                     member.alliance = "valhala"; // todo change to dynamic set alliance name
                     this.userService.addMember(member)
-                        .subscribe(function (user) { return _this.users.push(user); }, function (error) { return console.log(error); });
+                        .subscribe(function (user) { return _this.allianceMembers.push(user); }, function (error) { return console.log(error); });
                 };
                 LeaderManagerComponent.prototype.updateMember = function (member) {
                     var _this = this;
-                    console.log("LeaderManagerComponent.updateMember() method is working");
-                    this.userService.updateMember(member)
-                        .subscribe(function (user) {
-                        console.log("LeaderManagerComponent.updateMember() user value: " + JSON.stringify(user));
-                        _this.users[_this.users.indexOf(user)] = user;
-                        console.log("User from array: " + JSON.stringify(_this.users[_this.users.indexOf(user)]));
-                    }, function (error) { return console.log(error); });
+                    console.log("LeaderManagerComponent.updateMember() method is working. Member value: " + JSON.stringify(member));
+                    if (member !== null) {
+                        this.userService.updateMember(member)
+                            .subscribe(function (user) {
+                            console.log("LeaderManagerComponent.updateMember() user value: " + JSON.stringify(user));
+                            console.log("User from array: " + JSON.stringify(_this.allianceMembers[_this.allianceMembers.indexOf(_this.selectedMember)]));
+                            _this.allianceMembers[_this.allianceMembers.indexOf(_this.selectedMember)] = user;
+                            _this.selectedMember = null;
+                        }, function (error) {
+                            console.log(error);
+                            _this.selectedMember = null;
+                        });
+                    }
+                    else {
+                        this.selectedMember = member;
+                    }
                 };
                 LeaderManagerComponent.prototype.deleteMember = function (member) {
                     var _this = this;
@@ -62,7 +76,7 @@ System.register(['@angular/core', "../services/user.service"], function(exports_
                     this.userService.deleteMember(member)
                         .subscribe(function (status) {
                         if (status) {
-                            _this.users.splice(_this.users.indexOf(member), 1);
+                            _this.allianceMembers.splice(_this.allianceMembers.indexOf(member), 1);
                         }
                     }, function (error) { return console.log(error); });
                 };

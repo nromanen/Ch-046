@@ -10,7 +10,6 @@ import {HeaderComponent} from "./header/header.component";
 import {AllianceForm} from "./alliance/addalliance.component";
 import {EditAllianceComponent} from "./alliance/editalliance.component";
 import {ConfirmComponent} from "./modal_window/modal";
-import {AllianceMembersComponent} from './user/alliance-members.component';
 import {MemberForm} from './user/add-member.component';
 import {EditMemberComponent} from './user/edit-member.component';
 
@@ -32,7 +31,6 @@ import {UserService} from "./services/user.service";
         EditAllianceComponent,
         ConfirmComponent,
         LeaderManagerComponent,
-        AllianceMembersComponent,
         MemberForm,
         EditMemberComponent,
     ],

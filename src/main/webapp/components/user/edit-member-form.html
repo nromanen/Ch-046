@@ -1,5 +1,5 @@
 <div (keyup.escape)="cancelEditing()" style="height: 70px">
-    <form [formGroup]="memberForm" (ngSubmit)="updateMember(memberForm.value)" class="valign-wrapper">
+    <form [formGroup]="memberForm" (ngSubmit)="updateMember(memberForm.value)" class="valign-wrapper" style="height: 55px">
         <td class="col s2">
             <input type="text" name="login" id="editLogin" class="validate"
                    [formControl]="memberForm.controls['login']"/>
@@ -16,7 +16,7 @@
                     style="background-color: #9cd1af; width: 95px; padding: 0px 10px" type="submit">
                 <i class="material-icons right">play_arrow</i>Save
             </button>
-            <button class="waves-effect waves-light  btn"
+            <button class="waves-effect waves-light  btn" type="button"
                     style="background-color: #f21036; padding: 0px 10px; width: 115px"
                     (click)="cancelEditing()">
                 <i class="material-icons right">stop</i>Cancel

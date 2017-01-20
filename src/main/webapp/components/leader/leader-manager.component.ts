@@ -11,7 +11,9 @@ import {UserService} from "../services/user.service";
 
 export class LeaderManagerComponent implements OnInit {
     leader:User;
-    users:User[];
+    allianceMembers:User[];
+
+    selectedMember:User = null;
 
     constructor(public userService:UserService) {
         console.log(`LeaderManagerComponent constructor is working`);
@@ -26,12 +28,18 @@ export class LeaderManagerComponent implements OnInit {
         console.log("LeaderManagerComponent.getUsersByAlliance() method is working");
         this.userService.getUsersByAlliance()
             .subscribe(
-                users => {
-                    this.users = users;
-                    console.log(JSON.stringify(users));
+                allianceMembers => {
+                    this.allianceMembers = allianceMembers;
+                    console.log(JSON.stringify(allianceMembers));
                 },
                 error => console.log(error)
             );
+    }
+
+    selectMember(member:User) {
+        console.log(`AllianceMembersComponent.selectMember() method is working.`);
+
+        this.selectedMember = member;
     }
 
     addMember(member:User) {
@@ -39,22 +47,30 @@ export class LeaderManagerComponent implements OnInit {
         member.alliance = "valhala"; // todo change to dynamic set alliance name
         this.userService.addMember(member)
             .subscribe(
-                user => this.users.push(user),
+                user => this.allianceMembers.push(user),
                 error => console.log(error)
             );
     }
 
     updateMember(member:User) {
-        console.log(`LeaderManagerComponent.updateMember() method is working`);
-        this.userService.updateMember(member)
-            .subscribe(
-                user => {
-                    console.log(`LeaderManagerComponent.updateMember() user value: ${JSON.stringify(user)}`);
-                    this.users[this.users.indexOf(user)] = user;
-                    console.log(`User from array: ${JSON.stringify(this.users[this.users.indexOf(user)])}`)
-                },
-                error => console.log(error)
-            );
+        console.log(`LeaderManagerComponent.updateMember() method is working. Member value: ${JSON.stringify(member)}`);
+        if (member !== null) {
+            this.userService.updateMember(member)
+                .subscribe(
+                    user => {
+                        console.log(`LeaderManagerComponent.updateMember() user value: ${JSON.stringify(user)}`);
+                        console.log(`User from array: ${JSON.stringify(this.allianceMembers[this.allianceMembers.indexOf(this.selectedMember)])}`)
+                        this.allianceMembers[this.allianceMembers.indexOf(this.selectedMember)] = user;
+                        this.selectedMember = null;
+                    },
+                    error => {
+                        console.log(error);
+                        this.selectedMember = null;
+                    }
+                );
+        } else {
+            this.selectedMember = member;
+        }
     }
 
     deleteMember(member:User) {
@@ -63,7 +79,7 @@ export class LeaderManagerComponent implements OnInit {
             .subscribe(
                 status => {
                     if (status) {
-                        this.users.splice(this.users.indexOf(member), 1);
+                        this.allianceMembers.splice(this.allianceMembers.indexOf(member), 1);
                     }
                 },
                 error => console.log(error)

@@ -40,17 +40,23 @@ System.register(["@angular/core", "@angular/forms", "./user"], function(exports_
                 EditMemberComponent.prototype.ngOnInit = function () {
                     console.log("EditMemberComponent.ngOnInit() is working");
                     this.memberForm = this.fb.group({
-                        'uuid': [this.editedMember.uuid],
                         'login': [this.editedMember.login, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(this.USER_LOGIN)])],
                         'email': [this.editedMember.email, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(this.EMAIL_REGEXP)])],
-                        'alliance': [this.editedMember.alliance]
                     });
                 };
                 EditMemberComponent.prototype.updateMember = function (value) {
                     console.log("EditMemberComponent.updateMember() is working. Member value is: " + JSON.stringify(value));
-                    var member = new user_1.User(value.login, value.email, value.uuid, value.alliance);
-                    this.editMemberForm.emit(member);
+                    if (this.hasMemberDataChange(value)) {
+                        var member = new user_1.User(value.login, value.email, this.editedMember.uuid, this.editedMember.alliance);
+                        this.editMemberForm.emit(member);
+                    }
+                    else {
+                        this.editMemberForm.emit(null);
+                    }
                     this.memberForm.reset();
+                };
+                EditMemberComponent.prototype.hasMemberDataChange = function (value) {
+                    return value.login != this.editedMember.login || value.email != this.editedMember.email;
                 };
                 EditMemberComponent.prototype.cancelEditing = function () {
                     console.log("EditMemberComponent.cancelEditing() is working");
@@ -77,4 +83,5 @@ System.register(["@angular/core", "@angular/forms", "./user"], function(exports_
         }
     }
 });
+// todo протестить собственный валидатор на изменение значения сразу сравнивать + double click && autofocus on form field 
 //# sourceMappingURL=edit-member.component.js.map

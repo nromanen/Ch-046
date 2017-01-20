@@ -16,7 +16,7 @@ export class EditMemberComponent {
 
     memberForm: FormGroup;
     @Input() editedMember: User;
-    @Output() editMemberForm:EventEmitter<any> = new EventEmitter<any>();
+    @Output() editMemberForm:EventEmitter<User> = new EventEmitter<User>();
 
     USER_LOGIN = /^[a-z1-9]{3,9}$/;
     EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
@@ -32,19 +32,25 @@ export class EditMemberComponent {
         console.log(`EditMemberComponent.ngOnInit() is working`);
 
         this.memberForm = this.fb.group({
-            'uuid': [this.editedMember.uuid],
             'login': [this.editedMember.login, Validators.compose([Validators.required, Validators.pattern(this.USER_LOGIN)])],
             'email': [this.editedMember.email, Validators.compose([Validators.required, Validators.pattern(this.EMAIL_REGEXP)])],
-            'alliance': [this.editedMember.alliance]
         });
     }
 
     updateMember(value:any) {
         console.log(`EditMemberComponent.updateMember() is working. Member value is: ${JSON.stringify(value)}`);
 
-        let member = new User(value.login, value.email, value.uuid, value.alliance);
-        this.editMemberForm.emit(member);
+        if (this.hasMemberDataChange(value)) {
+            let member:User = new User(value.login, value.email, this.editedMember.uuid, this.editedMember.alliance);
+            this.editMemberForm.emit(member);
+        } else {
+            this.editMemberForm.emit(null);
+        }
         this.memberForm.reset();
+    }
+
+    hasMemberDataChange(value:any):boolean {
+        return value.login != this.editedMember.login || value.email != this.editedMember.email;
     }
 
     cancelEditing() {
@@ -53,3 +59,4 @@ export class EditMemberComponent {
         this.editMemberForm.emit(null);
     }
 }
+// todo протестить собственный валидатор на изменение значения сразу сравнивать + double click && autofocus on form field
