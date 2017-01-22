@@ -23,4 +23,9 @@ export class PlayerService{
         return this._http.get(this.url)
             .map(res => res.json());
     }
+
+    update(player:Player){
+      let a=JSON.stringify(player);
+      console.log(a);
+    }
 }

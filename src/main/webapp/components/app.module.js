@@ -1,4 +1,4 @@
-System.register(["@angular/core", "@angular/platform-browser", "@angular/http", "@angular/forms", "./app.component", "./alliance/alliance.component", "./header/header.component", "./services/alliance-service", "./alliance/addalliance.component", "./alliance/editalliance.component", "./modal_window/modal", "@angular/router", "./player/player.component", "./player/playerList.component", "./player/playerRow.component", "./player/playerHeader.component", "./services/player.service", "./village/editViallage.component", "./services/currentVillage.service", "./village/editVillageForm.component", "./army/armyCellComponent", "./player/mytr"], function (exports_1, context_1) {
+System.register(["@angular/core", "@angular/platform-browser", "@angular/http", "@angular/forms", "./app.component", "./alliance/alliance.component", "./header/header.component", "./services/alliance-service", "./alliance/addalliance.component", "./alliance/editalliance.component", "./modal_window/modal", "@angular/router", "./player/player.component", "./player/playerList.component", "./player/playerRow.component", "./player/playerHeader.component", "./services/player.service", "./village/editViallage.component", "./services/currentVillage.service", "./village/editVillageForm.component", "./army/armyCellComponent", "./UnitType/player.ro.component", "./services/villageService"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7,7 +7,7 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, platform_browser_1, http_1, forms_1, app_component_1, alliance_component_1, header_component_1, alliance_service_1, addalliance_component_1, editalliance_component_1, modal_1, router_1, player_component_1, playerList_component_1, playerRow_component_1, playerHeader_component_1, player_service_1, editViallage_component_1, currentVillage_service_1, editVillageForm_component_1, armyCellComponent_1, mytr_1, AppModule;
+    var core_1, platform_browser_1, http_1, forms_1, app_component_1, alliance_component_1, header_component_1, alliance_service_1, addalliance_component_1, editalliance_component_1, modal_1, router_1, player_component_1, playerList_component_1, playerRow_component_1, playerHeader_component_1, player_service_1, editViallage_component_1, currentVillage_service_1, editVillageForm_component_1, armyCellComponent_1, player_ro_component_1, villageService_1, AppModule;
     return {
         setters: [
             function (core_1_1) {
@@ -73,8 +73,11 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
             function (armyCellComponent_1_1) {
                 armyCellComponent_1 = armyCellComponent_1_1;
             },
-            function (mytr_1_1) {
-                mytr_1 = mytr_1_1;
+            function (player_ro_component_1_1) {
+                player_ro_component_1 = player_ro_component_1_1;
+            },
+            function (villageService_1_1) {
+                villageService_1 = villageService_1_1;
             }
         ],
         execute: function () {
@@ -129,13 +132,13 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
                         editViallage_component_1.EditVillageComponent,
                         editVillageForm_component_1.EditVillageForm,
                         armyCellComponent_1.ArmyCellComponent,
-                        mytr_1.MyTr
+                        player_ro_component_1.PlayerRo
                     ],
                     providers: [
                         alliance_service_1.AllianceService,
                         modal_1.ConfirmComponent,
                         player_service_1.PlayerService,
-                        currentVillage_service_1.CurrVillageService
+                        currentVillage_service_1.CurrVillageService, villageService_1.VillageService
                     ],
                     bootstrap: [app_component_1.AppComponent]
                 })

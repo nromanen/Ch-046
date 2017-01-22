@@ -20,7 +20,8 @@ import {EditVillageComponent} from "./village/editViallage.component";
 import {CurrVillageService} from "./services/currentVillage.service";
 import {EditVillageForm} from "./village/editVillageForm.component";
 import {ArmyCellComponent} from "./army/armyCellComponent";
-import {MyTr} from "./player/mytr";
+import {PlayerRo} from "./UnitType/player.ro.component";
+import {VillageService} from "./services/villageService";
 
 @NgModule({
     imports: [
@@ -68,13 +69,13 @@ import {MyTr} from "./player/mytr";
         EditVillageComponent,
         EditVillageForm,
         ArmyCellComponent,
-        MyTr
+        PlayerRo
     ],
     providers: [
         AllianceService,
         ConfirmComponent,
         PlayerService,
-        CurrVillageService
+        CurrVillageService,VillageService
     ],
     bootstrap: [AppComponent]
 })

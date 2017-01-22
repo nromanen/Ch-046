@@ -53,24 +53,11 @@ import {Army} from "../army/army";
         </thead>
 
         <tbody>
-        <tr *ngFor="let v of player.villages">
-            <td>{{v.name}}</td>
-            <td>{{v.population}}</td>
-            <td>{{v.xCoord}}</td>
-            <td>{{v.yCoord}}</td>
-            <td>{{v.isCapital}}</td>
-            <td>{{v.wall}}</td>
-           
-            <td *ngFor="let u of unitValues">
-                <army-cell [type]="u" [village]="v" ></army-cell>
-            </td>
-            <!--<td><player-row [v]="v" (editClick)="wasEdited($event)"></player-row></td>-->
-            
-            <tr my-tr>
-            </tr>
+        <tr player-ro [v]="v" *ngFor="let v of player.villages" [isForm]="v==selectedVillage" (selectedVillageChanged)="changeSelectedVillage($event)" >
         </tbody>
     </table>
     <button (click)="g()">degfdfg</button>
+    
 </div>
 `
 })
@@ -82,17 +69,11 @@ export class PlayerList implements OnInit{
 
     }
  @Input('player') player:Player;
-    unitTYPE:UnitType;
     unitValues:Array<string>;
     selectedVillage:Village;
     constructor(private currVillageService:CurrVillageService){
         this.unitValues=[];
         this.selectedVillage=null;
-        for (let m in UnitType){
-            if (typeof UnitType[m] === 'number'){
-                this.unitValues.push(m);
-            }
-        }
         console.log(this.unitValues);
     }
 
@@ -104,9 +85,15 @@ export class PlayerList implements OnInit{
 
     g(){
         this.player.villages[0].name="vill6";
+        this.player.villages.forEach(vill=>{
+           console.log(vill=this.selectedVillage);
+        });
     }
 
-    showForm(){
-
+    changeSelectedVillage(village:Village){
+          this.selectedVillage=village;
+          console.log(this.selectedVillage);
     }
+
+
 }

@@ -1,4 +1,4 @@
-System.register(["@angular/core", "../village/village"], function (exports_1, context_1) {
+System.register(["@angular/core", "../village/village", "./army"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,7 +10,7 @@ System.register(["@angular/core", "../village/village"], function (exports_1, co
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, village_1, ArmyCellComponent;
+    var core_1, village_1, army_1, ArmyCellComponent;
     return {
         setters: [
             function (core_1_1) {
@@ -18,30 +18,40 @@ System.register(["@angular/core", "../village/village"], function (exports_1, co
             },
             function (village_1_1) {
                 village_1 = village_1_1;
+            },
+            function (army_1_1) {
+                army_1 = army_1_1;
             }
         ],
         execute: function () {
             ArmyCellComponent = (function () {
                 function ArmyCellComponent() {
-                    this.value = 0;
-                    this.isForm = true;
-                    this.emitter = new core_1.EventEmitter();
+                    this.isInput = true;
+                    this.cellClicked = new core_1.EventEmitter();
+                    this.newArmy = new army_1.Army();
                 }
+                ArmyCellComponent.prototype.ngOnChanges = function (changes) {
+                    if (this.ifSave && this.army != null) {
+                        this.army.count = this.newArmy.count;
+                        console.log(this.village.armies);
+                    }
+                };
                 ArmyCellComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    console.log(this.village.armies.length);
                     this.village.armies.forEach(function (army) {
-                        console.log(army.type);
-                        console.log(_this.type.toString());
-                        console.log(_this.type === army.type.toString());
                         if (_this.type == army.type.toString()) {
-                            _this.value = army.count;
+                            _this.army = army;
+                            _this.newArmy = new army_1.Army;
+                            _this.newArmy.count = _this.army.count;
                         }
                     });
                 };
                 ArmyCellComponent.prototype.hide = function () {
-                    this.isForm = false;
-                    // this.emitter.emit(this.village);
+                    this.isInput = true;
+                    this.cellClicked.emit(this.village);
+                };
+                ArmyCellComponent.prototype.becomeDiv = function () {
+                    this.cellClicked.emit(null);
                 };
                 return ArmyCellComponent;
             }());
@@ -56,12 +66,16 @@ System.register(["@angular/core", "../village/village"], function (exports_1, co
             __decorate([
                 core_1.Input(),
                 __metadata("design:type", Boolean)
-            ], ArmyCellComponent.prototype, "isForm", void 0);
+            ], ArmyCellComponent.prototype, "isInput", void 0);
+            __decorate([
+                core_1.Input(),
+                __metadata("design:type", Boolean)
+            ], ArmyCellComponent.prototype, "ifSave", void 0);
             ArmyCellComponent = __decorate([
                 core_1.Component({
                     selector: 'army-cell',
                     outputs: ['cellClicked'],
-                    template: "\n{{diagnostic}}\n     <div title=\"{{this.type}}\" (dblclick)=\"hide()\" *ngIf=\"isVisible\">{{value}}</div>\n     <input  type=\"text\" *ngIf=\"!isVisible\"  style=\"margin: 0;width: 20px;height: 22px\" [(ngModel)]=\"this.value\" name=\"value\" #spy>\n"
+                    template: "\n     <div title=\"{{this.type}}\" (dblclick)=\"hide()\" *ngIf=\"!isInput\" (click)=\"becomeDiv()\">{{army!=null?this.army.count:\"0\"}}</div>\n     <div class=\"input-field\"  *ngIf=\"isInput\">\n     <input class=\"validate\"  type=\"text\"  style=\" \n     width: 20px;height: 22px\" [ngModel]=\"army!=null?this.army.count:'0'\" \n     name=\"value\" (ngModelChange)=\"newArmy.count=$event\"\n     minlength=\"5\" maxlength=\"7\" #name=\"ngModel\">\n     </div>\n\n"
                 }),
                 __metadata("design:paramtypes", [])
             ], ArmyCellComponent);

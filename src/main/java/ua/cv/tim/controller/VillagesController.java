@@ -36,6 +36,7 @@ public class VillagesController {
 
     @RequestMapping(value = "/village/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Village> updateVillage(@PathVariable(name = "id") String id, @RequestBody Village village){
+
         Village current_village= villageServiceImp.getById(id);
         if (current_village!=null) {
             current_village.setName(village.getName());
@@ -47,9 +48,13 @@ public class VillagesController {
             current_village.setUuid(village.getUuid());
             current_village.setArmies(village.getArmies());
             current_village.setArmyRequests(village.getArmyRequests());
-
+            villageServiceImp.update(current_village);
+            if (true){
+//                throw new NullPointerException();
+            }
             return new ResponseEntity<>(current_village,HttpStatus.CREATED);
         }
+
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 

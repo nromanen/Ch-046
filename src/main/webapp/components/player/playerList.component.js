@@ -32,11 +32,6 @@ System.register(["./player", "@angular/core", "../services/currentVillage.servic
                     this.currVillageService = currVillageService;
                     this.unitValues = [];
                     this.selectedVillage = null;
-                    for (var m in unitType_1.UnitType) {
-                        if (typeof unitType_1.UnitType[m] === 'number') {
-                            this.unitValues.push(m);
-                        }
-                    }
                     console.log(this.unitValues);
                 }
                 PlayerList.prototype.ngOnInit = function () {
@@ -50,9 +45,15 @@ System.register(["./player", "@angular/core", "../services/currentVillage.servic
                     this.currVillageService.village = village;
                 };
                 PlayerList.prototype.g = function () {
+                    var _this = this;
                     this.player.villages[0].name = "vill6";
+                    this.player.villages.forEach(function (vill) {
+                        console.log(vill = _this.selectedVillage);
+                    });
                 };
-                PlayerList.prototype.showForm = function () {
+                PlayerList.prototype.changeSelectedVillage = function (village) {
+                    this.selectedVillage = village;
+                    console.log(this.selectedVillage);
                 };
                 return PlayerList;
             }());
@@ -63,7 +64,7 @@ System.register(["./player", "@angular/core", "../services/currentVillage.servic
             PlayerList = __decorate([
                 core_1.Component({
                     selector: 'player-list',
-                    template: "<div class=\"row \">\n    <table>\n        <thead>\n        <tr>\n            <th>Village</th>\n            <th>Population</th>\n            <th>X</th>\n            <th>Y</th>\n            <th>Capital?</th>\n            <th>Wall level</th>\n            <td><img src=\"images/Gauls/GalFal.gif\"></td>\n            <td><img src=\"images/Gauls/GalSwordsman.gif\"></td>\n            <td><img src=\"images/Gauls/GalPathFinder.gif\"></td>\n            <td><img src=\"images/Gauls/GalTewtThunder.gif\"></td>\n            <td><img src=\"images/Gauls/GalDruid.gif\"></td>\n            <td><img src=\"images/Gauls/Edui.gif\"></td>\n            <td><img src=\"images/Gauls/GalRam.gif\"></td>\n            <td><img src=\"images/Gauls/GalCatapult.gif\"></td>\n            <td><img src=\"images/Gauls/GaLeader.gif\"></td>\n            <td><img src=\"images/Germans/Clubswinger.gif\"></td>\n            <td><img src=\"images/Germans/Spearman.gif\"></td>\n            <td><img src=\"images/Germans/Toporshchik.gif\"></td>\n            <td><img src=\"images/Germans/Skaut.gif\"></td>\n            <td><img src=\"images/Germans/Paladin.gif\"></td>\n            <td><img src=\"images/Germans/Tevtonskaya-konnitsa.gif\"></td>\n            <td><img src=\"images/Germans/Taran-ger.gif\"></td>\n            <td><img src=\"images/Germans/Katapulta-ger.gif\"></td>\n            <td><img src=\"images/Germans/Leader.gif\"></td>\n            <td><img src=\"images/Rome/Legioner.gif\"></td>\n            <td><img src=\"images/Rome/Praetorian.gif\"></td>\n            <td><img src=\"images/Rome/Imperianets.gif\"></td>\n            <td><img src=\"images/Rome/Konnyy-razvedchik.gif\"></td>\n            <td><img src=\"images/Rome/Konnitsa-imperatora.gif\"></td>\n            <td><img src=\"images/Rome/Konnitsa-Tsezarya.gif\"></td>\n            <td><img src=\"images/Rome/Taran-rim.gif\"></td>\n            <td><img src=\"images/Rome/Ognennaya-katapulta.gif\"></td>\n            <td><img src=\"images/Rome/Senator.gif\"></td>\n            <th></th>\n        </tr>\n        </thead>\n\n        <tbody>\n        <tr *ngFor=\"let v of player.villages\">\n            <td>{{v.name}}</td>\n            <td>{{v.population}}</td>\n            <td>{{v.xCoord}}</td>\n            <td>{{v.yCoord}}</td>\n            <td>{{v.isCapital}}</td>\n            <td>{{v.wall}}</td>\n           \n            <td *ngFor=\"let u of unitValues\">\n                <army-cell [type]=\"u\" [village]=\"v\" ></army-cell>\n            </td>\n            <!--<td><player-row [v]=\"v\" (editClick)=\"wasEdited($event)\"></player-row></td>-->\n            \n            <tr my-tr>\n            </tr>\n        </tbody>\n    </table>\n    <button (click)=\"g()\">degfdfg</button>\n</div>\n"
+                    template: "<div class=\"row \">\n    <table>\n        <thead>\n        <tr>\n            <th>Village</th>\n            <th>Population</th>\n            <th>X</th>\n            <th>Y</th>\n            <th>Capital?</th>\n            <th>Wall level</th>\n            <td><img src=\"images/Gauls/GalFal.gif\"></td>\n            <td><img src=\"images/Gauls/GalSwordsman.gif\"></td>\n            <td><img src=\"images/Gauls/GalPathFinder.gif\"></td>\n            <td><img src=\"images/Gauls/GalTewtThunder.gif\"></td>\n            <td><img src=\"images/Gauls/GalDruid.gif\"></td>\n            <td><img src=\"images/Gauls/Edui.gif\"></td>\n            <td><img src=\"images/Gauls/GalRam.gif\"></td>\n            <td><img src=\"images/Gauls/GalCatapult.gif\"></td>\n            <td><img src=\"images/Gauls/GaLeader.gif\"></td>\n            <td><img src=\"images/Germans/Clubswinger.gif\"></td>\n            <td><img src=\"images/Germans/Spearman.gif\"></td>\n            <td><img src=\"images/Germans/Toporshchik.gif\"></td>\n            <td><img src=\"images/Germans/Skaut.gif\"></td>\n            <td><img src=\"images/Germans/Paladin.gif\"></td>\n            <td><img src=\"images/Germans/Tevtonskaya-konnitsa.gif\"></td>\n            <td><img src=\"images/Germans/Taran-ger.gif\"></td>\n            <td><img src=\"images/Germans/Katapulta-ger.gif\"></td>\n            <td><img src=\"images/Germans/Leader.gif\"></td>\n            <td><img src=\"images/Rome/Legioner.gif\"></td>\n            <td><img src=\"images/Rome/Praetorian.gif\"></td>\n            <td><img src=\"images/Rome/Imperianets.gif\"></td>\n            <td><img src=\"images/Rome/Konnyy-razvedchik.gif\"></td>\n            <td><img src=\"images/Rome/Konnitsa-imperatora.gif\"></td>\n            <td><img src=\"images/Rome/Konnitsa-Tsezarya.gif\"></td>\n            <td><img src=\"images/Rome/Taran-rim.gif\"></td>\n            <td><img src=\"images/Rome/Ognennaya-katapulta.gif\"></td>\n            <td><img src=\"images/Rome/Senator.gif\"></td>\n            <th></th>\n        </tr>\n        </thead>\n\n        <tbody>\n        <tr player-ro [v]=\"v\" *ngFor=\"let v of player.villages\" [isForm]=\"v==selectedVillage\" (selectedVillageChanged)=\"changeSelectedVillage($event)\" >\n        </tbody>\n    </table>\n    <button (click)=\"g()\">degfdfg</button>\n    \n</div>\n"
                 }),
                 __metadata("design:paramtypes", [currentVillage_service_1.CurrVillageService])
             ], PlayerList);
