@@ -42,11 +42,23 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
         return users;
     }
 
-    public User getByMail(String mail) {
+    public User getByMail(String mail, String uuid) {
+        System.out.println("Dao get by email");
+        System.out.println("uuid = : " + uuid);
+
         Session session = getCurrentSession();
-        Query query = session.createQuery("FROM User WHERE email=:mail");
-        query.setParameter("mail", mail);
-        User user = (User) query.getSingleResult();
+        Query query = null;
+        if (uuid != null) {
+            System.out.println("uuid no = null : " + uuid);
+            query = session.createQuery("select u FROM User u WHERE u.email=:mail and u.uuid != :uuid");
+            query.setParameter("mail", mail);
+            query.setParameter("uuid", uuid);
+        } else {
+            query = session.createQuery("select u FROM User u WHERE u.email=:mail");
+            query.setParameter("mail", mail);
+        }
+        User user = (User) query.uniqueResult();
+        System.out.println(user);
         return user;
     }
 
@@ -62,6 +74,7 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     @Override
     public List<User> getAllWithRoles() {
 
+
         Query query = getCurrentSession().createQuery("FROM User ");
         List<User> allWithRoles = (List<User>) query.getResultList();
         for (User user : allWithRoles)
@@ -70,11 +83,25 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        String request = "select u from User u where u.login = :login";
-        org.hibernate.query.Query<User> query = getCurrentSession().createQuery(request);
-        query.setParameter("login", username);
-        return query.getSingleResult();
+    public User getUserByUsername(String username, String uuid) {
+
+        System.out.println("Dao get by email");
+        System.out.println("uuid = : " + uuid);
+
+        Session session = getCurrentSession();
+        Query query = null;
+        if (uuid != null) {
+            System.out.println("uuid no = null : " + uuid);
+            query = session.createQuery("select u from User u where u.login = :login and u.uuid != :uuid");
+            query.setParameter("login", username);
+            query.setParameter("uuid", uuid);
+        } else {
+            query = session.createQuery("select u from User u where u.login = :login");
+            query.setParameter("login", username);
+        }
+        User user = (User) query.uniqueResult();
+        System.out.println(user);
+        return user;
     }
 
 }

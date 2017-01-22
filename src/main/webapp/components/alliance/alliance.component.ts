@@ -1,71 +1,121 @@
-import {Component} from 'angular2/core'
-// import {AllianceService} from "./alliance-service";
+
 import {Alliance} from "./alliance";
-import {AllianceService} from "../../services/alliacne/alliance-service";
-import {ErrorMessage} from "../modal_window/modal";
-import {ViewChild} from "angular2/src/core/metadata";
+import {Component, OnInit} from "@angular/core";
+import {AllianceService} from "../services/alliance/alliance-service";
 
 
 @Component({
     selector: 'my-alliance',
     templateUrl: 'components/alliance/alliance.html',
-    providers: [AllianceService],
-    directives: [ErrorMessage],
+    styleUrls: ['components/alliance/alliance.css']
 })
 
-export class AllianceComponent{
 
-    alliances: Array<Alliance> = [];
+
+export class AllianceComponent implements OnInit{
+
+    alliances: Array<Alliance> ;
+    errorMessage: string = null;
+    successMessage: string = null;
+    addNewAlliance: boolean = false;
 
     selectedAlliance: Alliance = null;
-    name: string;
-    login: string;
-    email: string;
+    deletedAlliance: Alliance = null;
 
-    editName: string;
-    editLogin: string;
-    editEmail: string;
+    confirmMsg: string;
 
-    @ViewChild(ErrorMessage) errorMsg: ErrorMessage;  // ErrorMessage is a ViewChild
 
     constructor(private _allianceService: AllianceService){
-
     }
 
-    ontest(){
-        console.log("ontest");
-        this.errorMsg.showErrorMessage("Are you sure you want to delete this alliance?");
+    ngOnInit() {
+        this.getAlliances();
+    }
+
+    newAlliance(){
+        this.addNewAlliance = true;
+    }
+
+    closeSuccess(){
+        this.successMessage = null;
+    }
+
+    closeError(){
+        this.errorMessage = null;
+    }
+
+    onNotifyUpdate(alliance : Alliance){
+        if (alliance !== null){
+            console.log(alliance);
+            this._allianceService.updateAlliance(alliance)
+                .subscribe(
+                    resp => {
+                        this.alliances[this.alliances.indexOf(this.selectedAlliance)] = resp;
+                        this.successMessage = "Alliance updated successfully";
+                        this.errorMessage = null;
+                        this.selectedAlliance = null;
+                    },
+                    error =>  {
+
+                        this.errorMessage = <any>error;
+                        this.successMessage = null;
+                        this.selectedAlliance = null;
+                    }
+                );
+        } else {
+
+            this.selectedAlliance = alliance;
+        }
+    }
+
+    onNotifyDelete(confitmation : boolean){
+        if (confitmation){
+            if(this._allianceService.deleteAlliance(this.deletedAlliance)){
+                this.alliances.splice(this.alliances.indexOf(this.deletedAlliance), 1);
+                this.successMessage = "Alliance deleted successfully";
+                this.errorMessage = null;
+            }
+        }
+        this.deletedAlliance = null;
+    }
+    onNotifyCreate(alliance : Alliance){
+
+        this._allianceService.addAlliance(alliance)
+            .subscribe(
+                resp => {
+                    this.alliances.push(resp);
+                    this.successMessage = "Alliance added successfully";
+                    this.errorMessage = null;
+                },
+                error =>  {
+                    this.errorMessage = <any>error;
+                    this.successMessage = null;
+                }
+            );
+        this.addNewAlliance = false;
     }
 
     editAlliance(al: Alliance){
         this.selectedAlliance = al;
-        this.editName = al.name;
-        this.editLogin = al.leaderLogin;
-        this.editEmail = al.leaderEmail;
     }
 
     deleteAlliance(al: Alliance){
-        this._allianceService.deleteAlliance(al);
+        console.log("ontest delete");
+        this.confirmMsg = "Are you sure you want to delete alliance " + al.name + "?";
+        this.deletedAlliance = al;
+
     }
 
     cancelEditing(){
         this.selectedAlliance = null;
     }
 
-    addAlliance(){
-        console.log("AddAlliance");
-        var newAlliance = new Alliance(this.name, this.login, this.email);
-        this.name = "";
-        this.login = "";
-        this.email = "";
-        this._allianceService.addAlliance(newAlliance);
-
-    }
-
-    updateAlliance() {
-        console.log("update alliance")
-        var updatedAlliance = new Alliance(this.editName, this.editLogin, this.editEmail);
-        this._allianceService.updateAlliance(this.selectedAlliance, updatedAlliance);
+    getAlliances() {
+        this._allianceService.getAlliances()
+            .subscribe(
+                alliances => this.alliances = alliances,
+                error =>  this.errorMessage = <any>error
+            );
     }
 
 }

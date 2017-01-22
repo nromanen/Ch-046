@@ -1,9 +1,5 @@
-/**
- * Created by rmochetc on 12.01.2017.
- */
-System.register(['angular2/core'], function(exports_1, context_1) {
+System.register(["@angular/core"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -13,38 +9,60 @@ System.register(['angular2/core'], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
-    var ErrorMessage;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, ConfirmComponent;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
-            }],
-        execute: function() {
-            ErrorMessage = (function () {
-                function ErrorMessage() {
+            }
+        ],
+        execute: function () {
+            ConfirmComponent = (function () {
+                /**
+                 * Created by rmochetc on 12.01.2017.
+                 */
+                function ConfirmComponent() {
+                    this.notify = new core_1.EventEmitter();
                 }
-                ErrorMessage.prototype.showErrorMessage = function (msg) {
-                    console.log("show message");
-                    console.log(msg);
-                    this.ErrorMsg = msg;
-                    this.ErrorMessageIsVisible = true;
+                // private ErrorMsg: string;
+                // public ErrorMessageIsVisible: boolean;
+                ConfirmComponent.prototype.keyboardInput = function (event) {
+                    if (event.key === "Escape") {
+                        this.onCancel();
+                    }
                 };
-                ErrorMessage.prototype.hideErrorMsg = function () {
-                    this.ErrorMessageIsVisible = false;
+                ConfirmComponent.prototype.onConfirm = function () {
+                    this.notify.emit(true);
                 };
-                ErrorMessage = __decorate([
-                    core_1.Component({
-                        selector: 'app-modal',
-                        //templateUrl: 'components/modal_window/modal.html',
-                        template: "\n\n<!-- Modal Structure -->\n<div *ngIf=\"ErrorMessageIsVisible\" style=\"z-index: 999;display: block;opacity: 0.5;position: fixed; top: -100px; left: 0; bottom: 0; right: 0; height: 125%; width: 100%; background: #000;\">\n    <div style=\"\n    z-index: 1003;\n    color: black;\n    display: block;\n    opacity: 1;\n    transform: scaleX(1);\n    top: 10%;\n    position: fixed;\n    left: 0;\n    right: 0;\n    background-color: #fafafa;\n    padding: 0;\n    max-height: 70%;\n    width: 55%;\n    margin: auto;\n    overflow-y: auto;\n    border-radius: 2px;\n    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);\">\n <div style=\"padding: 24px; opacity: 1;\n    box-sizing: inherit;\n    display: block;\">\n        <h4 style=\"    margin-top: 0;\n    font-size: 2.28rem;\n    line-height: 110%;\n    margin: 1.14rem 0 0.912rem 0;\n    font-weight: 400;\n    box-sizing: inherit;\n    display: block;\">Confinm this action</h4>\n        <p>{{ErrorMsg}}</p>\n    </div>\n    <div class=\"modal-footer\">\n        <a href=\"#!\" (click)=\"hideErrorMsg()\" class=\" modal-action modal-close waves-effect waves-green btn-flat\" style=\"float: right; margin: 6px 0; opacity: 1;\">Agree</a>\n        <a href=\"#!\" (click)=\"hideErrorMsg()\" class=\" modal-action modal-close waves-effect waves-green btn-flat\" style=\"float: right; margin: 6px 0; opacity: 1;\">Disagree</a>\n    </div>\n    </div>\n</div>\n\n\n"
-                    }), 
-                    __metadata('design:paramtypes', [])
-                ], ErrorMessage);
-                return ErrorMessage;
+                ConfirmComponent.prototype.onCancel = function () {
+                    this.notify.emit(false);
+                };
+                return ConfirmComponent;
             }());
-            exports_1("ErrorMessage", ErrorMessage);
+            __decorate([
+                core_1.Input(),
+                __metadata("design:type", String)
+            ], ConfirmComponent.prototype, "confirmMsg", void 0);
+            __decorate([
+                core_1.Output(),
+                __metadata("design:type", core_1.EventEmitter)
+            ], ConfirmComponent.prototype, "notify", void 0);
+            __decorate([
+                core_1.HostListener('window:keydown', ['$event']),
+                __metadata("design:type", Function),
+                __metadata("design:paramtypes", [Object]),
+                __metadata("design:returntype", void 0)
+            ], ConfirmComponent.prototype, "keyboardInput", null);
+            ConfirmComponent = __decorate([
+                core_1.Component({
+                    selector: 'app-modal',
+                    templateUrl: 'components/modal_window/modal.html',
+                    styleUrls: ['components/modal_window/modal.css']
+                })
+            ], ConfirmComponent);
+            exports_1("ConfirmComponent", ConfirmComponent);
         }
-    }
+    };
 });
 //# sourceMappingURL=modal.js.map

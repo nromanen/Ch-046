@@ -12,6 +12,9 @@ import java.util.List;
 public interface AllianceDao extends CrudDao<Alliance> {
     Alliance getById(String id);
     List<Alliance> getAll();
+    String getIdByName(String name);
+    Alliance getByName(String name, String uuid);
+
 
 }
 

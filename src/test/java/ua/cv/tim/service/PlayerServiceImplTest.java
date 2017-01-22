@@ -30,6 +30,7 @@ public class PlayerServiceImplTest extends AbstractTestNGSpringContextTests {
         Player lkl = playerService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
         lkl.setRace(Race.GAULS);
         playerService.update(lkl);
+
     }
 
 
@@ -76,7 +77,7 @@ public class PlayerServiceImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testDelete() throws Exception {
-        Player player = playerService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
+        Player player = playerService.getById("77e0708b-0207-46e3-b521-b2ed1998e2b6");
         playerService.delete(player);
     }
 

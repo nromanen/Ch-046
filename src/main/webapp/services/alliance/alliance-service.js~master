@@ -64,10 +64,10 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx'], function(exports_
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
                     headers.append('X-CSRFToken', this.getCookie('csrftoken'));
-                    var url = 'allianceDTO/' + alliance.uuid;
+                    var url = 'allianceDTO/' + alliance.allianceUuid;
                     this._http.delete(url, {
                         headers: headers
-                    }).subscribe(function (response) { return console.log('Alliance deleted, id = ' + alliance.uuid); }, function (error) { return console.log(error); });
+                    }).subscribe(function (response) { return console.log('Alliance deleted, id = ' + alliance.allianceUuid); }, function (error) { return console.log(error); });
                 };
                 AllianceService.prototype.updateAlliance = function (alliance, newAlliance) {
                     this.alliances[this.alliances.indexOf(alliance)] = newAlliance;
@@ -75,10 +75,10 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx'], function(exports_
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
                     headers.append('X-CSRFToken', this.getCookie('csrftoken'));
-                    var url = 'allianceDTO/' + alliance.uuid;
+                    var url = 'allianceDTO/' + alliance.allianceUuid;
                     this._http.put(url, body, {
                         headers: headers
-                    }).subscribe(function (response) { return console.log('Alliance updated, id = ' + alliance.uuid + ', status = ' + response.status); }, function (error) { return console.log(error); });
+                    }).subscribe(function (response) { return console.log('Alliance updated, id = ' + alliance.allianceUuid + ', status = ' + response.status); }, function (error) { return console.log(error); });
                 };
                 AllianceService = __decorate([
                     core_1.Injectable(), 
