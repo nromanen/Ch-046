@@ -41,10 +41,7 @@
         </table>
         <br>
     </div>
-    <a class="btn-floating btn-large waves-effect waves-light cyan darken-1" *ngIf ="!addNewAlliance" (click)="newAlliance()"><i class="material-icons">add</i></a>
+    <a class="btn-floating btn-large waves-effect waves-light cyan darken-1 center" *ngIf ="!addNewAlliance" (click)="newAlliance()"><i class="material-icons">add</i></a>
     <add-alliance *ngIf="addNewAlliance" (notify)='onNotifyCreate($event)'></add-alliance>
-    <br>
-    <h3>Timer</h3>
-    <my-timer inputDate="January 20, 2017 12:00:00">Loading...</my-timer>
 </div>
 

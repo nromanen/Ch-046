@@ -21,7 +21,7 @@ public class AllianceDaoImpl extends AbstractCrudDao<Alliance>  implements Allia
         Session session = getCurrentSession();
         Query query = session.createQuery("FROM Alliance WHERE id=:id");
         query.setParameter("id", id);
-        Alliance alliance = (Alliance) query.uniqueResult();
+        Alliance alliance = (Alliance) query.getSingleResult();
         System.out.println(alliance);
         return alliance;
     }
@@ -41,7 +41,7 @@ public class AllianceDaoImpl extends AbstractCrudDao<Alliance>  implements Allia
         Session session = getCurrentSession();
         Query query = session.createQuery("select a.uuid FROM Alliance a where name=:name");
         query.setParameter("name", name);
-        String uuid = (String) query.uniqueResult();
+        String uuid = (String) query.getSingleResult();
         return uuid;
     }
 
@@ -58,7 +58,7 @@ public class AllianceDaoImpl extends AbstractCrudDao<Alliance>  implements Allia
             query = session.createQuery("select a from Alliance a where a.name = :name");
             query.setParameter("name", name);
         }
-        Alliance alliance = (Alliance) query.uniqueResult();
+        Alliance alliance = (Alliance) query.getSingleResult();
         System.out.println(alliance);
         return alliance;
     }

@@ -84,12 +84,18 @@ public class AllianceDTO  {
 
     @Override
     public String toString() {
-        return "AllianceDTO{" +
-                "allianceUuid='" + allianceUuid + '\'' +
-                ", leaderUuid='" + leaderUuid + '\'' +
-                ", name='" + name + '\'' +
-                ", leaderLogin='" + leaderLogin + '\'' +
-                ", leaderEmail='" + leaderEmail + '\'' +
-                '}';
-    }
+        return new StringBuilder()
+                .append("AllianceDTO{allianceUuid='")
+                .append(allianceUuid)
+                .append("', leaderUuid='")
+                .append(leaderUuid)
+                .append("', name='")
+                .append(name)
+                .append("', leaderLogin='")
+                .append(leaderLogin)
+                .append("', leaderEmail='")
+                .append(leaderEmail)
+                .append("'}")
+                .toString();
+       }
 }

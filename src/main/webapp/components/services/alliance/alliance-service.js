@@ -48,21 +48,21 @@ System.register(["rxjs/Rx", "@angular/http", "@angular/core"], function (exports
                     headers.append('Content-Type', 'application/json');
                     return this._http.post(this.url, body, {
                         headers: headers
-                    }).map(function (res) { return res.json(); }) // ...and calling .json() on the response to return data
+                    }).map(function (res) { return res.json(); })
                         .catch(function (error) {
                         if (error.status == 400) {
                             return Rx_1.Observable.throw('ERROR!!! Invalid data. Please check entered data!');
                         }
                         else if (error.status == 409) {
-                            return Rx_1.Observable.throw('ERROR!!! User whit the same login or e-mail is in DB!');
+                            return Rx_1.Observable.throw('ERROR!!! User with the same login or e-mail is in DB!');
                         }
                         else if (error.status == 403) {
-                            return Rx_1.Observable.throw('ERROR!!! Alliance whit the same name is in DB!');
+                            return Rx_1.Observable.throw('ERROR!!! Alliance with the same name is in DB!');
                         }
                         else {
                             return Rx_1.Observable.throw('UNKNOWN ERROR!!!');
                         }
-                    }); //...errors if
+                    });
                 };
                 AllianceService.prototype.deleteAlliance = function (alliance) {
                     var result = true;
