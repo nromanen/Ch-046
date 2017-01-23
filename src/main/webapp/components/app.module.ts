@@ -17,11 +17,12 @@ import {PlayerRow} from "./player/playerRow.component";
 import {PlayerHeader} from "./player/playerHeader.component";
 import {PlayerService} from "./services/player.service";
 import {EditVillageComponent} from "./village/editViallage.component";
-import {CurrVillageService} from "./services/currentVillage.service";
+import {CurrVillageArmiesService} from "./services/newVillageArmiesService";
 import {EditVillageForm} from "./village/editVillageForm.component";
 import {ArmyCellComponent} from "./army/armyCellComponent";
-import {PlayerRo} from "./UnitType/player.ro.component";
+import {VillageRow} from "./village/villageRow.component";
 import {VillageService} from "./services/villageService";
+import {AddVillageForm} from "./village/addVillageForm";
 
 @NgModule({
     imports: [
@@ -69,13 +70,15 @@ import {VillageService} from "./services/villageService";
         EditVillageComponent,
         EditVillageForm,
         ArmyCellComponent,
-        PlayerRo
+        VillageRow,
+        AddVillageForm
     ],
     providers: [
         AllianceService,
         ConfirmComponent,
         PlayerService,
-        CurrVillageService,VillageService
+        CurrVillageArmiesService,
+        VillageService
     ],
     bootstrap: [AppComponent]
 })

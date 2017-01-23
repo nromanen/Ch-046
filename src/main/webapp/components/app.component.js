@@ -1,4 +1,4 @@
-System.register(["@angular/core", "./services/currentVillage.service"], function (exports_1, context_1) {
+System.register(["@angular/core", "./services/newVillageArmiesService"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,14 +10,14 @@ System.register(["@angular/core", "./services/currentVillage.service"], function
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, currentVillage_service_1, AppComponent;
+    var core_1, newVillageArmiesService_1, AppComponent;
     return {
         setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (currentVillage_service_1_1) {
-                currentVillage_service_1 = currentVillage_service_1_1;
+            function (newVillageArmiesService_1_1) {
+                newVillageArmiesService_1 = newVillageArmiesService_1_1;
             }
         ],
         execute: function () {
@@ -31,7 +31,7 @@ System.register(["@angular/core", "./services/currentVillage.service"], function
                     selector: 'my-app',
                     template: "\n   <router-outlet></router-outlet>\n   <!--<router-outlet name=\"editRouter\"></router-outlet>-->\n    ",
                 }),
-                __metadata("design:paramtypes", [currentVillage_service_1.CurrVillageService])
+                __metadata("design:paramtypes", [newVillageArmiesService_1.CurrVillageArmiesService])
             ], AppComponent);
             exports_1("AppComponent", AppComponent);
         }

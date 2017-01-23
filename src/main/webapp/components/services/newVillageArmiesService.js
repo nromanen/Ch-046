@@ -10,7 +10,7 @@ System.register(["@angular/core"], function (exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, CurrVillageService;
+    var core_1, CurrVillageArmiesService;
     return {
         setters: [
             function (core_1_1) {
@@ -18,21 +18,22 @@ System.register(["@angular/core"], function (exports_1, context_1) {
             }
         ],
         execute: function () {
-            CurrVillageService = (function () {
-                function CurrVillageService() {
+            CurrVillageArmiesService = (function () {
+                function CurrVillageArmiesService() {
                     console.log(this.village);
+                    this.armies = [];
                 }
-                CurrVillageService.prototype.ngOnInit = function () {
+                CurrVillageArmiesService.prototype.ngOnInit = function () {
                     console.log(this.village);
                 };
-                return CurrVillageService;
+                return CurrVillageArmiesService;
             }());
-            CurrVillageService = __decorate([
+            CurrVillageArmiesService = __decorate([
                 core_1.Injectable(),
                 __metadata("design:paramtypes", [])
-            ], CurrVillageService);
-            exports_1("CurrVillageService", CurrVillageService);
+            ], CurrVillageArmiesService);
+            exports_1("CurrVillageArmiesService", CurrVillageArmiesService);
         }
     };
 });
-//# sourceMappingURL=currentVillage.service.js.map
+//# sourceMappingURL=newVillageArmiesService.js.map

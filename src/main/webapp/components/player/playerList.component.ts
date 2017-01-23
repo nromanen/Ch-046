@@ -5,9 +5,10 @@ import {PlayerRow} from "./playerRow.component";
 import {Player} from "./player";
 import {Component, Input, OnInit} from "@angular/core";
 import {Village} from "../village/village";
-import {CurrVillageService} from "../services/currentVillage.service";
+import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 import {UnitType} from "../UnitType/unitType";
 import {Army} from "../army/army";
+import {VillageService} from "../services/villageService";
 @Component
 ({
     selector: 'player-list',
@@ -66,12 +67,12 @@ export class PlayerList implements OnInit{
         console.log(UnitType.Legionnaire);
         console.log(this.player.villages[0].armies[0].type);
         console.log(UnitType[UnitType.Legionnaire]==this.player.villages[0].armies[0].type.toString());
-
+        this.villageService.villages=this.player.villages;
     }
  @Input('player') player:Player;
     unitValues:Array<string>;
     selectedVillage:Village;
-    constructor(private currVillageService:CurrVillageService){
+    constructor(private currVillageService:CurrVillageArmiesService,private villageService:VillageService){
         this.unitValues=[];
         this.selectedVillage=null;
         console.log(this.unitValues);

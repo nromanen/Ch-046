@@ -58,6 +58,8 @@ public class PlayerController {
             current_player.setUser(player.getUser());
             current_player.setVillages(player.getVillages());
             current_player.setAlliance(player.getAlliance());
+            playerService.add(current_player);
+
             return new ResponseEntity<>(current_player, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

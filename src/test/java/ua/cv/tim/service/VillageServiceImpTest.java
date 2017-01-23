@@ -9,6 +9,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.configuration.HibernateConfiguration;
+import ua.cv.tim.model.Army;
 import ua.cv.tim.model.Village;
 
 import org.testng.annotations.Test;
@@ -27,7 +28,8 @@ public class VillageServiceImpTest extends AbstractTestNGSpringContextTests{
     PlayerService playerServiceImpl;
     @Autowired
     VillageService villageService;
-
+    @Autowired
+    ArmyService armyService;
     @Test
     public void testAdd() throws Exception {
         Village village = new Village();
@@ -46,9 +48,14 @@ public class VillageServiceImpTest extends AbstractTestNGSpringContextTests{
 
     @Test
     public void testUpdate() throws Exception {
-        Village village = villageService.getById("1e70681a-6e67-4d7e-b66b-475df975c9f7");
-        village.setName("chernivtsi");
+        Village village = villageService.getById("1");
+//        village.setName("chernivtsi");
+//        Army armyById = armyService.getArmyById("7564d81e-b4c7-440f-8f55-ea8938ec0f11");
+//        armyById.setCount(5);
+//        armyService.update(armyById);
+         village.getArmies().get(0).setCount(20);
         villageService.update(village);
+
 
     }
 

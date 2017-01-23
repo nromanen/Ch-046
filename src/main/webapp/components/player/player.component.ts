@@ -9,19 +9,23 @@ import {Component, OnInit} from "@angular/core";
 import {PlayerService} from "../services/player.service";
 import {ActivatedRoute, Params} from "@angular/router";
 import {Village} from "../village/village";
-import {CurrVillageService} from "../services/currentVillage.service";
+import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
+import {VillageService} from "../services/villageService";
+import {Army} from "../army/army";
+import {UnitType} from "../UnitType/unitType";
 @Component({
     selector: 'player',
     template:`
 <player-head></player-head>
 <player-list *ngIf="player" [player]="player"></player-list>
-<button *ngIf="true" (click)="f()" ></button>
+<button  (click)="f()" >add</button>
+<add-vill-form></add-vill-form>
 `
 })
  export class PlayerComponent implements OnInit{
     player:Player;
     id;
-    constructor(private currPlayerService:CurrVillageService, private playerService:PlayerService, private route:ActivatedRoute){
+    constructor(private currPlayerService:CurrVillageArmiesService, private playerService:PlayerService, private route:ActivatedRoute, private villageService:VillageService){
         this.route.params.subscribe((param:any)=>
         {
             this.id=param['id'];
@@ -34,7 +38,12 @@ import {CurrVillageService} from "../services/currentVillage.service";
     f():void{
         console.log('clicked');
         console.log(this.player);
-        this.player.villages.push(new Village);
+        let village=new Village();
+        let armies:Army[]=[];
+        village.armies=armies;
+        alert(JSON.stringify(village));
+        village.armies.push(new Army(15,UnitType.Legionnaire,true));
+        this.player.villages.push(village);
     }
 
     ngOnInit(): void {
@@ -43,6 +52,7 @@ import {CurrVillageService} from "../services/currentVillage.service";
                 player=>{
                     this.player=player;
                     console.log(this.player);
+                    // alert(JSON.stringify(this.player));
                 }
             );
     }

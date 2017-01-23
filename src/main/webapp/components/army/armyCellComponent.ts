@@ -4,6 +4,8 @@
 import {Component, Input, OnInit, EventEmitter, OnChanges, SimpleChanges} from "@angular/core";
 import {Village} from "../village/village";
 import {Army} from "./army";
+import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
+import {isUndefined} from "util";
 @Component({
       selector:'army-cell',
       outputs:['cellClicked'],
@@ -25,15 +27,30 @@ export class ArmyCellComponent implements OnInit,OnChanges{
             console.log(this.village.armies);
         }
 
+        if (changes['isInput']!=null)
+        if (changes['isInput'].currentValue===true && this.army!=null){
+            console.log('isInput');
+            this.currVillageArmiesService.armies.push(this.newArmy);
+            console.log(this.newArmy);
+            console.log(this.currVillageArmiesService.armies);
+            alert(JSON.stringify(this.army));
+            alert(JSON.stringify(this.newArmy));
+
+        }
+
     }
     ngOnInit(): void {
         this.village.armies.forEach( (army)=> {
             if(this.type==army.type.toString()){
                 this.army=army;
-                this.newArmy=new Army;
-                this.newArmy.count=this.army.count;
+                this.newArmy=new Army(this.army.count,this.army.type,this.army.ownUnit);
+                this.newArmy.uuid=this.army.uuid;
+                // alert(JSON.stringify(this.army));
+                // this.newArmy.count=this.army.count;
+                // this.currVillageArmiesService.armies.push(this.newArmy);
             }
         });
+        // console.log(this.currVillageArmiesService.armies);
     }
   @Input() type:string;
   @Input() village:Village;
@@ -42,10 +59,11 @@ export class ArmyCellComponent implements OnInit,OnChanges{
   @Input() isInput:boolean;
   @Input() ifSave:boolean;
   cellClicked:EventEmitter<Village>;
-  constructor(){
+  constructor(private currVillageArmiesService:CurrVillageArmiesService){
       this.isInput=true;
       this.cellClicked=new EventEmitter<Village>();
-      this.newArmy=new Army();
+      // this.newArmy=new Army();
+
   }
 
   hide(){

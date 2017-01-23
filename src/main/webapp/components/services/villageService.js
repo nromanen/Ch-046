@@ -30,9 +30,7 @@ System.register(["@angular/core", "../village/village", "@angular/http"], functi
                     this.villageURL = "village/";
                 }
                 VillageService.prototype.update = function (village) {
-                    var a = JSON.stringify(village);
-                    // console.log(a);
-                    // console.log(village.name);
+                    var _this = this;
                     var villageBefore = new village_1.Village();
                     villageBefore.name = village.name;
                     villageBefore.uuid = village.uuid;
@@ -48,21 +46,36 @@ System.register(["@angular/core", "../village/village", "@angular/http"], functi
                     alert(JSON.stringify(village));
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
-                    return this.http.put(this.villageURL + village.uuid, JSON.stringify(village), { headers: headers })
-                        .map(function (res) {
-                        console.log(res);
-                    }).subscribe(function (res) {
-                        console.log(res);
-                    });
-                    // this.http.put(this.villageURL + village.uuid, a, {
-                    //     headers: headers
-                    // }).subscribe(
-                    //     response => {
-                    //         console.log(response);
-                    //         // this.alliances[this.alliances.indexOf(alliance)] = newAlliance;
+                    // return this.http.put(this.villageURL+village.uuid,JSON.stringify(village), {headers: headers})
+                    //     .map(res=>{
+                    //         console.log(res);
                     //     },
-                    //     error => console.log(error)
-                    // );
+                    //     error=>{
+                    //         console.log('error');
+                    //     }).subscribe(res=>{
+                    //         console.log(res);
+                    //     });
+                    this.http.put(this.villageURL + village.uuid, JSON.stringify(village), {
+                        headers: headers
+                    }).subscribe(function (response) {
+                        console.log(response);
+                        var newVillage = response.json();
+                        console.log(newVillage);
+                        _this.villages[_this.villages.indexOf(village)] = newVillage;
+                    }, function (error) { return console.log(error); });
+                };
+                VillageService.prototype.add = function (village) {
+                    var _this = this;
+                    var body = JSON.stringify(village);
+                    var headers = new http_1.Headers();
+                    headers.append('Content-Type', 'application/json');
+                    this.http.post(this.villageURL, body, {
+                        headers: headers
+                    }).map(function (res) { return res.json(); })
+                        .subscribe(function (response) {
+                        console.log('Alliance created successful');
+                        _this.villages.push(response);
+                    }, function (error) { return console.log(error); });
                 };
                 return VillageService;
             }());

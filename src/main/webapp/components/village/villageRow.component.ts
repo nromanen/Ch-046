@@ -2,10 +2,11 @@
  * Created by okunetc on 19.01.2017.
  */
 import {Component, Input, EventEmitter, OnInit} from "@angular/core";
-import {UnitType} from "./unitType";
-import {Village} from "../village/village";
+import {UnitType} from "../UnitType/unitType";
+import {Village} from "./village";
 import {VillageService} from "../services/villageService";
 import {error} from "util";
+import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 @Component({
     selector: '[player-ro]',
     outputs:['selectedVillageChanged'],
@@ -46,10 +47,15 @@ import {error} from "util";
             style="margin-top: 5px;"
     >{{!isForm?"Edit":"Save"}}
     </button>
+    
+    <button (click)="deleteVillage()" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action"
+            style="margin-top: 5px;"
+    >
+    </button>
 </td>
 `
 })
-export class PlayerRo implements OnInit{
+export class VillageRow implements OnInit{
     private newVillage: Village;
     ngOnInit(): void {
         console.log("inside ro");
@@ -70,7 +76,7 @@ export class PlayerRo implements OnInit{
     @Input() v:Village;
     @Input() isForm:boolean;
     ifSaveChanges:boolean;
-    constructor( private villageService:VillageService){
+    constructor( private villageService:VillageService, private currVillageArmiesService:CurrVillageArmiesService){
         this.selectedVillageChanged=new EventEmitter<Village>();
         this.unitValues=[];
         this.ifSaveChanges=false;
@@ -97,8 +103,11 @@ export class PlayerRo implements OnInit{
         this.ifSaveChanges=true;
         console.log('insideChange');
         console.log(this.v.armies);
+        alert(JSON.stringify(this.v.armies));
+        alert(JSON.stringify(this.currVillageArmiesService.armies));
         this.v.name=this.newVillage.name;
-        // this.v.armies=this.newVillage.armies;
+        this.v.armies=this.currVillageArmiesService.armies;
+
         this.v.xCoord=this.newVillage.xCoord;
         this.v.yCoord=this.newVillage.yCoord;
         this.v.isCapital=this.newVillage.isCapital;
@@ -108,6 +117,8 @@ export class PlayerRo implements OnInit{
         console.log('insideChange');
         console.log(this.v.armies);
         this.submitEdit();
+        this.isForm=false;
+        this.ifSaveChanges=false;
         // console.log("inside save");
         // console.log(this.ifSaveChanges);
         // this.ifSaveChanges=false;
@@ -118,5 +129,12 @@ export class PlayerRo implements OnInit{
             this.selectedVillageChanged.emit(null);
             this.selectedVillageChanged.emit(this.v);
              this.ifSaveChanges=false;
+             this.currVillageArmiesService.armies.length=0;
+             // this.v.armies.forEach(army=>{
+             //     this.currVillageArmiesService.armies.push(army);
+             // });
+             console.log(this.currVillageArmiesService.armies);
+
     }
+
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {Input} from "@angular/core/src/metadata/directives";
 import {Player} from "../player/player";
-import {CurrVillageService} from "../services/currentVillage.service";
+import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 import {Village} from "./village";
 /**
  * Created by Oleg on 17.01.2017.
@@ -79,7 +79,7 @@ export class EditVillageComponent implements OnInit{
         console.log(this.village.isCapital);
     }
  village:Village;
-    constructor(private currVillageService:CurrVillageService)
+    constructor(private currVillageService:CurrVillageArmiesService)
     {
         this.village=currVillageService.village;
     }

@@ -25,7 +25,7 @@ public class Village extends UuidEntity implements Comparable<Village> {
 	private Byte wall = 0;
 
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owningVillage")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owningVillage",cascade = CascadeType.ALL)
 	private List<Army> armies = new ArrayList<>();
 
 //	@JsonBackReference

@@ -9,7 +9,10 @@ System.register([], function (exports_1, context_1) {
              * Created by okunetc on 19.01.2017.
              */
             Army = (function () {
-                function Army() {
+                function Army(count, type, ownUnit) {
+                    this.type = type || null;
+                    this.count = count || 0;
+                    this.ownUnit = ownUnit || false;
                 }
                 return Army;
             }());
