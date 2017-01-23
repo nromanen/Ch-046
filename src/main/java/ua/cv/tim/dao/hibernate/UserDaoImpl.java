@@ -60,7 +60,6 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
             query.setParameter("mail", mail);
         }
         User user = (User) query.uniqueResult();
-        logger.info("UserDao.getByMail  finished user is {} ", user.toString());
         return user;
     }
 

@@ -9,9 +9,10 @@
         <div class="input-field col s4 offset-s1">
             <label for="login">Login</label>
             <input type="text" id="login" class="validate"
+                   required minlength="3" maxlength="9"
                    [formControl]="memberForm.controls['login']"/>
             <div style="color: red; font-size: 14px;" *ngIf="!memberForm.controls['login'].valid
-            && memberForm.controls['login'].touched">{{LOGIN_ERROR}}
+            && (memberForm.controls['login'].touched || memberForm.controls['login'].dirty)">{{LOGIN_ERROR}}
             </div>
         </div>
 
