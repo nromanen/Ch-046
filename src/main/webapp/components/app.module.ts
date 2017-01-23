@@ -14,6 +14,10 @@ import {RoutesModule} from "./app.routers";
 import {PagerService} from "./services/pager.service";
 import {AllianceService} from "./services/alliance/alliance-service";
 import {TimerComponent} from "./timer/timer.component";
+import {PlayerComponent} from "./player/player.component";
+import {PlayerHeader} from "./player/player-header.component";
+import {HelpComponent} from "./help/ask-help,component";
+import {HelpService} from "./help/help.service";
 
 @NgModule({
     imports: [
@@ -31,11 +35,15 @@ import {TimerComponent} from "./timer/timer.component";
         EditAllianceComponent,
         ConfirmComponent,
         TimerComponent,
+        PlayerComponent,
+        PlayerHeader,
+        HelpComponent
 
     ],
     providers: [
         AllianceService,
-        PagerService
+        PagerService,
+        HelpService
     ],
     bootstrap: [AppComponent]
 })

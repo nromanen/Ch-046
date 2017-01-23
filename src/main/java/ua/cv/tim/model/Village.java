@@ -13,7 +13,6 @@ import java.util.List;
 @Table(name = "Village", uniqueConstraints = @UniqueConstraint(columnNames = { "xCoord", "yCoord" }))
 public class Village extends UuidEntity implements Comparable<Village> {
     public Village(){
-    	prePersist();
 	}
 	private String name;
 	@Column(nullable = false)

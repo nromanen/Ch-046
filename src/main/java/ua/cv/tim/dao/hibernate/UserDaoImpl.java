@@ -85,8 +85,6 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     @Override
     public User getUserByUsername(String username, String uuid) {
 
-        System.out.println("Dao get by email");
-        System.out.println("uuid = : " + uuid);
 
         Session session = getCurrentSession();
         Query query = null;

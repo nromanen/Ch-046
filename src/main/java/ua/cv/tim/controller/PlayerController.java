@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import ua.cv.tim.dto.PlayerDTO;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Village;
 import ua.cv.tim.service.PlayerService;
@@ -33,11 +34,13 @@ public class PlayerController {
     }
 
     @RequestMapping(value = "/player/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Player> getPlayerById(@PathVariable(name = "id") String id) {
+    public ResponseEntity<PlayerDTO> getPlayerById(@PathVariable(name = "id") String id) {
+        System.out.println(id);
         Player player = playerService.getByIdWithVillages(id);
-        if (player == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(player, HttpStatus.OK);
+        PlayerDTO playerDTO = new PlayerDTO(player.getUser().getLogin(),
+                player.getUser().getPassword(), player.getUser().getEmail(),
+                player.getRace(), player.getVillages(), player.getAlliance());
+        return new ResponseEntity<>(playerDTO, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/player/", method = RequestMethod.POST)

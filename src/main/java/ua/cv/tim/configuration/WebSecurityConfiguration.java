@@ -46,6 +46,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/leader**/**").access("hasRole('LEADER')")
 				.antMatchers("/user**/**").access("hasRole('LEADER') or hasRole('USER')")
 				.antMatchers("/", "/login").permitAll()
+				.antMatchers("/askhelp").permitAll()
 				.and()
 				.formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/login")
 				.and()

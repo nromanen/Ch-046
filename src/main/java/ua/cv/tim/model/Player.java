@@ -66,4 +66,14 @@ import java.util.List;
     public Player(){
 
     }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "user=" + user +
+                ", race=" + race +
+                ", villages=" + villages +
+                ", alliance=" + alliance +
+                '}';
+    }
 }

@@ -1,4 +1,4 @@
-System.register(["@angular/core", "@angular/router"], function (exports_1, context_1) {
+System.register(["@angular/core", "@angular/http", "@angular/router"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,36 +10,39 @@ System.register(["@angular/core", "@angular/router"], function (exports_1, conte
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, router_1, PlayerComponent;
+    var core_1, http_1, router_1, HelpService;
     return {
         setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (http_1_1) {
+                http_1 = http_1_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
             }
         ],
         execute: function () {
-            PlayerComponent = (function () {
-                function PlayerComponent(route) {
-                    var _this = this;
-                    this.route = route;
-                    this.route.params.subscribe(function (param) {
-                        _this.id = param['id'];
-                    });
+            HelpService = (function () {
+                function HelpService(_http, _activatedRoute) {
+                    this._http = _http;
+                    this._activatedRoute = _activatedRoute;
+                    this.url = 'askhelp';
                 }
-                return PlayerComponent;
+                HelpService.prototype.getById = function () {
+                    console.log(this.url);
+                    return this._http.get(this.url)
+                        .map(function (res) { return res.json(); });
+                };
+                return HelpService;
             }());
-            PlayerComponent = __decorate([
-                core_1.Component({
-                    selector: 'player',
-                    templateUrl: 'components/player/player.html'
-                }),
-                __metadata("design:paramtypes", [router_1.ActivatedRoute])
-            ], PlayerComponent);
-            exports_1("PlayerComponent", PlayerComponent);
+            HelpService = __decorate([
+                core_1.Injectable(),
+                __metadata("design:paramtypes", [http_1.Http, router_1.ActivatedRoute])
+            ], HelpService);
+            exports_1("HelpService", HelpService);
         }
     };
 });
-//# sourceMappingURL=player.component.js.map
+//# sourceMappingURL=help.service.js.map

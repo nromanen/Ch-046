@@ -38,7 +38,7 @@ public class VillageServiceImpTest extends AbstractTestNGSpringContextTests{
         village.setIsCapital(true);
         village.setUuid("5dd0b0f2-810e-44d0-b11b-66d2e0f32bbe");
         village.setPopulation((short) 98);
-        village.setPlayer(playerServiceImpl.getById("77e0708b-0207-46e3-b521-b2ed1998e2b6"));
+        village.setPlayer(playerServiceImpl.getById("7564d81e-b4c7-440f-8f55-ea8938ec0hr8"));
         String village_id = village.getUuid();
         villageService.add(village);
 

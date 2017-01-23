@@ -40,4 +40,13 @@ public class Alliance extends UuidEntity {
         this.players = players;
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Alliance{");
+        sb.append("uuid='").append(getUuid()).append('\'' );
+        sb.append("name='").append(name).append('\'' );
+//        sb.append(", players=").append(players);
+        sb.append('}' );
+        return sb.toString();
+    }
 }
