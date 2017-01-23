@@ -1,20 +1,21 @@
 package ua.cv.tim.controller;
 
 
-import java.util.ArrayList;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponentsBuilder;
 import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.dto.UserInfoDTO;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.UserService;
+
 import java.util.List;
 
 /**
@@ -37,14 +38,6 @@ import org.springframework.web.servlet.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ua.cv.tim.dto.UserDTO;
-import ua.cv.tim.model.Player;
-import ua.cv.tim.model.Role;
-import ua.cv.tim.model.User;
-import ua.cv.tim.service.PlayerService;
-import ua.cv.tim.service.UserService;
-import ua.cv.tim.utils.SendMail;
-
 import javax.mail.MessagingException;
 
 
@@ -53,7 +46,7 @@ import javax.mail.MessagingException;
 public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -62,12 +55,6 @@ public class UserController {
 		return "user-main.jsp";
 	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public ModelAndView addUserForm() {
-
-		ModelAndView model = new ModelAndView("addUser.html");
-		return model;
-	}
 
 	@RequestMapping(value = "/submitUserForm",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<UserDTO> submitUserForm(@RequestBody UserDTO userDTO) {
@@ -130,12 +117,14 @@ public class UserController {
         return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteUser(@PathVariable(name = "id") String id) {
-		logger.info("UserController.deleteUser() method is working. User id: {}", id);
-        userService.deleteById(id);
-		logger.info("UserController.deleteUser() user has deleted");
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        User user = userService.getById(id);
+        user.setUuid(id);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        userService.delete(user);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 	// v.kruhlov realizations
@@ -150,7 +139,10 @@ public class UserController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserInfoDTO> addAllianceMember(@RequestBody UserInfoDTO member) {
 		logger.info("UserController.addAllianceMember() method is working. Alliance name: {}", member.toString());
-		if (!userService.isUserUnique(member)) {
+		User user = new User();
+		user.setLogin(member.getLogin());
+		user.setEmail(member.getEmail());
+		if (!userService.isUnique(user)) {
 			logger.error("UserController.addAllianceMember: {}", "user is not unique");
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}

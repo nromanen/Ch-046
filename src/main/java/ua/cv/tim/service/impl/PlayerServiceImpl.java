@@ -1,4 +1,4 @@
-package ua.cv.tim.service;
+package ua.cv.tim.service.impl;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import ua.cv.tim.dao.PlayerDao;
 import ua.cv.tim.dao.VillageDao;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Village;
+import ua.cv.tim.service.PlayerService;
 
 import java.util.List;
 

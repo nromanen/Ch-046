@@ -9,6 +9,17 @@ import org.hibernate.validator.constraints.NotEmpty;
 import ua.cv.tim.model.Role;
 
 public class UserDTO {
+
+	@NotEmpty
+	private String login;
+
+	@NotEmpty
+	private String password;
+
+	@NotEmpty
+	private String email;
+
+	private Role role;
 	
 	public UserDTO() {	}
 	
@@ -25,16 +36,7 @@ public class UserDTO {
 		this.role=role;
 	}
 
-	 @NotEmpty
-	private String login;
 
-	 @NotEmpty
-	private String password;
-
-	 @NotEmpty
-	private String email;
-	 
-	private Role role;
 
 	public String getLogin() {
 		return login;

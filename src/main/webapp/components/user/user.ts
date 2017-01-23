@@ -7,10 +7,10 @@ export class User {
 
     constructor(login: string, email: string, uuid?: string, alliance?: string, role?: boolean) {
         this.uuid = uuid || null;
-        this.login = login;
-        this.email = email;
-        this.alliance = alliance || null;
-        this.role = role==true ? 'LEADER': null;
-    }
+this.login = login;
+this.email = email;
+this.alliance = alliance || null;
+this.role = role==true ? 'LEADER': null;
+}
 
 }

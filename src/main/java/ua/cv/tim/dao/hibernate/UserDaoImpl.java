@@ -31,6 +31,15 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     }
 
     @Override
+    public User getUserByUsername(String username) {
+        logger.info("UserDao.getUsersByUsername  started username is {} ", username);
+        String request = "select u from User u where u.login = :login";
+        Query<User> query = getCurrentSession().createQuery(request);
+        query.setParameter("login", username);
+        return query.uniqueResult();
+    }
+
+    @Override
     public User getWithRolesById(String id) {
         User user = getCurrentSession().get(User.class, id);
         List<Role> roles = user.getRoles();
@@ -91,14 +100,6 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     }
 
 
-    public User getUserByUsername(String username) {
-        logger.info("UserDao.getUsersByUsername  started username is {} ", username);
-        String request = "select u from User u where u.login = :login";
-        Query<User> query = getCurrentSession().createQuery(request);
-        query.setParameter("login", username);
-        return query.uniqueResult();
-    }
-
     public User getByMail(String mail){
         String request = "select u FROM User u WHERE u.email=:mail";
         Query<User> query = getCurrentSession().createQuery(request);
@@ -123,6 +124,6 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
             query.setParameter("login", username);
         }
         User user = (User) query.uniqueResult();
-        return user;
+            return user;
     }
 }

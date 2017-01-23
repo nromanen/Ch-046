@@ -1,10 +1,11 @@
-package ua.cv.tim.service;
+package ua.cv.tim.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.VillageDao;
 import ua.cv.tim.model.Village;
+import ua.cv.tim.service.VillageService;
 
 /**
  * Created by Oleg on 05.01.2017.
@@ -12,7 +13,7 @@ import ua.cv.tim.model.Village;
 
 @Service
 @Transactional
-public class VillageServiceImp implements  VillageService{
+public class VillageServiceImp implements VillageService {
     @Autowired
     private VillageDao villageDao;
 

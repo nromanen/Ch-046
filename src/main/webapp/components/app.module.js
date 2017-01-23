@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/platform-browser', '@angular/http', '@angular/forms', './app.component', "./alliance/alliance.component", "./header/header.component", "./services/alliance-service", "./alliance/addalliance.component", "./alliance/editalliance.component", "./modal_window/modal", "@angular/router", "./leader/leader-manager.component", "./services/user.service", "./user/edit-member.component", "./user/add-member.component", "./user/alliance-members.component"], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/platform-browser', '@angular/http', '@angular/forms', './app.component', "./alliance/alliance.component", "./header/header.component", "./alliance/addalliance.component", "./alliance/editalliance.component", "./modal_window/modal", "./app.routers", "./services/pager.service", "./services/alliance/alliance-service", "./timer/timer.component", "./leader/leader-manager.component", "./user/add-member.component", "./services/user.service", "./user/alliance-members.component", "./user/edit-member.component"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/http', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, platform_browser_1, http_1, forms_1, app_component_1, alliance_component_1, header_component_1, alliance_service_1, addalliance_component_1, editalliance_component_1, modal_1, router_1, leader_manager_component_1, user_service_1, edit_member_component_1, add_member_component_1, alliance_members_component_1;
+    var core_1, platform_browser_1, http_1, forms_1, app_component_1, alliance_component_1, header_component_1, addalliance_component_1, editalliance_component_1, modal_1, app_routers_1, pager_service_1, alliance_service_1, timer_component_1, leader_manager_component_1, add_member_component_1, user_service_1, alliance_members_component_1, edit_member_component_1;
     var AppModule;
     return {
         setters:[
@@ -35,9 +35,6 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/http', 
             function (header_component_1_1) {
                 header_component_1 = header_component_1_1;
             },
-            function (alliance_service_1_1) {
-                alliance_service_1 = alliance_service_1_1;
-            },
             function (addalliance_component_1_1) {
                 addalliance_component_1 = addalliance_component_1_1;
             },
@@ -47,23 +44,32 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/http', 
             function (modal_1_1) {
                 modal_1 = modal_1_1;
             },
-            function (router_1_1) {
-                router_1 = router_1_1;
+            function (app_routers_1_1) {
+                app_routers_1 = app_routers_1_1;
+            },
+            function (pager_service_1_1) {
+                pager_service_1 = pager_service_1_1;
+            },
+            function (alliance_service_1_1) {
+                alliance_service_1 = alliance_service_1_1;
+            },
+            function (timer_component_1_1) {
+                timer_component_1 = timer_component_1_1;
             },
             function (leader_manager_component_1_1) {
                 leader_manager_component_1 = leader_manager_component_1_1;
             },
-            function (user_service_1_1) {
-                user_service_1 = user_service_1_1;
-            },
-            function (edit_member_component_1_1) {
-                edit_member_component_1 = edit_member_component_1_1;
-            },
             function (add_member_component_1_1) {
                 add_member_component_1 = add_member_component_1_1;
             },
+            function (user_service_1_1) {
+                user_service_1 = user_service_1_1;
+            },
             function (alliance_members_component_1_1) {
                 alliance_members_component_1 = alliance_members_component_1_1;
+            },
+            function (edit_member_component_1_1) {
+                edit_member_component_1 = edit_member_component_1_1;
             }],
         execute: function() {
             AppModule = (function () {
@@ -76,35 +82,7 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/http', 
                             http_1.HttpModule,
                             forms_1.FormsModule,
                             forms_1.ReactiveFormsModule,
-                            router_1.RouterModule.forRoot([
-                                {
-                                    path: 'leader',
-                                    component: leader_manager_component_1.LeaderManagerComponent
-                                },
-                                {
-                                    path: 'leader/',
-                                    redirectTo: 'leader',
-                                    pathMatch: 'full'
-                                },
-                                /*{
-                                    path:'player/:id',
-                                    component: PlayerComponent
-                                },*/
-                                {
-                                    path: 'admin',
-                                    component: alliance_component_1.AllianceComponent
-                                },
-                                {
-                                    path: 'admin/',
-                                    redirectTo: 'admin',
-                                    pathMatch: 'full'
-                                },
-                                {
-                                    path: 'user/:id',
-                                    redirectTo: 'player/:id',
-                                    pathMatch: 'full',
-                                },
-                            ])
+                            app_routers_1.RoutesModule,
                         ],
                         declarations: [
                             app_component_1.AppComponent,
@@ -113,20 +91,15 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/http', 
                             addalliance_component_1.AllianceForm,
                             editalliance_component_1.EditAllianceComponent,
                             modal_1.ConfirmComponent,
-                            /*PlayerComponent,
-                            PlayerList,
-                            PlayerRow,
-                            PlayerHeader,*/
+                            timer_component_1.TimerComponent,
                             leader_manager_component_1.LeaderManagerComponent,
-                            alliance_members_component_1.AllianceMembersComponent,
                             add_member_component_1.MemberForm,
-                            edit_member_component_1.EditMemberComponent,
+                            alliance_members_component_1.AllianceMembersComponent,
+                            edit_member_component_1.EditMemberComponent
                         ],
                         providers: [
                             alliance_service_1.AllianceService,
-                            modal_1.ConfirmComponent,
-                            /*PlayerService,
-                            CurrVillageService,*/
+                            pager_service_1.PagerService,
                             user_service_1.UserService
                         ],
                         bootstrap: [app_component_1.AppComponent]
