@@ -32,7 +32,7 @@ System.register(["@angular/core", "@angular/forms", "./user"], function(exports_
                     this.fb = fb;
                     this.editMemberForm = new core_1.EventEmitter();
                     this.USER_LOGIN = /^[a-z1-9]{3,9}$/;
-                    this.EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+                    this.EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?\.[a-z0-9]{2,}$/i;
                     this.LOGIN_ERROR = "Enter from 3 to 10 letters";
                     this.EMAIL_ERROR = "Enter correct email, please!";
                     console.log("EditMemberComponent.constructor() is working");

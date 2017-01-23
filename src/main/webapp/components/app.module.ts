@@ -2,6 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {RoutesModule} from "./app.routers";
 
 import { AppComponent }  from './app.component';
 import {AllianceComponent} from "./alliance/alliance.component";
@@ -22,6 +23,7 @@ import {UserService} from "./services/user.service";
         HttpModule,
         FormsModule,
         ReactiveFormsModule,
+        RoutesModule
     ],
     declarations: [
         AppComponent,

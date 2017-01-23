@@ -54,7 +54,7 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
                         uuid: member.uuid,
                         login: member.login,
                         email: member.email,
-                        alliance: "valhala" // todo change to dynamic
+                        alliance: member.alliance
                     });
                     console.log("Member value is: " + body);
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });

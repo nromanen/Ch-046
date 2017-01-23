@@ -48,7 +48,7 @@ export class UserService {
             uuid: member.uuid,
             login: member.login,
             email: member.email,
-            alliance: "valhala" // todo change to dynamic
+            alliance: member.alliance
         });
         console.log(`Member value is: ${body}`);
 

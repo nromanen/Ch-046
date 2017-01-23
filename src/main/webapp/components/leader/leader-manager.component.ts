@@ -14,6 +14,8 @@ export class LeaderManagerComponent implements OnInit {
     allianceMembers:User[];
 
     selectedMember:User = null;
+    deletedMember:User = null;
+    confirmMsg:string = null;
 
     constructor(public userService:UserService) {
         console.log(`LeaderManagerComponent constructor is working`);
@@ -73,16 +75,26 @@ export class LeaderManagerComponent implements OnInit {
         }
     }
 
-    deleteMember(member:User) {
+    deleteMember(member: User) {
+        this.deletedMember = member;
+        this.confirmMsg = `Are you going to delete alliance member: ${member.login}?`
+    }
+    
+    onConfirmDelete(confirmation:boolean) {
         console.log(`LeaderManagerComponent.deleteMember() method is working`);
-        this.userService.deleteMember(member)
-            .subscribe(
-                status => {
-                    if (status) {
-                        this.allianceMembers.splice(this.allianceMembers.indexOf(member), 1);
-                    }
-                },
-                error => console.log(error)
-            );
+        if (confirmation) {
+            this.userService.deleteMember(this.deletedMember)
+                .subscribe(
+                    status => {
+                        if (status) {
+                            this.allianceMembers.splice(this.allianceMembers.indexOf(this.deletedMember), 1);
+                            this.deletedMember = null;
+                        }
+                    },
+                    error => console.log(error)
+                );
+        } else {
+            this.deletedMember = null;
+        }
     }
 }

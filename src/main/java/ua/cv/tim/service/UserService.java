@@ -126,7 +126,7 @@ public class UserService {
 		User user = new User();
 		user.setLogin(member.getLogin());
 		user.setEmail(member.getEmail());
-		user.setPassword("hello"); // todo auto generate password
+		user.setPassword("hello");
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.USER);
 		user.setRoles(roles);

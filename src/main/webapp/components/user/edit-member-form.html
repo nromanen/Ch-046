@@ -1,25 +1,35 @@
 <div (keyup.escape)="cancelEditing()" style="height: 70px">
-    <form [formGroup]="memberForm" (ngSubmit)="updateMember(memberForm.value)" class="valign-wrapper" style="height: 55px">
-        <td class="col s2">
-            <input type="text" name="login" id="editLogin" class="validate"
-                   [formControl]="memberForm.controls['login']"/>
-            <!--<div style="color: red; font-size: 14px;" *ngIf="!memberForm.controls['allianceName'].valid && memberForm.controls['allianceName'].touched">{{NAME_ERROR}}</div>-->
+    <form [formGroup]="memberForm" (ngSubmit)="updateMember(memberForm.value)" class="valign-wrapper"
+          style="height: 55px">
+        <td class="col s3">
+            <div>
+                <input type="text" name="login" id="editLogin" class="validate" style="margin-bottom: 5px"
+                       [formControl]="memberForm.controls['login']" autofocus/>
+                <div class="red lighten-3"
+                     *ngIf="!memberForm.controls['login'].valid && memberForm.controls['login'].touched">{{LOGIN_ERROR}}
+                </div>
+            </div>
         </td>
         <td class="col s3">
-            <input type="text" name="email" id="editEmail" class="validate"
-                   [formControl]="memberForm.controls['email']"/>
-            <!--<div style="color: red; font-size: 14px;" *ngIf="!memberForm.controls['leaderLogin'].valid && memberForm.controls['leaderLogin'].touched">{{LOGIN_ERROR}}</div>-->
+            <div>
+                <input type="text" name="email" id="editEmail" class="validate" style="margin-bottom: 5px"
+                       [formControl]="memberForm.controls['email']"/>
+                <div class="red lighten-3"
+                     *ngIf="!memberForm.controls['email'].valid && memberForm.controls['email'].touched">
+                    {{EMAIL_ERROR}}
+                </div>
+            </div>
         </td>
         <td class="col s3">valhala</td>
-        <td class="col s4">
-            <button class="waves-effect waves-light  btn"
-                    style="background-color: #9cd1af; width: 95px; padding: 0px 10px" type="submit">
-                <i class="material-icons right">play_arrow</i>Save
+        <td class="col s3">
+            <button class="waves-effect waves-light  btn" [disabled]="!memberForm.valid"
+                    style="background-color: #9cd1af; width: 90px; padding: 0px 10px" type="submit">
+                <i class="material-icons">play_arrow</i>
             </button>
             <button class="waves-effect waves-light  btn" type="button"
-                    style="background-color: #f21036; padding: 0px 10px; width: 115px"
+                    style="background-color: #f21036; padding: 0px 10px; width: 90px"
                     (click)="cancelEditing()">
-                <i class="material-icons right">stop</i>Cancel
+                <i class="material-icons">stop</i>
             </button>
         </td>
     </form>

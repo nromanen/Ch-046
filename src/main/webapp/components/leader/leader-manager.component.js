@@ -25,6 +25,8 @@ System.register(['@angular/core', "../services/user.service"], function(exports_
                 function LeaderManagerComponent(userService) {
                     this.userService = userService;
                     this.selectedMember = null;
+                    this.deletedMember = null;
+                    this.confirmMsg = null;
                     console.log("LeaderManagerComponent constructor is working");
                 }
                 LeaderManagerComponent.prototype.ngOnInit = function () {
@@ -71,14 +73,24 @@ System.register(['@angular/core', "../services/user.service"], function(exports_
                     }
                 };
                 LeaderManagerComponent.prototype.deleteMember = function (member) {
+                    this.deletedMember = member;
+                    this.confirmMsg = "Are you going to delete alliance member: " + member.login + "?";
+                };
+                LeaderManagerComponent.prototype.onConfirmDelete = function (confirmation) {
                     var _this = this;
                     console.log("LeaderManagerComponent.deleteMember() method is working");
-                    this.userService.deleteMember(member)
-                        .subscribe(function (status) {
-                        if (status) {
-                            _this.allianceMembers.splice(_this.allianceMembers.indexOf(member), 1);
-                        }
-                    }, function (error) { return console.log(error); });
+                    if (confirmation) {
+                        this.userService.deleteMember(this.deletedMember)
+                            .subscribe(function (status) {
+                            if (status) {
+                                _this.allianceMembers.splice(_this.allianceMembers.indexOf(_this.deletedMember), 1);
+                                _this.deletedMember = null;
+                            }
+                        }, function (error) { return console.log(error); });
+                    }
+                    else {
+                        this.deletedMember = null;
+                    }
                 };
                 LeaderManagerComponent = __decorate([
                     core_1.Component({

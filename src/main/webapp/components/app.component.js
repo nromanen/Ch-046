@@ -24,7 +24,7 @@ System.register(["@angular/core"], function(exports_1, context_1) {
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n        <my-header></my-header>\n        <leader-manager></leader-manager>\n    ",
+                        template: "\n        <router-outlet></router-outlet>\n    ",
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);

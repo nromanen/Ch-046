@@ -18,25 +18,19 @@ System.register(["@angular/core"], function(exports_1, context_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            /**
-             * Created by rmochetc on 12.01.2017.
-             */
             ConfirmComponent = (function () {
                 function ConfirmComponent() {
                     this.notify = new core_1.EventEmitter();
                 }
-                // private ErrorMsg: string;
-                // public ErrorMessageIsVisible: boolean;
-                ConfirmComponent.prototype.showErrorMessage = function () {
-                    console.log("show message");
-                    // this.ErrorMsg = "TEST";
-                    // this.ErrorMessageIsVisible = true;
-                    // console.log(this.ErrorMessageIsVisible);
+                ConfirmComponent.prototype.keyboardInput = function (event) {
+                    if (event.key === "Escape") {
+                        this.onDecline();
+                    }
                 };
                 ConfirmComponent.prototype.onConfirm = function () {
                     this.notify.emit(true);
                 };
-                ConfirmComponent.prototype.onCancel = function () {
+                ConfirmComponent.prototype.onDecline = function () {
                     this.notify.emit(false);
                 };
                 __decorate([
@@ -47,13 +41,17 @@ System.register(["@angular/core"], function(exports_1, context_1) {
                     core_1.Output(), 
                     __metadata('design:type', core_1.EventEmitter)
                 ], ConfirmComponent.prototype, "notify", void 0);
+                __decorate([
+                    core_1.HostListener('window:keydown', ['$event']), 
+                    __metadata('design:type', Function), 
+                    __metadata('design:paramtypes', [Object]), 
+                    __metadata('design:returntype', void 0)
+                ], ConfirmComponent.prototype, "keyboardInput", null);
                 ConfirmComponent = __decorate([
                     core_1.Component({
                         selector: 'app-modal',
-                        //templateUrl: 'components/modal_window/modal.html',
-                        template: "\n    <div id=\"dialogoverlay\"></div>\n<div id=\"dialogbox\">\n    <div>\n        <div id=\"dialogboxhead\">Confirm</div>\n        <div id=\"dialogboxbody\">{{confirmMsg}}</div>\n        <div id=\"dialogboxfoot\"><button class='btn btn-danger' (click) = \"onConfirm()\">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-success' (click) = \"onCancel()\">Cancel</button></div>\n    </div>\n</div>\n\n",
-                        styles: ["#dialogoverlay{\n    display: block;\n    opacity: .8;\n    position: fixed;\n    top: 0px;\n    left: 0px;\n    background: black;\n    width: 100%;\n    height: 100%;\n    z-index: 10;\n}\n#dialogbox{\n    display: block;\n    position: absolute;\n    background: #fff;\n    border-radius:7px;\n    width:550px;\n    z-index: 10;\n     top: 20%;\n  left: 35%;\n}\n#dialogbox > div{ background: #d4e1d9; margin:8px; }\n#dialogbox > div > #dialogboxhead{ background: #fff; font-size:24px; padding:10px; color: #000000;  border-bottom: 1px solid lightgray;}\n#dialogbox > div > #dialogboxbody{ background: #fff; font-size:19px; padding:20px; color: #000000; border-bottom: 1px solid lightgray;}\n#dialogbox > div > #dialogboxfoot{ background: #fff; padding:10px; text-align:right; }"
-                        ]
+                        templateUrl: 'components/modal_window/modal.html',
+                        styleUrls: ['components/modal_window/modal.css']
                     }), 
                     __metadata('design:paramtypes', [])
                 ], ConfirmComponent);
