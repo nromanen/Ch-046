@@ -59,7 +59,7 @@ System.register(['@angular/core', "../services/user.service"], function(exports_
                     }, function (error) {
                         console.log(error);
                         _this.errorMessage = error;
-                        _this.errorMessage = "Failed to add user";
+                        /*this.errorMessage = "Failed to add user";*/
                         _this.successMessage = null;
                     });
                 };

@@ -150,18 +150,19 @@ public class UserController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserInfoDTO> addAllianceMember(@RequestBody UserInfoDTO member) {
 		logger.info("UserController.addAllianceMember() method is working. Alliance name: {}", member.toString());
-		User user = userService.getUserByUsername(member.getLogin());
-		member.setUuid(user.getUuid());
-		if (!userService.isUnique(user)) {
+		if (!userService.isUserUnique(member)) {
 			logger.error("UserController.addAllianceMember: {}", "user is not unique");
-			return new ResponseEntity<>(HttpStatus.CONFLICT);
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		try {
 			userService.addAllianceMember(member);
+			logger.info("UserController.addAllianceMember() method try section, send message on  {}", member.getEmail());
 		} catch (MessagingException e) {
 			logger.error("UserController.addAllianceMember: {}", e);
-			return new ResponseEntity(HttpStatus.BAD_REQUEST);// should send error message on html
+			return new ResponseEntity(HttpStatus.FORBIDDEN);// should send error message on html
 		}
+		//User user = userService.getUserByUsername(member.getLogin());
+		//member.setUuid(user.getUuid());
 		logger.info("UserController.getUsersByAlliance() method return: {}", member); // todo не сохраняет Player в service т.к. не вытащен Alliance
 		return new ResponseEntity<>(member, HttpStatus.OK);
 	}

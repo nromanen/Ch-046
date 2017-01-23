@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        return userDao.getUserByUsername(username, null);
+        return userDao.getUserByUsername(username);
     }
 
     @Override
@@ -75,16 +75,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUnique(User user) {
 
-
-        if (userDao.getUserByUsername(user.getLogin(), user.getUuid()) !=null) {
+        if (userDao.getUserByUsername(user.getLogin()) !=null) {
             return false;
         }
-        if(userDao.getByMail(user.getEmail(), user.getUuid())!=null ) {
+       else if(userDao.getByMail(user.getEmail(), user.getUuid())!=null ) {
             return false;
         }
-        return true;
+        else return true;
     }
 
+
+    @Override
+    public void add(User user) {
+        // TODO Auto-generated method stub
+
+    }
     @Override
     public List<User> getAll() {
         return userDao.getAll();
@@ -126,6 +131,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<UserInfoDTO> getUsersByAlliance(String allianceName) {
+        logger.info("getUsersByAlliance  started alliance name is {} ", allianceName);
         List<User> users = userDao.getUsersByAlliance(allianceName);
         List<UserInfoDTO> allianceUsers = new ArrayList<>();
         for (User user : users) {
@@ -140,15 +146,14 @@ public class UserServiceImpl implements UserService {
         user.setLogin(member.getLogin());
         user.setEmail(member.getEmail());
         user.setPassword(generatePassword(10));
-        //user.setPassword("hello"); // todo auto generate password
-        List<Role> roles = new ArrayList<>();
+        logger.info("addAllianceMember   Password is {} ", user.getPassword());
+               List<Role> roles = new ArrayList<>();
         roles.add(Role.USER);
         if (member.getRole() != null) {
             roles.add(Role.LEADER);
         }
         user.setRoles(roles);
         userDao.add(user);
-
         Player player = new Player();
         player.setUser(user);
         player.setAlliance(allianceDao.getAllianceByName(member.getAlliance()));
@@ -156,13 +161,6 @@ public class UserServiceImpl implements UserService {
         user.setPlayer(player);
         playerDao.add(player);
         sendEmail(user);
-    }
-
-
-    @Override
-    public void add(User user) {
-        // TODO Auto-generated method stub
-
     }
 
     public void sendEmail(User user) throws MessagingException {
@@ -199,7 +197,20 @@ public class UserServiceImpl implements UserService {
         }
         logger.info("Auto-generated password is {}", new String(password));
         return new String(password);
-
-
     }
+
+    public boolean isUserUnique(UserInfoDTO member) {
+        User user = new User();
+        user.setLogin(member.getLogin());
+        user.setEmail(member.getEmail());
+
+        if (userDao.getUserByUsername(user.getLogin(),user.getUuid()) !=null) {
+            return false;
+        }
+        else if(userDao.getByMail(user.getEmail(),user.getUuid())!=null ) {
+            return false;
+        }
+        else return true;
+    }
+
 }

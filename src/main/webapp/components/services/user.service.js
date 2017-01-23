@@ -1,7 +1,7 @@
 /**
  * Created by vyach on 13.01.2017.
  */
-System.register(['@angular/core', '@angular/http'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', "rxjs/Observable"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -13,7 +13,7 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1;
+    var core_1, http_1, Observable_1;
     var UserService;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
             },
             function (http_1_1) {
                 http_1 = http_1_1;
+            },
+            function (Observable_1_1) {
+                Observable_1 = Observable_1_1;
             }],
         execute: function() {
             UserService = (function () {
@@ -47,17 +50,17 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
                     return this.http.post(this.userControllerUrl + "/add", body, options)
-                        .map(function (response) { return response.json(); }); /* .catch(
-                        (error: any) => {
-                            if (error.status == 400){
-                                return Observable.throw('ERROR!!! E-mail did not send check internet connection!');
-                            } else if(error.status == 409){
-                                return Observable.throw('ERROR!!! User with entered login or e-mail already exist!');
-                            } else {
-                                return Observable.throw('UNKNOWN ERROR!!!');
-                            }
+                        .map(function (response) { return response.json(); }).catch(function (error) {
+                        if (error.status == 403) {
+                            return Observable_1.Observable.throw('ERROR!!! E-mail did not send, check internet connection!');
                         }
-                    );*/
+                        else if (error.status == 406) {
+                            return Observable_1.Observable.throw('ERROR!!! User with entered login or e-mail already exist!');
+                        }
+                        else {
+                            return Observable_1.Observable.throw('Error was occured, try again later!!!');
+                        }
+                    });
                 };
                 UserService.prototype.updateMember = function (member) {
                     console.log("UserService.updateMember() method is working");

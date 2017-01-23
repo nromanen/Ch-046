@@ -32,9 +32,7 @@ public class User extends UuidEntity implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Player player;
 
-	public User() {
-		prePersist();
-	}
+	public User() {		}
 
 	public String getLogin() {
 		return login;

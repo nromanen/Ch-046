@@ -39,17 +39,17 @@ export class UserService {
         let options = new RequestOptions({headers: headers});
 
         return this.http.post(`${this.userControllerUrl}/add`, body, options)
-            .map(response => response.json());/* .catch(
+            .map(response => response.json()).catch(
                 (error: any) => {
-                    if (error.status == 400){
-                        return Observable.throw('ERROR!!! E-mail did not send check internet connection!');
-                    } else if(error.status == 409){
+                    if (error.status == 403){
+                        return Observable.throw('ERROR!!! E-mail did not send, check internet connection!');
+                    } else if(error.status == 406){
                         return Observable.throw('ERROR!!! User with entered login or e-mail already exist!');
                     } else {
-                        return Observable.throw('UNKNOWN ERROR!!!');
+                        return Observable.throw('Error was occured, try again later!!!');
                     }
                 }
-            );*/
+            );
 
 
 

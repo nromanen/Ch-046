@@ -37,6 +37,7 @@ public interface UserService {
 	void update(User user);
 	void delete(User user);
 	boolean isUnique(User user);
+	public boolean isUserUnique(UserInfoDTO member);
 	long getCount();
 	User getWithRolesById(String id);
 	List<User> getAllWithRoles();

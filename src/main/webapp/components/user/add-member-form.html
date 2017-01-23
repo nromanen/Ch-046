@@ -8,7 +8,8 @@
     <div class="row container">
         <div class="input-field col s4 offset-s1">
             <label for="login">Login</label>
-            <input type="text" id="login" class="validate" [formControl]="memberForm.controls['login']"/>
+            <input type="text" id="login" class="validate"
+                   [formControl]="memberForm.controls['login']"/>
             <div style="color: red; font-size: 14px;" *ngIf="!memberForm.controls['login'].valid
             && memberForm.controls['login'].touched">{{LOGIN_ERROR}}
             </div>

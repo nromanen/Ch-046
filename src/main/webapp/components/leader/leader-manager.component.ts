@@ -56,7 +56,7 @@ export class LeaderManagerComponent implements OnInit {
                 this.errorMessage = null;},
                 error => {console.log(error);
                     this.errorMessage = <any>error;
-                    this.errorMessage = "Failed to add user";
+                    /*this.errorMessage = "Failed to add user";*/
                     this.successMessage = null;}
             );
     }
