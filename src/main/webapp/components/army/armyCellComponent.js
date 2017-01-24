@@ -1,4 +1,4 @@
-System.register(["@angular/core", "../village/village", "./army", "../services/newVillageArmiesService"], function (exports_1, context_1) {
+System.register(["@angular/core", "../village/village", "./army", "../services/newVillageArmiesService", "../UnitType/unitType"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,7 +10,7 @@ System.register(["@angular/core", "../village/village", "./army", "../services/n
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, village_1, army_1, newVillageArmiesService_1, ArmyCellComponent;
+    var core_1, village_1, army_1, newVillageArmiesService_1, unitType_1, ArmyCellComponent;
     return {
         setters: [
             function (core_1_1) {
@@ -24,6 +24,9 @@ System.register(["@angular/core", "../village/village", "./army", "../services/n
             },
             function (newVillageArmiesService_1_1) {
                 newVillageArmiesService_1 = newVillageArmiesService_1_1;
+            },
+            function (unitType_1_1) {
+                unitType_1 = unitType_1_1;
             }
         ],
         execute: function () {
@@ -43,16 +46,16 @@ System.register(["@angular/core", "../village/village", "./army", "../services/n
                         if (changes['isInput'].currentValue === true && this.army != null) {
                             console.log('isInput');
                             this.currVillageArmiesService.armies.push(this.newArmy);
-                            console.log(this.newArmy);
-                            console.log(this.currVillageArmiesService.armies);
-                            alert(JSON.stringify(this.army));
-                            alert(JSON.stringify(this.newArmy));
                         }
                 };
                 ArmyCellComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this.village.armies.forEach(function (army) {
-                        if (_this.type == army.type.toString()) {
+                        // console.log(UnitType[army.type]);
+                        // console.log(army.type);
+                        // console.log(this.type);
+                        if (_this.type == army.type.toString() || unitType_1.UnitType[army.type] == _this.type) {
+                            // alert(this.type==army.type.toString());
                             _this.army = army;
                             _this.newArmy = new army_1.Army(_this.army.count, _this.army.type, _this.army.ownUnit);
                             _this.newArmy.uuid = _this.army.uuid;

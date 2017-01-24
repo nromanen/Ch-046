@@ -48,8 +48,8 @@ export class AddArmyComponent implements OnInit,AfterViewChecked{
         // console.log(this.army);
     }
     ngOnInit(): void {
-        console.log('army is');
-        console.log(this.army);
+        // console.log('army is');
+        // console.log(this.army);
         this.army.type=UnitType.Axeman;
     }
     @Input() army:Army;
@@ -67,9 +67,9 @@ unitTypeStrings:Array<string>;
             }
         }
 
-        console.log(this.unitTypes);
-        console.log(this.unitTypeStrings);
-        console.log(UnitType[0]);
+        // console.log(this.unitTypes);
+        // console.log(this.unitTypeStrings);
+        // console.log(UnitType[0]);
     }
 
 }

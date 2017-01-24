@@ -11,5 +11,10 @@ export class Player{
       email:string;
       race:Race;
       villages:Village[];
+      uuid:string;
       // alliance:Alliance;
+      constructor(){
+            this.uuid="kjukjkj";
+            alert(this.uuid);
+      }
 }

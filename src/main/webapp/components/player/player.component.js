@@ -80,7 +80,7 @@ System.register(["@angular/core", "../services/player.service", "@angular/router
             PlayerComponent = __decorate([
                 core_1.Component({
                     selector: 'player',
-                    template: "\n<player-head></player-head>\n<player-list *ngIf=\"player\" [player]=\"player\"></player-list>\n<button  (click)=\"f()\" >add</button>\n<add-vill-form></add-vill-form>\n"
+                    template: "\n<player-head></player-head>\n<player-list *ngIf=\"player\" [player]=\"player\"></player-list>\n<button  (click)=\"f()\" >add</button>\n<add-vill-form [player]=\"player\"></add-vill-form>\n"
                 }),
                 __metadata("design:paramtypes", [newVillageArmiesService_1.CurrVillageArmiesService, player_service_1.PlayerService, router_1.ActivatedRoute, villageService_1.VillageService])
             ], PlayerComponent);

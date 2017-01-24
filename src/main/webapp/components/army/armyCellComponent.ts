@@ -6,6 +6,7 @@ import {Village} from "../village/village";
 import {Army} from "./army";
 import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 import {isUndefined} from "util";
+import {UnitType} from "../UnitType/unitType";
 @Component({
       selector:'army-cell',
       outputs:['cellClicked'],
@@ -31,17 +32,21 @@ export class ArmyCellComponent implements OnInit,OnChanges{
         if (changes['isInput'].currentValue===true && this.army!=null){
             console.log('isInput');
             this.currVillageArmiesService.armies.push(this.newArmy);
-            console.log(this.newArmy);
-            console.log(this.currVillageArmiesService.armies);
-            alert(JSON.stringify(this.army));
-            alert(JSON.stringify(this.newArmy));
+            // console.log(this.newArmy);
+            // console.log(this.currVillageArmiesService.armies);
+            // alert(JSON.stringify(this.army));
+            // alert(JSON.stringify(this.newArmy));
 
         }
 
     }
     ngOnInit(): void {
         this.village.armies.forEach( (army)=> {
-            if(this.type==army.type.toString()){
+            // console.log(UnitType[army.type]);
+            // console.log(army.type);
+            // console.log(this.type);
+            if(this.type==army.type.toString()|| UnitType[army.type]==this.type){
+                // alert(this.type==army.type.toString());
                 this.army=army;
                 this.newArmy=new Army(this.army.count,this.army.type,this.army.ownUnit);
                 this.newArmy.uuid=this.army.uuid;

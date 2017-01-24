@@ -38,16 +38,16 @@ System.register(["@angular/core", "./army", "../UnitType/unitType", "../village/
                             this.unitTypeStrings.push(t);
                         }
                     }
-                    console.log(this.unitTypes);
-                    console.log(this.unitTypeStrings);
-                    console.log(unitType_1.UnitType[0]);
+                    // console.log(this.unitTypes);
+                    // console.log(this.unitTypeStrings);
+                    // console.log(UnitType[0]);
                 }
                 AddArmyComponent.prototype.ngAfterViewChecked = function () {
                     // console.log(this.army);
                 };
                 AddArmyComponent.prototype.ngOnInit = function () {
-                    console.log('army is');
-                    console.log(this.army);
+                    // console.log('army is');
+                    // console.log(this.army);
                     this.army.type = unitType_1.UnitType.Axeman;
                 };
                 return AddArmyComponent;

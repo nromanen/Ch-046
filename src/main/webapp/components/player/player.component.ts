@@ -19,7 +19,7 @@ import {UnitType} from "../UnitType/unitType";
 <player-head></player-head>
 <player-list *ngIf="player" [player]="player"></player-list>
 <button  (click)="f()" >add</button>
-<add-vill-form></add-vill-form>
+<add-vill-form [player]="player"></add-vill-form>
 `
 })
  export class PlayerComponent implements OnInit{

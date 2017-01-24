@@ -1,7 +1,7 @@
 /**
  * Created by okunetc on 23.01.2017.
  */
-import {Component, OnInit, ViewChild, AfterViewChecked} from "@angular/core";
+import {Component, OnInit, ViewChild, AfterViewChecked, Input, Output, EventEmitter} from "@angular/core";
 import {Village} from "../village/village";
 import {NgForm} from "@angular/forms";
 import {Army} from "../army/army";
@@ -19,7 +19,7 @@ import {VillageService} from "../services/villageService";
 
     <!--</form>-->
  
-      <form #heroForm="ngForm" (ngSubmit)="onSubmit()">
+      <form #heroForm="ngForm" (ngSubmit)="onSubmit(village)" >
   <div class="row container">
   <div class="input-field col s6 offset-s3">
           <input id="name" type="text" class="validate" required [(ngModel)]="this.village.name" name="name" #name="ngModel" minlength="3" maxlength="14" pattern="[A-z]*">
@@ -45,7 +45,7 @@ import {VillageService} from "../services/villageService";
         </div>
   
   <div class="input-field col s6 offset-s3">
-          <input id="x" type="text" class="validate" [(ngModel)]="village.x" required name="x" pattern="[0-9]*" #x="ngModel">
+          <input id="x" type="text" class="validate" [(ngModel)]="this.village.xCoord" required name="x" pattern="[0-9]*" #x="ngModel">
           <label for="x">X</label>
           <div *ngIf="x.errors && (x.dirty || x.touched)"
              class="alert alert-danger">
@@ -60,7 +60,7 @@ import {VillageService} from "../services/villageService";
         </div>
         </div>
         <div class="input-field col s6 offset-s3">
-          <input id="y" type="text" class="validate" [(ngModel)]="village.y" name="y" pattern="[0-9]*" required #y="ngModel">
+          <input id="y" type="text" class="validate" [(ngModel)]="village.yCoord" name="y" pattern="[0-9]*" required #y="ngModel">
           <label for="y">Y</label>
           <div *ngIf="y.errors && (y.dirty || y.touched)"
              class="alert alert-danger">
@@ -120,7 +120,9 @@ export class AddVillageForm implements OnInit,AfterViewChecked{
     ngOnInit(): void {
     }
   village:Village;
-  constructor(villageService:VillageService){
+    @Input() player;
+    @Output() em:EventEmitter<boolean>;
+    constructor(private villageService:VillageService){
         this.village=new Village;
         this.village.armies=[];
         this.village.isCapital=false;
@@ -130,7 +132,7 @@ export class AddVillageForm implements OnInit,AfterViewChecked{
     @ViewChild('heroForm') currentForm: NgForm;
 
     ngAfterViewChecked() {
-        console.log(this.village);
+        // console.log(this.village);
         // this.formChanged();
     }
 
@@ -194,8 +196,11 @@ export class AddVillageForm implements OnInit,AfterViewChecked{
       console.log(this.village);
     }
 
- onSubmit(){
-        this.vi
+ onSubmit(village:Village){
+        alert(JSON.stringify(village));
+        this.player.villages.push(village);
+        this.villageService.add(village);
+     this.village=new Village;
  }
 
 }

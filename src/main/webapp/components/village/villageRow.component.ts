@@ -1,7 +1,7 @@
 /**
  * Created by okunetc on 19.01.2017.
  */
-import {Component, Input, EventEmitter, OnInit} from "@angular/core";
+import {Component, Input, EventEmitter, OnInit, AfterViewChecked} from "@angular/core";
 import {UnitType} from "../UnitType/unitType";
 import {Village} from "./village";
 import {VillageService} from "../services/villageService";
@@ -20,7 +20,7 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
     <input *ngIf="isForm" (ngModelChange)="this.newVillage.population=$event" type="text" [ngModel]="this.v.population" name="population">
 </td>
 <td>
-    <div *ngIf="!isForm">{{v.xCoord}}</div>
+    <div *ngIf="!isForm" >{{this.v.xCoord==null}}</div>
     <input (ngModelChange)="this.newVillage.xCoord=$event" *ngIf="isForm" type="text" [ngModel]="this.v.xCoord" name="x">
 </td>
 <td >
@@ -48,18 +48,23 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
     >{{!isForm?"Edit":"Save"}}
     </button>
     
-    <button (click)="deleteVillage()" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action"
-            style="margin-top: 5px;"
-    >
-    </button>
 </td>
 `
 })
-export class VillageRow implements OnInit{
+export class VillageRow implements OnInit,AfterViewChecked{
+    ngAfterViewChecked(): void {
+        // if (this.v!==this.villBefore) {
+        //     console.log('villages changed');
+        //     console.log(this.v);
+        //     this.villBefore=this.v;
+        // }
+    }
     private newVillage: Village;
+    private villBefore;
     ngOnInit(): void {
-        console.log("inside ro");
+        console.log("inside village row");
         console.log(this.v);
+        // alert(JSON.stringify(this.v));
         this.newVillage=new Village();
         this.newVillage.name=this.v.name;
         this.newVillage.uuid=this.v.uuid;
