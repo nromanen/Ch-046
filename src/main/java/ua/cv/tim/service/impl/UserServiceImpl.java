@@ -152,7 +152,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(member.getEmail());
         user.setPassword(generatePassword(10));
         logger.info("addAllianceMember   Password is {} ", user.getPassword());
-               List<Role> roles = new ArrayList<>();
+        List<Role> roles = new ArrayList<>();
         roles.add(Role.USER);
         if (member.getRole() != null) {
             roles.add(Role.LEADER);
@@ -161,14 +161,11 @@ public class UserServiceImpl implements UserService {
         userDao.add(user);
         Player player = new Player();
         player.setUser(user);
-        Alliance alliance = allianceDao.getByName(member.getAlliance(), null);
-        alliance.getPlayers().add(player);
-        player.setAlliance(alliance);
+        player.setAlliance(allianceDao.getAllianceByName(member.getAlliance()));
         user.setPlayer(player);
         playerDao.add(player);
         sendEmail(user);
     }
-
     public void sendEmail(User user) throws MessagingException {
         try {
             sendMail.send(user.getEmail(), "Travian user's info", "Your login is" + user.getLogin() + " and password: "

@@ -65,6 +65,8 @@ public class AllianceDaoImpl extends AbstractCrudDao<Alliance>  implements Allia
 
     @Override
     public Alliance getAllianceByName(String allianceName) {
-        return null;
+        Query<Alliance> query = getCurrentSession().createQuery("select a from Alliance a where a.name = :name");
+        query.setParameter("name", allianceName);
+        return query.getSingleResult();
     }
 }
