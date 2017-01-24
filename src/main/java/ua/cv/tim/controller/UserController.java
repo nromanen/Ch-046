@@ -59,6 +59,7 @@ public class UserController {
 			throw new NullPointerException("User with entered login or e-mail already exist");
 		}
 		addUserToDataBase(member);
+		member.setUuid(userService.getUserByUsername(member.getLogin()).getUuid());
 		return new ResponseEntity<>(member, HttpStatus.OK);
 	}
 

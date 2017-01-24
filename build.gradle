@@ -13,18 +13,18 @@ repositories {
 }
 
 ext.vers = [
-        hibernate: '5.2.5.Final',
-        postgresql: '9.3-1102.jdbc41',
-        spring: '4.3.5.RELEASE',
+        hibernate      : '5.2.5.Final',
+        postgresql     : '9.3-1102.jdbc41',
+        spring         : '4.3.5.RELEASE',
         spring_security: '4.2.0.RELEASE',
-        servlet: '3.1.0',
-        jstl: '1.2',
-        mail: '1.4',
-        jackson_core: '2.8.4',
-        slf4j_bridge: '1.7.21',
-        logback: '1.1.7',
-        testng: '6.9.13.6',
-        mockito: '2.3.5'
+        servlet        : '3.1.0',
+        jstl           : '1.2',
+        mail           : '1.4',
+        jackson_core   : '2.8.4',
+        slf4j_bridge   : '1.7.21',
+        logback        : '1.1.7',
+        testng         : '6.9.13.6',
+        mockito        : '2.3.5'
 ]
 
 dependencies {
