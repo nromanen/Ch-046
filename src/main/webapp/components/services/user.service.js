@@ -51,15 +51,14 @@ System.register(['@angular/core', '@angular/http', "rxjs/Observable"], function(
                     var options = new http_1.RequestOptions({ headers: headers });
                     return this.http.post(this.userControllerUrl + "/add", body, options)
                         .map(function (response) { return response.json(); }).catch(function (error) {
-                        if (error.status == 403) {
-                            return Observable_1.Observable.throw('ERROR!!! E-mail did not send, check internet connection!');
-                        }
-                        else if (error.status == 406) {
-                            return Observable_1.Observable.throw('ERROR!!! User with entered login or e-mail already exist!');
-                        }
-                        else {
-                            return Observable_1.Observable.throw('Error was occured, try again later!!!');
-                        }
+                        console.log(error);
+                        /* if (error.status == 403){
+                             return Observable.throw('ERROR!!! E-mail did not send, check internet connection!');
+                         } else if(error.status == 406){
+                             return Observable.throw('ERROR!!! User with entered login or e-mail already exist!');
+                         } else {
+                             return Observable.throw('Error was occured, try again later!!!');*/
+                        return Observable_1.Observable.throw(error._body);
                     });
                 };
                 UserService.prototype.updateMember = function (member) {

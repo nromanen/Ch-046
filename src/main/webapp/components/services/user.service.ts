@@ -41,14 +41,15 @@ export class UserService {
         return this.http.post(`${this.userControllerUrl}/add`, body, options)
             .map(response => response.json()).catch(
                 (error: any) => {
-                    if (error.status == 403){
+                    console.log(error);
+                   /* if (error.status == 403){
                         return Observable.throw('ERROR!!! E-mail did not send, check internet connection!');
                     } else if(error.status == 406){
                         return Observable.throw('ERROR!!! User with entered login or e-mail already exist!');
                     } else {
-                        return Observable.throw('Error was occured, try again later!!!');
-                    }
-                }
+                        return Observable.throw('Error was occured, try again later!!!');*/
+                    return Observable.throw(error._body);
+                                    }
             );
 
 

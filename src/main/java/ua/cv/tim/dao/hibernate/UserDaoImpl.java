@@ -60,7 +60,7 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
         Session session = getCurrentSession();
         Query query = null;
         if (uuid != null) {
-            System.out.println("uuid no = null : " + uuid);
+            logger.info("UserDaoImpl.getByMail  user with mail {} has uuid {} ",mail, uuid);
             query = session.createQuery("select u FROM User u WHERE u.email=:mail and u.uuid != :uuid");
             query.setParameter("mail", mail);
             query.setParameter("uuid", uuid);
@@ -109,7 +109,6 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     }
 
     public User getUserByUsername(String username, String uuid) {
-        logger.info("UserDao.getUsersByUsername  started username is {}, id is {} ", username,uuid);
         Session session = getCurrentSession();
         Query query = null;
         if (uuid != null) {

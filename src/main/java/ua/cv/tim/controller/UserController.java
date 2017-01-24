@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,39 +46,11 @@ import javax.mail.MessagingException;
 @RequestMapping(value = "/user")
 public class UserController {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String showAdminMainPage() {
-		return "user-main.jsp";
-	}
-
-
-	@RequestMapping(value = "/submitUserForm",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<UserDTO> submitUserForm(@RequestBody UserDTO userDTO) {
-		logger.info("UserMail {}" ,userDTO.getEmail());
-		logger.info("UserLogin {}" ,userDTO.getLogin());
-		logger.info("UserPassword {}" ,userDTO.getPassword());
-		logger.info("User Role {}" ,userDTO.getRole());
-		try {
-			userService.add(userDTO);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}
-		logger.info("User added succesfully {}" ,userDTO.getLogin());
-		return new ResponseEntity<>(userDTO, HttpStatus.OK);
-	}
-
-	@RequestMapping(value = "/leader", method = RequestMethod.GET)
-	public ModelAndView getAllUsers2() {
-
-		ModelAndView model = new ModelAndView("leaderMainPage.html");
-
-		return model;
-	}
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers() {
@@ -127,49 +100,50 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-	// v.kruhlov realizations
-	@RequestMapping(value = "/alliance-users/{allianceName}")
-	public ResponseEntity<List<UserInfoDTO>> getUsersByAlliance(@PathVariable(name = "allianceName") String allianceName) {
-		logger.info("UserController.getUsersByAlliance() method is working. Alliance name: {}", allianceName);
-		List<UserInfoDTO> allianceUsers = userService.getUsersByAlliance(allianceName);
-		logger.info("Users from DB: {}", allianceUsers);
-		return new ResponseEntity<>(allianceUsers, HttpStatus.OK);
-	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserInfoDTO> addAllianceMember(@RequestBody UserInfoDTO member) {
-		logger.info("UserController.addAllianceMember() method is working. Alliance name: {}", member.toString());
-		User user = new User();
-		user.setLogin(member.getLogin());
-		user.setEmail(member.getEmail());
-		if (!userService.isUnique(user)) {
-			logger.error("UserController.addAllianceMember: {}", "user is not unique");
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		}
-		try {
-			userService.addAllianceMember(member);
-			logger.info("UserController.addAllianceMember() method try section, send message on  {}", member.getEmail());
-		} catch (MessagingException e) {
-			logger.error("UserController.addAllianceMember: {}", e);
-			return new ResponseEntity(HttpStatus.FORBIDDEN);// should send error message on html
-		}
-		//User user = userService.getUserByUsername(member.getLogin());
-		//member.setUuid(user.getUuid());
-		logger.info("UserController.getUsersByAlliance() method return: {}", member); // todo не сохраняет Player в service т.к. не вытащен Alliance
-		return new ResponseEntity<>(member, HttpStatus.OK);
-	}
+    @RequestMapping(value = "/alliance-users/{allianceName}")
+    public ResponseEntity<List<UserInfoDTO>> getUsersByAlliance(@PathVariable(name = "allianceName") String allianceName) {
+        logger.info("UserController.getUsersByAlliance() method is working. Alliance name: {}", allianceName);
+        List<UserInfoDTO> allianceUsers = userService.getUsersByAlliance(allianceName);
+        logger.info("Users from DB: {}", allianceUsers);
+        return new ResponseEntity<>(allianceUsers, HttpStatus.OK);
+    }
 
-	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<User> updateMember(@PathVariable("id") String id, @RequestBody UserInfoDTO user) {
-		logger.info("UserController.updateUser() method is working. User id: {}, user body: {}", id, user);
-		User currentUser = userService.getById(id);
-		if (currentUser == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		currentUser.setLogin(user.getLogin());
-		currentUser.setEmail(user.getEmail());
-		userService.update(currentUser);
-		return new ResponseEntity<>(currentUser, HttpStatus.OK);
-	}
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserInfoDTO> addAllianceMember(@RequestBody UserInfoDTO member) throws MessagingException {
+        logger.info("UserController.addAllianceMember() method is working. Alliance name: {}", member.toString());
+        User user = new User();
+        user.setLogin(member.getLogin());
+        user.setEmail(member.getEmail());
+        if (!userService.isUnique(user)) {
+            logger.error("UserController.addAllianceMember: {}", "user is not unique");
+            throw new NullPointerException(" User with entered login or e-mail already exist");
+        }
+        addNewAllianceMember(member);
+        return new ResponseEntity<>(member, HttpStatus.OK);
+    }
 
+    private boolean addNewAllianceMember(@RequestBody UserInfoDTO member) throws MessagingException {
+        try {
+            userService.addAllianceMember(member);
+            logger.info("UserController.addAllianceMember() method try section, send message on  {}", member.getEmail());
+        } catch (MessagingException e) {
+            logger.error("UserController.addAllianceMember: {}", e);
+            throw new MessagingException("Message did not send check internet connection");
+        }
+        return true;
+    }
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<User> updateMember(@PathVariable("id") String id, @RequestBody UserInfoDTO user) {
+        logger.info("UserController.updateUser() method is working. User id: {}, user body: {}", id, user);
+        User currentUser = userService.getById(id);
+        if (currentUser == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        currentUser.setLogin(user.getLogin());
+        currentUser.setEmail(user.getEmail());
+        userService.update(currentUser);
+        return new ResponseEntity<>(currentUser, HttpStatus.OK);
+    }
 }
