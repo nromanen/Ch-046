@@ -24,6 +24,8 @@ System.register(['@angular/core', "../services/user.service"], function(exports_
             LeaderManagerComponent = (function () {
                 function LeaderManagerComponent(userService) {
                     this.userService = userService;
+                    this.errorMessage = null;
+                    this.successMessage = null;
                     this.selectedMember = null;
                     this.deletedMember = null;
                     this.confirmMsg = null;
@@ -37,21 +39,35 @@ System.register(['@angular/core', "../services/user.service"], function(exports_
                     var _this = this;
                     console.log("LeaderManagerComponent.getUsersByAlliance() method is working");
                     this.userService.getUsersByAlliance()
-                        .subscribe(function (allianceMembers) {
-                        _this.allianceMembers = allianceMembers;
-                        console.log(JSON.stringify(allianceMembers));
+                        .subscribe(function (users) {
+                        _this.users = users;
+                        console.log(JSON.stringify(users));
                     }, function (error) { return console.log(error); });
                 };
                 LeaderManagerComponent.prototype.selectMember = function (member) {
-                    console.log("AllianceMembersComponent.selectMember() method is working.");
+                    console.log("usersComponent.selectMember() method is working.");
                     this.selectedMember = member;
+                };
+                LeaderManagerComponent.prototype.closeSuccess = function () {
+                    this.successMessage = null;
+                };
+                LeaderManagerComponent.prototype.closeError = function () {
+                    this.errorMessage = null;
                 };
                 LeaderManagerComponent.prototype.addMember = function (member) {
                     var _this = this;
                     console.log("LeaderManagerComponent.addMember() method is working");
                     member.alliance = "valhala"; // todo change to dynamic set alliance name
                     this.userService.addMember(member)
-                        .subscribe(function (user) { return _this.allianceMembers.push(user); }, function (error) { return console.log(error); });
+                        .subscribe(function (user) {
+                        _this.users.push(user);
+                        _this.successMessage = "User added successfully";
+                        _this.errorMessage = null;
+                    }, function (error) {
+                        console.log(error);
+                        _this.errorMessage = error;
+                        _this.successMessage = null;
+                    });
                 };
                 LeaderManagerComponent.prototype.updateMember = function (member) {
                     var _this = this;
@@ -60,8 +76,8 @@ System.register(['@angular/core', "../services/user.service"], function(exports_
                         this.userService.updateMember(member)
                             .subscribe(function (user) {
                             console.log("LeaderManagerComponent.updateMember() user value: " + JSON.stringify(user));
-                            console.log("User from array: " + JSON.stringify(_this.allianceMembers[_this.allianceMembers.indexOf(_this.selectedMember)]));
-                            _this.allianceMembers[_this.allianceMembers.indexOf(_this.selectedMember)] = user;
+                            console.log("User from array: " + JSON.stringify(_this.users[_this.users.indexOf(_this.selectedMember)]));
+                            _this.users[_this.users.indexOf(_this.selectedMember)] = user;
                             _this.selectedMember = null;
                         }, function (error) {
                             console.log(error);
@@ -83,7 +99,7 @@ System.register(['@angular/core', "../services/user.service"], function(exports_
                         this.userService.deleteMember(this.deletedMember)
                             .subscribe(function (status) {
                             if (status) {
-                                _this.allianceMembers.splice(_this.allianceMembers.indexOf(_this.deletedMember), 1);
+                                _this.users.splice(_this.users.indexOf(_this.deletedMember), 1);
                                 _this.deletedMember = null;
                             }
                         }, function (error) { return console.log(error); });

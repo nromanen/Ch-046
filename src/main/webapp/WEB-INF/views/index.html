@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-
-    <script>document.write('<base href="/" />');</script>
-    <title>Alliance service</title>
+    <script>
+        var array = document.location.pathname.split('/');
+        document.write('<base href="/' + array[1] + '/" />');
+    </script>
+    <title>Travian</title>
     <meta charset="utf-8">
 
     <!-- Polyfill(s) for older browsers -->
@@ -43,4 +45,3 @@
     <my-app>Loading...</my-app>
 </body>
 </html>
-

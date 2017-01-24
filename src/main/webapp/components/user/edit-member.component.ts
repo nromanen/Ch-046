@@ -59,4 +59,3 @@ export class EditMemberComponent {
         this.editMemberForm.emit(null);
     }
 }
-// todo протестить собственный валидатор на изменение значения сразу сравнивать + double click && autofocus on form field

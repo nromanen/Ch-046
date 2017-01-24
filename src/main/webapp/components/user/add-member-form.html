@@ -1,4 +1,5 @@
-<div class="row container">
+
+            <div class="row container">
     <div class="col s12 center-align">
         <h3>Add New Member</h3>
     </div>
@@ -7,20 +8,26 @@
     <div class="row container">
         <div class="input-field col s4 offset-s1">
             <label for="login">Login</label>
-            <input type="text" id="login" class="validate" [formControl]="memberForm.controls['login']"/>
-            <!--<div style="color: red; font-size: 14px;" *ngIf="!memberForm.controls['allianceName'].valid-->
-            <!--&& memberForm.controls['allianceName'].touched">{{LOGIN_ERROR}}-->
-            <!--</div>-->
+            <input type="text" id="login" class="validate"
+                   required minlength="3" maxlength="9"
+                   [formControl]="memberForm.controls['login']"/>
+            <div style="color: red; font-size: 14px;" *ngIf="!memberForm.controls['login'].valid
+            && (memberForm.controls['login'].touched || memberForm.controls['login'].dirty)">{{LOGIN_ERROR}}
+            </div>
         </div>
 
         <div class="input-field col s4">
             <label for="email">Email</label>
             <input type="text" id="email" class="validate" [formControl]="memberForm.controls['email']"/>
-            <!--<div style="color: red; font-size: 14px;"-->
-                 <!--*ngIf="!memberForm.controls['leaderLogin'].valid && memberForm.controls['leaderLogin'].touched">-->
-                <!--{{LOGIN_ERROR}}-->
-            <!--</div>-->
+            <div style="color: red; font-size: 14px;"
+                 *ngIf="!memberForm.controls['email'].valid && memberForm.controls['email'].touched">
+                {{EMAIL_ERROR}}
+            </div>
         </div>
+        <div class="input-field col s1">
+        <input type="checkbox" class="messageCheckbox" id="test5" [formControl]="memberForm.controls['leader']"
+               name="Role" value="LEADER" /> <label for="test5">Leader</label>
+    </div>
 
         <div class="input-field col s2">
             <button class="btn waves-effect waves-light col offset-s5 " name="action" type="submit"

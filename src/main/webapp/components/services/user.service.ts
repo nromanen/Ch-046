@@ -4,7 +4,7 @@
 
 import {Injectable} from '@angular/core';
 import {Http, Headers, RequestOptions} from '@angular/http';
-import {User} from "../user/user.ts";
+import {User} from "../user/user";
 import {Observable} from "rxjs/Observable";
 
 @Injectable()
@@ -25,20 +25,26 @@ export class UserService {
 
     addMember(member:User):Observable<User> {
         console.log(`UserService.addMember() method is working`);
-        
+
         const body = JSON.stringify({
             uuid: null,
             login: member.login,
             email: member.email,
+            role: member.role,
             alliance: "valhala" // todo change to dynamic
         });
         console.log(`Member value is: ${body}`);
-        
+
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: headers});
 
         return this.http.post(`${this.userControllerUrl}/add`, body, options)
-            .map(response => response.json());
+            .map(response => response.json())
+            .catch((error:any) => {
+                    console.log(error);
+                    return Observable.throw(error._body);
+                }
+            );
     }
 
     updateMember(member:User):Observable<User> {
@@ -66,8 +72,8 @@ export class UserService {
         let options = new RequestOptions({headers: headers});
 
         return this.http.delete(`${this.userControllerUrl}/delete/${member.uuid}`, options)
-            .map(ok => true);
-
+            .map(ok => true)
+            .catch((error:any) => console.log(error));
     }
 }
 

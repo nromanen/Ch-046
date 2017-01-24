@@ -11,11 +11,14 @@ import {UserService} from "../services/user.service";
 
 export class LeaderManagerComponent implements OnInit {
     leader:User;
-    allianceMembers:User[];
+    users:User[];
+    errorMessage: string = null;
+    successMessage: string = null;
 
     selectedMember:User = null;
     deletedMember:User = null;
     confirmMsg:string = null;
+
 
     constructor(public userService:UserService) {
         console.log(`LeaderManagerComponent constructor is working`);
@@ -30,18 +33,26 @@ export class LeaderManagerComponent implements OnInit {
         console.log("LeaderManagerComponent.getUsersByAlliance() method is working");
         this.userService.getUsersByAlliance()
             .subscribe(
-                allianceMembers => {
-                    this.allianceMembers = allianceMembers;
-                    console.log(JSON.stringify(allianceMembers));
+                users => {
+                    this.users = users;
+                    console.log(JSON.stringify(users));
                 },
                 error => console.log(error)
             );
     }
 
     selectMember(member:User) {
-        console.log(`AllianceMembersComponent.selectMember() method is working.`);
+        console.log(`usersComponent.selectMember() method is working.`);
 
         this.selectedMember = member;
+    }
+
+    closeSuccess(){
+        this.successMessage = null;
+    }
+
+    closeError(){
+        this.errorMessage = null;
     }
 
     addMember(member:User) {
@@ -49,8 +60,14 @@ export class LeaderManagerComponent implements OnInit {
         member.alliance = "valhala"; // todo change to dynamic set alliance name
         this.userService.addMember(member)
             .subscribe(
-                user => this.allianceMembers.push(user),
-                error => console.log(error)
+                user => {this.users.push(user);
+                this.successMessage = "User added successfully";
+                this.errorMessage = null;
+                },
+                error => {console.log(error);
+                    this.errorMessage = <any>error;
+                    this.successMessage = null;
+                }
             );
     }
 
@@ -61,8 +78,8 @@ export class LeaderManagerComponent implements OnInit {
                 .subscribe(
                     user => {
                         console.log(`LeaderManagerComponent.updateMember() user value: ${JSON.stringify(user)}`);
-                        console.log(`User from array: ${JSON.stringify(this.allianceMembers[this.allianceMembers.indexOf(this.selectedMember)])}`)
-                        this.allianceMembers[this.allianceMembers.indexOf(this.selectedMember)] = user;
+                        console.log(`User from array: ${JSON.stringify(this.users[this.users.indexOf(this.selectedMember)])}`)
+                        this.users[this.users.indexOf(this.selectedMember)] = user;
                         this.selectedMember = null;
                     },
                     error => {
@@ -87,7 +104,7 @@ export class LeaderManagerComponent implements OnInit {
                 .subscribe(
                     status => {
                         if (status) {
-                            this.allianceMembers.splice(this.allianceMembers.indexOf(this.deletedMember), 1);
+                            this.users.splice(this.users.indexOf(this.deletedMember), 1);
                             this.deletedMember = null;
                         }
                     },

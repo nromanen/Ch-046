@@ -1,7 +1,7 @@
 /**
  * Created by vyach on 13.01.2017.
  */
-System.register(['@angular/core', '@angular/http'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', "rxjs/Observable"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -13,7 +13,7 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1;
+    var core_1, http_1, Observable_1;
     var UserService;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
             },
             function (http_1_1) {
                 http_1 = http_1_1;
+            },
+            function (Observable_1_1) {
+                Observable_1 = Observable_1_1;
             }],
         execute: function() {
             UserService = (function () {
@@ -40,13 +43,18 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
                         uuid: null,
                         login: member.login,
                         email: member.email,
+                        role: member.role,
                         alliance: "valhala" // todo change to dynamic
                     });
                     console.log("Member value is: " + body);
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
                     return this.http.post(this.userControllerUrl + "/add", body, options)
-                        .map(function (response) { return response.json(); });
+                        .map(function (response) { return response.json(); })
+                        .catch(function (error) {
+                        console.log(error);
+                        return Observable_1.Observable.throw(error._body);
+                    });
                 };
                 UserService.prototype.updateMember = function (member) {
                     console.log("UserService.updateMember() method is working");
@@ -67,7 +75,8 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
                     return this.http.delete(this.userControllerUrl + "/delete/" + member.uuid, options)
-                        .map(function (ok) { return true; });
+                        .map(function (ok) { return true; })
+                        .catch(function (error) { return console.log(error); });
                 };
                 UserService = __decorate([
                     core_1.Injectable(), 
