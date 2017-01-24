@@ -23,6 +23,8 @@ import {ArmyCellComponent} from "./army/armyCellComponent";
 import {VillageRow} from "./village/villageRow.component";
 import {VillageService} from "./services/villageService";
 import {AddVillageForm} from "./village/addVillageForm";
+import {AddArmyComponent} from "./army/addArmy.component";
+
 
 @NgModule({
     imports: [
@@ -71,7 +73,8 @@ import {AddVillageForm} from "./village/addVillageForm";
         EditVillageForm,
         ArmyCellComponent,
         VillageRow,
-        AddVillageForm
+        AddVillageForm,
+        AddArmyComponent
     ],
     providers: [
         AllianceService,

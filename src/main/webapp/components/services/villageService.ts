@@ -53,7 +53,6 @@ export class VillageService{
 
     add(village:Village){
         const body = JSON.stringify(village);
-
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         this.http.post(this.villageURL, body, {
@@ -63,6 +62,7 @@ export class VillageService{
                 response => {
                     console.log('Alliance created successful');
                     this.villages.push(response);
+
                 },
                 error => console.log(error)
             );
