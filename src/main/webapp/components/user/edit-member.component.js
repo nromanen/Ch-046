@@ -32,7 +32,7 @@ System.register(["@angular/core", "@angular/forms", "./user"], function(exports_
                     this.fb = fb;
                     this.editMemberForm = new core_1.EventEmitter();
                     this.USER_LOGIN = /^[a-z1-9]{3,9}$/;
-                    this.EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+                    this.EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?\.[a-z0-9]{2,}$/i;
                     this.LOGIN_ERROR = "Enter from 3 to 10 letters";
                     this.EMAIL_ERROR = "Enter correct email, please!";
                     console.log("EditMemberComponent.constructor() is working");
@@ -40,17 +40,23 @@ System.register(["@angular/core", "@angular/forms", "./user"], function(exports_
                 EditMemberComponent.prototype.ngOnInit = function () {
                     console.log("EditMemberComponent.ngOnInit() is working");
                     this.memberForm = this.fb.group({
-                        'uuid': [this.editedMember.uuid],
                         'login': [this.editedMember.login, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(this.USER_LOGIN)])],
                         'email': [this.editedMember.email, forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(this.EMAIL_REGEXP)])],
-                        'alliance': [this.editedMember.alliance]
                     });
                 };
                 EditMemberComponent.prototype.updateMember = function (value) {
                     console.log("EditMemberComponent.updateMember() is working. Member value is: " + JSON.stringify(value));
-                    var member = new user_1.User(value.login, value.email, value.uuid, value.alliance);
-                    this.editMemberForm.emit(member);
+                    if (this.hasMemberDataChange(value)) {
+                        var member = new user_1.User(value.login, value.email, this.editedMember.uuid, this.editedMember.alliance);
+                        this.editMemberForm.emit(member);
+                    }
+                    else {
+                        this.editMemberForm.emit(null);
+                    }
                     this.memberForm.reset();
+                };
+                EditMemberComponent.prototype.hasMemberDataChange = function (value) {
+                    return value.login != this.editedMember.login || value.email != this.editedMember.email;
                 };
                 EditMemberComponent.prototype.cancelEditing = function () {
                     console.log("EditMemberComponent.cancelEditing() is working");

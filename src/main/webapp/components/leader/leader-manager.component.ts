@@ -15,6 +15,10 @@ export class LeaderManagerComponent implements OnInit {
     errorMessage: string = null;
     successMessage: string = null;
 
+    selectedMember:User = null;
+    deletedMember:User = null;
+    confirmMsg:string = null;
+
 
     constructor(public userService:UserService) {
         console.log(`LeaderManagerComponent constructor is working`);
@@ -37,6 +41,11 @@ export class LeaderManagerComponent implements OnInit {
             );
     }
 
+    selectMember(member:User) {
+        console.log(`usersComponent.selectMember() method is working.`);
+
+        this.selectedMember = member;
+    }
 
     closeSuccess(){
         this.successMessage = null;
@@ -53,37 +62,56 @@ export class LeaderManagerComponent implements OnInit {
             .subscribe(
                 user => {this.users.push(user);
                 this.successMessage = "User added successfully";
-                this.errorMessage = null;},
+                this.errorMessage = null;
+                },
                 error => {console.log(error);
                     this.errorMessage = <any>error;
-                    /*this.errorMessage = "Failed to add user";*/
-                    this.successMessage = null;}
+                    this.successMessage = null;
+                }
             );
     }
 
     updateMember(member:User) {
-        console.log(`LeaderManagerComponent.updateMember() method is working`);
-        this.userService.updateMember(member)
-            .subscribe(
-                user => {
-                    console.log(`LeaderManagerComponent.updateMember() user value: ${JSON.stringify(user)}`);
-                    this.users[this.users.indexOf(user)] = user;
-                    console.log(`User from array: ${JSON.stringify(this.users[this.users.indexOf(user)])}`)
-                },
-                error => console.log(error)
-            );
+        console.log(`LeaderManagerComponent.updateMember() method is working. Member value: ${JSON.stringify(member)}`);
+        if (member !== null) {
+            this.userService.updateMember(member)
+                .subscribe(
+                    user => {
+                        console.log(`LeaderManagerComponent.updateMember() user value: ${JSON.stringify(user)}`);
+                        console.log(`User from array: ${JSON.stringify(this.users[this.users.indexOf(this.selectedMember)])}`)
+                        this.users[this.users.indexOf(this.selectedMember)] = user;
+                        this.selectedMember = null;
+                    },
+                    error => {
+                        console.log(error);
+                        this.selectedMember = null;
+                    }
+                );
+        } else {
+            this.selectedMember = member;
+        }
     }
 
-    deleteMember(member:User) {
+    deleteMember(member: User) {
+        this.deletedMember = member;
+        this.confirmMsg = `Are you going to delete alliance member: ${member.login}?`
+    }
+    
+    onConfirmDelete(confirmation:boolean) {
         console.log(`LeaderManagerComponent.deleteMember() method is working`);
-        this.userService.deleteMember(member)
-            .subscribe(
-                status => {
-                    if (status) {
-                        this.users.splice(this.users.indexOf(member), 1);
-                    }
-                },
-                error => console.log(error)
-            );
+        if (confirmation) {
+            this.userService.deleteMember(this.deletedMember)
+                .subscribe(
+                    status => {
+                        if (status) {
+                            this.users.splice(this.users.indexOf(this.deletedMember), 1);
+                            this.deletedMember = null;
+                        }
+                    },
+                    error => console.log(error)
+                );
+        } else {
+            this.deletedMember = null;
+        }
     }
 }

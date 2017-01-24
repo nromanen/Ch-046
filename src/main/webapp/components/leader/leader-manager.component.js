@@ -26,6 +26,9 @@ System.register(['@angular/core', "../services/user.service"], function(exports_
                     this.userService = userService;
                     this.errorMessage = null;
                     this.successMessage = null;
+                    this.selectedMember = null;
+                    this.deletedMember = null;
+                    this.confirmMsg = null;
                     console.log("LeaderManagerComponent constructor is working");
                 }
                 LeaderManagerComponent.prototype.ngOnInit = function () {
@@ -40,6 +43,10 @@ System.register(['@angular/core', "../services/user.service"], function(exports_
                         _this.users = users;
                         console.log(JSON.stringify(users));
                     }, function (error) { return console.log(error); });
+                };
+                LeaderManagerComponent.prototype.selectMember = function (member) {
+                    console.log("usersComponent.selectMember() method is working.");
+                    this.selectedMember = member;
                 };
                 LeaderManagerComponent.prototype.closeSuccess = function () {
                     this.successMessage = null;
@@ -59,29 +66,47 @@ System.register(['@angular/core', "../services/user.service"], function(exports_
                     }, function (error) {
                         console.log(error);
                         _this.errorMessage = error;
-                        /*this.errorMessage = "Failed to add user";*/
                         _this.successMessage = null;
                     });
                 };
                 LeaderManagerComponent.prototype.updateMember = function (member) {
                     var _this = this;
-                    console.log("LeaderManagerComponent.updateMember() method is working");
-                    this.userService.updateMember(member)
-                        .subscribe(function (user) {
-                        console.log("LeaderManagerComponent.updateMember() user value: " + JSON.stringify(user));
-                        _this.users[_this.users.indexOf(user)] = user;
-                        console.log("User from array: " + JSON.stringify(_this.users[_this.users.indexOf(user)]));
-                    }, function (error) { return console.log(error); });
+                    console.log("LeaderManagerComponent.updateMember() method is working. Member value: " + JSON.stringify(member));
+                    if (member !== null) {
+                        this.userService.updateMember(member)
+                            .subscribe(function (user) {
+                            console.log("LeaderManagerComponent.updateMember() user value: " + JSON.stringify(user));
+                            console.log("User from array: " + JSON.stringify(_this.users[_this.users.indexOf(_this.selectedMember)]));
+                            _this.users[_this.users.indexOf(_this.selectedMember)] = user;
+                            _this.selectedMember = null;
+                        }, function (error) {
+                            console.log(error);
+                            _this.selectedMember = null;
+                        });
+                    }
+                    else {
+                        this.selectedMember = member;
+                    }
                 };
                 LeaderManagerComponent.prototype.deleteMember = function (member) {
+                    this.deletedMember = member;
+                    this.confirmMsg = "Are you going to delete alliance member: " + member.login + "?";
+                };
+                LeaderManagerComponent.prototype.onConfirmDelete = function (confirmation) {
                     var _this = this;
                     console.log("LeaderManagerComponent.deleteMember() method is working");
-                    this.userService.deleteMember(member)
-                        .subscribe(function (status) {
-                        if (status) {
-                            _this.users.splice(_this.users.indexOf(member), 1);
-                        }
-                    }, function (error) { return console.log(error); });
+                    if (confirmation) {
+                        this.userService.deleteMember(this.deletedMember)
+                            .subscribe(function (status) {
+                            if (status) {
+                                _this.users.splice(_this.users.indexOf(_this.deletedMember), 1);
+                                _this.deletedMember = null;
+                            }
+                        }, function (error) { return console.log(error); });
+                    }
+                    else {
+                        this.deletedMember = null;
+                    }
                 };
                 LeaderManagerComponent = __decorate([
                     core_1.Component({

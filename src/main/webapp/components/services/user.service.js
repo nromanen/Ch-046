@@ -50,14 +50,9 @@ System.register(['@angular/core', '@angular/http', "rxjs/Observable"], function(
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
                     return this.http.post(this.userControllerUrl + "/add", body, options)
-                        .map(function (response) { return response.json(); }).catch(function (error) {
+                        .map(function (response) { return response.json(); })
+                        .catch(function (error) {
                         console.log(error);
-                        /* if (error.status == 403){
-                             return Observable.throw('ERROR!!! E-mail did not send, check internet connection!');
-                         } else if(error.status == 406){
-                             return Observable.throw('ERROR!!! User with entered login or e-mail already exist!');
-                         } else {
-                             return Observable.throw('Error was occured, try again later!!!');*/
                         return Observable_1.Observable.throw(error._body);
                     });
                 };
@@ -67,7 +62,7 @@ System.register(['@angular/core', '@angular/http', "rxjs/Observable"], function(
                         uuid: member.uuid,
                         login: member.login,
                         email: member.email,
-                        alliance: "valhala" // todo change to dynamic
+                        alliance: member.alliance
                     });
                     console.log("Member value is: " + body);
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
@@ -80,7 +75,8 @@ System.register(['@angular/core', '@angular/http', "rxjs/Observable"], function(
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
                     return this.http.delete(this.userControllerUrl + "/delete/" + member.uuid, options)
-                        .map(function (ok) { return true; });
+                        .map(function (ok) { return true; })
+                        .catch(function (error) { return console.log(error); });
                 };
                 UserService = __decorate([
                     core_1.Injectable(), 

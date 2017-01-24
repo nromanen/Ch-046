@@ -32,7 +32,7 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
 
     @Override
     public User getUserByUsername(String username) {
-        logger.info("UserDao.getUsersByUsername  started username is {} ", username);
+        logger.info("Username is {} ", username);
         String request = "select u from User u where u.login = :login";
         Query<User> query = getCurrentSession().createQuery(request);
         query.setParameter("login", username);
@@ -56,11 +56,11 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     }
 
     public User getByMail(String mail, String uuid) {
-        logger.info("UserDao.getByMail  started mail is {} uuid is {} ", mail,uuid);
+        logger.info("Mail is {} uuid is {} ", mail,uuid);
         Session session = getCurrentSession();
         Query query = null;
         if (uuid != null) {
-            logger.info("UserDaoImpl.getByMail  user with mail {} has uuid {} ",mail, uuid);
+            logger.info("User with mail {} has uuid {} ",mail, uuid);
             query = session.createQuery("select u FROM User u WHERE u.email=:mail and u.uuid != :uuid");
             query.setParameter("mail", mail);
             query.setParameter("uuid", uuid);
@@ -112,14 +112,14 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
         Session session = getCurrentSession();
         Query query = null;
         if (uuid != null) {
-            logger.info("UserDao.getUsersByUsername  started username is {} ", username);
+            logger.info("Username is {} ", username);
             System.out.println("uuid no = null : " + uuid);
             query = session.createQuery("select u from User u where u.login = :login and u.uuid != :uuid");
             query.setParameter("login", username);
             query.setParameter("uuid", uuid);
         } else {
             query = session.createQuery("select u from User u where u.login = :login");
-            logger.info("UserDao.getUsersByUsername   id is null and username is {} ", username);
+            logger.info("Id is null and username is {} ", username);
             query.setParameter("login", username);
         }
         User user = (User) query.uniqueResult();

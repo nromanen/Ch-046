@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by Oleg on 04.01.2017.
  */
-@Service
+@Service(value = "playerService")
 @Transactional
 public class PlayerServiceImpl implements PlayerService {
     @Autowired
