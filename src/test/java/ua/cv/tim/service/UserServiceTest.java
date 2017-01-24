@@ -23,7 +23,7 @@ import static org.testng.Assert.*;
 
 @WebAppConfiguration
 @ContextConfiguration(classes = {HibernateConfiguration.class, WebConfiguration.class})
-public class UserServiceImplTest  extends AbstractTestNGSpringContextTests {
+public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void getAllWithRoles() throws Exception {
@@ -98,10 +98,14 @@ public class UserServiceImplTest  extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testGetById() throws Exception {
-        User user = userService.getById("06a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
-
+    public void testGetByName() throws Exception {
+        User user = userService.getUserByUsername("neo");
+        assertTrue(user.getLogin().equals("neo"));
     }
 
-
+    @Test
+    public void testDeleteUser() {
+        User user = userService.getUserByUsername("neo");
+        userService.delete(user);
+    }
 }

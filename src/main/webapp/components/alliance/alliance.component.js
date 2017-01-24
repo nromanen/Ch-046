@@ -1,5 +1,6 @@
-System.register(["@angular/core", "../services/alliance/alliance-service"], function (exports_1, context_1) {
+System.register(["@angular/core", "../services/alliance/alliance-service"], function(exports_1, context_1) {
     "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,18 +10,17 @@ System.register(["@angular/core", "../services/alliance/alliance-service"], func
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var __moduleName = context_1 && context_1.id;
-    var core_1, alliance_service_1, AllianceComponent;
+    var core_1, alliance_service_1;
+    var AllianceComponent;
     return {
-        setters: [
+        setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
             function (alliance_service_1_1) {
                 alliance_service_1 = alliance_service_1_1;
-            }
-        ],
-        execute: function () {
+            }],
+        execute: function() {
             AllianceComponent = (function () {
                 function AllianceComponent(_allianceService) {
                     this._allianceService = _allianceService;
@@ -101,18 +101,18 @@ System.register(["@angular/core", "../services/alliance/alliance-service"], func
                     this._allianceService.getAlliances()
                         .subscribe(function (alliances) { return _this.alliances = alliances; }, function (error) { return _this.errorMessage = error; });
                 };
+                AllianceComponent = __decorate([
+                    core_1.Component({
+                        selector: 'my-alliance',
+                        templateUrl: 'components/alliance/alliance.html',
+                        styleUrls: ['components/alliance/alliance.css']
+                    }), 
+                    __metadata('design:paramtypes', [alliance_service_1.AllianceService])
+                ], AllianceComponent);
                 return AllianceComponent;
             }());
-            AllianceComponent = __decorate([
-                core_1.Component({
-                    selector: 'my-alliance',
-                    templateUrl: 'components/alliance/alliance.html',
-                    styleUrls: ['components/alliance/alliance.css']
-                }),
-                __metadata("design:paramtypes", [alliance_service_1.AllianceService])
-            ], AllianceComponent);
             exports_1("AllianceComponent", AllianceComponent);
         }
-    };
+    }
 });
 //# sourceMappingURL=alliance.component.js.map

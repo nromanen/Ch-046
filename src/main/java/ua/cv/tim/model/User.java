@@ -1,7 +1,6 @@
 package ua.cv.tim.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,13 +29,10 @@ public class User extends UuidEntity implements Serializable {
 	private List<Role> roles;
 
 	@JsonIgnore
-	@OneToOne(/*cascade = CascadeType.ALL,*/ fetch = FetchType.EAGER)
-
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Player player;
 
-	public User() {
-		prePersist();
-	}
+	public User() {		}
 
 	public String getLogin() {
 		return login;

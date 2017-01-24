@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+<title>Add user</title>
+</head>
+<body>
+	<script type="text/javascript"
+		src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script>
+		function send() {
+			var mail = $("#mail").val();
+			var login = $("#login").val();
+			var password = $("#password").val();
+			var checkedRole = $('.messageCheckbox:checked').val();
+
+			if (checkedRole == 'LEADER') {
+				var user = {
+					email : mail,
+					login : login,
+					password : password,
+					role : 'LEADER'
+				};
+			} else {
+				var user = {
+					email : mail,
+					login : login,
+					password : password
+				};
+			}
+			console.log(checkedRole);
+			console.log(user);
+			$.ajax({
+				type : "POST", // http method
+				url : "submitUserForm", // the endpoint
+				contentType : "application/json; charset=utf-8",
+				headers : {
+					'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr(
+							'content')
+				},
+				data : JSON.stringify(user),
+				success : function(json) {
+					console.log(json);
+					console.log("success");
+				}
+			});
+		}
+	</script>
+	<div >
+		<form>
+
+			<div class="input-field col s6 offset-s3">
+				<input type="text" id="mail" class="input-field col s6 offset-s1" name="email" placeholder="email" style="width: 300px;" /><span id="mail_error" style="color: red;"></span><br>
+				<input 	type="text" id="login" class="input-field col s3 offset-s1"	name="login" placeholder="user name" style="width: 300px;" /><br>
+				<input type="text" id="password" class="input-field col s3 offset-s1" name="password" placeholder="password" style="width: 300px;" /><br>
+
+					<p>
+						<input type="checkbox" class="messageCheckbox" id="test5"
+							name="Role" value="LEADER" /> <label for="test5">Leader</label>
+					</p>
+					<br>
+					<button class="btn waves-effect waves-teal " id="whitespace"
+						onclick="send()">Add</button>
+					<!-- <input type="submit" class="btn waves-effect waves-teal "id="whitespace" onclick="send()" value="Add"/> -->
+
+					<!-- <input type="submit"  id="whitespace" class="btn waves-effect waves-teal " onclick="showToast('User added successfully', 3000)" disabled value="Add"  action="./user/submitUserForm"/> -->
+
+
+			</div>
+		</form>
+
+	</div>
+	 <script src="./js/UserValidator.js" ></script> 
+</body>
+</html>

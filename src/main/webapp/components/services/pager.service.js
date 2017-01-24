@@ -1,14 +1,14 @@
-System.register(["underscore"], function (exports_1, context_1) {
+System.register(['underscore'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var _, PagerService;
+    var _;
+    var PagerService;
     return {
-        setters: [
+        setters:[
             function (_1) {
                 _ = _1;
-            }
-        ],
-        execute: function () {
+            }],
+        execute: function() {
             PagerService = (function () {
                 function PagerService() {
                 }
@@ -72,6 +72,6 @@ System.register(["underscore"], function (exports_1, context_1) {
             }());
             exports_1("PagerService", PagerService);
         }
-    };
+    }
 });
 //# sourceMappingURL=pager.service.js.map

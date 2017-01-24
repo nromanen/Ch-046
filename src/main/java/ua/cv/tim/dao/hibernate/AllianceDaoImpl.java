@@ -62,4 +62,9 @@ public class AllianceDaoImpl extends AbstractCrudDao<Alliance>  implements Allia
         System.out.println(alliance);
         return alliance;
     }
+
+    @Override
+    public Alliance getAllianceByName(String allianceName) {
+        return null;
+    }
 }

@@ -14,6 +14,11 @@ import {RoutesModule} from "./app.routers";
 import {PagerService} from "./services/pager.service";
 import {AllianceService} from "./services/alliance/alliance-service";
 import {TimerComponent} from "./timer/timer.component";
+import {LeaderManagerComponent} from "./leader/leader-manager.component";
+import {MemberForm} from "./user/add-member.component";
+import {UserService} from "./services/user.service";
+import {AllianceMembersComponent} from "./user/alliance-members.component";
+import {EditMemberComponent} from "./user/edit-member.component";
 
 @NgModule({
     imports: [
@@ -31,11 +36,16 @@ import {TimerComponent} from "./timer/timer.component";
         EditAllianceComponent,
         ConfirmComponent,
         TimerComponent,
+        LeaderManagerComponent,
+        MemberForm,
+        AllianceMembersComponent,
+        EditMemberComponent
 
     ],
     providers: [
         AllianceService,
-        PagerService
+        PagerService,
+        UserService
     ],
     bootstrap: [AppComponent]
 })

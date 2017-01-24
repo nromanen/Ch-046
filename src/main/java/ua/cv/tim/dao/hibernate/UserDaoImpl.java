@@ -7,11 +7,14 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ua.cv.tim.dao.AbstractCrudDao;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
 import ua.cv.tim.dao.UserDao;
+import ua.cv.tim.service.UserService;
 
 /**
  * Created by rmochetc on 03.01.2017.
@@ -20,10 +23,20 @@ import ua.cv.tim.dao.UserDao;
 @Repository("userDao")
 public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Override
     public long getCount() {
         return (long) getCurrentSession().createCriteria(User.class).setProjection(Projections.rowCount()).uniqueResult();
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        logger.info("UserDao.getUsersByUsername  started username is {} ", username);
+        String request = "select u from User u where u.login = :login";
+        Query<User> query = getCurrentSession().createQuery(request);
+        query.setParameter("login", username);
+        return query.uniqueResult();
     }
 
     @Override
@@ -43,13 +56,11 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     }
 
     public User getByMail(String mail, String uuid) {
-        System.out.println("Dao get by email");
-        System.out.println("uuid = : " + uuid);
-
+        logger.info("UserDao.getByMail  started mail is {} uuid is {} ", mail,uuid);
         Session session = getCurrentSession();
         Query query = null;
         if (uuid != null) {
-            System.out.println("uuid no = null : " + uuid);
+            logger.info("UserDaoImpl.getByMail  user with mail {} has uuid {} ",mail, uuid);
             query = session.createQuery("select u FROM User u WHERE u.email=:mail and u.uuid != :uuid");
             query.setParameter("mail", mail);
             query.setParameter("uuid", uuid);
@@ -58,8 +69,15 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
             query.setParameter("mail", mail);
         }
         User user = (User) query.uniqueResult();
-        System.out.println(user);
         return user;
+    }
+
+    @Override
+    public List<User> getUsersByAlliance(String allianceName) {
+        String request = "select u from User u where u.player.alliance.name = :name";
+        Query<User> query = getCurrentSession().createQuery(request);
+        query.setParameter("name", allianceName);
+        return query.list();
     }
 
     @Override
@@ -74,7 +92,6 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     @Override
     public List<User> getAllWithRoles() {
 
-
         Query query = getCurrentSession().createQuery("FROM User ");
         List<User> allWithRoles = (List<User>) query.getResultList();
         for (User user : allWithRoles)
@@ -82,26 +99,30 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
         return allWithRoles;
     }
 
-    @Override
+
+    public User getByMail(String mail){
+        String request = "select u FROM User u WHERE u.email=:mail";
+        Query<User> query = getCurrentSession().createQuery(request);
+        query.setParameter("mail", mail);
+        return query.uniqueResult();
+
+    }
+
     public User getUserByUsername(String username, String uuid) {
-
-        System.out.println("Dao get by email");
-        System.out.println("uuid = : " + uuid);
-
         Session session = getCurrentSession();
         Query query = null;
         if (uuid != null) {
+            logger.info("UserDao.getUsersByUsername  started username is {} ", username);
             System.out.println("uuid no = null : " + uuid);
             query = session.createQuery("select u from User u where u.login = :login and u.uuid != :uuid");
             query.setParameter("login", username);
             query.setParameter("uuid", uuid);
         } else {
             query = session.createQuery("select u from User u where u.login = :login");
+            logger.info("UserDao.getUsersByUsername   id is null and username is {} ", username);
             query.setParameter("login", username);
         }
         User user = (User) query.uniqueResult();
-        System.out.println(user);
-        return user;
+            return user;
     }
-
 }

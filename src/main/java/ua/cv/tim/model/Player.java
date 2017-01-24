@@ -21,7 +21,6 @@ import java.util.List;
     @Enumerated(EnumType.STRING)
     private Race race;
 
-
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "player")
     @OrderBy("population")

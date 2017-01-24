@@ -1,5 +1,6 @@
-System.register(["rxjs/Rx", "@angular/core"], function (exports_1, context_1) {
+System.register(['rxjs/Rx', "@angular/core"], function(exports_1, context_1) {
     "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,18 +10,17 @@ System.register(["rxjs/Rx", "@angular/core"], function (exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var __moduleName = context_1 && context_1.id;
-    var Rx_1, core_1, TimerComponent;
+    var Rx_1, core_1;
+    var TimerComponent;
     return {
-        setters: [
+        setters:[
             function (Rx_1_1) {
                 Rx_1 = Rx_1_1;
             },
             function (core_1_1) {
                 core_1 = core_1_1;
-            }
-        ],
-        execute: function () {
+            }],
+        execute: function() {
             TimerComponent = (function () {
                 function TimerComponent(elm) {
                     this.futureString = elm.nativeElement.getAttribute('inputDate');
@@ -50,17 +50,17 @@ System.register(["rxjs/Rx", "@angular/core"], function (exports_1, context_1) {
                         _this.message = _this.dhms(_this.diff);
                     });
                 };
+                TimerComponent = __decorate([
+                    core_1.Component({
+                        selector: 'my-timer',
+                        template: "\n  <div>\n    {{message}}\n  </div>\n"
+                    }), 
+                    __metadata('design:paramtypes', [core_1.ElementRef])
+                ], TimerComponent);
                 return TimerComponent;
             }());
-            TimerComponent = __decorate([
-                core_1.Component({
-                    selector: 'my-timer',
-                    template: "\n  <div>\n    {{message}}\n  </div>\n"
-                }),
-                __metadata("design:paramtypes", [core_1.ElementRef])
-            ], TimerComponent);
             exports_1("TimerComponent", TimerComponent);
         }
-    };
+    }
 });
 //# sourceMappingURL=timer.component.js.map
