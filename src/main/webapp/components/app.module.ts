@@ -16,7 +16,7 @@ import {AllianceService} from "./services/alliance/alliance-service";
 import {TimerComponent} from "./timer/timer.component";
 import {PlayerComponent} from "./player/player.component";
 import {PlayerHeader} from "./player/player-header.component";
-import {HelpComponent} from "./help/ask-help,component";
+import {HelpComponent} from "./help/ask-help.component";
 import {HelpService} from "./help/help.service";
 
 @NgModule({
@@ -37,8 +37,7 @@ import {HelpService} from "./help/help.service";
         TimerComponent,
         PlayerComponent,
         PlayerHeader,
-        HelpComponent
-
+        HelpComponent,
     ],
     providers: [
         AllianceService,

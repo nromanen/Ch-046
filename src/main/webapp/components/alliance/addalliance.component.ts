@@ -21,6 +21,8 @@ export class AllianceForm{
     NAME_ERROR = "Enter from 3 to 10 letters";
     LOGIN_ERROR = "Enter from 3 to 10 letters";
 
+
+
     constructor(private fb: FormBuilder){
         this.complexForm = fb.group({
             'allianceName' : [null,  Validators.compose([Validators.required, Validators.pattern(this.ALLIANCE_NAME)])],

@@ -6,7 +6,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {ModuleWithProviders} from '@angular/core';
 import {AllianceComponent} from "./alliance/alliance.component";
 import {PlayerComponent} from "./player/player.component";
-import {HelpComponent} from "./help/ask-help,component";
+import {HelpComponent} from "./help/ask-help.component";
 
 
 

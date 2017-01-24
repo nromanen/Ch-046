@@ -1,4 +1,4 @@
-System.register(["@angular/core", "@angular/platform-browser", "@angular/http", "@angular/forms", "./app.component", "./alliance/alliance.component", "./header/header.component", "./alliance/addalliance.component", "./alliance/editalliance.component", "./modal_window/modal", "./app.routers", "./services/pager.service", "./services/alliance/alliance-service", "./timer/timer.component", "./player/player.component", "./player/player-header.component", "./help/ask-help,component", "./help/help.service"], function (exports_1, context_1) {
+System.register(["@angular/core", "@angular/platform-browser", "@angular/http", "@angular/forms", "./app.component", "./alliance/alliance.component", "./header/header.component", "./alliance/addalliance.component", "./alliance/editalliance.component", "./modal_window/modal", "./app.routers", "./services/pager.service", "./services/alliance/alliance-service", "./timer/timer.component", "./player/player.component", "./player/player-header.component", "./help/ask-help.component", "./help/help.service"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -90,7 +90,7 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
                         timer_component_1.TimerComponent,
                         player_component_1.PlayerComponent,
                         player_header_component_1.PlayerHeader,
-                        ask_help_component_1.HelpComponent
+                        ask_help_component_1.HelpComponent,
                     ],
                     providers: [
                         alliance_service_1.AllianceService,

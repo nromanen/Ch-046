@@ -42,6 +42,8 @@ public class HelpController {
     @RequestMapping(value = "/askhelp", method = RequestMethod.GET)
     public ResponseEntity<PlayerDTO> getPlayerById() {
 
+        System.out.println("Help");
+
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println(principal.getUsername());
         User userByUsername = userService.getUserByUsername(principal.getUsername());

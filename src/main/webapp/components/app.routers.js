@@ -1,7 +1,7 @@
 /**
  * Created by rmochetc on 15.01.2017.
  */
-System.register(["@angular/router", "./alliance/alliance.component", "./player/player.component", "./help/ask-help,component"], function (exports_1, context_1) {
+System.register(["@angular/router", "./alliance/alliance.component", "./player/player.component", "./help/ask-help.component"], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var router_1, alliance_component_1, player_component_1, ask_help_component_1, routes, RoutesModule;

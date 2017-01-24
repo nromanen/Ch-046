@@ -5,6 +5,7 @@ import {Injectable} from "@angular/core";
 import {Http} from "@angular/http";
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
+import {Player} from "../player/player";
 @Injectable()
 export class HelpService {
 
@@ -15,9 +16,11 @@ export class HelpService {
     }
 
 
-    getById(): Observable<any> {
+    getById(): Observable<Player> {
         console.log(this.url);
         return this._http.get(this.url)
             .map(res => res.json());
     }
+
+
 }
