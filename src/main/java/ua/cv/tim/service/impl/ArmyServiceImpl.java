@@ -1,15 +1,16 @@
-package ua.cv.tim.service;
+package ua.cv.tim.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.ArmyDao;
 import ua.cv.tim.model.Army;
+import ua.cv.tim.service.ArmyService;
 
 /**
  * Created by Serhii Starovoit on 1/5/2017 in 7:31 PM.
  */
-@Service("armyService")
+@Service
 @Transactional
 public class ArmyServiceImpl implements ArmyService {
 
@@ -32,8 +33,13 @@ public class ArmyServiceImpl implements ArmyService {
     }
 
     @Override
-    public Army getArmyById(String uuid) { armyDao.getArmyById(uuid);
-        return null;
+    public Army getArmyById(String uuid) {
+        return armyDao.getArmyById(uuid);
+    }
+
+    @Override
+    public Army getById(String uuid)  {
+        return armyDao.getById(uuid);
     }
 
     public void setArmyDao(ArmyDao armyDao) {

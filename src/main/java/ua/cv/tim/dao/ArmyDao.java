@@ -8,4 +8,5 @@ import ua.cv.tim.model.Army;
 
 public interface ArmyDao extends CrudDao<Army> {
     Army getArmyById(String uuid);
+    public Army getById(String id);
 }

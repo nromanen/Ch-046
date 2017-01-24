@@ -4,23 +4,21 @@ package ua.cv.tim.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.UriComponentsBuilder;
 import ua.cv.tim.dto.UserDTO;
-import ua.cv.tim.dto.UserInfoDTO;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.UserService;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 /**
  * Created by Oleg on 07.01.2017.
  */
+
 
 @RestController
 @RequestMapping(value = "/user")
@@ -31,105 +29,71 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String showAdminMainPage() {
-		return "user-main.jsp";
+
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	public ResponseEntity<List<User>> getAllUsers() {
+		List<User> allWithRoles = userService.getAllWithRoles();
+		if (allWithRoles.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(allWithRoles, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/addd", method = RequestMethod.GET)
-	public ModelAndView addUserForm() {
-
-		ModelAndView model = new ModelAndView("addUser.html");
-		return model;
-	}
-
-	@RequestMapping(value = "/submitUserForm",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<UserDTO> submitUserForm(@RequestBody UserDTO userDTO) {
-		logger.info("UserMail {}" ,userDTO.getEmail());
-		logger.info("UserLogin {}" ,userDTO.getLogin());
-		logger.info("UserPassword {}" ,userDTO.getPassword());
-		logger.info("User Role {}" ,userDTO.getRole());
-		userService.add(userDTO);
-		logger.info("User added succesfully {}" ,userDTO.getLogin());
-		return new ResponseEntity<>(userDTO, HttpStatus.OK);
-	}
-
-	@RequestMapping(value = "/leader", method = RequestMethod.GET)
-	public ModelAndView getAllUsers2() {
-
-		ModelAndView model = new ModelAndView("leaderMainPage.html");
-
-		return model;
-	}
-
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> allWithRoles = userService.getAllWithRoles();
-        if (allWithRoles.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(allWithRoles, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public ResponseEntity<User> getById(@PathVariable("id") String id) {
-        User user = userService.getWithRolesById(id);
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public ResponseEntity<Void> addUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
-        userService.add(user);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/member/{id}").buildAndExpand(user.getUuid()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
-    }
-
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<User> updateUser(@PathVariable("id") String id, @RequestBody User user) {
-		User currentUser = userService.getWithRolesById(id);
-        if (currentUser == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        currentUser.setLogin(user.getLogin());
-        currentUser.setPassword(user.getPassword());
-        userService.update(currentUser);
-        return new ResponseEntity<>(currentUser, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<User> deleteUser(@PathVariable(name = "id") String id) {
-		logger.info("UserController.deleteUser() method is working. User id: {}", id);
-        userService.deleteById(id);
-		logger.info("UserController.deleteUser() user has deleted");
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-	// v.kruhlov realizations
-	@RequestMapping(value = "/alliance-users/{allianceName}")
-	public ResponseEntity<List<UserInfoDTO>> getUsersByAlliance(@PathVariable(name = "allianceName") String allianceName) {
-		logger.info("UserController.getUsersByAlliance() method is working. Alliance name: {}", allianceName);
-		List<UserInfoDTO> allianceUsers = userService.getUsersByAlliance(allianceName);
-		logger.info("Users from DB: {}", allianceUsers);
-		return new ResponseEntity<>(allianceUsers, HttpStatus.OK);
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+	public ResponseEntity<User> getById(@PathVariable("id") String id) {
+		User user = userService.getWithRolesById(id);
+		if (user == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserInfoDTO> addAllianceMember(@RequestBody UserInfoDTO member) {
-		logger.info("UserController.addAllianceMember() method is working. Alliance name: {}", member.toString());
-		userService.addAllianceMember(member);
-		User user = userService.getUserByUsername(member.getLogin());
-		member.setUuid(user.getUuid());
-		logger.info("UserController.getUsersByAlliance() method return: {}", member); // todo не сохраняет Player в service т.к. не вытащен Alliance
+	public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO member) throws MessagingException {
+		logger.info("Alliance name: {}", member.toString());
+		User user = new User();
+		user.setLogin(member.getLogin());
+		user.setEmail(member.getEmail());
+		if (!userService.isUnique(user)) {
+			logger.error("User is not unique");
+			throw new NullPointerException("User with entered login or e-mail already exist");
+		}
+		addUserToDataBase(member);
 		return new ResponseEntity<>(member, HttpStatus.OK);
 	}
 
+	private boolean addUserToDataBase(@RequestBody UserDTO member) throws MessagingException {
+		try {
+			userService.addUser(member);
+			logger.info("Try section, send message on  {}", member.getEmail());
+		} catch (MessagingException e) {
+			logger.error("Exception: {}", e);
+			throw new MessagingException("Message did not send check internet connection");
+		}
+		return true;
+	}
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<User> deleteUser(@PathVariable(name = "id") String id) {
+		if (isUserExists(id)) {
+			logger.info("User id: {}", id);
+			userService.deleteById(id);
+			logger.info("User has deleted successfully");
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} else {
+			logger.info("User has not found");
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+
+	private boolean isUserExists(String id) {
+		return userService.getById(id) != null;
+	}
+
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<User> updateMember(@PathVariable("id") String id, @RequestBody UserInfoDTO user) {
-		logger.info("UserController.updateUser() method is working. User id: {}, user body: {}", id, user);
+	public ResponseEntity<UserDTO> updateUser(@PathVariable("id") String id, @RequestBody UserDTO user) {
+		logger.info("User id: {}, user body: {}", id, user);
 		User currentUser = userService.getById(id);
 		if (currentUser == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -137,7 +101,14 @@ public class UserController {
 		currentUser.setLogin(user.getLogin());
 		currentUser.setEmail(user.getEmail());
 		userService.update(currentUser);
-		return new ResponseEntity<>(currentUser, HttpStatus.OK);
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/alliance-users/{allianceName}")
+	public ResponseEntity<List<UserDTO>> getUsersByAlliance(@PathVariable(name = "allianceName") String allianceName) {
+		logger.info("Alliance name: {}", allianceName);
+		List<UserDTO> allianceUsers = userService.getUsersByAlliance(allianceName);
+		logger.info("Users from DB: {}", allianceUsers);
+		return new ResponseEntity<>(allianceUsers, HttpStatus.OK);
+	}
 }

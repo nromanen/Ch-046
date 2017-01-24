@@ -14,7 +14,7 @@ export class MemberForm {
 
     USER_LOGIN = /^[a-z1-9]{3,9}$/;
     EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-    LOGIN_ERROR = "Enter from 3 to 10 letters";
+    LOGIN_ERROR = "Login should be from 3 to 10 letters";
     EMAIL_ERROR = "Enter correct email, please!";
 
     constructor(private fb:FormBuilder) {
@@ -23,7 +23,8 @@ export class MemberForm {
             'uuid': [''],
             'login': ['', Validators.compose([Validators.required, Validators.pattern(this.USER_LOGIN)])],
             'email': ['', Validators.compose([Validators.required, Validators.pattern(this.EMAIL_REGEXP)])],
-            'alliance': ['']
+            'alliance': [''],
+            'leader':['']
         });
     }
 
@@ -31,7 +32,7 @@ export class MemberForm {
         console.log(`MemberForm.addMember() method is working`);
         console.log(`Form value is: ${JSON.stringify(value)}`);
 
-        let member = new User(value.login, value.email, value.uuid, value.alliance);
+        let member = new User(value.login, value.email, value.uuid, value.alliance, value.leader);
         this.addMemberForm.emit(member);
         this.memberForm.reset();
     }

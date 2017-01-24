@@ -54,12 +54,15 @@ import java.util.List;
         this.villages = villages;
     }
 
-
     public Alliance getAlliance() {
         return alliance;
     }
 
     public void setAlliance(Alliance alliance) {
         this.alliance = alliance;
+    }
+
+    public Player(){
+
     }
 }

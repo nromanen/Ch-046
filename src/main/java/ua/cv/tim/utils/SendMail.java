@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Service("sendMail")
 public class SendMail {
 	
-
+		
 	@Autowired
 	private EmailConfiguration emailConfig;
 
@@ -63,26 +63,30 @@ public class SendMail {
         // -- Create a new message --
         final MimeMessage msg = new MimeMessage(session);
 
-        // -- Set the FROM and TO fields --
+		/*
+		 * If set to false, the QUIT command is sent and the connection is
+		 * immediately closed. If set to true (the default), causes the
+		 * transport to wait for the response to the QUIT command.
+		 *
+		 */
 
-        //msg.setFrom(new InternetAddress(username + "@gmail.com"));
-        msg.setFrom(new InternetAddress(sender));
-        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail, false));
+		msg.setFrom(new InternetAddress(sender));
+		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail, false));
 
-        if (ccEmail.length() > 0) {
-            msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmail, false));
-        }
+		if (ccEmail.length() > 0) {
+			msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmail, false));
+		}
 
-        msg.setSubject(title);
-        msg.setText(message, "utf-8");
-        msg.setSentDate(new Date());
+		msg.setSubject(title);
+		msg.setText(message, "utf-8");
+		msg.setSentDate(new Date());
 
-        SMTPTransport t = (SMTPTransport)session.getTransport("smtps");
+		SMTPTransport t = (SMTPTransport) session.getTransport("smtps");
 
-        t.connect("smtp.gmail.com", sender, password);
-        t.sendMessage(msg, msg.getAllRecipients());
-        t.close();
-    }
+		t.connect("smtp.gmail.com", sender, password);
+		t.sendMessage(msg, msg.getAllRecipients());
+		t.close();
+	}
 }
 
 

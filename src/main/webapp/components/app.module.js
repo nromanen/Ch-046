@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/platform-browser', '@angular/http', '@angular/forms', "./app.routers", './app.component', "./alliance/alliance.component", "./leader/leader-manager.component", "./header/header.component", "./alliance/addalliance.component", "./alliance/editalliance.component", "./modal_window/modal", './user/add-member.component', './user/edit-member.component', "./services/alliance-service", "./services/user.service"], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/platform-browser', '@angular/http', '@angular/forms', "./app.routers", './app.component', "./alliance/alliance.component", "./header/header.component", "./alliance/editalliance.component", "./modal_window/modal", "./timer/timer.component", "./leader/leader-manager.component", "./user/edit-member.component", "./alliance/addalliance.component", "./user/add-member.component", "./services/pager.service", "./services/alliance/alliance-service", "./services/user.service"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/http', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, platform_browser_1, http_1, forms_1, app_routers_1, app_component_1, alliance_component_1, leader_manager_component_1, header_component_1, addalliance_component_1, editalliance_component_1, modal_1, add_member_component_1, edit_member_component_1, alliance_service_1, user_service_1;
+    var core_1, platform_browser_1, http_1, forms_1, app_routers_1, app_component_1, alliance_component_1, header_component_1, editalliance_component_1, modal_1, timer_component_1, leader_manager_component_1, edit_member_component_1, addalliance_component_1, add_member_component_1, pager_service_1, alliance_service_1, user_service_1;
     var AppModule;
     return {
         setters:[
@@ -35,14 +35,8 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/http', 
             function (alliance_component_1_1) {
                 alliance_component_1 = alliance_component_1_1;
             },
-            function (leader_manager_component_1_1) {
-                leader_manager_component_1 = leader_manager_component_1_1;
-            },
             function (header_component_1_1) {
                 header_component_1 = header_component_1_1;
-            },
-            function (addalliance_component_1_1) {
-                addalliance_component_1 = addalliance_component_1_1;
             },
             function (editalliance_component_1_1) {
                 editalliance_component_1 = editalliance_component_1_1;
@@ -50,11 +44,23 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/http', 
             function (modal_1_1) {
                 modal_1 = modal_1_1;
             },
-            function (add_member_component_1_1) {
-                add_member_component_1 = add_member_component_1_1;
+            function (timer_component_1_1) {
+                timer_component_1 = timer_component_1_1;
+            },
+            function (leader_manager_component_1_1) {
+                leader_manager_component_1 = leader_manager_component_1_1;
             },
             function (edit_member_component_1_1) {
                 edit_member_component_1 = edit_member_component_1_1;
+            },
+            function (addalliance_component_1_1) {
+                addalliance_component_1 = addalliance_component_1_1;
+            },
+            function (add_member_component_1_1) {
+                add_member_component_1 = add_member_component_1_1;
+            },
+            function (pager_service_1_1) {
+                pager_service_1 = pager_service_1_1;
             },
             function (alliance_service_1_1) {
                 alliance_service_1 = alliance_service_1_1;
@@ -82,13 +88,14 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/http', 
                             addalliance_component_1.AllianceForm,
                             editalliance_component_1.EditAllianceComponent,
                             modal_1.ConfirmComponent,
+                            timer_component_1.TimerComponent,
                             leader_manager_component_1.LeaderManagerComponent,
                             add_member_component_1.MemberForm,
-                            edit_member_component_1.EditMemberComponent,
+                            edit_member_component_1.EditMemberComponent
                         ],
                         providers: [
                             alliance_service_1.AllianceService,
-                            modal_1.ConfirmComponent,
+                            pager_service_1.PagerService,
                             user_service_1.UserService
                         ],
                         bootstrap: [app_component_1.AppComponent]

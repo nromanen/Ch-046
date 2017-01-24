@@ -7,8 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.cv.tim.dto.AllianceDTO;
 import ua.cv.tim.model.Alliance;
+import ua.cv.tim.model.User;
 import ua.cv.tim.service.AllianceService;
+import ua.cv.tim.service.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -18,44 +21,76 @@ import java.util.List;
 
 @RestController
 public class AllianceController {
+
     @Autowired
-    private AllianceService service;
+    private AllianceService allianceService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/admin/allianceDTO", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<AllianceDTO>> listAllAlliances() {
-        List<AllianceDTO> alliances = service.getAll();
+        List<AllianceDTO> alliances = allianceService.getAll();
         if (alliances.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        System.out.println(alliances);
         return new ResponseEntity<>(alliances, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/admin/allianceDTO", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<AllianceDTO> createAlliance(@RequestBody AllianceDTO allianceDTO) {
-        service.addAlliane(allianceDTO);
+    public ResponseEntity<AllianceDTO> createAlliance(@RequestBody @Valid AllianceDTO allianceDTO) {
 
-        allianceDTO.setUuid(service.getIdByName(allianceDTO.getName()));
+        User user = new User();
+        user.setLogin(allianceDTO.getLeaderLogin());
+        user.setEmail(allianceDTO.getLeaderEmail());
+
+        System.out.println(allianceDTO.getLeaderUuid());
+
+        if (!userService.isUnique(user)) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        if (!allianceService.isUniqueAlliance(allianceDTO.getName(), null)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        allianceService.addAlliance(allianceDTO);
+        allianceDTO.setAllianceUuid(allianceService.getIdByName(allianceDTO.getName()));
+
+        System.out.println(allianceDTO);
 
         return new ResponseEntity<>(allianceDTO, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/admin/allianceDTO/{id}", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<AllianceDTO> updateAlliance(@PathVariable("id") String uuid, @RequestBody AllianceDTO allianceDTO) {
+    public ResponseEntity<AllianceDTO> updateAlliance(@PathVariable("id") String uuid, @RequestBody @Valid  AllianceDTO allianceDTO) {
 
-        if (service.getById(uuid) == null) {
+        Alliance updatedAlliance = allianceService.getById(uuid);
+        if (updatedAlliance == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        allianceDTO.setUuid(uuid);
-        service.updateAlliance(allianceDTO);
+
+        User user = new User();
+        user.setLogin(allianceDTO.getLeaderLogin());
+        user.setEmail(allianceDTO.getLeaderEmail());
+        user.setUuid(allianceDTO.getLeaderUuid());
+        if (!userService.isUnique(user)) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        if (!allianceService.isUniqueAlliance(allianceDTO.getName(), uuid)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        allianceDTO.setAllianceUuid(uuid);
+        allianceService.updateAlliance(allianceDTO);
         return new ResponseEntity<>(allianceDTO, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/admin/allianceDTO/{id}", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AllianceDTO> deleteAlliance(@PathVariable("id") String uuid) {
-        if (service.getById(uuid) == null) {
+        if (allianceService.getById(uuid) == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        service.deleteAlliance(uuid);
+        allianceService.deleteAlliance(uuid);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

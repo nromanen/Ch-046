@@ -22,7 +22,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let member of allianceMembers">
+            <tr *ngFor="let member of users">
                 <div *ngIf="member !== selectedMember" class="valign-wrapper" style="height: 55px" (dblclick)="selectMember(member)">
                     <td class="col s3">{{ member.login }}</td>
                     <td class="col s3">{{ member.email }}</td>

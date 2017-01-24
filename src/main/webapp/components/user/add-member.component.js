@@ -30,20 +30,21 @@ System.register(["@angular/core", "@angular/forms", "./user"], function(exports_
                     this.addMemberForm = new core_1.EventEmitter();
                     this.USER_LOGIN = /^[a-z1-9]{3,9}$/;
                     this.EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-                    this.LOGIN_ERROR = "Enter from 3 to 10 letters";
+                    this.LOGIN_ERROR = "Login should be from 3 to 10 letters";
                     this.EMAIL_ERROR = "Enter correct email, please!";
                     console.log("MemberForm.constructor() is working");
                     this.memberForm = fb.group({
                         'uuid': [''],
                         'login': ['', forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(this.USER_LOGIN)])],
                         'email': ['', forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(this.EMAIL_REGEXP)])],
-                        'alliance': ['']
+                        'alliance': [''],
+                        'leader': ['']
                     });
                 }
                 MemberForm.prototype.addMember = function (value) {
                     console.log("MemberForm.addMember() method is working");
                     console.log("Form value is: " + JSON.stringify(value));
-                    var member = new user_1.User(value.login, value.email, value.uuid, value.alliance);
+                    var member = new user_1.User(value.login, value.email, value.uuid, value.alliance, value.leader);
                     this.addMemberForm.emit(member);
                     this.memberForm.reset();
                 };

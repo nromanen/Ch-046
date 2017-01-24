@@ -1,5 +1,7 @@
 package ua.cv.tim.dto;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -8,15 +10,21 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class AllianceDTO  {
 
-    private String uuid;
+    private String allianceUuid;
+
+    private String leaderUuid;
+
+
 
     @NotEmpty
+    @Length(min = 3, max = 10)
     private String name;
 
     @NotEmpty
+    @Length(min = 3, max = 10)
     private String leaderLogin;
 
-    @NotEmpty
+    @Email
     private String leaderEmail;
 
     public AllianceDTO() {
@@ -28,9 +36,10 @@ public class AllianceDTO  {
         this.leaderEmail = leaderEmail;
     }
 
-    public AllianceDTO(String uuid, String name, String leaderLogin, String leaderEmail) {
+    public AllianceDTO(String allianceUuid, String leaderUuid, String name, String leaderLogin, String leaderEmail) {
         this(name, leaderLogin, leaderEmail);
-        this.uuid = uuid;
+        this.allianceUuid = allianceUuid;
+        this.leaderUuid = leaderUuid;
     }
 
     public String getName() {
@@ -57,11 +66,36 @@ public class AllianceDTO  {
         this.leaderEmail = leaderEmail;
     }
 
-    public String getUuid() {
-        return uuid;
+    public String getAllianceUuid() {
+        return allianceUuid;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setAllianceUuid(String allianceUuid) {
+        this.allianceUuid = allianceUuid;
     }
+
+    public String getLeaderUuid() {
+        return leaderUuid;
+    }
+
+    public void setLeaderUuid(String leaderUuid) {
+        this.leaderUuid = leaderUuid;
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder()
+                .append("AllianceDTO{allianceUuid='")
+                .append(allianceUuid)
+                .append("', leaderUuid='")
+                .append(leaderUuid)
+                .append("', name='")
+                .append(name)
+                .append("', leaderLogin='")
+                .append(leaderLogin)
+                .append("', leaderEmail='")
+                .append(leaderEmail)
+                .append("'}")
+                .toString();
+       }
 }

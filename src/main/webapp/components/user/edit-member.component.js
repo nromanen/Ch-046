@@ -83,5 +83,4 @@ System.register(["@angular/core", "@angular/forms", "./user"], function(exports_
         }
     }
 });
-// todo протестить собственный валидатор на изменение значения сразу сравнивать + double click && autofocus on form field 
 //# sourceMappingURL=edit-member.component.js.map
