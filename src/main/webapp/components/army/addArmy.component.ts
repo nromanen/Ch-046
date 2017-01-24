@@ -1,11 +1,12 @@
 /**
  * Created by okunetc on 23.01.2017.
  */
-import {Component, Input, OnInit, OnChanges, AfterViewChecked} from "@angular/core";
+import {Component, Input, OnInit, OnChanges, AfterViewChecked, Output, EventEmitter, ViewChild} from "@angular/core";
 import {Army} from "./army";
 import {UnitType} from "../UnitType/unitType";
 import {Player} from "../player/player";
 import {Village} from "../village/village";
+import {NgForm} from "@angular/forms";
 @Component({
     selector:"[add-army]",
     template:`
@@ -31,7 +32,7 @@ import {Village} from "../village/village";
         </div>
         
   <div class="input-field col s6 offset-s3">
-Is capital?
+Is own unit?
 </div>
 <div class="switch ">
     <label class="col offset-s3">
@@ -45,19 +46,21 @@ Is capital?
 })
 export class AddArmyComponent implements OnInit,AfterViewChecked{
     ngAfterViewChecked(): void {
-        // console.log(this.army);
+
     }
     ngOnInit(): void {
-        // console.log('army is');
-        // console.log(this.army);
         this.army.type=UnitType.Axeman;
     }
     @Input() army:Army;
     @Input() village:Village;
-unitTypes:Array<number>;
-unitTypeStrings:Array<string>;
+    @Output () armyIsValid:EventEmitter<boolean>;
+    @ViewChild('addArmyForm') currentForm: NgForm;
+
+    unitTypes:Array<number>;
+    unitTypeStrings:Array<string>;
     constructor(){
         this.unitTypes=[];
+        this.armyIsValid=new EventEmitter<boolean>();
         this.unitTypeStrings=[];
         for(let t in UnitType){
             if (typeof UnitType[t]==='string')
@@ -66,10 +69,8 @@ unitTypeStrings:Array<string>;
                 this.unitTypeStrings.push(t);
             }
         }
-
-        // console.log(this.unitTypes);
-        // console.log(this.unitTypeStrings);
-        // console.log(UnitType[0]);
     }
+
+
 
 }

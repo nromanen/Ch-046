@@ -35,7 +35,6 @@ System.register(["@angular/core", "../village/village", "./army", "../services/n
                     this.currVillageArmiesService = currVillageArmiesService;
                     this.isInput = true;
                     this.cellClicked = new core_1.EventEmitter();
-                    // this.newArmy=new Army();
                 }
                 ArmyCellComponent.prototype.ngOnChanges = function (changes) {
                     if (this.ifSave && this.army != null) {
@@ -49,19 +48,23 @@ System.register(["@angular/core", "../village/village", "./army", "../services/n
                         }
                 };
                 ArmyCellComponent.prototype.ngOnInit = function () {
-                    var _this = this;
-                    this.village.armies.forEach(function (army) {
-                        // console.log(UnitType[army.type]);
-                        // console.log(army.type);
-                        // console.log(this.type);
-                        if (_this.type == army.type.toString() || unitType_1.UnitType[army.type] == _this.type) {
-                            // alert(this.type==army.type.toString());
-                            _this.army = army;
-                            _this.newArmy = new army_1.Army(_this.army.count, _this.army.type, _this.army.ownUnit);
-                            _this.newArmy.uuid = _this.army.uuid;
+                    for (var army in this.village.armies) {
+                        if (this.type == this.village.armies[army].type.toString() || unitType_1.UnitType[this.village.armies[army].type] == this.type) {
+                            this.army = this.village.armies[army];
+                            this.newArmy = new army_1.Army(this.army.count, this.army.type, this.army.ownUnit);
+                            this.newArmy.uuid = this.army.uuid;
+                            break;
                         }
-                    });
-                    // console.log(this.currVillageArmiesService.armies);
+                        else
+                            this.army = new army_1.Army(0, unitType_1.UnitType[this.type], false);
+                    }
+                    // this.village.armies.forEach( (army)=> {
+                    //     if(this.type==army.type.toString()|| UnitType[army.type]==this.type){
+                    //         this.army=army;
+                    //         this.newArmy=new Army(this.army.count,this.army.type,this.army.ownUnit);
+                    //         this.newArmy.uuid=this.army.uuid;
+                    //     }
+                    // });
                 };
                 ArmyCellComponent.prototype.hide = function () {
                     this.isInput = true;

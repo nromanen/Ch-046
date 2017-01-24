@@ -18,32 +18,30 @@ import {UnitType} from "../UnitType/unitType";
     template:`
 <player-head></player-head>
 <player-list *ngIf="player" [player]="player"></player-list>
-<button  (click)="f()" >add</button>
-<add-vill-form [player]="player"></add-vill-form>
+<div class="row">
+<div class="col offset-s5">
+<button  (click)="showAddForm()" class="btn waves-effect waves-light">add</button>
+</div>
+<add-vill-form [player]="player" *ngIf="showAddVillageForm" (wasSubmitted)="hideAddForm($event)" ></add-vill-form>
 `
 })
  export class PlayerComponent implements OnInit{
     player:Player;
     id;
+    showAddVillageForm:boolean;
     constructor(private currPlayerService:CurrVillageArmiesService, private playerService:PlayerService, private route:ActivatedRoute, private villageService:VillageService){
         this.route.params.subscribe((param:any)=>
         {
             this.id=param['id'];
             this.playerService.url=this.playerService.url+this.id;
         });
+        this.showAddVillageForm=false;
 
 
     }
 
-    f():void{
-        console.log('clicked');
-        console.log(this.player);
-        let village=new Village();
-        let armies:Army[]=[];
-        village.armies=armies;
-        alert(JSON.stringify(village));
-        village.armies.push(new Army(15,UnitType.Legionnaire,true));
-        this.player.villages.push(village);
+    hideAddForm():void{
+      this.showAddVillageForm=false;
     }
 
     ngOnInit(): void {
@@ -55,6 +53,11 @@ import {UnitType} from "../UnitType/unitType";
                     // alert(JSON.stringify(this.player));
                 }
             );
+    }
+
+    showAddForm(){
+        console.log(this.showAddVillageForm);
+        this.showAddVillageForm=true;
     }
 }
 

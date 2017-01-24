@@ -41,21 +41,21 @@ export class ArmyCellComponent implements OnInit,OnChanges{
 
     }
     ngOnInit(): void {
-        this.village.armies.forEach( (army)=> {
-            // console.log(UnitType[army.type]);
-            // console.log(army.type);
-            // console.log(this.type);
-            if(this.type==army.type.toString()|| UnitType[army.type]==this.type){
-                // alert(this.type==army.type.toString());
-                this.army=army;
+        for(let army in this.village.armies){
+            if(this.type==this.village.armies[army].type.toString()|| UnitType[this.village.armies[army].type]==this.type){
+                this.army=this.village.armies[army];
                 this.newArmy=new Army(this.army.count,this.army.type,this.army.ownUnit);
                 this.newArmy.uuid=this.army.uuid;
-                // alert(JSON.stringify(this.army));
-                // this.newArmy.count=this.army.count;
-                // this.currVillageArmiesService.armies.push(this.newArmy);
-            }
-        });
-        // console.log(this.currVillageArmiesService.armies);
+                break;
+            } else this.army=new Army(0,UnitType[this.type],false);
+        }
+        // this.village.armies.forEach( (army)=> {
+        //     if(this.type==army.type.toString()|| UnitType[army.type]==this.type){
+        //         this.army=army;
+        //         this.newArmy=new Army(this.army.count,this.army.type,this.army.ownUnit);
+        //         this.newArmy.uuid=this.army.uuid;
+        //     }
+        // });
     }
   @Input() type:string;
   @Input() village:Village;
@@ -67,7 +67,6 @@ export class ArmyCellComponent implements OnInit,OnChanges{
   constructor(private currVillageArmiesService:CurrVillageArmiesService){
       this.isInput=true;
       this.cellClicked=new EventEmitter<Village>();
-      // this.newArmy=new Army();
 
   }
 

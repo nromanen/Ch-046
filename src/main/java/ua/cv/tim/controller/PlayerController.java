@@ -36,6 +36,7 @@ public class PlayerController {
     @RequestMapping(value = "/player/{id}", method = RequestMethod.GET)
     public ResponseEntity<PlayerDTO> getPlayerById(@PathVariable(name = "id") String id) {
         Player player = playerService.getByIdWithVillages(id);
+
         PlayerDTO playerDTO=new PlayerDTO(player.getUser().getLogin(),
                 player.getUser().getPassword(),player.getUser().getEmail(),
                 player.getRace(),player.getVillages(),player.getAlliance());

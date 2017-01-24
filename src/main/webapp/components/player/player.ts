@@ -14,7 +14,6 @@ export class Player{
       uuid:string;
       // alliance:Alliance;
       constructor(){
-            this.uuid="kjukjkj";
-            alert(this.uuid);
+
       }
 }

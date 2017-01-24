@@ -11,8 +11,6 @@ System.register([], function (exports_1, context_1) {
             Player = (function () {
                 // alliance:Alliance;
                 function Player() {
-                    this.uuid = "kjukjkj";
-                    alert(this.uuid);
                 }
                 return Player;
             }());

@@ -20,7 +20,7 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
     <input *ngIf="isForm" (ngModelChange)="this.newVillage.population=$event" type="text" [ngModel]="this.v.population" name="population">
 </td>
 <td>
-    <div *ngIf="!isForm" >{{this.v.xCoord==null}}</div>
+    <div *ngIf="!isForm" >{{this.v.xCoord}}</div>
     <input (ngModelChange)="this.newVillage.xCoord=$event" *ngIf="isForm" type="text" [ngModel]="this.v.xCoord" name="x">
 </td>
 <td >
@@ -53,11 +53,7 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 })
 export class VillageRow implements OnInit,AfterViewChecked{
     ngAfterViewChecked(): void {
-        // if (this.v!==this.villBefore) {
-        //     console.log('villages changed');
-        //     console.log(this.v);
-        //     this.villBefore=this.v;
-        // }
+      
     }
     private newVillage: Village;
     private villBefore;
