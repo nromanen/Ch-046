@@ -1,6 +1,5 @@
 package ua.cv.tim.dao;
 
-import ua.cv.tim.dao.CrudDao;
 import java.util.List;
 
 import ua.cv.tim.model.User;

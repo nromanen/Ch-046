@@ -1,4 +1,4 @@
-package ua.cv.tim.service;
+package ua.cv.tim.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +12,7 @@ import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
+import ua.cv.tim.service.UserService;
 import ua.cv.tim.utils.SendMail;
 
 import javax.mail.MessagingException;

@@ -19,7 +19,6 @@ public class PlayerMainController {
     UserService userService;
     @RequestMapping(method= RequestMethod.GET)
     public String showPlayerMainPage(){
-
         return "index.html";
     }
 }

@@ -88,6 +88,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public AuthenticationTrustResolver getAuthenticationTrustResolver() {
+		System.out.println("hkhhkhkh");
 		return new AuthenticationTrustResolverImpl();
 	}
 }

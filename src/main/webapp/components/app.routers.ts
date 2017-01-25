@@ -36,9 +36,9 @@ export const routes:Routes = ([
     },
     {
         path: 'user/:id',
-        redirectTo:'player/:id',
-        pathMatch:'full',
-
+        component:PlayerComponent
+        // redirectTo:'player/:id',
+        // pathMatch:'full',
     },
 ]);
 
