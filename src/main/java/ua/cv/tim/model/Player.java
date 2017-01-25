@@ -67,4 +67,15 @@ import java.util.List;
     public Player(){
 
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb
+                .append("Player: { user: ").append(user).append(", ")
+                .append("race: ").append(race).append(", ")
+                .append("villages: { ").append(villages).append(" }, ")
+                .append("alliance: ").append(alliance).append(" }");
+        return sb.toString();
+    }
 }

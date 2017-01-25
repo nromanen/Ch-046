@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.PlayerDao;
 import ua.cv.tim.dao.VillageDao;
-import ua.cv.tim.model.Army;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Village;
 import ua.cv.tim.service.PlayerService;
@@ -54,5 +53,10 @@ public class PlayerServiceImpl implements PlayerService {
 
     public void deleteVillageOfPlayer(Village village) {
         villageDao.delete(village);
+    }
+
+    @Override
+    public List<Player> getPlayersByAllianceWithVillages(String allianceName) {
+        return playerDao.getPlayersByAllianceWithVillages(allianceName);
     }
 }

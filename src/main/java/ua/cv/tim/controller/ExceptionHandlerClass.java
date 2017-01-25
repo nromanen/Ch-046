@@ -37,6 +37,7 @@ public class ExceptionHandlerClass {
     @ExceptionHandler(value = Exception.class)
     public String generalExceptionHandler(Exception e) {
         logger.error("Exception: {}", e.getMessage());
+        e.printStackTrace();
         return e.getMessage();
     }
 }

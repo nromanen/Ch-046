@@ -23,6 +23,16 @@ export class UserService {
             );
     }
 
+    getLeader():Observable<User> {
+        console.log(`UserService.getLeader() method is working`);
+
+        return this.http.get(`${this.userControllerUrl}`)
+            .map(response => {
+                console.log(`Leader value: ${JSON.stringify(response)}`);
+                return response.json()
+            });
+    }
+
     addMember(member:User):Observable<User> {
         console.log(`UserService.addMember() method is working`);
 

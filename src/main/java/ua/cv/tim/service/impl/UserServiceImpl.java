@@ -184,4 +184,8 @@ public class UserServiceImpl implements UserService {
 		} else return true;
 	}
 
+	@Override
+	public User getUserWithAlliance(String username) {
+		return userDao.getUserWithAlliance(username);
+	}
 }

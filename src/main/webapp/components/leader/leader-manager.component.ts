@@ -5,7 +5,7 @@ import {UserService} from "../services/user.service";
 
 @Component({
     selector: "leader-manager",
-    templateUrl: "components/leader/leader.html", // todo add logic when click delete button
+    templateUrl: "components/leader/leader.html",
     providers: [UserService]
 })
 

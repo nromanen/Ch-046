@@ -26,8 +26,10 @@ import {VillageService} from "../services/villageService";
     id;
     showAddVillageForm:boolean;
     constructor(private currPlayerService:CurrVillageArmiesService, private playerService:PlayerService, private route:ActivatedRoute, private villageService:VillageService){
+        console.log(`PlayerComponent constructor is working. Id: ${this.id}`);
         this.route.params.subscribe((param:any)=>
         {
+            console.log(`PlayerComponent constructor. Param value: ${JSON.stringify(param)}`);
             this.id=param['id'];
             this.playerService.url=this.playerService.url+this.id;
         });

@@ -1,10 +1,10 @@
-System.register([], function (exports_1, context_1) {
+System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var Army;
     return {
-        setters: [],
-        execute: function () {
+        setters:[],
+        execute: function() {
             /**
              * Created by okunetc on 19.01.2017.
              */
@@ -18,6 +18,6 @@ System.register([], function (exports_1, context_1) {
             }());
             exports_1("Army", Army);
         }
-    };
+    }
 });
 //# sourceMappingURL=army.js.map

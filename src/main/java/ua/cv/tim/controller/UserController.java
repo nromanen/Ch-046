@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.model.User;
@@ -29,6 +31,19 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<UserDTO> getUserWithAlliance() {
+		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserWithAlliance(principal.getUsername());
+		logger.info("User: {}", user);
+		if (user == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		UserDTO userDTO = new UserDTO(user.getUuid(), user.getLogin(), user.getEmail(), user.getPlayer().getAlliance().getName());
+		logger.info("UserDTO: {}", userDTO);
+		return new ResponseEntity<>(userDTO, HttpStatus.OK);
+	}
 
     @RequestMapping(value = "/userList", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers() {

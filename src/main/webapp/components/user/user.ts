@@ -5,7 +5,7 @@ export class User {
     alliance:string;
     role:string;
 
-    constructor(login:string, email:string, uuid?:string, alliance?:string, role?:boolean) {
+    constructor(login?:string, email?:string, uuid?:string, alliance?:string, role?:boolean) {
         this.uuid = uuid || null;
         this.login = login;
         this.email = email;

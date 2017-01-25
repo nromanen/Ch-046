@@ -15,13 +15,17 @@ import {PlayerComponent} from "./player/player.component";
 import {PlayerList} from "./player/playerList.component";
 import {PlayerRow} from "./player/playerRow.component";
 import {PlayerHeader} from "./player/playerHeader.component";
+import {PlayerListComponent} from "./player/player-list.component";
 import {ArmyCellComponent} from "./army/armyCellComponent";
 import {VillageRow} from "./village/villageRow.component";
 import {AddVillageForm} from "./village/addVillageForm";
+import {VillageInfoComponent} from "./village/village-info.component";
 import {AddArmyComponent} from "./army/addArmy.component";
+import {ArmyCellInfoComponent} from "./army/army-cell-info.component";
 
 import {TimerComponent} from "./timer/timer.component";
 import {LeaderManagerComponent} from "./leader/leader-manager.component";
+import {LeaderMainComponent} from "./leader/leader-main.component";
 import {EditMemberComponent} from "./user/edit-member.component";
 
 import {AllianceForm} from "./alliance/addalliance.component";
@@ -54,12 +58,16 @@ import {PlayerService} from "./services/player.service";
         PlayerHeader,
         TimerComponent,
         LeaderManagerComponent,
+        LeaderMainComponent,
         MemberForm,
         EditMemberComponent,
         ArmyCellComponent,
         VillageRow,
         AddVillageForm,
-        AddArmyComponent
+        AddArmyComponent,
+        VillageInfoComponent,
+        PlayerListComponent,
+        ArmyCellInfoComponent
     ],
     providers: [
         AllianceService,

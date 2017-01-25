@@ -1,0 +1,14 @@
+<my-header></my-header>
+
+<div class="row container">
+    <div class="col s12 center-align">
+        <div class="col s6 left-align">
+            <h3>{{ leader.login }}</h3>
+        </div>
+        <div class="col s6 right-align">
+            <h3>Alliance: {{ leader.alliance }}</h3>
+        </div>
+    </div>
+</div>
+
+<player-leader *ngFor="let player of players" [player]="player"></player-leader>
