@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <base href="/travian/">
     <script>
         var array = document.location.pathname.split('/');
         document.write('<base href="/' + array[1] + '/" />');
+        alert(document.write('<base href="/' + array[1] + '/" />'));
+        console.log(document.write('<base href="/' + array[1] + '/" />'));
     </script>
+
     <title>Travian</title>
     <meta charset="utf-8">
 

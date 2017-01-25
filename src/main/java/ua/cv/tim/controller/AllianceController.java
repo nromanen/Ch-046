@@ -74,6 +74,7 @@ public class AllianceController {
         user.setLogin(allianceDTO.getLeaderLogin());
         user.setEmail(allianceDTO.getLeaderEmail());
         user.setUuid(allianceDTO.getLeaderUuid());
+        boolean unique = userService.isUnique(user);
         if (!userService.isUnique(user)) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
