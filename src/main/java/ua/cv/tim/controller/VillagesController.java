@@ -1,5 +1,7 @@
 package ua.cv.tim.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,11 +35,14 @@ public class VillagesController {
     }
 
     @RequestMapping(value = "/village/", method = RequestMethod.POST)
-    public ResponseEntity<Village> addVillage(@RequestBody Village village, UriComponentsBuilder builder) {
+    public ResponseEntity<Village> addVillage(@RequestBody Village village, UriComponentsBuilder builder) throws JsonProcessingException {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User userByUsername = userService.getUserByUsername(principal.getUsername());
         village.setPlayer(userByUsername.getPlayer());
         villageService.add(village);
+        ObjectMapper objectMapper=new ObjectMapper();
+        String s = objectMapper.writeValueAsString(village);
+        System.out.println(s);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(builder.path("/village/{id}").buildAndExpand(village.getUuid()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
@@ -56,7 +61,6 @@ public class VillagesController {
             current_village.setIsCapital(village.getIsCapital());
             current_village.setUuid(village.getUuid());
             current_village.setArmies(village.getArmies());
-//          current_village.setArmyRequests(village.getArmyRequests());
             villageService.update(current_village);
 
             return new ResponseEntity<>(current_village, HttpStatus.CREATED);

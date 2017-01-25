@@ -40,10 +40,6 @@ System.register(["@angular/core", "@angular/http", "@angular/router"], function 
                     return this._http.get(this.url)
                         .map(function (res) { return res.json(); });
                 };
-                PlayerService.prototype.update = function (player) {
-                    var a = JSON.stringify(player);
-                    console.log(a);
-                };
                 return PlayerService;
             }());
             PlayerService = __decorate([

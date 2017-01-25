@@ -3,16 +3,12 @@
  */
 
 
-import {PlayerList} from "./playerList.component";
 import {Player} from "./player";
 import {Component, OnInit} from "@angular/core";
 import {PlayerService} from "../services/player.service";
 import {ActivatedRoute, Params} from "@angular/router";
-import {Village} from "../village/village";
 import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 import {VillageService} from "../services/villageService";
-import {Army} from "../army/army";
-import {UnitType} from "../UnitType/unitType";
 @Component({
     selector: 'player',
     template:`
@@ -49,14 +45,11 @@ import {UnitType} from "../UnitType/unitType";
             .subscribe(
                 player=>{
                     this.player=player;
-                    console.log(this.player);
-                    // alert(JSON.stringify(this.player));
                 }
             );
     }
 
     showAddForm(){
-        console.log(this.showAddVillageForm);
         this.showAddVillageForm=true;
     }
 }

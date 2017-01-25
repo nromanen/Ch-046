@@ -40,21 +40,8 @@ System.register(["@angular/core", "../village/village", "@angular/http"], functi
                     villageBefore.xCoord = village.xCoord;
                     villageBefore.yCoord = village.yCoord;
                     villageBefore.wall = village.wall;
-                    console.log('url is:');
-                    console.log(this.villageURL);
-                    console.log(village);
-                    alert(JSON.stringify(village));
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
-                    // return this.http.put(this.villageURL+village.uuid,JSON.stringify(village), {headers: headers})
-                    //     .map(res=>{
-                    //         console.log(res);
-                    //     },
-                    //     error=>{
-                    //         console.log('error');
-                    //     }).subscribe(res=>{
-                    //         console.log(res);
-                    //     });
                     this.http.put(this.villageURL + village.uuid, JSON.stringify(village), {
                         headers: headers
                     }).subscribe(function (response) {
@@ -73,7 +60,6 @@ System.register(["@angular/core", "../village/village", "@angular/http"], functi
                         headers: headers
                     }).map(function (res) { return res.json(); })
                         .subscribe(function (response) {
-                        console.log('Alliance created successful');
                         _this.villages.push(response);
                     }, function (error) { return console.log(error); });
                 };

@@ -13,5 +13,7 @@ export class Village{
     wall:number;
     armies:Array<Army>;
     player:Player;
+    constructor(){
+    }
 
 }

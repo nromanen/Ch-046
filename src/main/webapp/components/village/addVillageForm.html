@@ -18,9 +18,6 @@
                     Name cannot be more than 14 characters long.
                 </div>
             </div>
-            <!--<div *ngIf="formErrors.name" class="alert alert-danger">-->
-            <!--{{ formErrors.name }}-->
-            <!--</div>-->
         </div>
 
         <div class="input-field col s6 offset-s3">
@@ -33,7 +30,7 @@
                 </div>
 
                 <div [hidden]="!x.errors.pattern">
-                    Coordinates can contain chars only!
+                    Coordinates can contain numbers only!
                 </div>
 
             </div>
@@ -49,7 +46,7 @@
                 </div>
 
                 <div [hidden]="!y.errors.pattern">
-                    Coordinates can contain chars only!
+                    Coordinates can contain numbers only!
                 </div>
             </div>
         </div>
@@ -65,7 +62,7 @@
                 </div>
 
                 <div [hidden]="!population.errors.pattern">
-                    Population value can contain chars only!
+                    Population value can contain numbers only!
                 </div>
             </div>
         </div>
@@ -99,8 +96,8 @@
 
 
 
-        <div *ngIf="showAddArmyButton" class="input-field col s6 offset-s3">
-            <a (click)="addArmies()" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+        <div  class="input-field col s6 offset-s3">
+            <button  (click)="addArmies()" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></button>
         </div>
 
         <div add-army *ngFor="let army of village.armies" [army]="army" (armyIsValid)="showAddArmy($event)"></div>

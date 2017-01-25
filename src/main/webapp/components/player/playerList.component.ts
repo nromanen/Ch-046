@@ -57,8 +57,6 @@ import {VillageService} from "../services/villageService";
         <tr player-ro [v]="v" *ngFor="let v of player.villages" [isForm]="v==selectedVillage" (selectedVillageChanged)="changeSelectedVillage($event)" >
         </tbody>
     </table>
-    <button (click)="g()">degfdfg</button>
-    
 </div>
 `
 })

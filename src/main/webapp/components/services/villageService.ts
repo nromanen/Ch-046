@@ -21,23 +21,8 @@ export class VillageService{
         villageBefore.xCoord=village.xCoord;
         villageBefore.yCoord=village.yCoord;
         villageBefore.wall=village.wall;
-        console.log('url is:');
-        console.log(this.villageURL);
-        console.log(village);
-        alert(JSON.stringify(village));
-
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        // return this.http.put(this.villageURL+village.uuid,JSON.stringify(village), {headers: headers})
-        //     .map(res=>{
-        //         console.log(res);
-        //     },
-        //     error=>{
-        //         console.log('error');
-        //     }).subscribe(res=>{
-        //         console.log(res);
-        //     });
-
         this.http.put(this.villageURL + village.uuid, JSON.stringify(village), {
             headers: headers
         }).subscribe(
@@ -60,9 +45,7 @@ export class VillageService{
         }).map(res => res.json())
             .subscribe(
                 response => {
-                    console.log('Alliance created successful');
                     this.villages.push(response);
-
                 },
                 error => console.log(error)
             );

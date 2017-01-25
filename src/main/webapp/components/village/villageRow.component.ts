@@ -53,7 +53,7 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 })
 export class VillageRow implements OnInit,AfterViewChecked{
     ngAfterViewChecked(): void {
-      
+
     }
     private newVillage: Village;
     private villBefore;
@@ -104,8 +104,6 @@ export class VillageRow implements OnInit,AfterViewChecked{
         this.ifSaveChanges=true;
         console.log('insideChange');
         console.log(this.v.armies);
-        alert(JSON.stringify(this.v.armies));
-        alert(JSON.stringify(this.currVillageArmiesService.armies));
         this.v.name=this.newVillage.name;
         this.v.armies=this.currVillageArmiesService.armies;
 

@@ -5,7 +5,6 @@ import {Component, Input, OnInit, EventEmitter, OnChanges, SimpleChanges} from "
 import {Village} from "../village/village";
 import {Army} from "./army";
 import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
-import {isUndefined} from "util";
 import {UnitType} from "../UnitType/unitType";
 @Component({
       selector:'army-cell',
@@ -32,30 +31,19 @@ export class ArmyCellComponent implements OnInit,OnChanges{
         if (changes['isInput'].currentValue===true && this.army!=null){
             console.log('isInput');
             this.currVillageArmiesService.armies.push(this.newArmy);
-            // console.log(this.newArmy);
-            // console.log(this.currVillageArmiesService.armies);
-            // alert(JSON.stringify(this.army));
-            // alert(JSON.stringify(this.newArmy));
+
 
         }
 
     }
     ngOnInit(): void {
-        for(let army in this.village.armies){
-            if(this.type==this.village.armies[army].type.toString()|| UnitType[this.village.armies[army].type]==this.type){
-                this.army=this.village.armies[army];
+        this.village.armies.forEach( (army)=> {
+            if(this.type==army.type.toString()|| UnitType[army.type]==this.type){
+                this.army=army;
                 this.newArmy=new Army(this.army.count,this.army.type,this.army.ownUnit);
                 this.newArmy.uuid=this.army.uuid;
-                break;
-            } else this.army=new Army(0,UnitType[this.type],false);
-        }
-        // this.village.armies.forEach( (army)=> {
-        //     if(this.type==army.type.toString()|| UnitType[army.type]==this.type){
-        //         this.army=army;
-        //         this.newArmy=new Army(this.army.count,this.army.type,this.army.ownUnit);
-        //         this.newArmy.uuid=this.army.uuid;
-        //     }
-        // });
+            }
+        });
     }
   @Input() type:string;
   @Input() village:Village;

@@ -38,8 +38,6 @@ System.register(["@angular/core", "../village/village", "../army/army", "../serv
                 }
                 AddVillageForm.prototype.ngOnInit = function () {
                 };
-                // heroForm: NgForm;
-                // @ViewChild('heroForm') currentForm: NgForm;
                 AddVillageForm.prototype.ngAfterViewChecked = function () {
                 };
                 AddVillageForm.prototype.addArmies = function () {
@@ -48,7 +46,6 @@ System.register(["@angular/core", "../village/village", "../army/army", "../serv
                     this.showAddArmyButton = false;
                 };
                 AddVillageForm.prototype.onSubmit = function (village) {
-                    alert(JSON.stringify(village));
                     this.player.villages.push(village);
                     this.villageService.add(village);
                     this.village = new village_1.Village;

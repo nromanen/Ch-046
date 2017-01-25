@@ -16,9 +16,7 @@ import {PlayerList} from "./player/playerList.component";
 import {PlayerRow} from "./player/playerRow.component";
 import {PlayerHeader} from "./player/playerHeader.component";
 import {PlayerService} from "./services/player.service";
-import {EditVillageComponent} from "./village/editViallage.component";
 import {CurrVillageArmiesService} from "./services/newVillageArmiesService";
-import {EditVillageForm} from "./village/editVillageForm.component";
 import {ArmyCellComponent} from "./army/armyCellComponent";
 import {VillageRow} from "./village/villageRow.component";
 import {VillageService} from "./services/villageService";
@@ -52,10 +50,7 @@ import {AddArmyComponent} from "./army/addArmy.component";
                 pathMatch:'full',
 
             },
-            {
-                path:'edit',
-                component:EditVillageComponent,
-            }
+
         ])
     ],
     declarations: [
@@ -69,8 +64,7 @@ import {AddArmyComponent} from "./army/addArmy.component";
         PlayerList,
         PlayerRow,
         PlayerHeader,
-        EditVillageComponent,
-        EditVillageForm,
+
         ArmyCellComponent,
         VillageRow,
         AddVillageForm,

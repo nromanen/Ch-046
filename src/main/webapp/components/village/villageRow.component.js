@@ -74,8 +74,6 @@ System.register(["@angular/core", "../UnitType/unitType", "./village", "../servi
                     this.ifSaveChanges = true;
                     console.log('insideChange');
                     console.log(this.v.armies);
-                    alert(JSON.stringify(this.v.armies));
-                    alert(JSON.stringify(this.currVillageArmiesService.armies));
                     this.v.name = this.newVillage.name;
                     this.v.armies = this.currVillageArmiesService.armies;
                     this.v.xCoord = this.newVillage.xCoord;

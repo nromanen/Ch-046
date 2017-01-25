@@ -56,12 +56,9 @@ System.register(["@angular/core", "../services/player.service", "@angular/router
                     this.playerService.getById()
                         .subscribe(function (player) {
                         _this.player = player;
-                        console.log(_this.player);
-                        // alert(JSON.stringify(this.player));
                     });
                 };
                 PlayerComponent.prototype.showAddForm = function () {
-                    console.log(this.showAddVillageForm);
                     this.showAddVillageForm = true;
                 };
                 return PlayerComponent;

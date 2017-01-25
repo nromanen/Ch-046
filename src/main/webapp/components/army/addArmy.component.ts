@@ -1,10 +1,9 @@
 /**
  * Created by okunetc on 23.01.2017.
  */
-import {Component, Input, OnInit, OnChanges, AfterViewChecked, Output, EventEmitter, ViewChild} from "@angular/core";
+import {Component, Input, OnInit, AfterViewChecked, Output, EventEmitter, ViewChild} from "@angular/core";
 import {Army} from "./army";
 import {UnitType} from "../UnitType/unitType";
-import {Player} from "../player/player";
 import {Village} from "../village/village";
 import {NgForm} from "@angular/forms";
 @Component({
@@ -18,7 +17,7 @@ import {NgForm} from "@angular/forms";
   </select>
     </div>
     <div class="input-field col s6 offset-s3">
-          <input id="count" type="text" class="validate" [(ngModel)]="army.count" name="count" pattern="[0-9]*" #count="ngModel" required>
+          <input id="count" type="text" class="validate" [(ngModel)]="army.count" name="count" pattern="[1-9][0-9]*" #count="ngModel" required>
           <label for="count">Count</label>
           <div *ngIf="count.errors && (count.dirty || count.touched)"
              class="alert alert-danger">
@@ -46,7 +45,7 @@ Is own unit?
 })
 export class AddArmyComponent implements OnInit,AfterViewChecked{
     ngAfterViewChecked(): void {
-
+        this.armyIsValid.emit(true);
     }
     ngOnInit(): void {
         this.army.type=UnitType.Axeman;
