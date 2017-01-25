@@ -9,6 +9,7 @@ import {Player} from "./player";
 @Component({
     selector: "player-leader", // todo change to player list and rename in playerList.component
     templateUrl: "components/player/player-list.html",
+    styleUrls: ["components/player/player-list.css"]
 })
 
 export class PlayerListComponent {
