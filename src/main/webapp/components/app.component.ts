@@ -6,8 +6,7 @@ import {CurrVillageArmiesService} from "./services/newVillageArmiesService";
 @Component({
     selector: 'my-app',
     template: `
-   <router-outlet></router-outlet>
-   <!--<router-outlet name="editRouter"></router-outlet>-->
+         <router-outlet></router-outlet>
     `,
 })
 

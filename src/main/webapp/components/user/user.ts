@@ -1,12 +1,16 @@
-import {Role} from "../roles/role";
-import {Player} from "../player/player";
-/**
- * Created by okunetc on 17.01.2017.
- */
-export class User{
+export class User {
+    uuid:string;
     login:string;
-    password:string;
     email:string;
-    roles:Role[];
-    player:Player;
+    alliance:string;
+    role:string;
+
+    constructor(login:string, email:string, uuid?:string, alliance?:string, role?:boolean) {
+        this.uuid = uuid || null;
+        this.login = login;
+        this.email = email;
+        this.alliance = alliance || null;
+        this.role = role == true ? 'LEADER' : null;
+    }
+
 }

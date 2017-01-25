@@ -22,7 +22,6 @@ import java.util.List;
     @Enumerated(EnumType.STRING)
     private Race race;
 
-
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "player")
     @OrderBy("population")
@@ -57,12 +56,15 @@ import java.util.List;
         this.villages = villages;
     }
 
-
     public Alliance getAlliance() {
         return alliance;
     }
 
     public void setAlliance(Alliance alliance) {
         this.alliance = alliance;
+    }
+
+    public Player(){
+
     }
 }

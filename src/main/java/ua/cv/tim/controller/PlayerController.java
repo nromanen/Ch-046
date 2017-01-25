@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 public class PlayerController {
     @Autowired
-    VillageService villageServiceImp;
+    VillageService villageService;
 
     @Autowired
     PlayerService playerService;

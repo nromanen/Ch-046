@@ -5,11 +5,13 @@ System.register([], function (exports_1, context_1) {
     return {
         setters: [],
         execute: function () {
-            /**
-             * Created by okunetc on 17.01.2017.
-             */
             User = (function () {
-                function User() {
+                function User(login, email, uuid, alliance, role) {
+                    this.uuid = uuid || null;
+                    this.login = login;
+                    this.email = email;
+                    this.alliance = alliance || null;
+                    this.role = role == true ? 'LEADER' : null;
                 }
                 return User;
             }());

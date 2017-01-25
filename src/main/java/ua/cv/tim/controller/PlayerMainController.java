@@ -20,6 +20,6 @@ public class PlayerMainController {
     @RequestMapping(method= RequestMethod.GET)
     public String showPlayerMainPage(){
 
-        return "villagesList.html";
+        return "index.html";
     }
 }

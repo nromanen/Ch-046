@@ -7,11 +7,14 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ua.cv.tim.dao.AbstractCrudDao;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
 import ua.cv.tim.dao.UserDao;
+import ua.cv.tim.service.UserService;
 
 /**
  * Created by rmochetc on 03.01.2017.
@@ -20,10 +23,20 @@ import ua.cv.tim.dao.UserDao;
 @Repository("userDao")
 public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Override
     public long getCount() {
         return (long) getCurrentSession().createCriteria(User.class).setProjection(Projections.rowCount()).uniqueResult();
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        logger.info("Username is {} ", username);
+        String request = "select u from User u where u.login = :login";
+        Query<User> query = getCurrentSession().createQuery(request);
+        query.setParameter("login", username);
+        return query.uniqueResult();
     }
 
     @Override
@@ -42,12 +55,29 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
         return users;
     }
 
-    public User getByMail(String mail) {
+    public User getByMail(String mail, String uuid) {
+        logger.info("Mail is {} uuid is {} ", mail,uuid);
         Session session = getCurrentSession();
-        Query query = session.createQuery("FROM User WHERE email=:mail");
-        query.setParameter("mail", mail);
-        User user = (User) query.getSingleResult();
+        Query query = null;
+        if (uuid != null) {
+            logger.info("User with mail {} has uuid {} ",mail, uuid);
+            query = session.createQuery("select u FROM User u WHERE u.email=:mail and u.uuid != :uuid");
+            query.setParameter("mail", mail);
+            query.setParameter("uuid", uuid);
+        } else {
+            query = session.createQuery("select u FROM User u WHERE u.email=:mail");
+            query.setParameter("mail", mail);
+        }
+        User user = (User) query.uniqueResult();
         return user;
+    }
+
+    @Override
+    public List<User> getUsersByAlliance(String allianceName) {
+        String request = "select u from User u where u.player.alliance.name = :name";
+        Query<User> query = getCurrentSession().createQuery(request);
+        query.setParameter("name", allianceName);
+        return query.list();
     }
 
     @Override
@@ -69,12 +99,30 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
         return allWithRoles;
     }
 
-    @Override
-    public User getUserByUsername(String username) {
-        String request = "select u from User u where u.login = :login";
-        org.hibernate.query.Query<User> query = getCurrentSession().createQuery(request);
-        query.setParameter("login", username);
-        return query.getSingleResult();
+
+    public User getByMail(String mail){
+        String request = "select u FROM User u WHERE u.email=:mail";
+        Query<User> query = getCurrentSession().createQuery(request);
+        query.setParameter("mail", mail);
+        return query.uniqueResult();
+
     }
 
+    public User getUserByUsername(String username, String uuid) {
+        Session session = getCurrentSession();
+        Query query = null;
+        if (uuid != null) {
+            logger.info("Username is {} ", username);
+            System.out.println("uuid no = null : " + uuid);
+            query = session.createQuery("select u from User u where u.login = :login and u.uuid != :uuid");
+            query.setParameter("login", username);
+            query.setParameter("uuid", uuid);
+        } else {
+            query = session.createQuery("select u from User u where u.login = :login");
+            logger.info("Id is null and username is {} ", username);
+            query.setParameter("login", username);
+        }
+        User user = (User) query.uniqueResult();
+            return user;
+    }
 }
