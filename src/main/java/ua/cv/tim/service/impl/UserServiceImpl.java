@@ -1,4 +1,4 @@
-package ua.cv.tim.service.impl;
+package ua.cv.tim.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,6 @@ import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
-import ua.cv.tim.service.UserService;
 import ua.cv.tim.utils.SendMail;
 
 import javax.mail.MessagingException;
@@ -25,7 +24,7 @@ import java.util.Random;
  * Created by Oleg on 04.01.2017.
  */
 
-@Service
+@Service(value = "userService")
 @Transactional
 public class UserServiceImpl implements UserService {
 
