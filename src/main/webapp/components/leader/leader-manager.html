@@ -1,11 +1,11 @@
-<my-header></my-header>
+<leader-header></leader-header>
 <add-member (addMemberForm)="addMember($event)"></add-member>
 
 <app-modal *ngIf="deletedMember !== null" [confirmMsg] = "confirmMsg" (notify)='onConfirmDelete($event)'></app-modal>
 
 <div class="row container">
     <div class="col s12 center-align">
-        <h3>Valhala Members</h3>     <!-- use alliance name variable instead 'Valhala' -->
+        <h3>{{ leader.alliance }} Members</h3>
     </div>
 </div>
 <div class="row container">

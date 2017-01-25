@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
+
 import {User} from '../user/user';
 import {UserService} from "../services/user.service";
 
 
 @Component({
     selector: "leader-manager",
-    templateUrl: "components/leader/leader.html",
+    templateUrl: "components/leader/leader-manager.html",
     providers: [UserService]
 })
 
@@ -20,13 +21,35 @@ export class LeaderManagerComponent implements OnInit {
     confirmMsg:string = null;
 
 
-    constructor(public userService:UserService) {
+    constructor(private userService:UserService) {
         console.log(`LeaderManagerComponent constructor is working`);
+
+        this.leader = new User();
+        this.users = [];
+        this.errorMessage = null;
+        this.successMessage = null;
+        this.selectedMember= null;
+        this.deletedMember= null;
+        this.confirmMsg= null;
     }
 
     ngOnInit():void {
         console.log(`LeaderManagerComponent.ngOnInit() method is working`);
+        this.getLeader();
         this.getUsersByAlliance();
+    }
+
+    getLeader() {
+        console.log(`LeaderManagerComponent getLeader() method is working`);
+
+        this.userService.getLeader()
+            .subscribe(
+                leader => {
+                    this.leader = leader;
+                    console.log(`LeaderManagerComponent getLeader() leader value: ${JSON.stringify(this.leader)}`);
+                },
+                error => console.log(error)
+            );
     }
 
     getUsersByAlliance():void {
@@ -57,7 +80,7 @@ export class LeaderManagerComponent implements OnInit {
 
     addMember(member:User) {
         console.log(`LeaderManagerComponent.addMember() method is working`);
-        member.alliance = "valhala"; // todo change to dynamic set alliance name
+        member.alliance = this.leader.alliance;
         this.userService.addMember(member)
             .subscribe(
                 user => {this.users.push(user);

@@ -6,6 +6,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {ModuleWithProviders} from '@angular/core';
 import {AllianceComponent} from "./alliance/alliance.component";
 import {LeaderMainComponent} from "./leader/leader-main.component";
+import {LeaderManagerComponent} from "./leader/leader-manager.component";
 import {PlayerComponent} from "./player/player.component";
 
 
@@ -29,6 +30,10 @@ export const routes:Routes = ([
         path: 'leader/',
         redirectTo:'leader',
         pathMatch:'full'
+    },
+    {
+        path: 'leader/manager',
+        component: LeaderManagerComponent
     },
     {
         path:'player/:id',

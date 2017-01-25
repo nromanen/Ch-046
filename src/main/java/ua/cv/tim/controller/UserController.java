@@ -36,12 +36,12 @@ public class UserController {
 	public ResponseEntity<UserDTO> getUserWithAlliance() {
 		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = userService.getUserWithAlliance(principal.getUsername());
-		logger.info("User: {}", user);
+		logger.info(user.toString());
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		UserDTO userDTO = new UserDTO(user.getUuid(), user.getLogin(), user.getEmail(), user.getPlayer().getAlliance().getName());
-		logger.info("UserDTO: {}", userDTO);
+		logger.info(userDTO.toString());
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 

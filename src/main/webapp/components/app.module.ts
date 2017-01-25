@@ -7,6 +7,7 @@ import {RoutesModule} from "./app.routers";
 import {AppComponent}  from './app.component';
 import {AllianceComponent} from "./alliance/alliance.component";
 import {HeaderComponent} from "./header/header.component";
+import {LeaderHeaderComponent} from "./header/leader-header.component";
 
 import {EditAllianceComponent} from "./alliance/editalliance.component";
 import {ConfirmComponent} from "./modal_window/modal";
@@ -67,7 +68,8 @@ import {PlayerService} from "./services/player.service";
         AddArmyComponent,
         VillageInfoComponent,
         PlayerListComponent,
-        ArmyCellInfoComponent
+        ArmyCellInfoComponent,
+        LeaderHeaderComponent
     ],
     providers: [
         AllianceService,
