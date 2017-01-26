@@ -59,6 +59,7 @@ System.register(["@angular/core", "./alliance", "@angular/forms"], function (exp
                 core_1.Component({
                     selector: 'add-alliance',
                     templateUrl: 'components/alliance/allianceForm.html',
+                    styleUrls: ['components/alliance/allianceForm.css']
                 }),
                 __metadata("design:paramtypes", [forms_1.FormBuilder])
             ], AllianceForm);

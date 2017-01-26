@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 @Component({
     selector: 'edit-alliance',
     templateUrl: 'components/alliance/editAlliance.html',
+    styleUrls: ['components/alliance/allianceForm.css']
 })
 
 export class EditAllianceComponent {

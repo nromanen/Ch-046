@@ -68,6 +68,7 @@ System.register(["@angular/core", "./alliance", "@angular/forms"], function (exp
                 core_1.Component({
                     selector: 'edit-alliance',
                     templateUrl: 'components/alliance/editAlliance.html',
+                    styleUrls: ['components/alliance/allianceForm.css']
                 }),
                 __metadata("design:paramtypes", [forms_1.FormBuilder])
             ], EditAllianceComponent);
