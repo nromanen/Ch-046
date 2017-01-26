@@ -12,7 +12,6 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ua.cv.tim.model.User;
 import ua.cv.tim.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,11 +26,12 @@ import java.util.Set;
 @Controller
 public class MainController {
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
-@Autowired
-UserService userService;
 
     @Autowired
-    AuthenticationTrustResolver authenticationTrustResolver;
+    private AuthenticationTrustResolver authenticationTrustResolver;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
     public String loginPage() {
@@ -58,8 +58,8 @@ UserService userService;
         } else if (authorities.contains("ROLE_LEADER")) {
             return "redirect:/leader";
         } else {
-            User userByUsername = userService.getUserByUsername(principal.getUsername());
-            return "redirect:/user" + "/" + userByUsername.getPlayer().getUuid();
+            return "redirect:/user/init";
+
         }
     }
 

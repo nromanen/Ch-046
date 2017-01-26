@@ -19,7 +19,7 @@ public interface UserDao extends CrudDao<User> {
 
 	List<User> getAllWithRoles();
 
-	User getUserByUsername(String username, String uuid);
+	boolean isUserUnique(String username, String uuid);
 
 	User getByMail(String mail, String uuid);
 

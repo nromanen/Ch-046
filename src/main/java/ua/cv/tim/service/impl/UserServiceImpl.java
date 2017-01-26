@@ -191,7 +191,7 @@ public class UserServiceImpl implements UserService {
 		user.setLogin(member.getLogin());
 		user.setEmail(member.getEmail());
 
-		if (userDao.getUserByUsername(user.getLogin(), user.getUuid()) != null) {
+		if (userDao.isUserUnique(user.getLogin(), user.getUuid())) {
 			return false;
 		} else if (userDao.getByMail(user.getEmail(), user.getUuid()) != null) {
 			return false;

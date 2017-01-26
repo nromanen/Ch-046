@@ -6,25 +6,24 @@ import {Village} from "../village/village";
 
 @Component
 ({
-    selector:'player-row',
-    outputs:['editClick'],
-    template:`
+    selector: 'player-row',
+    outputs: ['editClick'],
+    template: `
              <a (click)="edit()" routerLink="/edit"><button class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" style="margin-top: 5px;"
         >Edit</button></a>
 `
 })
-export class PlayerRow implements OnInit{
-    ngOnInit(): void {
-        console.log(this.v);
+export class PlayerRow {
+    @Input() v: Village;
+    editClick: EventEmitter<Village>;
+
+    constructor() {
+        this.editClick = new EventEmitter<Village>();
     }
-    @Input() v:Village;
-    editClick:EventEmitter<Village>;
-    edit(){
-        console.log('clicked');
+
+    edit() {
         this.editClick.emit(this.v);
     }
 
-    constructor(){
-        this.editClick=new EventEmitter<Village>();
-    }
+
 }

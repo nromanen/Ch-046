@@ -77,6 +77,7 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
         String request = "select u from User u where u.player.alliance.name = :name";
         Query<User> query = getCurrentSession().createQuery(request);
         query.setParameter("name", allianceName);
+        System.out.println(query);
         return query.list();
     }
 
@@ -108,7 +109,7 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
 
     }
 
-    public User getUserByUsername(String username, String uuid) {
+    public boolean isUserUnique(String username, String uuid) {
         Session session = getCurrentSession();
         Query query = null;
         if (uuid != null) {
@@ -123,7 +124,7 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
             query.setParameter("login", username);
         }
         User user = (User) query.uniqueResult();
-            return user;
+            return user == null ? true : false;
     }
 
     @Override

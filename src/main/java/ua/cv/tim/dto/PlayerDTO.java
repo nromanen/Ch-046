@@ -92,4 +92,16 @@ public class PlayerDTO {
     public void setLogin(String login) {
         this.login = login;
     }
+
+    @Override
+    public String toString() {
+        return "PlayerDTO{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", race=" + race +
+                ", villages=" + villages +
+                ", alliance=" + alliance +
+                '}';
+    }
 }

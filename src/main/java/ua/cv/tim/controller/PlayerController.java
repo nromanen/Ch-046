@@ -36,8 +36,8 @@ public class PlayerController {
     @Autowired
     PlayerService playerService;
 
-	@Autowired
-	UserService userService; // todo delete this too
+    @Autowired
+    UserService userService;
 
     @RequestMapping(value = "/player/{id}/village", method = RequestMethod.GET)
     public ResponseEntity<List<Village>> getUsersVillages(@PathVariable(name = "id") String id) {
@@ -46,10 +46,16 @@ public class PlayerController {
         return new ResponseEntity<>(villages, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/player/{id}", method = RequestMethod.GET)
-    public ResponseEntity<PlayerDTO> getPlayerById(@PathVariable(name = "id") String id) {
-		log.info("Id: {}", id);
-		Player player = playerService.getByIdWithVillages(id);
+    @RequestMapping(value = "/player", method = RequestMethod.GET)
+    public ResponseEntity<PlayerDTO> getPlayerById() {
+
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userByUsername = userService.getUserByUsername(principal.getUsername());
+
+        String id = userByUsername.getPlayer().getUuid();
+
+        Player player = playerService.getByIdWithVillages(id);
+
         PlayerDTO playerDTO=new PlayerDTO(player.getUser().getLogin(),
                 player.getUser().getPassword(),player.getUser().getEmail(),
                 player.getRace(),player.getVillages(),player.getAlliance());

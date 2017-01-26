@@ -7,13 +7,9 @@ import {Army} from "../army/army";
  */
 
 @Injectable()
-export class CurrVillageArmiesService implements OnInit{
-    ngOnInit(): void {
-        console.log(this.village);
-    }
+export class CurrVillageArmiesService{
     public village:Village;
     public armies:Array<Army>;
-
     constructor(){
         console.log(this.village);
         this.armies=[];

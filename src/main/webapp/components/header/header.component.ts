@@ -4,10 +4,8 @@ import {Component} from "@angular/core";
  */
 
 @Component({
-    selector: 'my-header',
+    selector: 'admin-header',
     templateUrl: 'components/header/header.html',
-
 })
 export class HeaderComponent {
-
 }

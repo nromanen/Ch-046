@@ -24,10 +24,14 @@ public class PlayerDaoImpl extends AbstractCrudDao<Player> implements PlayerDao 
 	@Autowired
 	VillageDao villageDao;
 
-	@Override
-	public Player getById(String id) {
-		return getCurrentSession().get(Player.class, id);
-	}
+    @Override
+    public Player getById(String id) {
+        Query query = getCurrentSession().createQuery("FROM Player WHERE id=:id");
+        query.setParameter("id", id);
+        Player player = (Player) query.uniqueResult();
+        System.out.println("DAO: " + player);
+        return player;
+    }
 
 	@Override
 	public Player getByIdWithVillages(String id) {
