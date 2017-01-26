@@ -70,11 +70,12 @@ import java.util.List;
 
     @Override
     public String toString() {
-        return "Player{" +
-                "user=" + user +
-                ", race=" + race +
-                ", villages=" + villages +
-                ", alliance=" + alliance +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb
+                .append("Player: { user: ").append(user).append(", ")
+                .append("race: ").append(race).append(", ")
+                .append("villages: { ").append(villages).append(" }, ")
+                .append("alliance: ").append(alliance).append(" }");
+        return sb.toString();
     }
 }

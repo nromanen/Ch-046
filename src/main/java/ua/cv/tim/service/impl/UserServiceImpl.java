@@ -25,7 +25,7 @@ import java.util.Random;
  * Created by Oleg on 04.01.2017.
  */
 
-@Service(value = "userService")
+@Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByUsername(String username) {
-		return userDao.getUserByName(username);
+		return userDao.getUserByUsername(username);
 	}
 
 	public void add(User user) {
@@ -67,15 +67,29 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean isUnique(User user) {
+		boolean[] isLoginEmailUnique = new boolean[2];
+		User compareUser = userDao.getUserByUsername(user.getLogin());
+		isLoginEmailUnique[0] = compareUser == null || compareUser.getUuid().equals(user.getUuid());
+		compareUser = userDao.getByMail(user.getEmail());
+		isLoginEmailUnique[1] = compareUser == null || compareUser.getUuid().equals(user.getUuid());
 
+		String errorMessage = createErrorMessage(isLoginEmailUnique);
+		if (errorMessage != null) {
+			throw new IllegalArgumentException(errorMessage);
+		}
+		return true;
+	}
 
-		if (userDao.isUserUnique(user.getLogin(), user.getUuid())) {
-			return true;
+	private String createErrorMessage(boolean[] isLoginEmailUnique) {
+		String errorMessage = null;
+		if (!isLoginEmailUnique[0] && !isLoginEmailUnique[1]) {
+			errorMessage = "User with the same login and email has already existed!";
+		} else if (!isLoginEmailUnique[0]) {
+			errorMessage = "User with the same login has already existed!";
+		} else if (!isLoginEmailUnique[1]) {
+			errorMessage = "User with the same email has already existed!";
 		}
-		if (userDao.getByMail(user.getEmail(), user.getUuid()) != null) {
-			return true;
-		}
-		return false;
+		return errorMessage;
 	}
 
 	@Override
@@ -184,4 +198,8 @@ public class UserServiceImpl implements UserService {
 		} else return true;
 	}
 
+	@Override
+	public User getUserWithAlliance(String username) {
+		return userDao.getUserWithAlliance(username);
+	}
 }

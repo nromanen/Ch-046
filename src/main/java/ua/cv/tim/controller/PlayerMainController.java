@@ -10,7 +10,7 @@ import ua.cv.tim.service.UserService;
  * Created by okunetc on 16.01.2017.
  */
 @Controller
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/user/init")
 public class PlayerMainController {
     @Autowired
     UserService userService;

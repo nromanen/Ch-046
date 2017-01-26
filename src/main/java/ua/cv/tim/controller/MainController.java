@@ -58,7 +58,7 @@ public class MainController {
         } else if (authorities.contains("ROLE_LEADER")) {
             return "redirect:/leader";
         } else {
-            return "redirect:/user";
+            return "redirect:/user/init";
 
         }
     }

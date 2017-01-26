@@ -36,4 +36,5 @@ public interface UserService {
 
 	void deleteById(String id);
 
+	User getUserWithAlliance(String username);
 }

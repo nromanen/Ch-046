@@ -1,32 +1,55 @@
 import {Component, OnInit} from '@angular/core';
+
 import {User} from '../user/user';
 import {UserService} from "../services/user.service";
 
 
 @Component({
     selector: "leader-manager",
-    templateUrl: "components/leader/leader.html", // todo add logic when click delete button
+    templateUrl: "components/leader/leader-manager.html",
     providers: [UserService]
 })
 
 export class LeaderManagerComponent implements OnInit {
     leader:User;
     users:User[];
-    errorMessage: string = null;
-    successMessage: string = null;
+    errorMessage: string;
+    successMessage: string;
 
-    selectedMember:User = null;
-    deletedMember:User = null;
-    confirmMsg:string = null;
+    selectedMember:User;
+    deletedMember:User;
+    confirmMsg:string;
 
 
-    constructor(public userService:UserService) {
+    constructor(private userService:UserService) {
         console.log(`LeaderManagerComponent constructor is working`);
+
+        this.leader = new User();
+        this.users = [];
+        this.errorMessage = null;
+        this.successMessage = null;
+        this.selectedMember= null;
+        this.deletedMember= null;
+        this.confirmMsg= null;
     }
 
     ngOnInit():void {
         console.log(`LeaderManagerComponent.ngOnInit() method is working`);
+        this.getLeader();
         this.getUsersByAlliance();
+    }
+
+    getLeader() {
+        console.log(`LeaderManagerComponent getLeader() method is working`);
+
+        this.userService.getLeader()
+            .subscribe(
+                leader => {
+                    this.leader = leader;
+                    console.log(`LeaderManagerComponent getLeader() leader value: ${JSON.stringify(this.leader)}`);
+                },
+                error => console.log(error)
+            );
     }
 
     getUsersByAlliance():void {
@@ -57,16 +80,16 @@ export class LeaderManagerComponent implements OnInit {
 
     addMember(member:User) {
         console.log(`LeaderManagerComponent.addMember() method is working`);
-        member.alliance = "valhala"; // todo change to dynamic set alliance name
+        member.alliance = this.leader.alliance;
         this.userService.addMember(member)
             .subscribe(
                 user => {this.users.push(user);
-                this.successMessage = "User added successfully";
-                this.errorMessage = null;
+                    this.errorMessage = null;
+                    this.successMessage = "User added successfully";
                 },
                 error => {console.log(error);
-                    this.errorMessage = <any>error;
                     this.successMessage = null;
+                    this.errorMessage = <any>error;
                 }
             );
     }
@@ -81,10 +104,14 @@ export class LeaderManagerComponent implements OnInit {
                         console.log(`User from array: ${JSON.stringify(this.users[this.users.indexOf(this.selectedMember)])}`)
                         this.users[this.users.indexOf(this.selectedMember)] = user;
                         this.selectedMember = null;
+                        this.errorMessage = null;
+                        this.successMessage = `User updated successfully`;
                     },
                     error => {
                         console.log(error);
                         this.selectedMember = null;
+                        this.successMessage = null;
+                        this.errorMessage = <any>error;
                     }
                 );
         } else {
@@ -105,10 +132,17 @@ export class LeaderManagerComponent implements OnInit {
                     status => {
                         if (status) {
                             this.users.splice(this.users.indexOf(this.deletedMember), 1);
+                            this.errorMessage = null;
+                            this.successMessage = `User ${this.deletedMember.login} deleted successfully`;
                             this.deletedMember = null;
                         }
                     },
-                    error => console.log(error)
+                    error => {
+                        console.log(error);
+                        this.deletedMember = null;
+                        this.successMessage = null;
+                        this.errorMessage = <any>error;
+                    }
                 );
         } else {
             this.deletedMember = null;

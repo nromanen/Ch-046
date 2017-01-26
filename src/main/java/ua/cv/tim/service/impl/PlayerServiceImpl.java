@@ -54,4 +54,9 @@ public class PlayerServiceImpl implements PlayerService {
     public void deleteVillageOfPlayer(Village village) {
         villageDao.delete(village);
     }
+
+    @Override
+    public List<Player> getPlayersByAllianceWithVillages(String allianceName) {
+        return playerDao.getPlayersByAllianceWithVillages(allianceName);
+    }
 }

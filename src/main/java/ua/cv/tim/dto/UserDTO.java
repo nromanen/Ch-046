@@ -75,7 +75,8 @@ public class UserDTO {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb
-				.append("UserDTO: { login: ").append(login).append(", ")
+				.append("UserDTO: { uuid: ").append(uuid).append(", ")
+				.append("login: ").append(login).append(", ")
 				.append("email: ").append(email).append(", ")
 				.append("role: ").append(role).append(", ")
 				.append("alliance: ").append(alliance).append(" } ");

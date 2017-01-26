@@ -31,7 +31,7 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     }
 
     @Override
-    public User getUserByName(String username) {
+    public User getUserByUsername(String username) {
         logger.info("Username is {} ", username);
         String request = "select u from User u where u.login = :login";
         Query<User> query = getCurrentSession().createQuery(request);
@@ -125,5 +125,15 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
         }
         User user = (User) query.uniqueResult();
             return user == null ? true : false;
+    }
+
+    @Override
+    public User getUserWithAlliance(String username) {
+        String request = "select u from User u where u.login = :login";
+        Query<User> query = getCurrentSession().createQuery(request);
+        query.setParameter("login", username);
+        User user = query.getSingleResult();
+        Hibernate.initialize(user.getPlayer().getAlliance());
+        return user;
     }
 }
