@@ -45,16 +45,7 @@ System.register(["./player", "@angular/core", "../services/newVillageArmiesServi
                     this.villageService.villages = this.player.villages;
                 };
                 PlayerList.prototype.wasEdited = function (village) {
-                    console.log('was edited');
-                    console.log(village);
                     this.currVillageService.village = village;
-                };
-                PlayerList.prototype.g = function () {
-                    var _this = this;
-                    this.player.villages[0].name = "vill6";
-                    this.player.villages.forEach(function (vill) {
-                        console.log(vill = _this.selectedVillage);
-                    });
                 };
                 PlayerList.prototype.changeSelectedVillage = function (village) {
                     this.selectedVillage = village;
@@ -69,7 +60,7 @@ System.register(["./player", "@angular/core", "../services/newVillageArmiesServi
             PlayerList = __decorate([
                 core_1.Component({
                     selector: 'player-list',
-                    template: "<div class=\"row \">\n    <table>\n        <thead>\n        <tr>\n            <th>Village</th>\n            <th>Population</th>\n            <th>X</th>\n            <th>Y</th>\n            <th>Capital?</th>\n            <th>Wall level</th>\n            <td><img src=\"images/Gauls/GalFal.gif\"></td>\n            <td><img src=\"images/Gauls/GalSwordsman.gif\"></td>\n            <td><img src=\"images/Gauls/GalPathFinder.gif\"></td>\n            <td><img src=\"images/Gauls/GalTewtThunder.gif\"></td>\n            <td><img src=\"images/Gauls/GalDruid.gif\"></td>\n            <td><img src=\"images/Gauls/Edui.gif\"></td>\n            <td><img src=\"images/Gauls/GalRam.gif\"></td>\n            <td><img src=\"images/Gauls/GalCatapult.gif\"></td>\n            <td><img src=\"images/Gauls/GaLeader.gif\"></td>\n            <td><img src=\"images/Germans/Clubswinger.gif\"></td>\n            <td><img src=\"images/Germans/Spearman.gif\"></td>\n            <td><img src=\"images/Germans/Toporshchik.gif\"></td>\n            <td><img src=\"images/Germans/Skaut.gif\"></td>\n            <td><img src=\"images/Germans/Paladin.gif\"></td>\n            <td><img src=\"images/Germans/Tevtonskaya-konnitsa.gif\"></td>\n            <td><img src=\"images/Germans/Taran-ger.gif\"></td>\n            <td><img src=\"images/Germans/Katapulta-ger.gif\"></td>\n            <td><img src=\"images/Germans/Leader.gif\"></td>\n            <td><img src=\"images/Rome/Legioner.gif\"></td>\n            <td><img src=\"images/Rome/Praetorian.gif\"></td>\n            <td><img src=\"images/Rome/Imperianets.gif\"></td>\n            <td><img src=\"images/Rome/Konnyy-razvedchik.gif\"></td>\n            <td><img src=\"images/Rome/Konnitsa-imperatora.gif\"></td>\n            <td><img src=\"images/Rome/Konnitsa-Tsezarya.gif\"></td>\n            <td><img src=\"images/Rome/Taran-rim.gif\"></td>\n            <td><img src=\"images/Rome/Ognennaya-katapulta.gif\"></td>\n            <td><img src=\"images/Rome/Senator.gif\"></td>\n            <th></th>\n        </tr>\n        </thead>\n\n        <tbody>\n        <tr player-ro [v]=\"v\" *ngFor=\"let v of player.villages\" [isForm]=\"v==selectedVillage\" (selectedVillageChanged)=\"changeSelectedVillage($event)\" >\n        </tbody>\n    </table>\n</div>\n"
+                    templateUrl: "components/player/playerList.html"
                 }),
                 __metadata("design:paramtypes", [newVillageArmiesService_1.CurrVillageArmiesService, villageService_1.VillageService])
             ], PlayerList);

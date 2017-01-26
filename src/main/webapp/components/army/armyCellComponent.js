@@ -39,11 +39,9 @@ System.register(["@angular/core", "../village/village", "./army", "../services/n
                 ArmyCellComponent.prototype.ngOnChanges = function (changes) {
                     if (this.ifSave && this.army != null) {
                         this.army.count = this.newArmy.count;
-                        console.log(this.village.armies);
                     }
                     if (changes['isInput'] != null)
                         if (changes['isInput'].currentValue === true && this.army != null) {
-                            console.log('isInput');
                             this.currVillageArmiesService.armies.push(this.newArmy);
                         }
                 };

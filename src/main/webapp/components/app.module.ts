@@ -14,7 +14,7 @@ import {ConfirmComponent} from "./modal_window/modal";
 import {PlayerComponent} from "./player/player.component";
 import {PlayerList} from "./player/playerList.component";
 import {PlayerRow} from "./player/playerRow.component";
-import {PlayerHeader} from "./player/playerHeader.component";
+import {PlayerHeader} from "./player/player-header.component";
 import {ArmyCellComponent} from "./army/armyCellComponent";
 import {VillageRow} from "./village/villageRow.component";
 import {AddVillageForm} from "./village/addVillageForm";

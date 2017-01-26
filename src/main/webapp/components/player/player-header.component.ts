@@ -4,10 +4,10 @@
 import {Component} from "@angular/core";
 @Component(
     {
-        selector:'player-head',
-        templateUrl:'components/player/playerHeader.html'
+        selector: 'player-head',
+        templateUrl: 'components/player/playerHeader.html'
     }
 )
-export class PlayerHeader{
+export class PlayerHeader {
 
 }

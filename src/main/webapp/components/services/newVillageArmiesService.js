@@ -23,9 +23,6 @@ System.register(["@angular/core"], function (exports_1, context_1) {
                     console.log(this.village);
                     this.armies = [];
                 }
-                CurrVillageArmiesService.prototype.ngOnInit = function () {
-                    console.log(this.village);
-                };
                 return CurrVillageArmiesService;
             }());
             CurrVillageArmiesService = __decorate([

@@ -25,11 +25,7 @@ System.register(["@angular/core", "../village/village"], function (exports_1, co
                 function PlayerRow() {
                     this.editClick = new core_1.EventEmitter();
                 }
-                PlayerRow.prototype.ngOnInit = function () {
-                    console.log(this.v);
-                };
                 PlayerRow.prototype.edit = function () {
-                    console.log('clicked');
                     this.editClick.emit(this.v);
                 };
                 return PlayerRow;
