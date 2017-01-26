@@ -5,11 +5,9 @@
 import 'rxjs/Rx';
 import {Injectable} from "@angular/core";
 import {Http, Headers, Response} from "@angular/http";
-import {ActivatedRoute} from "@angular/router";
-import { Observable }     from 'rxjs/Rx';
-import {Player} from "../player/player";
-import {Attack} from "./attack";
-
+import {Observable} from 'rxjs/Rx';
+import {Player} from "../../player/player";
+import {Attack} from "../../help/attack";
 
 @Injectable()
 export class HelpService {

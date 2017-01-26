@@ -2,15 +2,11 @@
  * Created by rmochetc on 19.01.2017.
  */
 import {Observable} from 'rxjs/Rx';
-import {Component, OnInit, ElementRef, Input} from "@angular/core";
+import {Component, OnInit, Input} from "@angular/core";
 
 @Component({
     selector: 'my-timer',
-    template: `
-  <div>
-    {{message}}
-  </div>
-`
+    template: `<div>{{message}}</div>`
 })
 export class TimerComponent implements OnInit {
 
@@ -20,15 +16,15 @@ export class TimerComponent implements OnInit {
 
     @Input() futureString: string;
 
-    dhms(t){
+    dhms(time){
         let days, hours, minutes, seconds;
-        days = Math.floor(t / 86400);
-        t -= days * 86400;
-        hours = Math.floor(t / 3600) % 24;
-        t -= hours * 3600;
-        minutes = Math.floor(t / 60) % 60;
-        t -= minutes * 60;
-        seconds = t % 60;
+        days = Math.floor(time / 86400);
+        time -= days * 86400;
+        hours = Math.floor(time / 3600) % 24;
+        time -= hours * 3600;
+        minutes = Math.floor(time / 60) % 60;
+        time -= minutes * 60;
+        seconds = time % 60;
 
         return [
             days + 'd',
@@ -37,7 +33,6 @@ export class TimerComponent implements OnInit {
             seconds + 's'
         ].join(' ');
     }
-
 
     ngOnInit() {
         console.log("this.futureString");

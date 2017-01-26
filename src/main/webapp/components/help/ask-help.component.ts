@@ -2,13 +2,15 @@
  * Created by rmochetc on 22.01.2017.
  */
 
-import {HelpService} from "./help.service";
+
 import {Component, Output, EventEmitter, OnInit} from "@angular/core";
 import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
 import {Attack} from "./attack";
 import {Player} from "../player/player";
 import {Village} from "../village/village";
-import {StompService} from "./stomp.service";
+import {HelpService} from "../services/helpNotification/help.service";
+import {StompService} from "../services/helpNotification/stomp.service";
+
 
 @Component({
     selector: 'ask-help',

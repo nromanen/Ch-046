@@ -1,4 +1,4 @@
-System.register(["@angular/core", "../help/stomp.service"], function (exports_1, context_1) {
+System.register(["@angular/core", "../services/helpNotification/stomp.service"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -52,7 +52,8 @@ System.register(["@angular/core", "../help/stomp.service"], function (exports_1,
             PlayerHeader = __decorate([
                 core_1.Component({
                     selector: 'player-head',
-                    template: "<nav>\n<div class=\"nav-wrapper\">\n<a href=\"#!\" class=\"brand-logo\">Logo</a>\n<ul class=\"right hide-on-med-and-down\">\n<li><a href=\"#\" >Add village</a></li>\n<li><a href=\"#\">All villages</a></li>\n<li><a routerLink=\"/help\" routerLinkActive=\"active\">Ask help</a></li>\n<li><a routerLink=\"/allHelps\" routerLinkActive=\"active\">Attacks</a></li>\n<li><a href=\"logout\" >Log out</a></li>\n</ul>\n</div>\n</nav>\n<div id=\"note\" *ngIf=\"showNotif\" routerLink=\"/allHelps\" routerLinkActive=\"active\" style=\"\n\n    position: absolute;\n    width: 30%;\n    height: 60px;\n    z-index: 101;\n    top: 70px;\n    font-size: 18px;\n\n    right: 10px;\n    color: #fff;\n    background: #fd5c68;\n    line-height: 2.5;\n    -webkit-box-shadow: 0 0 5px black;\n    -moz-box-shadow:    0 0 5px black;\n    box-shadow:         0 0 5px black;\n    padding: 10px;\n\">\n    One of alliance member needs help!\n    <div  class=\"right\" style=\"cursor: pointer;\" (click) = \"close()\">\n    x\n    </div>\n</div>\n"
+                    templateUrl: 'components/header/playerHeader.html',
+                    styleUrls: ['components/header/playerHeader.css']
                 }),
                 __metadata("design:paramtypes", [stomp_service_1.StompService])
             ], PlayerHeader);

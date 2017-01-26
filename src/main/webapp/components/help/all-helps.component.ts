@@ -4,7 +4,8 @@
 
 
 import {Component} from "@angular/core";
-import {HelpService} from "./help.service";
+import {HelpService} from "../services/helpNotification/help.service";
+
 @Component({
     selector: 'ask-help',
     templateUrl: 'components/help/allHelps.html'

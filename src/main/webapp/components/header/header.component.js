@@ -22,7 +22,7 @@ System.register(["@angular/core"], function (exports_1, context_1) {
             }());
             HeaderComponent = __decorate([
                 core_1.Component({
-                    selector: 'my-header',
+                    selector: 'admin-header',
                     templateUrl: 'components/header/header.html',
                 })
             ], HeaderComponent);

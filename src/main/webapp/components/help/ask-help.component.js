@@ -1,7 +1,7 @@
 /**
  * Created by rmochetc on 22.01.2017.
  */
-System.register(["./help.service", "@angular/core", "@angular/forms", "./attack", "./stomp.service"], function (exports_1, context_1) {
+System.register(["@angular/core", "@angular/forms", "./attack", "../services/helpNotification/help.service", "../services/helpNotification/stomp.service"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -13,12 +13,9 @@ System.register(["./help.service", "@angular/core", "@angular/forms", "./attack"
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var help_service_1, core_1, forms_1, attack_1, stomp_service_1, HelpComponent;
+    var core_1, forms_1, attack_1, help_service_1, stomp_service_1, HelpComponent;
     return {
         setters: [
-            function (help_service_1_1) {
-                help_service_1 = help_service_1_1;
-            },
             function (core_1_1) {
                 core_1 = core_1_1;
             },
@@ -27,6 +24,9 @@ System.register(["./help.service", "@angular/core", "@angular/forms", "./attack"
             },
             function (attack_1_1) {
                 attack_1 = attack_1_1;
+            },
+            function (help_service_1_1) {
+                help_service_1 = help_service_1_1;
             },
             function (stomp_service_1_1) {
                 stomp_service_1 = stomp_service_1_1;

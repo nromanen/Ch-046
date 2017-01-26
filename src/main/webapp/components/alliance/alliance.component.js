@@ -33,13 +33,14 @@ System.register(["@angular/core", "../services/alliance/alliance-service"], func
                 AllianceComponent.prototype.ngOnInit = function () {
                     this.getAlliances();
                 };
-                AllianceComponent.prototype.newAlliance = function () {
-                    this.addNewAlliance = true;
+                AllianceComponent.prototype.getAlliances = function () {
+                    var _this = this;
+                    this._allianceService.getAlliances()
+                        .subscribe(function (alliances) { return _this.alliances = alliances; }, function (error) { return _this.errorMessage = error; });
                 };
                 AllianceComponent.prototype.onNotifyUpdate = function (alliance) {
                     var _this = this;
                     if (alliance !== null) {
-                        console.log(alliance);
                         this._allianceService.updateAlliance(alliance)
                             .subscribe(function (resp) {
                             _this.alliances[_this.alliances.indexOf(_this.selectedAlliance)] = resp;
@@ -79,21 +80,18 @@ System.register(["@angular/core", "../services/alliance/alliance-service"], func
                     });
                     this.addNewAlliance = false;
                 };
-                AllianceComponent.prototype.editAlliance = function (al) {
-                    this.selectedAlliance = al;
+                AllianceComponent.prototype.newAlliance = function () {
+                    this.addNewAlliance = true;
                 };
-                AllianceComponent.prototype.deleteAlliance = function (al) {
-                    console.log("ontest delete");
-                    this.confirmMsg = "Are you sure you want to delete alliance " + al.name + "?";
-                    this.deletedAlliance = al;
+                AllianceComponent.prototype.editAlliance = function (alliance) {
+                    this.selectedAlliance = alliance;
+                };
+                AllianceComponent.prototype.deleteAlliance = function (alliance) {
+                    this.confirmMsg = "Are you sure you want to delete alliance " + alliance.name + "?";
+                    this.deletedAlliance = alliance;
                 };
                 AllianceComponent.prototype.cancelEditing = function () {
                     this.selectedAlliance = null;
-                };
-                AllianceComponent.prototype.getAlliances = function () {
-                    var _this = this;
-                    this._allianceService.getAlliances()
-                        .subscribe(function (alliances) { return _this.alliances = alliances; }, function (error) { return _this.errorMessage = error; });
                 };
                 AllianceComponent.prototype.closeSuccess = function () {
                     this.successMessage = null;
