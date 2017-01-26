@@ -9,7 +9,6 @@ System.register([], function (exports_1, context_1) {
              * Created by Oleg on 14.01.2017.
              */
             Player = (function () {
-                // alliance:Alliance;
                 function Player() {
                 }
                 return Player;

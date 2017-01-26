@@ -18,7 +18,7 @@ import {PlayerHeader} from "./player/playerHeader.component";
 import {ArmyCellComponent} from "./army/armyCellComponent";
 import {VillageRow} from "./village/villageRow.component";
 import {AddVillageForm} from "./village/addVillageForm";
-import {AddArmyComponent} from "./army/addArmy.component";
+import {AddArmyForm} from "./army/addArmyForm.component";
 
 import {TimerComponent} from "./timer/timer.component";
 import {LeaderManagerComponent} from "./leader/leader-manager.component";
@@ -59,7 +59,7 @@ import {PlayerService} from "./services/player.service";
         ArmyCellComponent,
         VillageRow,
         AddVillageForm,
-        AddArmyComponent
+        AddArmyForm
     ],
     providers: [
         AllianceService,

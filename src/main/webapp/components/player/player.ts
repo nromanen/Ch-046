@@ -12,7 +12,6 @@ export class Player{
       race:Race;
       villages:Village[];
       uuid:string;
-      // alliance:Alliance;
       constructor(){
 
       }
