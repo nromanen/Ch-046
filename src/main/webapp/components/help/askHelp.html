@@ -33,12 +33,12 @@
             <!--<div style="color: red; font-size: 14px;" *ngIf="!complexForm.controls['enemy'].valid && complexForm.controls['enemy'].touched">{{LOGIN_ERROR}}</div>-->
         </div>
 
-        <div class="col s3">
+        <div class="col s4">
             <label for="time">Time of attack</label>
             <input type="text" id="time" class="validate"  [formControl]="helpForm.controls['timeAttack']" placeholder="yyyy-MM-dd-HH-mm-ss / 2017-01-27-12-00-00"/>
             <!--<div style="color: red; font-size: 14px;" *ngIf="!complexForm.controls['timeAttack'].valid && complexForm.controls['timeAttack'].touched">{{EMAIL_ERROR}}</div>-->
         </div>
-        <div class="input-field col s3">
+        <div class="input-field col s2">
             <button class="btn waves-effect waves-light col offset-s5 " name="action" type="submit" [disabled]="!helpForm.valid">Ask help</button>
         </div>
     </div>

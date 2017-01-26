@@ -4,7 +4,7 @@
 
 import {HelpService} from "./help.service";
 import {Component, Output, EventEmitter, OnInit} from "@angular/core";
-import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
 import {Attack} from "./attack";
 import {Player} from "../player/player";
 import {Village} from "../village/village";
@@ -63,6 +63,9 @@ export class HelpComponent implements OnInit{
         console.log("Complex form: " + value);
         let newAttack = new Attack(value.villageName, value.enemy, value.timeAttack);
         this.send(newAttack);
+        this.helpForm.controls['villageName'].setValue("");
+        this.helpForm.controls['enemy'].setValue("");
+        this.helpForm.controls['timeAttack'].setValue("");
     }
 
     public send(attack : Attack): void {

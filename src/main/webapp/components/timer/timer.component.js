@@ -22,8 +22,7 @@ System.register(["rxjs/Rx", "@angular/core"], function (exports_1, context_1) {
         ],
         execute: function () {
             TimerComponent = (function () {
-                function TimerComponent(elm) {
-                    this.futureString = elm.nativeElement.getAttribute('inputDate');
+                function TimerComponent() {
                 }
                 TimerComponent.prototype.dhms = function (t) {
                     var days, hours, minutes, seconds;
@@ -43,7 +42,9 @@ System.register(["rxjs/Rx", "@angular/core"], function (exports_1, context_1) {
                 };
                 TimerComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.future = new Date(this.futureString);
+                    console.log("this.futureString");
+                    console.log(this.futureString);
+                    this.future = new Date(+this.futureString);
                     Rx_1.Observable.interval(1000).map(function (x) {
                         _this.diff = Math.floor((_this.future.getTime() - new Date().getTime()) / 1000);
                     }).subscribe(function (x) {
@@ -52,12 +53,15 @@ System.register(["rxjs/Rx", "@angular/core"], function (exports_1, context_1) {
                 };
                 return TimerComponent;
             }());
+            __decorate([
+                core_1.Input(),
+                __metadata("design:type", String)
+            ], TimerComponent.prototype, "futureString", void 0);
             TimerComponent = __decorate([
                 core_1.Component({
                     selector: 'my-timer',
                     template: "\n  <div>\n    {{message}}\n  </div>\n"
-                }),
-                __metadata("design:paramtypes", [core_1.ElementRef])
+                })
             ], TimerComponent);
             exports_1("TimerComponent", TimerComponent);
         }

@@ -65,7 +65,7 @@ export class PlayerHeader{
 
 
     public ngOnInit(): void {
-        this.stompService.connect('ws://localhost:8080/travian/stompTest');
+        this.stompService.connect();
         this.stompService.getObservable().subscribe(payload => {
             this.serverResponse = payload.outputField;
             this.showNotification();

@@ -2,7 +2,7 @@
  * Created by rmochetc on 19.01.2017.
  */
 import {Observable} from 'rxjs/Rx';
-import {Component, OnInit, ElementRef} from "@angular/core";
+import {Component, OnInit, ElementRef, Input} from "@angular/core";
 
 @Component({
     selector: 'my-timer',
@@ -15,16 +15,13 @@ import {Component, OnInit, ElementRef} from "@angular/core";
 export class TimerComponent implements OnInit {
 
     private future:Date;
-    private futureString:string;
     private diff:number;
     private message: any;
 
-    constructor(elm: ElementRef) {
-        this.futureString = elm.nativeElement.getAttribute('inputDate');
-    }
+    @Input() futureString: string;
 
     dhms(t){
-        var days, hours, minutes, seconds;
+        let days, hours, minutes, seconds;
         days = Math.floor(t / 86400);
         t -= days * 86400;
         hours = Math.floor(t / 3600) % 24;
@@ -43,7 +40,9 @@ export class TimerComponent implements OnInit {
 
 
     ngOnInit() {
-        this.future = new Date(this.futureString);
+        console.log("this.futureString");
+        console.log(this.futureString);
+        this.future = new Date(+this.futureString);
         Observable.interval(1000).map((x) => {
             this.diff = Math.floor((this.future.getTime() - new Date().getTime()) / 1000);
         }).subscribe((x) => {

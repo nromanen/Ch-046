@@ -35,7 +35,7 @@ System.register(["@angular/core", "../help/stomp.service"], function (exports_1,
                 }
                 PlayerHeader.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.stompService.connect('ws://localhost:8080/travian/stompTest');
+                    this.stompService.connect();
                     this.stompService.getObservable().subscribe(function (payload) {
                         _this.serverResponse = payload.outputField;
                         _this.showNotification();

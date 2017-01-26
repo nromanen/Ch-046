@@ -48,7 +48,7 @@ public class AttackServiceImpl implements AttackService {
             e.printStackTrace();
         }
 
-        newAttack.setUuid("newAtt" + (int)(Math.random()*100000));
+        newAttack.setUuid("newAtt" + (int) (Math.random() * 100000));
         newAttack.setLastModified(new Date());
         newAttack.setAttackTime(date);
         newAttack.setEnemy(attack.getEnemy());
@@ -56,6 +56,9 @@ public class AttackServiceImpl implements AttackService {
         newAttack.setVillage(villageService.getById(attack.getVillageId()));
 
         attacks.add(newAttack);
+
+        System.out.println("Add: " + attacks);
+
     }
 
     @Override
@@ -78,20 +81,23 @@ public class AttackServiceImpl implements AttackService {
     public List<AttackDTO> getActive() {
 
         List<AttackDTO> activeAttacks = new ArrayList<>();
-        AttackDTO attackDTO = new AttackDTO();
 
-        for (Attack attack: attacks){
-            if(attack.getAttackTime().after(new Date())){
+
+        for (Attack attack : attacks) {
+            if (attack.getAttackTime().after(new Date())) {
+                AttackDTO attackDTO = new AttackDTO();
                 attackDTO.setUuid(attack.getUuid());
                 attackDTO.setEnemy(attack.getEnemy());
-                attackDTO.setAttackTime(attack.getAttackTime().toString());
+                attackDTO.setAttackTime("" + attack.getAttackTime().getTime());
                 attackDTO.setPlayerId(attack.getOwner().getUuid());
                 attackDTO.setPlayerName(attack.getOwner().getUser().getLogin());
                 attackDTO.setVillageId(attack.getVillage().getUuid());
-                attackDTO.setVillageName(attack.getVillage().getName()+"["+attack.getVillage().getxCoord()+" , " + attack.getVillage().getyCoord()+"]");
+                attackDTO.setVillageName(attack.getVillage().getName() + "[" + attack.getVillage().getxCoord() + " , " + attack.getVillage().getyCoord() + "]");
                 activeAttacks.add(attackDTO);
             }
         }
+
+        System.out.println("GET ALL: " + activeAttacks);
         return activeAttacks;
     }
 }

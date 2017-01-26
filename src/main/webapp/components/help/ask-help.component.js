@@ -72,6 +72,9 @@ System.register(["./help.service", "@angular/core", "@angular/forms", "./attack"
                     console.log("Complex form: " + value);
                     var newAttack = new attack_1.Attack(value.villageName, value.enemy, value.timeAttack);
                     this.send(newAttack);
+                    this.helpForm.controls['villageName'].setValue("");
+                    this.helpForm.controls['enemy'].setValue("");
+                    this.helpForm.controls['timeAttack'].setValue("");
                 };
                 HelpComponent.prototype.send = function (attack) {
                     var _this = this;

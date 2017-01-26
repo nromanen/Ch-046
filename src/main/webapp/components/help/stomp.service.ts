@@ -9,22 +9,30 @@ declare let Stomp:any;
 @Injectable()
 export class StompService {
 
-    private stompClient;
+    private static stompClient;
     private stompSubject : Subject<any> = new Subject<any>();
+    private WEBSOCKETURL = 'ws://localhost:8080/travian/stompTest';
 
-    public connect(webSocketUrl: string) : void {
-        let self = this;
-        let webSocket = new WebSocket(webSocketUrl);
-        this.stompClient = Stomp.over(webSocket);
-        this.stompClient.connect({}, function (frame) {
-            self.stompClient.subscribe('/topic/greetings', function (stompResponse) {
-                self.stompSubject.next(JSON.parse(stompResponse.body));
-            });
-        });
+    constructor(){
+        let webSocket = new WebSocket(this.WEBSOCKETURL);
+        StompService.stompClient = Stomp.over(webSocket);
     }
 
+    public connect() : void {
+        let self = this;
+        if (!StompService.stompClient.isConnected) {
+            console.log("Use static! Connecting to websocket server")
+            StompService.stompClient.connect({}, function (frame) {
+                StompService.stompClient.subscribe('/topic/greetings', function (stompResponse) {
+                    self.stompSubject.next(JSON.parse(stompResponse.body));
+                });
+            });
+        }
+    }
+
+
     public send(payload: string) {
-        this.stompClient.send("/app/hello", {}, JSON.stringify({'message': 'askHelp'}));
+        StompService.stompClient.send("/app/hello", {}, JSON.stringify({'message': 'askHelp'}));
     }
 
     public getObservable() : Observable<any> {
