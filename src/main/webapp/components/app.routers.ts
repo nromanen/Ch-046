@@ -6,6 +6,9 @@ import {Routes, RouterModule} from '@angular/router';
 import {ModuleWithProviders} from '@angular/core';
 import {AllianceComponent} from "./alliance/alliance.component";
 import {LeaderManagerComponent} from "./leader/leader-manager.component";
+import {PlayerComponent} from "./player/player.component";
+import {HelpComponent} from "./help/ask-help.component";
+import {AllHelps} from "./help/all-helps.component";
 
 
 
@@ -28,7 +31,27 @@ export const routes:Routes = ([
         path: 'leader/',
         redirectTo:'leader',
         pathMatch:'full'
+    },
+    {
+        path:'player',
+        component: PlayerComponent
+    },
+    {
+        path: 'user',
+        component:PlayerComponent
+    },
+    {
+        path:'help',
+        component: HelpComponent
+    },
+    {
+        path:'allHelps',
+        component: AllHelps
     }
+
+
+
+
 
 ]);
 

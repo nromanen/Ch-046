@@ -1,6 +1,8 @@
 package ua.cv.tim.dao.hibernate;
 
 import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.cv.tim.dao.AbstractCrudDao;
@@ -17,7 +19,14 @@ public class PlayerDaoImpl extends AbstractCrudDao<Player> implements PlayerDao 
 
     @Override
     public Player getById(String id) {
-        return getCurrentSession().get(Player.class, id);
+        Session session = getCurrentSession();
+        Query query = session.createQuery("FROM Player WHERE id=:id");
+        query.setParameter("id", id);
+        Player player = (Player) query.uniqueResult();
+        System.out.println("DAO: " + player);
+        return player;
+
+//        return getCurrentSession().get(Player.class, id);
     }
 
     @Override

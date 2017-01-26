@@ -4,11 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import ua.cv.tim.dto.PlayerDTO;
 import ua.cv.tim.model.Player;
+import ua.cv.tim.model.User;
 import ua.cv.tim.model.Village;
 import ua.cv.tim.service.PlayerService;
+import ua.cv.tim.service.UserService;
 import ua.cv.tim.service.VillageService;
 
 import java.util.List;
@@ -25,6 +30,9 @@ public class PlayerController {
     @Autowired
     PlayerService playerService;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping(value = "/player/{id}/village", method = RequestMethod.GET)
     public ResponseEntity<List<Village>> getUsersVillages(@PathVariable(name = "id") String id) {
         Player byIdWithVillages = playerService.getByIdWithVillages(id);
@@ -32,12 +40,20 @@ public class PlayerController {
         return new ResponseEntity<>(villages, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/player/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Player> getPlayerById(@PathVariable(name = "id") String id) {
+    @RequestMapping(value = "/player", method = RequestMethod.GET)
+    public ResponseEntity<PlayerDTO> getPlayerById() {
+
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userByUsername = userService.getUserByUsername(principal.getUsername());
+
+        String id = userByUsername.getPlayer().getUuid();
+
         Player player = playerService.getByIdWithVillages(id);
-        if (player == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(player, HttpStatus.OK);
+
+        PlayerDTO playerDTO=new PlayerDTO(player.getUser().getLogin(),
+                player.getUser().getPassword(),player.getUser().getEmail(),
+                player.getRace(),player.getVillages(),player.getAlliance());
+        return new ResponseEntity<>(playerDTO, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/player/", method = RequestMethod.POST)
@@ -56,6 +72,8 @@ public class PlayerController {
             current_player.setUser(player.getUser());
             current_player.setVillages(player.getVillages());
             current_player.setAlliance(player.getAlliance());
+            playerService.add(current_player);
+
             return new ResponseEntity<>(current_player, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

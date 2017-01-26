@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByUsername(String username) {
-		return userDao.getUserByUsername(username);
+		return userDao.getUserByName(username);
 	}
 
 	public void add(User user) {
@@ -69,13 +69,13 @@ public class UserServiceImpl implements UserService {
 	public boolean isUnique(User user) {
 
 
-		if (userDao.getUserByUsername(user.getLogin(), user.getUuid()) != null) {
-			return false;
+		if (userDao.isUserUnique(user.getLogin(), user.getUuid())) {
+			return true;
 		}
 		if (userDao.getByMail(user.getEmail(), user.getUuid()) != null) {
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Override
@@ -177,7 +177,7 @@ public class UserServiceImpl implements UserService {
 		user.setLogin(member.getLogin());
 		user.setEmail(member.getEmail());
 
-		if (userDao.getUserByUsername(user.getLogin(), user.getUuid()) != null) {
+		if (userDao.isUserUnique(user.getLogin(), user.getUuid())) {
 			return false;
 		} else if (userDao.getByMail(user.getEmail(), user.getUuid()) != null) {
 			return false;

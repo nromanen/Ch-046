@@ -10,7 +10,7 @@ import ua.cv.tim.service.ArmyService;
 /**
  * Created by Serhii Starovoit on 1/5/2017 in 7:31 PM.
  */
-@Service
+@Service("armyService")
 @Transactional
 public class ArmyServiceImpl implements ArmyService {
 

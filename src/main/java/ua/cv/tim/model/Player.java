@@ -1,6 +1,7 @@
 package ua.cv.tim.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.OrderBy;
@@ -28,6 +29,7 @@ import java.util.List;
 
     @ManyToOne
     @JoinColumn(name = "alliance_id")
+    @JsonIgnore
     private Alliance alliance;
 
     public User getUser() {
@@ -64,5 +66,15 @@ import java.util.List;
 
     public Player(){
 
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "user=" + user +
+                ", race=" + race +
+                ", villages=" + villages +
+                ", alliance=" + alliance +
+                '}';
     }
 }
