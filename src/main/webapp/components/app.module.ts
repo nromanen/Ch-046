@@ -13,7 +13,7 @@ import {ConfirmComponent} from "./modal_window/modal";
 
 import {PlayerComponent} from "./player/player.component";
 import {PlayerList} from "./player/player-list.component";
-import {PlayerHeader} from "./player/player-header.component";
+import {PlayerHeader} from "./header/player/player-header.component";
 import {ArmyCellComponent} from "./army/armyCellComponent";
 import {VillageRow} from "./village/villageRow.component";
 import {AddVillageForm} from "./village/addVillageForm";

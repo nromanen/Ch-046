@@ -5,7 +5,7 @@ import {Component} from "@angular/core";
 @Component(
     {
         selector: 'player-head',
-        templateUrl: 'components/player/playerHeader.component.html'
+        templateUrl: 'components/header/player/playerHeader.component.html'
     }
 )
 export class PlayerHeader {

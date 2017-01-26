@@ -9,8 +9,8 @@ import {error} from "util";
 import {EditingVillageArmiesService} from "../services/editing-village-armis.service";
 @Component({
     selector: '[player-ro]',
-    outputs:['selectedVillageChanged'],
-    template:`
+    outputs: ['selectedVillageChanged'],
+    template: `
 <td>
     <div *ngIf="!isForm">{{village.name}}</div>
     <input *ngIf="isForm" (ngModelChange)="this.newVillage.name=$event" type="text" [ngModel]="this.village.name"  name="name"></td>
@@ -51,74 +51,77 @@ import {EditingVillageArmiesService} from "../services/editing-village-armis.ser
 </td>
 `
 })
-export class VillageRow implements OnInit{
+export class VillageRow implements OnInit {
+    @Input() village: Village;
+    @Input() isForm: boolean;
+    ifSaveChanges: boolean;
     private newVillage: Village;
-    unitValues:Array<string>;
-    selectedVillageChanged:EventEmitter<Village>;
-    @Input() village:Village;
-    @Input() isForm:boolean;
-    ifSaveChanges:boolean;
-    ngOnInit(): void {
-        this.newVillage=new Village();
-        this.newVillage.name=this.village.name;
-        this.newVillage.uuid=this.village.uuid;
-        this.newVillage.armies=this.village.armies;
-        this.newVillage.isCapital=this.village.isCapital;
-        this.newVillage.population=this.village.population;
-        this.newVillage.xCoord=this.village.xCoord;
-        this.newVillage.yCoord=this.village.yCoord;
-        this.newVillage.wall=this.village.wall;
-        this.getStringUnitTypeValues();
-    }
+    unitValues: Array<string>;
+    selectedVillageChanged: EventEmitter<Village>;
 
-    constructor( private villageService:VillageService, private currVillageArmiesService:EditingVillageArmiesService){
-        this.selectedVillageChanged=new EventEmitter<Village>();
-        this.unitValues=[];
-        this.ifSaveChanges=false;
+    constructor(private villageService: VillageService, private currVillageArmiesService: EditingVillageArmiesService) {
+        this.selectedVillageChanged = new EventEmitter<Village>();
+        this.unitValues = [];
+        this.ifSaveChanges = false;
         console.log('inside constructor');
         console.log(this.ifSaveChanges);
     }
 
-    getStringUnitTypeValues(){
-        for (let m in UnitType){
-            if (typeof UnitType[m] === 'number'){
+    ngOnInit(): void {
+        this.newVillage = new Village();
+        this.newVillage.name = this.village.name;
+        this.newVillage.uuid = this.village.uuid;
+        this.newVillage.armies = this.village.armies;
+        this.newVillage.isCapital = this.village.isCapital;
+        this.newVillage.population = this.village.population;
+        this.newVillage.xCoord = this.village.xCoord;
+        this.newVillage.yCoord = this.village.yCoord;
+        this.newVillage.wall = this.village.wall;
+        this.getStringUnitTypeValues();
+    }
+
+    getStringUnitTypeValues() {
+        for (let m in UnitType) {
+            if (typeof UnitType[m] === 'number') {
                 this.unitValues.push(m);
             }
         }
 
     }
-    submitEdit(){
+
+    submitEdit() {
         this.villageService.update(this.village);
     }
-    cellClick(village:Village){
+
+    cellClick(village: Village) {
         this.selectedVillageChanged.emit(village);
     }
 
-    changeVillage(){
-        this.ifSaveChanges=true;
+    changeVillage() {
+        this.ifSaveChanges = true;
         console.log('insideChange');
         console.log(this.village.armies);
-        this.village.name=this.newVillage.name;
-        this.village.armies=this.currVillageArmiesService.armies;
+        this.village.name = this.newVillage.name;
+        this.village.armies = this.currVillageArmiesService.armies;
 
-        this.village.xCoord=this.newVillage.xCoord;
-        this.village.yCoord=this.newVillage.yCoord;
-        this.village.isCapital=this.newVillage.isCapital;
-        this.village.population=this.newVillage.population;
-        this.village.wall=this.newVillage.wall;
+        this.village.xCoord = this.newVillage.xCoord;
+        this.village.yCoord = this.newVillage.yCoord;
+        this.village.isCapital = this.newVillage.isCapital;
+        this.village.population = this.newVillage.population;
+        this.village.wall = this.newVillage.wall;
 
         this.submitEdit();
-        this.isForm=false;
-        this.ifSaveChanges=false;
+        this.isForm = false;
+        this.ifSaveChanges = false;
 
     }
 
-    showEdit(){
+    showEdit() {
 
-            this.selectedVillageChanged.emit(null);
-            this.selectedVillageChanged.emit(this.village);
-             this.ifSaveChanges=false;
-             this.currVillageArmiesService.armies.length=0;
+        this.selectedVillageChanged.emit(null);
+        this.selectedVillageChanged.emit(this.village);
+        this.ifSaveChanges = false;
+        this.currVillageArmiesService.armies.length = 0;
 
     }
 

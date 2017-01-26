@@ -7,8 +7,8 @@ import {UnitType} from "../UnitType/unitType";
 import {Village} from "../village/village";
 import {NgForm} from "@angular/forms";
 @Component({
-    selector:"[add-army]",
-    template:`
+    selector: "[add-army]",
+    template: `
 <div class="input-field col s6 offset-s3">
     <select class="browser-default" [ngModel]="army.type"
             (ngModelChange)="army.type = $event" name="type" #type>
@@ -44,17 +44,19 @@ import {NgForm} from "@angular/forms";
 </div>
 `
 })
-export class AddArmyForm implements OnInit,AfterViewChecked{
+export class AddArmyForm implements OnInit,AfterViewChecked {
+    @Input() army: Army;
+    @Input() village: Village;
+    @Output() armyIsValid: EventEmitter<boolean>;
+    unitTypes: Array<number>;
+    unitTypeStrings: Array<string>;
 
-    unitTypes:Array<number>;
-    unitTypeStrings:Array<string>;
-
-    constructor(){
-        this.unitTypes=[];
-        this.armyIsValid=new EventEmitter<boolean>();
-        this.unitTypeStrings=[];
-        for(let type in UnitType){
-            if (typeof UnitType[type]==='string')
+    constructor() {
+        this.unitTypes = [];
+        this.armyIsValid = new EventEmitter<boolean>();
+        this.unitTypeStrings = [];
+        for (let type in UnitType) {
+            if (typeof UnitType[type] === 'string')
                 this.unitTypes.push(+type);
             else {
                 this.unitTypeStrings.push(type);
@@ -62,12 +64,10 @@ export class AddArmyForm implements OnInit,AfterViewChecked{
         }
     }
 
-    @Input() army:Army;
-    @Input() village:Village;
-    @Output () armyIsValid:EventEmitter<boolean>;
     ngOnInit(): void {
-        this.army.type=UnitType.Axeman;
+        this.army.type = UnitType.Axeman;
     }
+
     ngAfterViewChecked(): void {
         this.armyIsValid.emit(true);
     }

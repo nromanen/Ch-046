@@ -23,21 +23,15 @@ import {UnitType} from "../UnitType/unitType";
 export class ArmyCellComponent implements OnInit,OnChanges {
     @Input() type: string;
     @Input() village: Village;
-    army: Army;
-    newArmy: Army;
     @Input() isInput: boolean;
     @Input() ifSave: boolean;
+    army: Army;
+    newArmy: Army;
     cellClicked: EventEmitter<Village>;
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (this.ifSave && this.army != null) {
-            this.army.count = this.newArmy.count;
-        }
-
-        if (changes['isInput'] != null)
-            if (changes['isInput'].currentValue === true && this.army != null) {
-                this.currVillageArmiesService.armies.push(this.newArmy);
-            }
+    constructor(private currVillageArmiesService: EditingVillageArmiesService) {
+        this.isInput = true;
+        this.cellClicked = new EventEmitter<Village>();
 
     }
 
@@ -51,9 +45,15 @@ export class ArmyCellComponent implements OnInit,OnChanges {
         });
     }
 
-    constructor(private currVillageArmiesService: EditingVillageArmiesService) {
-        this.isInput = true;
-        this.cellClicked = new EventEmitter<Village>();
+    ngOnChanges(changes: SimpleChanges): void {
+        if (this.ifSave && this.army != null) {
+            this.army.count = this.newArmy.count;
+        }
+
+        if (changes['isInput'] != null)
+            if (changes['isInput'].currentValue === true && this.army != null) {
+                this.currVillageArmiesService.armies.push(this.newArmy);
+            }
 
     }
 

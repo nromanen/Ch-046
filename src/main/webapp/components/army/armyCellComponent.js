@@ -36,15 +36,6 @@ System.register(["@angular/core", "../village/village", "./army", "../services/e
                     this.isInput = true;
                     this.cellClicked = new core_1.EventEmitter();
                 }
-                ArmyCellComponent.prototype.ngOnChanges = function (changes) {
-                    if (this.ifSave && this.army != null) {
-                        this.army.count = this.newArmy.count;
-                    }
-                    if (changes['isInput'] != null)
-                        if (changes['isInput'].currentValue === true && this.army != null) {
-                            this.currVillageArmiesService.armies.push(this.newArmy);
-                        }
-                };
                 ArmyCellComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this.village.armies.forEach(function (army) {
@@ -54,6 +45,15 @@ System.register(["@angular/core", "../village/village", "./army", "../services/e
                             _this.newArmy.uuid = _this.army.uuid;
                         }
                     });
+                };
+                ArmyCellComponent.prototype.ngOnChanges = function (changes) {
+                    if (this.ifSave && this.army != null) {
+                        this.army.count = this.newArmy.count;
+                    }
+                    if (changes['isInput'] != null)
+                        if (changes['isInput'].currentValue === true && this.army != null) {
+                            this.currVillageArmiesService.armies.push(this.newArmy);
+                        }
                 };
                 ArmyCellComponent.prototype.hide = function () {
                     this.isInput = true;
