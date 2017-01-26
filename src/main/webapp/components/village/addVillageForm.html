@@ -1,0 +1,109 @@
+<form #heroForm="ngForm" (ngSubmit)="onSubmit(village)" >
+    <div class="row container">
+        <div class="input-field col s6 offset-s3">
+            <input id="name" type="text" class="validate" required [(ngModel)]="this.village.name" name="name" #name="ngModel" minlength="3" maxlength="14" pattern="[A-z]*">
+            <label for="name">Name</label>
+            <div *ngIf="name.errors && (name.dirty|| x.touched)"
+                 class="alert alert-danger">
+                <div [hidden]="!name.errors.required">
+                    Name is required
+                </div>
+                <div [hidden]="!name.errors.minlength">
+                    Name cannot be less than 3 characters long.
+                </div>
+                <div [hidden]="!name.errors.pattern">
+                    Name is incorrect!
+                </div>
+                <div [hidden]="!name.errors.maxlength">
+                    Name cannot be more than 14 characters long.
+                </div>
+            </div>
+        </div>
+
+        <div class="input-field col s6 offset-s3">
+            <input id="x" type="text" class="validate" [(ngModel)]="this.village.xCoord" required name="x" pattern="[0-9]*" #x="ngModel">
+            <label for="x">X</label>
+            <div *ngIf="x.errors && (x.dirty || x.touched)"
+                 class="alert alert-danger">
+                <div [hidden]="!x.errors.required">
+                    X coordinate is required
+                </div>
+
+                <div [hidden]="!x.errors.pattern">
+                    Coordinates can contain numbers only!
+                </div>
+
+            </div>
+        </div>
+
+        <div class="input-field col s6 offset-s3">
+            <input id="y" type="text" class="validate" [(ngModel)]="village.yCoord" name="y" pattern="[0-9]*" required #y="ngModel">
+            <label for="y">Y</label>
+            <div *ngIf="y.errors && (y.dirty || y.touched)"
+                 class="alert alert-danger">
+                <div [hidden]="!y.errors.required">
+                    Y coordinate is required
+                </div>
+
+                <div [hidden]="!y.errors.pattern">
+                    Coordinates can contain numbers only!
+                </div>
+            </div>
+        </div>
+
+        <div class="input-field col s6 offset-s3">
+            <input id="population" type="text" class="validate" required [(ngModel)]="village.population"
+                   name="population" pattern="[0-9]*" #population="ngModel">
+            <label for="population">Population</label>
+            <div *ngIf="population.errors && (population.dirty || population.touched)"
+                 class="alert alert-danger">
+                <div [hidden]="!population.errors.required">
+                    Population  is required
+                </div>
+
+                <div [hidden]="!population.errors.pattern">
+                    Population value can contain numbers only!
+                </div>
+            </div>
+        </div>
+
+        <div class="input-field col s6 offset-s3">
+            <input id="wall" type="text" class="validate" [(ngModel)]="village.wall" name="wall" pattern="[0-9]*" required #wall="ngModel">
+            <label for="wall">Wall</label>
+            <div *ngIf="wall.errors && (wall.dirty || wall.touched)"
+                 class="alert alert-danger">
+                <div [hidden]="!wall.errors.required">
+                    Wall level is required!
+                </div>
+
+                <div [hidden]="!wall.errors.pattern">
+                    Wall level can contain numbers only!
+                </div>
+            </div>
+        </div>
+
+        <div class="input-field col s6 offset-s3">
+            Is capital?
+        </div>
+        <div class="switch ">
+            <label class="col offset-s3">
+                No
+                <input type="checkbox" [(ngModel)]="village.isCapital" name="isCapital">
+                <span class="lever"></span>
+                Yes
+            </label>
+        </div>
+
+
+
+        <div  class="input-field col s6 offset-s3">
+            <button  (click)="addArmies()" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></button>
+        </div>
+
+        <div add-army *ngFor="let army of village.armies" [army]="army" (armyIsValid)="showAddArmy($event)"></div>
+        <div class="input-field col s6 offset-s3">
+            <button type="submit" class="btn btn-default"
+                    [disabled]="!heroForm.form.valid">Submit</button>
+        </div>
+    </div>
+</form>

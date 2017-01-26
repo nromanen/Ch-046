@@ -1,10 +1,10 @@
 /**
  * Created by rmochetc on 15.01.2017.
  */
-System.register(["@angular/router", "./alliance/alliance.component", "./player/player.component", "./help/ask-help.component", "./help/all-helps.component"], function (exports_1, context_1) {
+System.register(["@angular/router", "./alliance/alliance.component", "./leader/leader-manager.component", "./player/player.component", "./help/ask-help.component", "./help/all-helps.component"], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var router_1, alliance_component_1, player_component_1, ask_help_component_1, all_helps_component_1, routes, RoutesModule;
+    var router_1, alliance_component_1, leader_manager_component_1, player_component_1, ask_help_component_1, all_helps_component_1, routes, RoutesModule;
     return {
         setters: [
             function (router_1_1) {
@@ -12,6 +12,9 @@ System.register(["@angular/router", "./alliance/alliance.component", "./player/p
             },
             function (alliance_component_1_1) {
                 alliance_component_1 = alliance_component_1_1;
+            },
+            function (leader_manager_component_1_1) {
+                leader_manager_component_1 = leader_manager_component_1_1;
             },
             function (player_component_1_1) {
                 player_component_1 = player_component_1_1;
@@ -35,13 +38,21 @@ System.register(["@angular/router", "./alliance/alliance.component", "./player/p
                     pathMatch: 'full'
                 },
                 {
-                    path: 'player/:id',
+                    path: 'leader',
+                    component: leader_manager_component_1.LeaderManagerComponent
+                },
+                {
+                    path: 'leader/',
+                    redirectTo: 'leader',
+                    pathMatch: 'full'
+                },
+                {
+                    path: 'player',
                     component: player_component_1.PlayerComponent
                 },
                 {
-                    path: 'user/:id',
-                    redirectTo: 'player/:id',
-                    pathMatch: 'full',
+                    path: 'user',
+                    component: player_component_1.PlayerComponent
                 },
                 {
                     path: 'help',

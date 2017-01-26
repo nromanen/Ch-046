@@ -24,10 +24,9 @@ import java.util.List;
 /**
  * Created by rmochetc on 17.01.2017.
  */
-@Service("allianceService")
+@Service(value = "allianceService")
 @Transactional
 public class AllianceServiceImpl implements AllianceService {
-
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired

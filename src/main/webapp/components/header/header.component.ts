@@ -7,6 +7,5 @@ import {Component} from "@angular/core";
     selector: 'admin-header',
     templateUrl: 'components/header/header.html',
 })
-
 export class HeaderComponent {
 }

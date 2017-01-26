@@ -1,42 +1,43 @@
 package ua.cv.tim.dto;
 
-import java.util.List;
-
-import javax.persistence.Column;
-
-import org.hibernate.validator.constraints.NotEmpty;
-
 import ua.cv.tim.model.Role;
 
+/**
+ * Created by vyach on 15.01.2017.
+ */
 public class UserDTO {
 
-	@NotEmpty
+	private String uuid;
 	private String login;
-
-	@NotEmpty
-	private String password;
-
-	@NotEmpty
 	private String email;
-
+	private String alliance;
 	private Role role;
-	
-	public UserDTO() {	}
-	
-	public UserDTO(String email, String login, String password) {	
-		this.login=login;
-		this.password=password;
-		this.email=email;		
-	}
-	
-	public UserDTO(String login, String password, String email, Role role) {	
-		this.login=login;
-		this.password=password;
-		this.email=email;
-		this.role=role;
+
+	public UserDTO() {
 	}
 
+	public UserDTO(String uuid, String login, String email, String alliance, Role role) {
+		this.uuid = uuid;
+		this.login = login;
+		this.email = email;
+		this.alliance = alliance;
+		this.role = role;
+	}
 
+	public UserDTO(String uuid, String login, String email, String alliance) {
+		this.uuid = uuid;
+		this.login = login;
+		this.email = email;
+		this.alliance = alliance;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
 
 	public String getLogin() {
 		return login;
@@ -44,14 +45,6 @@ public class UserDTO {
 
 	public void setLogin(String login) {
 		this.login = login;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getEmail() {
@@ -62,11 +55,30 @@ public class UserDTO {
 		this.email = email;
 	}
 
+	public String getAlliance() {
+		return alliance;
+	}
+
+	public void setAlliance(String alliance) {
+		this.alliance = alliance;
+	}
+
 	public Role getRole() {
 		return role;
 	}
 
 	public void setRole(Role role) {
 		this.role = role;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb
+				.append("UserDTO: { login: ").append(login).append(", ")
+				.append("email: ").append(email).append(", ")
+				.append("role: ").append(role).append(", ")
+				.append("alliance: ").append(alliance).append(" } ");
+		return sb.toString();
+	}
 }

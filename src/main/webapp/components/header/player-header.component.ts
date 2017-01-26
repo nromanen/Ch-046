@@ -1,7 +1,7 @@
 /**
  * Created by okunetc on 16.01.2017.
  */
-import {Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {StompService} from "../services/helpNotification/stomp.service";
 
 @Component(
@@ -13,25 +13,17 @@ import {StompService} from "../services/helpNotification/stomp.service";
 )
 export class PlayerHeader{
 
-    // EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-    // ALLIANCE_NAME = /^[a-z]{3,9}$/;
-    VILLAGE = /^[A-Za-z1-9.]{3,9}$/;
-    DATE = /^[A-Za-z1-9. :]{3,20}$/;
-    ENEMY = "Enter correct email, please!";
-    NAME_ERROR = "Enter from 3 to 10 letters";
-    LOGIN_ERROR = "Enter from 3 to 10 letters";
+    // @Input() id: string;
 
     public serverResponse: string;
 
     showNotif: boolean = false;
 
-
-
     constructor(private stompService: StompService){
     }
 
-
     public ngOnInit(): void {
+        console.log(this.id);
         this.stompService.connect();
         this.stompService.getObservable().subscribe(payload => {
             this.serverResponse = payload.outputField;
@@ -46,6 +38,4 @@ export class PlayerHeader{
     close(){
         this.showNotif = false;
     }
-
-
 }

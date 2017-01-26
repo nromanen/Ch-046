@@ -1,5 +1,8 @@
 package ua.cv.tim.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,10 +15,12 @@ public class Army extends UuidEntity implements Comparable<Army> {
 
     private boolean ownUnit;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "village_uuid")
     private Village owningVillage;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "ar_village_uuid")
     private Village armyRequestVillage;

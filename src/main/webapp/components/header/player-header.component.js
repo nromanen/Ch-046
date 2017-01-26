@@ -24,17 +24,11 @@ System.register(["@angular/core", "../services/helpNotification/stomp.service"],
             PlayerHeader = (function () {
                 function PlayerHeader(stompService) {
                     this.stompService = stompService;
-                    // EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-                    // ALLIANCE_NAME = /^[a-z]{3,9}$/;
-                    this.VILLAGE = /^[A-Za-z1-9.]{3,9}$/;
-                    this.DATE = /^[A-Za-z1-9. :]{3,20}$/;
-                    this.ENEMY = "Enter correct email, please!";
-                    this.NAME_ERROR = "Enter from 3 to 10 letters";
-                    this.LOGIN_ERROR = "Enter from 3 to 10 letters";
                     this.showNotif = false;
                 }
                 PlayerHeader.prototype.ngOnInit = function () {
                     var _this = this;
+                    console.log(this.id);
                     this.stompService.connect();
                     this.stompService.getObservable().subscribe(function (payload) {
                         _this.serverResponse = payload.outputField;

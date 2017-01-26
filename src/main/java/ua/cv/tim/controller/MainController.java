@@ -12,7 +12,6 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ua.cv.tim.model.User;
 import ua.cv.tim.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,8 +58,8 @@ public class MainController {
         } else if (authorities.contains("ROLE_LEADER")) {
             return "redirect:/leader";
         } else {
-            User userByUsername = userService.getUserByUsername(principal.getUsername());
-            return "redirect:/user" + "/" + userByUsername.getPlayer().getUuid();
+            return "redirect:/user";
+
         }
     }
 

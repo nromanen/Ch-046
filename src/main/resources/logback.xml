@@ -8,7 +8,7 @@
         <layout class="ch.qos.logback.classic.PatternLayout">
 
             <Pattern>
-                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36}.%M{}\(\) - %msg%n
             </Pattern>
 
         </layout>
@@ -18,7 +18,7 @@
         <file>${LOGS_PATH}\logs\logs.${date}.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>
-                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36}.%M{}\(\) - %msg%n
             </Pattern>
         </encoder>
 
