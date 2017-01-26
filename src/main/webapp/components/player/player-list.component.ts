@@ -1,7 +1,6 @@
 /**
  * Created by Oleg on 14.01.2017.
  */
-import {PlayerRow} from "./playerRow.component";
 import {Player} from "./player";
 import {Component, Input, OnInit} from "@angular/core";
 import {Village} from "../village/village";
@@ -12,7 +11,7 @@ import {VillageService} from "../services/villageService";
 @Component
 ({
     selector: 'player-list',
-    templateUrl: "components/player/playerList.html"
+    templateUrl: "components/player/player-list.component.html"
 
 })
 export class PlayerList implements OnInit {

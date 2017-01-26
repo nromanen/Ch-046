@@ -7,12 +7,7 @@ import {ModuleWithProviders} from '@angular/core';
 import {AllianceComponent} from "./alliance/alliance.component";
 import {LeaderManagerComponent} from "./leader/leader-manager.component";
 import {PlayerComponent} from "./player/player.component";
-
-
-
 export const routes:Routes = ([
-
-
     {
         path: 'admin', component: AllianceComponent
     },

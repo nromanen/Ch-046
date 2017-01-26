@@ -12,34 +12,34 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
     outputs:['selectedVillageChanged'],
     template:`
 <td>
-    <div *ngIf="!isForm">{{v.name}}</div>
-    <input *ngIf="isForm" (ngModelChange)="this.newVillage.name=$event" type="text" [ngModel]="this.v.name"  name="name"></td>
+    <div *ngIf="!isForm">{{village.name}}</div>
+    <input *ngIf="isForm" (ngModelChange)="this.newVillage.name=$event" type="text" [ngModel]="this.village.name"  name="name"></td>
     
 <td>
-    <div *ngIf="!isForm">{{v.population}}</div>
-    <input *ngIf="isForm" (ngModelChange)="this.newVillage.population=$event" type="text" [ngModel]="this.v.population" name="population">
+    <div *ngIf="!isForm">{{village.population}}</div>
+    <input *ngIf="isForm" (ngModelChange)="this.newVillage.population=$event" type="text" [ngModel]="this.village.population" name="population">
 </td>
 <td>
-    <div *ngIf="!isForm" >{{this.v.xCoord}}</div>
-    <input (ngModelChange)="this.newVillage.xCoord=$event" *ngIf="isForm" type="text" [ngModel]="this.v.xCoord" name="x">
+    <div *ngIf="!isForm" >{{this.village.xCoord}}</div>
+    <input (ngModelChange)="this.newVillage.xCoord=$event" *ngIf="isForm" type="text" [ngModel]="this.village.xCoord" name="x">
 </td>
 <td >
-    <div *ngIf="!isForm">{{v.yCoord}}</div>
-    <input *ngIf="isForm" type="text" [ngModel]="this.v.yCoord" name="y" (ngModelChange)="this.newVillage.yCoord=$event">
+    <div *ngIf="!isForm">{{village.yCoord}}</div>
+    <input *ngIf="isForm" type="text" [ngModel]="this.village.yCoord" name="y" (ngModelChange)="this.newVillage.yCoord=$event">
 </td>
 <td >
-    <div *ngIf="!isForm">{{v.isCapital}}</div>
-    <input *ngIf="isForm" type="checkbox" (ngModelChange)="this.newVillage.isCapital=$event" [ngModel]="this.v.isCapital" name="isCapital" id="isCapital" class="filled-in">
+    <div *ngIf="!isForm">{{village.isCapital}}</div>
+    <input *ngIf="isForm" type="checkbox" (ngModelChange)="this.newVillage.isCapital=$event" [ngModel]="this.village.isCapital" name="isCapital" id="isCapital" class="filled-in">
     <label *ngIf="isForm" for="isCapital"></label>
 </td>
 
 <td >
-<div *ngIf="!isForm">{{v.wall}}</div>
-<input *ngIf="isForm" type="text" [ngModel]="this.v.wall" (ngModelChange)="this.newVillage.wall=$event" name="wall">
+<div *ngIf="!isForm">{{village.wall}}</div>
+<input *ngIf="isForm" type="text" [ngModel]="this.village.wall" (ngModelChange)="this.newVillage.wall=$event" name="wall">
 </td>
 
 <td *ngFor="let tp of unitValues">
-    <army-cell [type]="tp" [village]="v" 
+    <army-cell [type]="tp" [village]="village" 
     (cellClicked)="cellClick($event)" [isInput]="isForm" [ifSave]="ifSaveChanges"></army-cell>
 </td>
 <td>
@@ -51,32 +51,26 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 </td>
 `
 })
-export class VillageRow implements OnInit,AfterViewChecked{
-    ngAfterViewChecked(): void {
-
-    }
+export class VillageRow implements OnInit{
     private newVillage: Village;
-    private villBefore;
-    ngOnInit(): void {
-        console.log("inside village row");
-        console.log(this.v);
-        // alert(JSON.stringify(this.v));
-        this.newVillage=new Village();
-        this.newVillage.name=this.v.name;
-        this.newVillage.uuid=this.v.uuid;
-        this.newVillage.armies=this.v.armies;
-        this.newVillage.isCapital=this.v.isCapital;
-        this.newVillage.population=this.v.population;
-        this.newVillage.xCoord=this.v.xCoord;
-        this.newVillage.yCoord=this.v.yCoord;
-        this.newVillage.wall=this.v.wall;
-        this.getStringUnitTypeValues();
-    }
     unitValues:Array<string>;
     selectedVillageChanged:EventEmitter<Village>;
-    @Input() v:Village;
+    @Input() village:Village;
     @Input() isForm:boolean;
     ifSaveChanges:boolean;
+    ngOnInit(): void {
+        this.newVillage=new Village();
+        this.newVillage.name=this.village.name;
+        this.newVillage.uuid=this.village.uuid;
+        this.newVillage.armies=this.village.armies;
+        this.newVillage.isCapital=this.village.isCapital;
+        this.newVillage.population=this.village.population;
+        this.newVillage.xCoord=this.village.xCoord;
+        this.newVillage.yCoord=this.village.yCoord;
+        this.newVillage.wall=this.village.wall;
+        this.getStringUnitTypeValues();
+    }
+
     constructor( private villageService:VillageService, private currVillageArmiesService:CurrVillageArmiesService){
         this.selectedVillageChanged=new EventEmitter<Village>();
         this.unitValues=[];
@@ -94,7 +88,7 @@ export class VillageRow implements OnInit,AfterViewChecked{
 
     }
     submitEdit(){
-        this.villageService.update(this.v);
+        this.villageService.update(this.village);
     }
     cellClick(village:Village){
         this.selectedVillageChanged.emit(village);
@@ -103,36 +97,28 @@ export class VillageRow implements OnInit,AfterViewChecked{
     changeVillage(){
         this.ifSaveChanges=true;
         console.log('insideChange');
-        console.log(this.v.armies);
-        this.v.name=this.newVillage.name;
-        this.v.armies=this.currVillageArmiesService.armies;
+        console.log(this.village.armies);
+        this.village.name=this.newVillage.name;
+        this.village.armies=this.currVillageArmiesService.armies;
 
-        this.v.xCoord=this.newVillage.xCoord;
-        this.v.yCoord=this.newVillage.yCoord;
-        this.v.isCapital=this.newVillage.isCapital;
-        this.v.population=this.newVillage.population;
-        this.v.wall=this.newVillage.wall;
+        this.village.xCoord=this.newVillage.xCoord;
+        this.village.yCoord=this.newVillage.yCoord;
+        this.village.isCapital=this.newVillage.isCapital;
+        this.village.population=this.newVillage.population;
+        this.village.wall=this.newVillage.wall;
 
-        console.log('insideChange');
-        console.log(this.v.armies);
         this.submitEdit();
         this.isForm=false;
         this.ifSaveChanges=false;
-        // console.log("inside save");
-        // console.log(this.ifSaveChanges);
-        // this.ifSaveChanges=false;
+
     }
 
     showEdit(){
 
             this.selectedVillageChanged.emit(null);
-            this.selectedVillageChanged.emit(this.v);
+            this.selectedVillageChanged.emit(this.village);
              this.ifSaveChanges=false;
              this.currVillageArmiesService.armies.length=0;
-             // this.v.armies.forEach(army=>{
-             //     this.currVillageArmiesService.armies.push(army);
-             // });
-             console.log(this.currVillageArmiesService.armies);
 
     }
 

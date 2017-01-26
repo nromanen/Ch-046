@@ -40,7 +40,7 @@
         </thead>
 
         <tbody>
-        <tr player-ro [v]="v" *ngFor="let v of player.villages" [isForm]="v==selectedVillage"
+        <tr player-ro [village]="v" *ngFor="let v of player.villages" [isForm]="v==selectedVillage"
             (selectedVillageChanged)="changeSelectedVillage($event)">
         </tbody>
     </table>

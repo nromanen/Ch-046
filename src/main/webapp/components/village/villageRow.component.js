@@ -40,21 +40,16 @@ System.register(["@angular/core", "../UnitType/unitType", "./village", "../servi
                     console.log('inside constructor');
                     console.log(this.ifSaveChanges);
                 }
-                VillageRow.prototype.ngAfterViewChecked = function () {
-                };
                 VillageRow.prototype.ngOnInit = function () {
-                    console.log("inside village row");
-                    console.log(this.v);
-                    // alert(JSON.stringify(this.v));
                     this.newVillage = new village_1.Village();
-                    this.newVillage.name = this.v.name;
-                    this.newVillage.uuid = this.v.uuid;
-                    this.newVillage.armies = this.v.armies;
-                    this.newVillage.isCapital = this.v.isCapital;
-                    this.newVillage.population = this.v.population;
-                    this.newVillage.xCoord = this.v.xCoord;
-                    this.newVillage.yCoord = this.v.yCoord;
-                    this.newVillage.wall = this.v.wall;
+                    this.newVillage.name = this.village.name;
+                    this.newVillage.uuid = this.village.uuid;
+                    this.newVillage.armies = this.village.armies;
+                    this.newVillage.isCapital = this.village.isCapital;
+                    this.newVillage.population = this.village.population;
+                    this.newVillage.xCoord = this.village.xCoord;
+                    this.newVillage.yCoord = this.village.yCoord;
+                    this.newVillage.wall = this.village.wall;
                     this.getStringUnitTypeValues();
                 };
                 VillageRow.prototype.getStringUnitTypeValues = function () {
@@ -65,7 +60,7 @@ System.register(["@angular/core", "../UnitType/unitType", "./village", "../servi
                     }
                 };
                 VillageRow.prototype.submitEdit = function () {
-                    this.villageService.update(this.v);
+                    this.villageService.update(this.village);
                 };
                 VillageRow.prototype.cellClick = function (village) {
                     this.selectedVillageChanged.emit(village);
@@ -73,39 +68,30 @@ System.register(["@angular/core", "../UnitType/unitType", "./village", "../servi
                 VillageRow.prototype.changeVillage = function () {
                     this.ifSaveChanges = true;
                     console.log('insideChange');
-                    console.log(this.v.armies);
-                    this.v.name = this.newVillage.name;
-                    this.v.armies = this.currVillageArmiesService.armies;
-                    this.v.xCoord = this.newVillage.xCoord;
-                    this.v.yCoord = this.newVillage.yCoord;
-                    this.v.isCapital = this.newVillage.isCapital;
-                    this.v.population = this.newVillage.population;
-                    this.v.wall = this.newVillage.wall;
-                    console.log('insideChange');
-                    console.log(this.v.armies);
+                    console.log(this.village.armies);
+                    this.village.name = this.newVillage.name;
+                    this.village.armies = this.currVillageArmiesService.armies;
+                    this.village.xCoord = this.newVillage.xCoord;
+                    this.village.yCoord = this.newVillage.yCoord;
+                    this.village.isCapital = this.newVillage.isCapital;
+                    this.village.population = this.newVillage.population;
+                    this.village.wall = this.newVillage.wall;
                     this.submitEdit();
                     this.isForm = false;
                     this.ifSaveChanges = false;
-                    // console.log("inside save");
-                    // console.log(this.ifSaveChanges);
-                    // this.ifSaveChanges=false;
                 };
                 VillageRow.prototype.showEdit = function () {
                     this.selectedVillageChanged.emit(null);
-                    this.selectedVillageChanged.emit(this.v);
+                    this.selectedVillageChanged.emit(this.village);
                     this.ifSaveChanges = false;
                     this.currVillageArmiesService.armies.length = 0;
-                    // this.v.armies.forEach(army=>{
-                    //     this.currVillageArmiesService.armies.push(army);
-                    // });
-                    console.log(this.currVillageArmiesService.armies);
                 };
                 return VillageRow;
             }());
             __decorate([
                 core_1.Input(),
                 __metadata("design:type", village_1.Village)
-            ], VillageRow.prototype, "v", void 0);
+            ], VillageRow.prototype, "village", void 0);
             __decorate([
                 core_1.Input(),
                 __metadata("design:type", Boolean)
@@ -114,7 +100,7 @@ System.register(["@angular/core", "../UnitType/unitType", "./village", "../servi
                 core_1.Component({
                     selector: '[player-ro]',
                     outputs: ['selectedVillageChanged'],
-                    template: "\n<td>\n    <div *ngIf=\"!isForm\">{{v.name}}</div>\n    <input *ngIf=\"isForm\" (ngModelChange)=\"this.newVillage.name=$event\" type=\"text\" [ngModel]=\"this.v.name\"  name=\"name\"></td>\n    \n<td>\n    <div *ngIf=\"!isForm\">{{v.population}}</div>\n    <input *ngIf=\"isForm\" (ngModelChange)=\"this.newVillage.population=$event\" type=\"text\" [ngModel]=\"this.v.population\" name=\"population\">\n</td>\n<td>\n    <div *ngIf=\"!isForm\" >{{this.v.xCoord}}</div>\n    <input (ngModelChange)=\"this.newVillage.xCoord=$event\" *ngIf=\"isForm\" type=\"text\" [ngModel]=\"this.v.xCoord\" name=\"x\">\n</td>\n<td >\n    <div *ngIf=\"!isForm\">{{v.yCoord}}</div>\n    <input *ngIf=\"isForm\" type=\"text\" [ngModel]=\"this.v.yCoord\" name=\"y\" (ngModelChange)=\"this.newVillage.yCoord=$event\">\n</td>\n<td >\n    <div *ngIf=\"!isForm\">{{v.isCapital}}</div>\n    <input *ngIf=\"isForm\" type=\"checkbox\" (ngModelChange)=\"this.newVillage.isCapital=$event\" [ngModel]=\"this.v.isCapital\" name=\"isCapital\" id=\"isCapital\" class=\"filled-in\">\n    <label *ngIf=\"isForm\" for=\"isCapital\"></label>\n</td>\n\n<td >\n<div *ngIf=\"!isForm\">{{v.wall}}</div>\n<input *ngIf=\"isForm\" type=\"text\" [ngModel]=\"this.v.wall\" (ngModelChange)=\"this.newVillage.wall=$event\" name=\"wall\">\n</td>\n\n<td *ngFor=\"let tp of unitValues\">\n    <army-cell [type]=\"tp\" [village]=\"v\" \n    (cellClicked)=\"cellClick($event)\" [isInput]=\"isForm\" [ifSave]=\"ifSaveChanges\"></army-cell>\n</td>\n<td>\n    <button (click)=\"!isForm?showEdit():changeVillage()\" class=\"btn waves-effect waves-light col offset-s1 \" type=\"submit\" name=\"action\"\n            style=\"margin-top: 5px;\"\n    >{{!isForm?\"Edit\":\"Save\"}}\n    </button>\n    \n</td>\n"
+                    template: "\n<td>\n    <div *ngIf=\"!isForm\">{{village.name}}</div>\n    <input *ngIf=\"isForm\" (ngModelChange)=\"this.newVillage.name=$event\" type=\"text\" [ngModel]=\"this.village.name\"  name=\"name\"></td>\n    \n<td>\n    <div *ngIf=\"!isForm\">{{village.population}}</div>\n    <input *ngIf=\"isForm\" (ngModelChange)=\"this.newVillage.population=$event\" type=\"text\" [ngModel]=\"this.village.population\" name=\"population\">\n</td>\n<td>\n    <div *ngIf=\"!isForm\" >{{this.village.xCoord}}</div>\n    <input (ngModelChange)=\"this.newVillage.xCoord=$event\" *ngIf=\"isForm\" type=\"text\" [ngModel]=\"this.village.xCoord\" name=\"x\">\n</td>\n<td >\n    <div *ngIf=\"!isForm\">{{village.yCoord}}</div>\n    <input *ngIf=\"isForm\" type=\"text\" [ngModel]=\"this.village.yCoord\" name=\"y\" (ngModelChange)=\"this.newVillage.yCoord=$event\">\n</td>\n<td >\n    <div *ngIf=\"!isForm\">{{village.isCapital}}</div>\n    <input *ngIf=\"isForm\" type=\"checkbox\" (ngModelChange)=\"this.newVillage.isCapital=$event\" [ngModel]=\"this.village.isCapital\" name=\"isCapital\" id=\"isCapital\" class=\"filled-in\">\n    <label *ngIf=\"isForm\" for=\"isCapital\"></label>\n</td>\n\n<td >\n<div *ngIf=\"!isForm\">{{village.wall}}</div>\n<input *ngIf=\"isForm\" type=\"text\" [ngModel]=\"this.village.wall\" (ngModelChange)=\"this.newVillage.wall=$event\" name=\"wall\">\n</td>\n\n<td *ngFor=\"let tp of unitValues\">\n    <army-cell [type]=\"tp\" [village]=\"village\" \n    (cellClicked)=\"cellClick($event)\" [isInput]=\"isForm\" [ifSave]=\"ifSaveChanges\"></army-cell>\n</td>\n<td>\n    <button (click)=\"!isForm?showEdit():changeVillage()\" class=\"btn waves-effect waves-light col offset-s1 \" type=\"submit\" name=\"action\"\n            style=\"margin-top: 5px;\"\n    >{{!isForm?\"Edit\":\"Save\"}}\n    </button>\n    \n</td>\n"
                 }),
                 __metadata("design:paramtypes", [villageService_1.VillageService, newVillageArmiesService_1.CurrVillageArmiesService])
             ], VillageRow);
