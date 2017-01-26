@@ -1,8 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Village} from "../village/village";
 import {Http, Headers} from "@angular/http";
-import {Observable} from "rxjs";
-import {error} from "util";
 /**
  * Created by okunetc on 20.01.2017.
  */
@@ -10,8 +8,9 @@ import {error} from "util";
 export class VillageService{
     villageURL="village/";
     villages:Array<Village>;
+    constructor(private http:Http){
+    }
     update(village:Village){
-
         let villageBefore=new Village();
         villageBefore.name=village.name;
         villageBefore.uuid=village.uuid;
@@ -50,7 +49,5 @@ export class VillageService{
                 error => console.log(error)
             );
     }
-    constructor(private http:Http){
 
-    }
 }

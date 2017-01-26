@@ -7,7 +7,7 @@ import {Player} from "./player";
 import {Component, OnInit} from "@angular/core";
 import {PlayerService} from "../services/player.service";
 import {ActivatedRoute} from "@angular/router";
-import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
+import {EditingVillageArmiesService} from "../services/editing-village-armis.service";
 import {VillageService} from "../services/villageService";
 @Component({
     selector: 'player',
@@ -27,7 +27,7 @@ export class PlayerComponent implements OnInit {
     id: string;
     showAddVillageForm: boolean;
 
-    constructor(private currPlayerService: CurrVillageArmiesService, private playerService: PlayerService, private route: ActivatedRoute, private villageService: VillageService) {
+    constructor(private currPlayerService: EditingVillageArmiesService, private playerService: PlayerService, private route: ActivatedRoute, private villageService: VillageService) {
         this.route.params.subscribe((param: any) => {
             this.id = param['id'];
             this.playerService.url = this.playerService.url + this.id;

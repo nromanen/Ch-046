@@ -28,7 +28,7 @@ public class Village extends UuidEntity implements Comparable<Village> {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owningVillage",cascade = CascadeType.ALL)
 	private List<Army> armies = new ArrayList<>();
 
-//	@JsonBackReference
+
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "armyRequestVillage")
 	private List<Army> armyRequests;

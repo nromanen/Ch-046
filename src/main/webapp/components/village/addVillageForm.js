@@ -36,10 +36,6 @@ System.register(["@angular/core", "../village/village", "../army/army", "../serv
                     this.wasSubmitted = new core_1.EventEmitter();
                     this.showAddArmyButton = true;
                 }
-                AddVillageForm.prototype.ngOnInit = function () {
-                };
-                AddVillageForm.prototype.ngAfterViewChecked = function () {
-                };
                 AddVillageForm.prototype.addArmies = function () {
                     this.village.armies.push(new army_1.Army);
                     console.log(this.village);

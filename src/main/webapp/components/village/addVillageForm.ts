@@ -9,15 +9,11 @@ import {VillageService} from "../services/villageService";
     selector: "add-vill-form",
     templateUrl: "components/village/addVillageForm.html"
 })
-export class AddVillageForm implements OnInit,AfterViewChecked {
-    ngOnInit(): void {
-
-    }
-
-    showAddArmyButton: boolean;
-    village: Village;
+export class AddVillageForm  {
     @Input() player;
     @Output() wasSubmitted: EventEmitter<any>;
+    showAddArmyButton: boolean;
+    village: Village;
 
     constructor(private villageService: VillageService) {
         this.village = new Village;
@@ -26,11 +22,6 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         this.wasSubmitted = new EventEmitter();
         this.showAddArmyButton = true;
     }
-
-    ngAfterViewChecked() {
-
-    }
-
 
     addArmies() {
         this.village.armies.push(new Army);

@@ -9,11 +9,10 @@ import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
 @Injectable()
 export class PlayerService{
-        players:Array<Player>;
         player:Player;
         id:string;
         url='player/';
-    constructor(private _http:Http, private _activatedRoute:ActivatedRoute){
+    constructor(private _http:Http){
 
     }
 

@@ -1,4 +1,4 @@
-System.register(["@angular/core", "../village/village", "./army", "../services/newVillageArmiesService", "../UnitType/unitType"], function (exports_1, context_1) {
+System.register(["@angular/core", "../village/village", "./army", "../services/editing-village-armis.service", "../UnitType/unitType"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,7 +10,7 @@ System.register(["@angular/core", "../village/village", "./army", "../services/n
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, village_1, army_1, newVillageArmiesService_1, unitType_1, ArmyCellComponent;
+    var core_1, village_1, army_1, editing_village_armis_service_1, unitType_1, ArmyCellComponent;
     return {
         setters: [
             function (core_1_1) {
@@ -22,8 +22,8 @@ System.register(["@angular/core", "../village/village", "./army", "../services/n
             function (army_1_1) {
                 army_1 = army_1_1;
             },
-            function (newVillageArmiesService_1_1) {
-                newVillageArmiesService_1 = newVillageArmiesService_1_1;
+            function (editing_village_armis_service_1_1) {
+                editing_village_armis_service_1 = editing_village_armis_service_1_1;
             },
             function (unitType_1_1) {
                 unitType_1 = unitType_1_1;
@@ -86,7 +86,7 @@ System.register(["@angular/core", "../village/village", "./army", "../services/n
                     outputs: ['cellClicked'],
                     template: "\n     <div title=\"{{this.type}}\" (dblclick)=\"hide()\" *ngIf=\"!isInput\" (click)=\"becomeDiv()\">{{army!=null?this.army.count:\"0\"}}</div>\n     <div class=\"input-field\"  *ngIf=\"isInput\">\n     <input class=\"validate\"  type=\"text\"  style=\" \n     width: 20px;height: 22px\" [ngModel]=\"army!=null?this.army.count:'0'\" \n     name=\"value\" (ngModelChange)=\"newArmy.count=$event\"\n     minlength=\"5\" maxlength=\"7\" #name=\"ngModel\">\n     </div>\n\n"
                 }),
-                __metadata("design:paramtypes", [newVillageArmiesService_1.CurrVillageArmiesService])
+                __metadata("design:paramtypes", [editing_village_armis_service_1.EditingVillageArmiesService])
             ], ArmyCellComponent);
             exports_1("ArmyCellComponent", ArmyCellComponent);
         }

@@ -1,7 +1,8 @@
-<form #heroForm="ngForm" (ngSubmit)="onSubmit(village)" >
+<form #heroForm="ngForm" (ngSubmit)="onSubmit(village)">
     <div class="row container">
         <div class="input-field col s6 offset-s3">
-            <input id="name" type="text" class="validate" required [(ngModel)]="this.village.name" name="name" #name="ngModel" minlength="3" maxlength="14" pattern="[A-z]*">
+            <input id="name" type="text" class="validate" required [(ngModel)]="this.village.name" name="name"
+                   #name="ngModel" minlength="3" maxlength="14" pattern="[A-z]*">
             <label for="name">Name</label>
             <div *ngIf="name.errors && (name.dirty|| x.touched)"
                  class="alert alert-danger">
@@ -21,7 +22,8 @@
         </div>
 
         <div class="input-field col s6 offset-s3">
-            <input id="x" type="text" class="validate" [(ngModel)]="this.village.xCoord" required name="x" pattern="[0-9]*" #x="ngModel">
+            <input id="x" type="text" class="validate" [(ngModel)]="this.village.xCoord" required name="x"
+                   pattern="[0-9]*" #x="ngModel">
             <label for="x">X</label>
             <div *ngIf="x.errors && (x.dirty || x.touched)"
                  class="alert alert-danger">
@@ -37,7 +39,8 @@
         </div>
 
         <div class="input-field col s6 offset-s3">
-            <input id="y" type="text" class="validate" [(ngModel)]="village.yCoord" name="y" pattern="[0-9]*" required #y="ngModel">
+            <input id="y" type="text" class="validate" [(ngModel)]="village.yCoord" name="y" pattern="[0-9]*" required
+                   #y="ngModel">
             <label for="y">Y</label>
             <div *ngIf="y.errors && (y.dirty || y.touched)"
                  class="alert alert-danger">
@@ -58,7 +61,7 @@
             <div *ngIf="population.errors && (population.dirty || population.touched)"
                  class="alert alert-danger">
                 <div [hidden]="!population.errors.required">
-                    Population  is required
+                    Population is required
                 </div>
 
                 <div [hidden]="!population.errors.pattern">
@@ -68,7 +71,8 @@
         </div>
 
         <div class="input-field col s6 offset-s3">
-            <input id="wall" type="text" class="validate" [(ngModel)]="village.wall" name="wall" pattern="[0-9]*" required #wall="ngModel">
+            <input id="wall" type="text" class="validate" [(ngModel)]="village.wall" name="wall" pattern="[0-9]*"
+                   required #wall="ngModel">
             <label for="wall">Wall</label>
             <div *ngIf="wall.errors && (wall.dirty || wall.touched)"
                  class="alert alert-danger">
@@ -95,15 +99,16 @@
         </div>
 
 
-
-        <div  class="input-field col s6 offset-s3">
-            <button  (click)="addArmies()" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></button>
+        <div class="input-field col s6 offset-s3">
+            <button (click)="addArmies()" class="btn-floating btn-large waves-effect waves-light red"><i
+                    class="material-icons">add</i></button>
         </div>
 
         <div add-army *ngFor="let army of village.armies" [army]="army" (armyIsValid)="showAddArmy($event)"></div>
         <div class="input-field col s6 offset-s3">
             <button type="submit" class="btn btn-default"
-                    [disabled]="!heroForm.form.valid">Submit</button>
+                    [disabled]="!heroForm.form.valid">Submit
+            </button>
         </div>
     </div>
 </form>

@@ -4,7 +4,7 @@
 import {Component, Input, OnInit, EventEmitter, OnChanges, SimpleChanges} from "@angular/core";
 import {Village} from "../village/village";
 import {Army} from "./army";
-import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
+import {EditingVillageArmiesService} from "../services/editing-village-armis.service";
 import {UnitType} from "../UnitType/unitType";
 @Component({
     selector: 'army-cell',
@@ -51,7 +51,7 @@ export class ArmyCellComponent implements OnInit,OnChanges {
         });
     }
 
-    constructor(private currVillageArmiesService: CurrVillageArmiesService) {
+    constructor(private currVillageArmiesService: EditingVillageArmiesService) {
         this.isInput = true;
         this.cellClicked = new EventEmitter<Village>();
 

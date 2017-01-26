@@ -6,7 +6,7 @@ import {UnitType} from "../UnitType/unitType";
 import {Village} from "./village";
 import {VillageService} from "../services/villageService";
 import {error} from "util";
-import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
+import {EditingVillageArmiesService} from "../services/editing-village-armis.service";
 @Component({
     selector: '[player-ro]',
     outputs:['selectedVillageChanged'],
@@ -71,7 +71,7 @@ export class VillageRow implements OnInit{
         this.getStringUnitTypeValues();
     }
 
-    constructor( private villageService:VillageService, private currVillageArmiesService:CurrVillageArmiesService){
+    constructor( private villageService:VillageService, private currVillageArmiesService:EditingVillageArmiesService){
         this.selectedVillageChanged=new EventEmitter<Village>();
         this.unitValues=[];
         this.ifSaveChanges=false;

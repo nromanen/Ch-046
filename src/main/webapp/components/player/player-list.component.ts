@@ -4,9 +4,8 @@
 import {Player} from "./player";
 import {Component, Input, OnInit} from "@angular/core";
 import {Village} from "../village/village";
-import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
+import {EditingVillageArmiesService} from "../services/editing-village-armis.service";
 import {UnitType} from "../UnitType/unitType";
-import {Army} from "../army/army";
 import {VillageService} from "../services/villageService";
 @Component
 ({
@@ -19,7 +18,7 @@ export class PlayerList implements OnInit {
     unitValues: Array<string>;
     selectedVillage: Village;
 
-    constructor(private currVillageService: CurrVillageArmiesService, private villageService: VillageService) {
+    constructor(private currVillageService: EditingVillageArmiesService, private villageService: VillageService) {
         this.unitValues = [];
         this.selectedVillage = null;
         console.log(this.unitValues);
@@ -39,7 +38,6 @@ export class PlayerList implements OnInit {
 
     changeSelectedVillage(village: Village) {
         this.selectedVillage = village;
-        console.log(this.selectedVillage);
     }
 
 

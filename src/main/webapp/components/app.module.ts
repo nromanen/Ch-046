@@ -29,7 +29,7 @@ import {PagerService} from "./services/pager.service";
 import {AllianceService} from "./services/alliance/alliance-service";
 import {UserService} from "./services/user.service";
 import {VillageService} from "./services/villageService";
-import {CurrVillageArmiesService} from "./services/newVillageArmiesService";
+import {EditingVillageArmiesService} from "./services/editing-village-armis.service";
 import {PlayerService} from "./services/player.service";
 
 @NgModule({
@@ -66,7 +66,7 @@ import {PlayerService} from "./services/player.service";
         UserService,
         ConfirmComponent,
         PlayerService,
-        CurrVillageArmiesService,
+        EditingVillageArmiesService,
         VillageService
 
     ],

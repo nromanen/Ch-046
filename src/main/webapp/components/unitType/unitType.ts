@@ -32,6 +32,4 @@ export enum UnitType{
     BatteringRam,
     FireCatapult,
     Senator,
-
-
 }

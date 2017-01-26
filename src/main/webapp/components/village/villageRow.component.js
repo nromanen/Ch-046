@@ -1,4 +1,4 @@
-System.register(["@angular/core", "../UnitType/unitType", "./village", "../services/villageService", "../services/newVillageArmiesService"], function (exports_1, context_1) {
+System.register(["@angular/core", "../UnitType/unitType", "./village", "../services/villageService", "../services/editing-village-armis.service"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,7 +10,7 @@ System.register(["@angular/core", "../UnitType/unitType", "./village", "../servi
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, unitType_1, village_1, villageService_1, newVillageArmiesService_1, VillageRow;
+    var core_1, unitType_1, village_1, villageService_1, editing_village_armis_service_1, VillageRow;
     return {
         setters: [
             function (core_1_1) {
@@ -25,8 +25,8 @@ System.register(["@angular/core", "../UnitType/unitType", "./village", "../servi
             function (villageService_1_1) {
                 villageService_1 = villageService_1_1;
             },
-            function (newVillageArmiesService_1_1) {
-                newVillageArmiesService_1 = newVillageArmiesService_1_1;
+            function (editing_village_armis_service_1_1) {
+                editing_village_armis_service_1 = editing_village_armis_service_1_1;
             }
         ],
         execute: function () {
@@ -102,7 +102,7 @@ System.register(["@angular/core", "../UnitType/unitType", "./village", "../servi
                     outputs: ['selectedVillageChanged'],
                     template: "\n<td>\n    <div *ngIf=\"!isForm\">{{village.name}}</div>\n    <input *ngIf=\"isForm\" (ngModelChange)=\"this.newVillage.name=$event\" type=\"text\" [ngModel]=\"this.village.name\"  name=\"name\"></td>\n    \n<td>\n    <div *ngIf=\"!isForm\">{{village.population}}</div>\n    <input *ngIf=\"isForm\" (ngModelChange)=\"this.newVillage.population=$event\" type=\"text\" [ngModel]=\"this.village.population\" name=\"population\">\n</td>\n<td>\n    <div *ngIf=\"!isForm\" >{{this.village.xCoord}}</div>\n    <input (ngModelChange)=\"this.newVillage.xCoord=$event\" *ngIf=\"isForm\" type=\"text\" [ngModel]=\"this.village.xCoord\" name=\"x\">\n</td>\n<td >\n    <div *ngIf=\"!isForm\">{{village.yCoord}}</div>\n    <input *ngIf=\"isForm\" type=\"text\" [ngModel]=\"this.village.yCoord\" name=\"y\" (ngModelChange)=\"this.newVillage.yCoord=$event\">\n</td>\n<td >\n    <div *ngIf=\"!isForm\">{{village.isCapital}}</div>\n    <input *ngIf=\"isForm\" type=\"checkbox\" (ngModelChange)=\"this.newVillage.isCapital=$event\" [ngModel]=\"this.village.isCapital\" name=\"isCapital\" id=\"isCapital\" class=\"filled-in\">\n    <label *ngIf=\"isForm\" for=\"isCapital\"></label>\n</td>\n\n<td >\n<div *ngIf=\"!isForm\">{{village.wall}}</div>\n<input *ngIf=\"isForm\" type=\"text\" [ngModel]=\"this.village.wall\" (ngModelChange)=\"this.newVillage.wall=$event\" name=\"wall\">\n</td>\n\n<td *ngFor=\"let tp of unitValues\">\n    <army-cell [type]=\"tp\" [village]=\"village\" \n    (cellClicked)=\"cellClick($event)\" [isInput]=\"isForm\" [ifSave]=\"ifSaveChanges\"></army-cell>\n</td>\n<td>\n    <button (click)=\"!isForm?showEdit():changeVillage()\" class=\"btn waves-effect waves-light col offset-s1 \" type=\"submit\" name=\"action\"\n            style=\"margin-top: 5px;\"\n    >{{!isForm?\"Edit\":\"Save\"}}\n    </button>\n    \n</td>\n"
                 }),
-                __metadata("design:paramtypes", [villageService_1.VillageService, newVillageArmiesService_1.CurrVillageArmiesService])
+                __metadata("design:paramtypes", [villageService_1.VillageService, editing_village_armis_service_1.EditingVillageArmiesService])
             ], VillageRow);
             exports_1("VillageRow", VillageRow);
         }
