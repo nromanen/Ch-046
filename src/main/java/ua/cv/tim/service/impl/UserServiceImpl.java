@@ -67,15 +67,29 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean isUnique(User user) {
+		boolean[] isLoginEmailUnique = new boolean[2];
+		User compareUser = userDao.getUserByUsername(user.getLogin());
+		isLoginEmailUnique[0] = compareUser == null || compareUser.getUuid().equals(user.getUuid());
+		compareUser = userDao.getByMail(user.getEmail());
+		isLoginEmailUnique[1] = compareUser == null || compareUser.getUuid().equals(user.getUuid());
 
-
-		if (userDao.getUserByUsername(user.getLogin(), user.getUuid()) != null) {
-			return false;
-		}
-		if (userDao.getByMail(user.getEmail(), user.getUuid()) != null) {
-			return false;
+		String errorMessage = createErrorMessage(isLoginEmailUnique);
+		if (errorMessage != null) {
+			throw new IllegalArgumentException(errorMessage);
 		}
 		return true;
+	}
+
+	private String createErrorMessage(boolean[] isLoginEmailUnique) {
+		String errorMessage = null;
+		if (!isLoginEmailUnique[0] && !isLoginEmailUnique[1]) {
+			errorMessage = "User with the same login and email has already existed!";
+		} else if (!isLoginEmailUnique[0]) {
+			errorMessage = "User with the same login has already existed!";
+		} else if (!isLoginEmailUnique[1]) {
+			errorMessage = "User with the same email has already existed!";
+		}
+		return errorMessage;
 	}
 
 	@Override

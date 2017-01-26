@@ -1,7 +1,22 @@
 <leader-header></leader-header>
-<add-member (addMemberForm)="addMember($event)"></add-member>
+<app-modal *ngIf="deletedMember !== null" [confirmMsg]="confirmMsg" (notify)='onConfirmDelete($event)'></app-modal>
 
-<app-modal *ngIf="deletedMember !== null" [confirmMsg] = "confirmMsg" (notify)='onConfirmDelete($event)'></app-modal>
+<div class="row container" *ngIf="successMessage != null || errorMessage != null">
+    <div class="col s12">
+        <div *ngIf="successMessage != null" class="card green lighten-5">
+            <div class="card-content green-text">
+                <p>{{successMessage}} <span (click)="closeSuccess()" class="right" style="cursor: pointer;">x</span></p>
+            </div>
+        </div>
+        <div class="card red lighten-4">
+            <div *ngIf="errorMessage != null" class="card-content red-text">
+                <p>{{errorMessage}} <span (click)="closeError()" class="right" style="cursor: pointer;">x</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<add-member (addMemberForm)="addMember($event)"></add-member>
 
 <div class="row container">
     <div class="col s12 center-align">
@@ -10,6 +25,7 @@
 </div>
 <div class="row container">
     <div class="row col s12 valign-wrapper">
+
         <table class="bordered striped centered">
             <thead>
             <tr>
@@ -23,7 +39,8 @@
             </thead>
             <tbody>
             <tr *ngFor="let member of users">
-                <div *ngIf="member !== selectedMember" class="valign-wrapper" style="height: 55px" (dblclick)="selectMember(member)">
+                <div *ngIf="member !== selectedMember" class="valign-wrapper" style="height: 55px"
+                     (dblclick)="selectMember(member)">
                     <td class="col s3">{{ member.login }}</td>
                     <td class="col s3">{{ member.email }}</td>
                     <td class="col s3">{{ member.alliance }}</td>
@@ -45,5 +62,6 @@
             </tr>
             </tbody>
         </table>
+
     </div>
 </div>

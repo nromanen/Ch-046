@@ -13,8 +13,9 @@ import javax.mail.MessagingException;
 /**
  * Created by mmaksymtc on 23.01.2017.
  */
+
 @RestControllerAdvice
-public class ExceptionHandlerClass {
+public class ExceptionHandlerControllerAdvice {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
@@ -30,6 +31,14 @@ public class ExceptionHandlerClass {
     @ExceptionHandler(value = MessagingException.class)
     public String messageExceptionHandler(MessagingException e) {
         logger.error("Exception: {}", e);
+        return e.getMessage();
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    public String illegalArgumentException(IllegalArgumentException e) {
+        logger.error("IllegalArgumentException: {}", e);
+        e.printStackTrace();
         return e.getMessage();
     }
 

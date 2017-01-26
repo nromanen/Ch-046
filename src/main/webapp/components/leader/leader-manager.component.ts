@@ -13,12 +13,12 @@ import {UserService} from "../services/user.service";
 export class LeaderManagerComponent implements OnInit {
     leader:User;
     users:User[];
-    errorMessage: string = null;
-    successMessage: string = null;
+    errorMessage: string;
+    successMessage: string;
 
-    selectedMember:User = null;
-    deletedMember:User = null;
-    confirmMsg:string = null;
+    selectedMember:User;
+    deletedMember:User;
+    confirmMsg:string;
 
 
     constructor(private userService:UserService) {
@@ -84,12 +84,12 @@ export class LeaderManagerComponent implements OnInit {
         this.userService.addMember(member)
             .subscribe(
                 user => {this.users.push(user);
-                this.successMessage = "User added successfully";
-                this.errorMessage = null;
+                    this.errorMessage = null;
+                    this.successMessage = "User added successfully";
                 },
                 error => {console.log(error);
-                    this.errorMessage = <any>error;
                     this.successMessage = null;
+                    this.errorMessage = <any>error;
                 }
             );
     }
@@ -104,10 +104,14 @@ export class LeaderManagerComponent implements OnInit {
                         console.log(`User from array: ${JSON.stringify(this.users[this.users.indexOf(this.selectedMember)])}`)
                         this.users[this.users.indexOf(this.selectedMember)] = user;
                         this.selectedMember = null;
+                        this.errorMessage = null;
+                        this.successMessage = `User updated successfully`;
                     },
                     error => {
                         console.log(error);
                         this.selectedMember = null;
+                        this.successMessage = null;
+                        this.errorMessage = <any>error;
                     }
                 );
         } else {
@@ -128,10 +132,17 @@ export class LeaderManagerComponent implements OnInit {
                     status => {
                         if (status) {
                             this.users.splice(this.users.indexOf(this.deletedMember), 1);
+                            this.errorMessage = null;
+                            this.successMessage = `User ${this.deletedMember.login} deleted successfully`;
                             this.deletedMember = null;
                         }
                     },
-                    error => console.log(error)
+                    error => {
+                        console.log(error);
+                        this.deletedMember = null;
+                        this.successMessage = null;
+                        this.errorMessage = <any>error;
+                    }
                 );
         } else {
             this.deletedMember = null;

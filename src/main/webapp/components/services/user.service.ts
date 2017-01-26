@@ -15,15 +15,14 @@ export class UserService {
     constructor(private http:Http) {
     }
 
-    getUsersByAlliance():Observable<User[]> {
-        console.log(`UserService.getUsersByAlliance() method is working`);
+    getUsersByAlliance() {
+        console.log(`UserService.getUsersByAlliance() method is working.`);
 
-        return this.http.get(`${this.userControllerUrl}/alliance-users/valhala`) // todo change to dynamic name
-            .map(response => response.json()
-            );
+        return this.http.get(`${this.userControllerUrl}/alliance-users`)
+            .map(response => response.json());
     }
 
-    getLeader():Observable<User> {
+    getLeader() {
         console.log(`UserService.getLeader() method is working`);
 
         return this.http.get(`${this.userControllerUrl}`)
@@ -33,7 +32,7 @@ export class UserService {
             });
     }
 
-    addMember(member:User):Observable<User> {
+    addMember(member:User) {
         console.log(`UserService.addMember() method is working`);
 
         const body = JSON.stringify({
@@ -41,7 +40,7 @@ export class UserService {
             login: member.login,
             email: member.email,
             role: member.role,
-            alliance: "valhala" // todo change to dynamic
+            alliance: member.alliance
         });
         console.log(`Member value is: ${body}`);
 
@@ -57,7 +56,7 @@ export class UserService {
             );
     }
 
-    updateMember(member:User):Observable<User> {
+    updateMember(member:User) {
         console.log(`UserService.updateMember() method is working`);
 
         const body = JSON.stringify({
@@ -72,10 +71,15 @@ export class UserService {
         let options = new RequestOptions({headers: headers});
 
         return this.http.put(`${this.userControllerUrl}/update/${member.uuid}`, body, options)
-            .map(response => response.json());
+            .map(response => response.json())
+            .catch((error:any) => {
+                    console.log(error);
+                    return Observable.throw(error._body);
+                }
+            );
     }
 
-    deleteMember(member:User):Observable<boolean> {
+    deleteMember(member:User) {
         console.log(`UserService.updateMember() method is working`);
 
         let headers = new Headers({'Content-Type': 'application/json'});
@@ -83,7 +87,11 @@ export class UserService {
 
         return this.http.delete(`${this.userControllerUrl}/delete/${member.uuid}`, options)
             .map(ok => true)
-            .catch((error:any) => console.log(error));
+            .catch((error:any) => {
+                    console.log(error);
+                    return Observable.throw(error._body);
+                }
+            );
     }
 }
 
