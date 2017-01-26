@@ -3,14 +3,13 @@
 <head>
     <script>
         var array = document.location.pathname.split('/');
-        document.write('<base href="/' + array[1] + '/" />');
+        document.write('<base href="/travian/" />');
     </script>
     <title>Travian</title>
     <meta charset="utf-8">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.1/sockjs.min.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>-->
     <script src="js/stomp.min.js"></script>
 
     <!-- Polyfill(s) for older browsers -->
@@ -48,57 +47,6 @@
 </head>
 <body>
     <my-app>Loading...</my-app>
-
-<br>
-<br>
-    <div class="container">
-
-            <div>
-                    <button class="btn btn-default" type="submit"  id = "send">Send</button>
-            </div>
-
-            <div>
-                <table id="conversation" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Greetings</th>
-                    </tr>
-                    </thead>
-                    <tbody id="greetings">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        var stompClient = null;
-
-        $(function () {
-            connect();
-            $( "#send" ).click(function() { sendName(); });
-        });
-
-        function connect() {
-            var socket = new SockJS('/travian/askHelp');
-            stompClient = Stomp.over(socket);
-            stompClient.connect({}, function (frame) {
-                console.log('Connected: ' + frame);
-                stompClient.subscribe('/topic/greetings', function (greeting) {
-                    showGreeting(JSON.parse(greeting.body).content);
-                });
-            });
-        }
-
-        function sendName() {
-            stompClient.send("/app/askhelp", {}, JSON.stringify({'name': 'test'}));
-        }
-
-        function showGreeting(message) {
-            $("#greetings").append("<tr><td>" + message + "</td></tr>");
-        }
-
-    </script>
 
 </body>
 </html>

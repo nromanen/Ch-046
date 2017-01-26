@@ -12,6 +12,7 @@ import ua.cv.tim.model.Village;
 import ua.cv.tim.service.PlayerService;
 import ua.cv.tim.service.VillageService;
 
+
 import java.util.List;
 
 /**
@@ -25,6 +26,7 @@ public class PlayerController {
 
     @Autowired
     PlayerService playerService;
+
 
     @RequestMapping(value = "/player/{id}/village", method = RequestMethod.GET)
     public ResponseEntity<List<Village>> getUsersVillages(@PathVariable(name = "id") String id) {

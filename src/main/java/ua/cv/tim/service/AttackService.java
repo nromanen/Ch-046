@@ -1,5 +1,6 @@
 package ua.cv.tim.service;
 
+import ua.cv.tim.dto.AttackDTO;
 import ua.cv.tim.model.Attack;
 
 import java.util.List;
@@ -9,14 +10,16 @@ import java.util.List;
  */
 public interface AttackService {
 
-    public List<Attack> getAll();
+    List<Attack> getAll();
 
-    public void addAttack(Attack attack);
+    void addAttack(AttackDTO attack);
 
 
-    public void deleteAAttack(String  id);
+    void deleteAAttack(String  id);
 
-    public Attack getById(String  uuid);
+    Attack getById(String  uuid);
 
-    public void updateAAttack(Attack attack);
+    void updateAAttack(Attack attack);
+
+    List<AttackDTO> getActive();
 }

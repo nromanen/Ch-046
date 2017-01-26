@@ -46,7 +46,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework/spring-messaging
     compile group: 'org.springframework', name: 'spring-messaging', version: '4.3.5.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework/spring-websocket
-    compile group: 'org.springframework', name: 'spring-websocket', version: '4.3.5.RELEASE'
+    compile group: 'org.springframework', name: 'spring-helpNotification', version: '4.3.5.RELEASE'
 
 
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: vers.servlet

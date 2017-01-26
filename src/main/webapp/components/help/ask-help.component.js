@@ -1,7 +1,7 @@
 /**
  * Created by rmochetc on 22.01.2017.
  */
-System.register(["./help.service", "@angular/core", "@angular/forms", "./attack"], function (exports_1, context_1) {
+System.register(["./help.service", "@angular/core", "@angular/forms", "./attack", "./stomp.service"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -13,7 +13,7 @@ System.register(["./help.service", "@angular/core", "@angular/forms", "./attack"
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var help_service_1, core_1, forms_1, attack_1, HelpComponent;
+    var help_service_1, core_1, forms_1, attack_1, stomp_service_1, HelpComponent;
     return {
         setters: [
             function (help_service_1_1) {
@@ -27,36 +27,33 @@ System.register(["./help.service", "@angular/core", "@angular/forms", "./attack"
             },
             function (attack_1_1) {
                 attack_1 = attack_1_1;
+            },
+            function (stomp_service_1_1) {
+                stomp_service_1 = stomp_service_1_1;
             }
         ],
         execute: function () {/**
              * Created by rmochetc on 22.01.2017.
              */
             HelpComponent = (function () {
-                function HelpComponent(helpService, fb) {
+                function HelpComponent(helpService, formBuilder, stompService) {
                     this.helpService = helpService;
-                    this.fb = fb;
+                    this.formBuilder = formBuilder;
+                    this.stompService = stompService;
                     // EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
                     // ALLIANCE_NAME = /^[a-z]{3,9}$/;
                     this.VILLAGE = /^[A-Za-z1-9.]{3,9}$/;
+                    this.DATE = /^[1-9/-0]{3,20}/;
                     this.ENEMY = "Enter correct email, please!";
                     this.NAME_ERROR = "Enter from 3 to 10 letters";
                     this.LOGIN_ERROR = "Enter from 3 to 10 letters";
-                    this.helpForm = this.fb.group({
+                    this.successMessage = null;
+                    this.errorMessage = null;
+                    this.helpForm = this.formBuilder.group({
                         'villageName': ['', forms_1.Validators.compose([forms_1.Validators.required])],
                         'enemy': ['', forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(this.VILLAGE)])],
-                        'timeAttack': ['', forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(this.VILLAGE)])]
+                        'timeAttack': ['', forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.pattern(this.DATE)])]
                     });
-                    // var socket = new SockJS('http://localhost:8080/portfolio');
-                    // this.stompClient = Stomp.over(socket);
-                    // this.stompClient.connect("guest", "guest", function(frame) {
-                    //     console.log('Connected: ' + frame);
-                    //     this.stompClient.subscribe('http://localhost:8080/topic/greeting', function(greeting) {
-                    //         console.log("from from", greeting);
-                    //     });
-                    // }, function (err) {
-                    //     console.log('err', err);
-                    // });
                 }
                 HelpComponent.prototype.ngOnInit = function () {
                     this.getPlayer();
@@ -73,11 +70,26 @@ System.register(["./help.service", "@angular/core", "@angular/forms", "./attack"
                 };
                 HelpComponent.prototype.submitForm = function (value) {
                     console.log("Complex form: " + value);
-                    console.log(value.allianceName);
-                    var newAttack = new attack_1.Attack(value.allianceName, value.leaderLogin, value.leaderEmail);
-                    console.log(newAttack);
-                    // this.notify.emit(newAttack);
-                    // this.complexForm.reset();
+                    var newAttack = new attack_1.Attack(value.villageName, value.enemy, value.timeAttack);
+                    this.send(newAttack);
+                };
+                HelpComponent.prototype.send = function (attack) {
+                    var _this = this;
+                    this.helpService.addAttack(attack)
+                        .subscribe(function (resp) {
+                        _this.successMessage = "Ask help added successfully";
+                        _this.errorMessage = null;
+                        _this.stompService.send(_this.player.login);
+                    }, function (error) {
+                        _this.errorMessage = error;
+                        _this.successMessage = null;
+                    });
+                };
+                HelpComponent.prototype.closeSuccess = function () {
+                    this.successMessage = null;
+                };
+                HelpComponent.prototype.closeError = function () {
+                    this.errorMessage = null;
                 };
                 return HelpComponent;
             }());
@@ -86,7 +98,7 @@ System.register(["./help.service", "@angular/core", "@angular/forms", "./attack"
                     selector: 'ask-help',
                     templateUrl: 'components/help/askHelp.html'
                 }),
-                __metadata("design:paramtypes", [help_service_1.HelpService, forms_1.FormBuilder])
+                __metadata("design:paramtypes", [help_service_1.HelpService, forms_1.FormBuilder, stomp_service_1.StompService])
             ], HelpComponent);
             exports_1("HelpComponent", HelpComponent);
         }

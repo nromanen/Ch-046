@@ -7,6 +7,7 @@ import {ModuleWithProviders} from '@angular/core';
 import {AllianceComponent} from "./alliance/alliance.component";
 import {PlayerComponent} from "./player/player.component";
 import {HelpComponent} from "./help/ask-help.component";
+import {AllHelps} from "./help/all-helps.component";
 
 
 
@@ -33,7 +34,15 @@ export const routes:Routes = ([
     {
         path:'help',
         component: HelpComponent
+    },
+    {
+        path:'allHelps',
+        component: AllHelps
     }
+
+
+
+
 
 ]);
 

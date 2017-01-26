@@ -1,5 +1,15 @@
 <player-head></player-head>
+<div *ngIf="successMessage != null" class="card green lighten-5">
+    <div class="card-content green-text">
+        <p>{{successMessage}} <span (click)="closeSuccess()" class="right" style="cursor: pointer;">x</span></p>
+    </div>
+</div>
+<div class="card red lighten-4">
+    <div *ngIf="errorMessage != null" class="card-content red-text">
+        <p>{{errorMessage}} <span (click)="closeError()" class="right" style="cursor: pointer;">x</span></p>
 
+    </div>
+</div>
 <div class="row container">
     <div class="col s12">
         <h3>Ask help!</h3>
@@ -17,20 +27,19 @@
             <!--<div style="color: red; font-size: 14px;" *ngIf="!complexForm.controls['villageName'].valid && complexForm.controls['villageName'].touched">{{NAME_ERROR}}</div>-->
         </div>
 
-        <div class="input-field col s3">
+        <div class="col s3">
             <label for="enemy">Enemy</label>
             <input type="text" id="enemy" class="validate"  [formControl]="helpForm.controls['enemy']"/>
             <!--<div style="color: red; font-size: 14px;" *ngIf="!complexForm.controls['enemy'].valid && complexForm.controls['enemy'].touched">{{LOGIN_ERROR}}</div>-->
         </div>
 
-        <div class="input-field col s3">
+        <div class="col s3">
             <label for="time">Time of attack</label>
-            <input type="text" id="time" class="validate"  [formControl]="helpForm.controls['timeAttack']"/>
+            <input type="text" id="time" class="validate"  [formControl]="helpForm.controls['timeAttack']" placeholder="yyyy-MM-dd-HH-mm-ss / 2017-01-27-12-00-00"/>
             <!--<div style="color: red; font-size: 14px;" *ngIf="!complexForm.controls['timeAttack'].valid && complexForm.controls['timeAttack'].touched">{{EMAIL_ERROR}}</div>-->
         </div>
         <div class="input-field col s3">
-            <button class="btn waves-effect waves-light col offset-s5 " name="action" type="submit" [disabled]="!helpForm.valid">Add alliance
-            </button>
+            <button class="btn waves-effect waves-light col offset-s5 " name="action" type="submit" [disabled]="!helpForm.valid">Ask help</button>
         </div>
     </div>
 </form>

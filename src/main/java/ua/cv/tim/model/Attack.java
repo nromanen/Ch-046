@@ -1,11 +1,13 @@
 package ua.cv.tim.model;
 
+import javax.persistence.Entity;
 import java.util.Date;
 
 /**
  * Created by rmochetc on 22.01.2017.
  */
-public class Attack {
+public class Attack extends UuidEntity{
+
     private Player owner;
     private Village village;
     private String enemy;
@@ -43,5 +45,16 @@ public class Attack {
 
     public void setAttackTime(Date attackTime) {
         this.attackTime = attackTime;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Attack{");
+        sb.append("owner=").append(owner);
+        sb.append(", village=").append(village);
+        sb.append(", enemy='").append(enemy).append('\'');
+        sb.append(", attackTime=").append(attackTime);
+        sb.append('}');
+        return sb.toString();
     }
 }

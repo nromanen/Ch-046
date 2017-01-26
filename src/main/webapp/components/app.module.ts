@@ -18,6 +18,8 @@ import {PlayerComponent} from "./player/player.component";
 import {PlayerHeader} from "./player/player-header.component";
 import {HelpComponent} from "./help/ask-help.component";
 import {HelpService} from "./help/help.service";
+import {StompService} from "./help/stomp.service";
+import {AllHelps} from "./help/all-helps.component";
 
 @NgModule({
     imports: [
@@ -38,11 +40,13 @@ import {HelpService} from "./help/help.service";
         PlayerComponent,
         PlayerHeader,
         HelpComponent,
+        AllHelps
     ],
     providers: [
         AllianceService,
         PagerService,
-        HelpService
+        HelpService,
+        StompService
     ],
     bootstrap: [AppComponent]
 })

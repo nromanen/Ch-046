@@ -1,0 +1,30 @@
+<player-head></player-head>
+
+<div class="row container" >
+    <div class="col s12">
+
+        <h3>All Helps</h3>
+        <table class="highlight">
+
+            <thead>
+            <tr>
+                <th class="col s3"><div style="margin: 15px 0;">Player name name</div></th>
+                <th class="col s3"><div style="margin: 15px 0;">Village name/ coocrd</div></th>
+                <th class="col s3"><div style="margin: 15px 0;">Enemy</div></th>
+                <th class="col s3"><div style="margin: 15px 0;">Time to attack</div></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let at of attacks">
+                    <td class="col s3"><div  style="margin: 15px 0;">{{at.playerName}}</div></td>
+                    <td class="col s3"><div  style="margin: 15px 0;">{{at.villageName}}</div></td>
+                    <td class="col s3"><div style="margin: 15px 0;">{{at.enemy}}</div></td>
+                    <td class="col s3"><div style="margin: 15px 0;">{{at.attackTime}}</div></td>
+
+            </tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
+</div>
+

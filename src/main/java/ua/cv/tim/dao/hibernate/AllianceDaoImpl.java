@@ -30,9 +30,11 @@ public class AllianceDaoImpl extends AbstractCrudDao<Alliance>  implements Allia
     @Override
     public List<Alliance> getAll() {
         Session session = getCurrentSession();
+        System.out.println("GetAllTEstStart");
         Query query = session.createQuery("select a FROM Alliance a order by a.name");
         List<Alliance> alliances = (List<Alliance>) query.list();
         System.out.println(alliances);
+        System.out.println("GetAllTEstEnd");
         return alliances;
     }
 

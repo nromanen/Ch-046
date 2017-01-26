@@ -36,14 +36,6 @@ export class AllianceComponent implements OnInit{
         this.addNewAlliance = true;
     }
 
-    closeSuccess(){
-        this.successMessage = null;
-    }
-
-    closeError(){
-        this.errorMessage = null;
-    }
-
     onNotifyUpdate(alliance : Alliance){
         if (alliance !== null){
             console.log(alliance);
@@ -116,6 +108,14 @@ export class AllianceComponent implements OnInit{
                 alliances => this.alliances = alliances,
                 error =>  this.errorMessage = <any>error
             );
+    }
+
+    closeSuccess(){
+        this.successMessage = null;
+    }
+
+    closeError(){
+        this.errorMessage = null;
     }
 
 }

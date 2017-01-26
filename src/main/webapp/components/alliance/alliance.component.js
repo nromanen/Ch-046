@@ -36,12 +36,6 @@ System.register(["@angular/core", "../services/alliance/alliance-service"], func
                 AllianceComponent.prototype.newAlliance = function () {
                     this.addNewAlliance = true;
                 };
-                AllianceComponent.prototype.closeSuccess = function () {
-                    this.successMessage = null;
-                };
-                AllianceComponent.prototype.closeError = function () {
-                    this.errorMessage = null;
-                };
                 AllianceComponent.prototype.onNotifyUpdate = function (alliance) {
                     var _this = this;
                     if (alliance !== null) {
@@ -100,6 +94,12 @@ System.register(["@angular/core", "../services/alliance/alliance-service"], func
                     var _this = this;
                     this._allianceService.getAlliances()
                         .subscribe(function (alliances) { return _this.alliances = alliances; }, function (error) { return _this.errorMessage = error; });
+                };
+                AllianceComponent.prototype.closeSuccess = function () {
+                    this.successMessage = null;
+                };
+                AllianceComponent.prototype.closeError = function () {
+                    this.errorMessage = null;
                 };
                 return AllianceComponent;
             }());
