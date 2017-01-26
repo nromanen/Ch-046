@@ -9,10 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponentsBuilder;
-import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.dto.UserInfoDTO;
+import ua.cv.tim.exception.EntityNotUniqueException;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.UserService;
 
@@ -22,22 +21,10 @@ import java.util.List;
  * Created by Oleg on 07.01.2017.
  */
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.mail.MessagingException;
 
@@ -110,14 +97,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserInfoDTO> addAllianceMember(@RequestBody UserInfoDTO member) throws MessagingException {
+    public ResponseEntity<UserInfoDTO> addAllianceMember(@RequestBody UserInfoDTO member) throws MessagingException,EntityNotUniqueException {
         logger.info("UserController.addAllianceMember() method is working. Alliance name: {}", member.toString());
         User user = new User();
         user.setLogin(member.getLogin());
         user.setEmail(member.getEmail());
         if (!userService.isUnique(user)) {
             logger.error("UserController.addAllianceMember: {}", "user is not unique");
-            throw new NullPointerException(" User with entered login or e-mail already exist");
+            throw new EntityNotUniqueException(" User with entered login or e-mail already exist ");
         }
         addNewAllianceMember(member);
         return new ResponseEntity<>(member, HttpStatus.OK);

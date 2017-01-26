@@ -1,6 +1,8 @@
 package ua.cv.tim.configuration;
 
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,15 +17,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-/**
- * Created by vyach on 28.12.2016.
- */
 
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({"ua.cv.tim"})
 @PropertySource(value = {"classpath:hibernate.properties"})
 public class HibernateConfiguration {
+
+    private static final Logger logger = LoggerFactory.getLogger(HibernateConfiguration.class);
+
+    public HibernateConfiguration() {
+        logger.info("HibernateConfiguration  constructor working  ");
+    }
 
     @Autowired
     private Environment environment;

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ua.cv.tim.exception.EntityNotUniqueException;
 import ua.cv.tim.service.UserService;
 
 import javax.mail.MessagingException;
@@ -19,11 +20,10 @@ public class ExceptionHandlerClass {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = NullPointerException.class)
-    public String nullPointerHandler(Exception e) {
-        logger.error("ExceptionHandlerClass.nullPointerHandler: {}", e);
+    @ExceptionHandler(value = EntityNotUniqueException.class)
+    public String entityNotUniqueHandler(Exception e) {
+        logger.error("ExceptionHandlerClass.EntityNotUniqueException: {}", e);
         return e.getMessage();
     }
 

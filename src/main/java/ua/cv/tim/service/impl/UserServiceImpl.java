@@ -11,9 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.AllianceDao;
 import ua.cv.tim.dao.PlayerDao;
 import ua.cv.tim.dao.UserDao;
-import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.dto.UserInfoDTO;
-import ua.cv.tim.model.Alliance;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
@@ -46,36 +44,10 @@ public class UserServiceImpl implements UserService {
 	public User getUserByUsername(String username) {
 		return  userDao.getUserByUsername(username);
 	}
-	@Override
-	public void add(UserDTO userDTO) {
-		User user = new User();
-		user.setEmail(userDTO.getEmail());
-		user.setLogin(userDTO.getLogin());
-		user.setPassword(userDTO.getPassword());
-		List<Role> roles = new ArrayList<>();
-		roles.add(Role.USER);
-		if (userDTO.getRole() != null) {
-			roles.add(Role.LEADER);
-		}
-		user.setRoles(roles);
-		userDao.add(user);
-		Player player = new Player();
-		player.setUser(user);
-		user.setPlayer(player);
-		playerDao.add(player);
 
-		try {
-			sendMail.send(user.getEmail(), "Travian user's info",
-					"Your login is" + user.getLogin() + " and password: " + user.getPassword() + "  role " + user.getRoles());
-			logger.info("Password {} has been sent on user's e-mail {}", user.getPassword(), user.getEmail());
-		} catch (MessagingException e) {
-			logger.error("The e-mail hasn't been sent {}", e);
-		}
-	}
 	public void add(User user) {
 		userDao.add(user);
 	}
-
 
 
 
@@ -88,7 +60,6 @@ public class UserServiceImpl implements UserService {
 		userDao.update(user);
 	}
 
-
 	@Override
 	public void delete(User user) {
 	    userDao.delete(user);
@@ -98,13 +69,10 @@ public class UserServiceImpl implements UserService {
     public boolean isUnique(User user) {
 
 
-        if (userDao.getUserByUsername(user.getLogin(), user.getUuid()) !=null) {
-            return false;
-        }
-        if(userDao.getByMail(user.getEmail(), user.getUuid())!=null ) {
-            return false;
-        }
-        return true;
+        if (userDao.getUserByUsername(user.getLogin(), user.getUuid()) ==null ) {
+            return true;
+                }
+        return false;
     }
 
     @Override
@@ -122,8 +90,6 @@ public class UserServiceImpl implements UserService {
         return userDao.getAllWithRoles();
     }
 
-
-
     @Override
     public User getById(String id) {
         return userDao.getById(id);
@@ -133,6 +99,7 @@ public class UserServiceImpl implements UserService {
     public void deleteById(String id) {
         User byId = userDao.getById(id);
         userDao.delete(byId);
+        logger.info("  deleteById deleted id - {} ", id);
     }
 
     public List<UserInfoDTO> getUsersByAlliance(String allianceName) {
@@ -202,18 +169,6 @@ public class UserServiceImpl implements UserService {
         return new String(password);
     }
 
-    public boolean isUserUnique(UserInfoDTO member) {
-        User user = new User();
-        user.setLogin(member.getLogin());
-        user.setEmail(member.getEmail());
 
-        if (userDao.getUserByUsername(user.getLogin(),user.getUuid()) !=null) {
-            return false;
-        }
-        else if(userDao.getByMail(user.getEmail(),user.getUuid())!=null ) {
-            return false;
-        }
-        else return true;
-    }
 
 }

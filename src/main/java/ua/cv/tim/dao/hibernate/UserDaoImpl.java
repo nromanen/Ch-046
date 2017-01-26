@@ -23,7 +23,7 @@ import ua.cv.tim.service.UserService;
 @Repository("userDao")
 public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
 
     @Override
     public long getCount() {
@@ -44,7 +44,6 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
         User user = getCurrentSession().get(User.class, id);
         List<Role> roles = user.getRoles();
         return user;
-
     }
 
     @Override
@@ -122,7 +121,13 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
             logger.info("UserDao.getUsersByUsername   id is null and username is {} ", username);
             query.setParameter("login", username);
         }
-        User user = (User) query.uniqueResult();
-            return user;
+        //User user = (User) query.uniqueResult();
+        //logger.info("UserDao.getUsersByUsername   retrieved user username is {} ", user.getLogin());
+          try{  return (User) query.uniqueResult();}
+          catch (NullPointerException expt){
+              System.out.println("ddfsdf");
+            return null;
+          }
+
     }
 }
