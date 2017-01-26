@@ -40,6 +40,9 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-orm', version: vers.spring
     compile group: 'org.springframework', name: 'spring-test', version: vers.spring
 
+    compile group: 'org.springframework', name: 'spring-messaging', version: vers.spring
+    compile group: 'org.springframework', name: 'spring-websocket', version: vers.spring
+
     compile group: 'org.springframework.security', name: 'spring-security-web', version: vers.spring_security
     compile group: 'org.springframework.security', name: 'spring-security-config', version: vers.spring_security
     compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: vers.spring_security

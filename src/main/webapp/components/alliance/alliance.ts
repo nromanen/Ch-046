@@ -10,15 +10,9 @@ export class Alliance {
     leaderLogin: string;
     leaderEmail: string;
 
-
-
-
     constructor( name: string, leaderLogin: string, leaderEmail: string){
         this.name = name;
         this.leaderEmail = leaderEmail;
         this.leaderLogin = leaderLogin;
-
     }
-
-
 }
