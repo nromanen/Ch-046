@@ -35,7 +35,7 @@ export class PlayerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.playerService.getById(this.id)
+        this.playerService.getById()
             .subscribe(
                 player => {
                     this.player = player;

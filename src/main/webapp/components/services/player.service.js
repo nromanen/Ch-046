@@ -35,7 +35,7 @@ System.register(["@angular/core", "@angular/http", "@angular/router"], function 
                     this._activatedRoute = _activatedRoute;
                     this.url = 'player/';
                 }
-                PlayerService.prototype.getById = function (id) {
+                PlayerService.prototype.getById = function () {
                     return this._http.get(this.url)
                         .map(function (res) { return res.json(); });
                 };

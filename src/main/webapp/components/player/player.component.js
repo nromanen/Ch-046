@@ -48,7 +48,7 @@ System.register(["@angular/core", "../services/player.service", "@angular/router
                 }
                 PlayerComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.playerService.getById(this.id)
+                    this.playerService.getById()
                         .subscribe(function (player) {
                         _this.player = player;
                     });
