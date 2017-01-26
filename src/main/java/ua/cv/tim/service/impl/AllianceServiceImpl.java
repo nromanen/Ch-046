@@ -27,7 +27,6 @@ import java.util.List;
 @Service(value = "allianceService")
 @Transactional
 public class AllianceServiceImpl implements AllianceService {
-
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired

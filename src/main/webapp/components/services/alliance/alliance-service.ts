@@ -1,10 +1,8 @@
-
 import 'rxjs/Rx';
 
-import {Http, Headers, Response, RequestOptions} from "@angular/http";
+import {Http, Headers, Response} from "@angular/http";
 import {Injectable} from "@angular/core";
-
-import { Observable }     from 'rxjs/Rx';
+import {Observable}     from 'rxjs/Rx';
 import {Alliance} from "../../alliance/alliance";
 
 @Injectable()
@@ -21,14 +19,15 @@ export class AllianceService {
 
         return this._http.get(this.url)
             .map((res: Response) => {
-            console.log(res);
-            return res.json();}
+                    console.log(res);
+                    return res.json();
+                }
             ) // ...and calling .json() on the response to return data
             .catch((error: any) => Observable.throw(error.json().error || 'Server error')); //...errors if
 
     }
 
-    addAlliance(alliance: Alliance):  Observable<Alliance> {
+    addAlliance(alliance: Alliance): Observable<Alliance> {
         const body = JSON.stringify({
             name: alliance.name,
             leaderLogin: alliance.leaderLogin,
@@ -42,11 +41,11 @@ export class AllianceService {
         }).map((res: Response) => res.json())
             .catch(
                 (error: any) => {
-                    if (error.status == 400){
+                    if (error.status == 400) {
                         return Observable.throw('ERROR!!! Invalid data. Please check entered data!');
-                    } else if(error.status == 409){
+                    } else if (error.status == 409) {
                         return Observable.throw('ERROR!!! User with the same login or e-mail is in DB!');
-                    } else if(error.status == 403){
+                    } else if (error.status == 403) {
                         return Observable.throw('ERROR!!! Alliance with the same name is in DB!');
                     } else {
                         return Observable.throw('UNKNOWN ERROR!!!');
@@ -57,7 +56,7 @@ export class AllianceService {
 
     deleteAlliance(alliance: Alliance): boolean {
 
-        let result : boolean = true;
+        let result: boolean = true;
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         this._http.delete(this.url + alliance.allianceUuid, {
@@ -75,7 +74,7 @@ export class AllianceService {
         return result;
     }
 
-    updateAlliance(newAlliance: Alliance):  Observable<Alliance> {
+    updateAlliance(newAlliance: Alliance): Observable<Alliance> {
         const body = JSON.stringify({
             name: newAlliance.name,
             leaderLogin: newAlliance.leaderLogin,
@@ -92,9 +91,9 @@ export class AllianceService {
         }).map((res: Response) => res.json()) // ...and calling .json() on the response to return data
             .catch(
                 (error: any) => {
-                    if (error.status == 400){
+                    if (error.status == 400) {
                         return Observable.throw('ERROR!!! Invalid data. Please check entered data!');
-                    } else if(error.status == 409){
+                    } else if (error.status == 409) {
                         return Observable.throw('ERROR!!! User whit the same login or e-mail is in DB!');
                     } else {
                         return Observable.throw('UNKNOWN ERROR!!!');

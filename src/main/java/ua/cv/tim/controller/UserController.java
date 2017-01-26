@@ -30,14 +30,14 @@ public class UserController {
 	private UserService userService;
 
 
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public ResponseEntity<List<User>> getAllUsers() {
-		List<User> allWithRoles = userService.getAllWithRoles();
-		if (allWithRoles.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<>(allWithRoles, HttpStatus.OK);
-	}
+    @RequestMapping(value = "/userList", method = RequestMethod.GET)
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> allWithRoles = userService.getAllWithRoles();
+        if (allWithRoles.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(allWithRoles, HttpStatus.OK);
+    }
 
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
 	public ResponseEntity<User> getById(@PathVariable("id") String id) {
