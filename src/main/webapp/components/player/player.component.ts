@@ -20,6 +20,7 @@ import {VillageService} from "../services/villageService";
             </div>
             <add-vill-form [player]="player" *ngIf="showAddVillageForm" (wasSubmitted)="hideAddForm($event)"></add-vill-form>
         </div>
+        <button (click)="changePlayer()">ghfh</button>
 `
 })
 export class PlayerComponent implements OnInit {
@@ -46,6 +47,12 @@ export class PlayerComponent implements OnInit {
 
     showAddForm() {
         this.showAddVillageForm = true;
+    }
+
+    changePlayer(){
+        let i:number;
+        i++;
+        this.player.login=''+i;
     }
 }
 

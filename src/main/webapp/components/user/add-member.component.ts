@@ -13,7 +13,7 @@ export class MemberForm {
     @Output() addMemberForm:EventEmitter<any> = new EventEmitter<any>();
 
     USER_LOGIN = /^[a-z1-9]{3,9}$/;
-    EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+    EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?\.[a-z0-9]{2,}$/i;
     LOGIN_ERROR = "Login should be from 3 to 10 letters";
     EMAIL_ERROR = "Enter correct email, please!";
 

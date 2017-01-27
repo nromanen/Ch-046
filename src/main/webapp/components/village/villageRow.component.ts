@@ -58,8 +58,8 @@ export class VillageRow implements OnInit,AfterViewChecked{
     private newVillage: Village;
     private villBefore;
     ngOnInit(): void {
-        console.log("inside village row");
-        console.log(this.v);
+        // console.log("inside village row");
+        // console.log(this.v);
         // alert(JSON.stringify(this.v));
         this.newVillage=new Village();
         this.newVillage.name=this.v.name;
@@ -81,8 +81,8 @@ export class VillageRow implements OnInit,AfterViewChecked{
         this.selectedVillageChanged=new EventEmitter<Village>();
         this.unitValues=[];
         this.ifSaveChanges=false;
-        console.log('inside constructor');
-        console.log(this.ifSaveChanges);
+        // console.log('inside constructor');
+        // console.log(this.ifSaveChanges);
     }
 
     getStringUnitTypeValues(){
