@@ -17,6 +17,7 @@ import {StompService} from "../services/helpNotification/stomp.service";
             <li><a routerLink="/leader/manager" routerLinkActive="active">Manage</a></li>
             <li><a routerLink="/help" routerLinkActive="active">Ask help</a></li>
             <li><a routerLink="/allHelps" routerLinkActive="active">Attacks</a></li>
+            <li><a href="/travian/parser/">Parse</a></li>
             <li><a href="/travian/logout">Logout</a></li>
         </ul>
     </div>
