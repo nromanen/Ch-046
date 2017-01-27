@@ -21,9 +21,8 @@ export class AllianceService {
 
         return this._http.get(this.url)
             .map((res: Response) => {
-            console.log(res);
             return res.json();}
-            ) // ...and calling .json() on the response to return data
+            )
             .catch((error: any) => Observable.throw(error.json().error || 'Server error')); //...errors if
 
     }
