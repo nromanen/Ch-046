@@ -26,10 +26,10 @@ import java.util.List;
 @RequestMapping(value = "/user")
 public class UserController {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
 
 	@RequestMapping(method = RequestMethod.GET)

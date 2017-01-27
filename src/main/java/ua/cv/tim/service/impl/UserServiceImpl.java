@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
-	@Autowired
-	private AllianceDao allianceDao;
+    @Autowired
+    private AllianceDao allianceDao;
 	@Autowired
 	private PlayerDao playerDao;
 	@Autowired
@@ -53,7 +53,6 @@ public class UserServiceImpl implements UserService {
 	public List<User> getAll() {
 		return userDao.getAll();
 	}
-
 	@Override
 	public void update(User user) {
 		userDao.update(user);
@@ -62,7 +61,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void delete(User user) {
-		userDao.delete(user);
+	    userDao.delete(user);
 	}
 
 	@Override
