@@ -48,16 +48,13 @@ public class HelpController {
     public ResponseEntity<PlayerDTO> getPlayerById() {
 
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(principal.getUsername());
         User userByUsername = userService.getUserByUsername(principal.getUsername());
         String id = userByUsername.getPlayer().getUuid();
-        System.out.println(id);
         Player player = playerService.getByIdWithVillages(id);
         PlayerDTO playerDTO = new PlayerDTO(player.getUser().getLogin(),
                 player.getUser().getPassword(), player.getUser().getEmail(),
                 player.getRace(), player.getVillages(), player.getAlliance());
 
-        System.out.println(playerDTO);
         return new ResponseEntity<>(playerDTO, HttpStatus.OK);
     }
 
@@ -65,7 +62,6 @@ public class HelpController {
     public ResponseEntity<AttackDTO> createHelp(@RequestBody AttackDTO attack) {
 
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(principal.getUsername());
         User userByUsername = userService.getUserByUsername(principal.getUsername());
         String id = userByUsername.getPlayer().getUuid();
 
@@ -74,7 +70,6 @@ public class HelpController {
 
         attackService.addAttack(attack);
 
-        System.out.println(attackService.getActive());
         return new ResponseEntity<>(attack, HttpStatus.OK);
     }
 
