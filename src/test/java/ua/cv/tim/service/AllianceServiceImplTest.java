@@ -1,7 +1,7 @@
 package ua.cv.tim.service;
 
 
-import org.junit.runner.RunWith;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import static org.testng.Assert.*;
 /**
  * Created by mmaksymtc on 26.01.2017.
  */
-@RunWith(SpringRunner.class)
+
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfigurationTest.class})
 public class AllianceServiceImplTest extends AbstractTransactionalTestNGSpringContextTests {

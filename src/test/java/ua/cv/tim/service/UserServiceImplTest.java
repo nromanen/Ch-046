@@ -1,6 +1,6 @@
 package ua.cv.tim.service;
 
-import org.junit.runner.RunWith;
+
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
@@ -28,7 +28,7 @@ import static org.testng.Assert.*;
  * Created by mmaksymtc on 24.01.2017.
  */
 
-@RunWith(SpringRunner.class)
+
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfigurationTest.class})
 public class UserServiceImplTest extends AbstractTransactionalTestNGSpringContextTests {
