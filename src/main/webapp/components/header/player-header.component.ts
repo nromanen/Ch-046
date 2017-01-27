@@ -13,7 +13,7 @@ import {StompService} from "../services/helpNotification/stomp.service";
 )
 export class PlayerHeader{
 
-    // @Input() id: string;
+    @Input() id: string;
 
     public serverResponse: string;
 

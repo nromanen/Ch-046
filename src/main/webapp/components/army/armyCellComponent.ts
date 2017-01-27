@@ -15,7 +15,7 @@ import {UnitType} from "../UnitType/unitType";
      <input class="validate"  type="text"  style=" 
      width: 20px;height: 22px" [ngModel]="army!=null?this.army.count:'0'" 
      name="value" (ngModelChange)="addOrEdit($event)"
-     minlength="5" maxlength="7" #name="ngModel">
+     #name="ngModel">
      </div>
 
 `

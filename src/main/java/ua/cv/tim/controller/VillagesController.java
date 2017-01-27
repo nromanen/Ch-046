@@ -41,12 +41,9 @@ public class VillagesController {
         User userByUsername = userService.getUserByUsername(principal.getUsername());
         village.setPlayer(userByUsername.getPlayer());
         villageService.add(village);
-        ObjectMapper objectMapper=new ObjectMapper();
-        String s = objectMapper.writeValueAsString(village);
-        System.out.println(s);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(builder.path("/village/{id}").buildAndExpand(village.getUuid()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(village, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/village/{id}", method = RequestMethod.PUT)

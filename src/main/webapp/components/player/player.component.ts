@@ -24,14 +24,11 @@ import {VillageService} from "../services/villageService";
 })
 export class PlayerComponent implements OnInit {
     player: Player;
-    // id: string;
+
     showAddVillageForm: boolean;
 
     constructor(private currPlayerService: CurrVillageArmiesService, private playerService: PlayerService, private route: ActivatedRoute, private villageService: VillageService) {
-        // this.route.params.subscribe((param: any) => {
-        //     this.id = param['id'];
-        // });
-        // this.showAddVillageForm = false;
+
     }
 
     ngOnInit(): void {
