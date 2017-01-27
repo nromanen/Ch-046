@@ -77,7 +77,6 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
         String request = "select u from User u where u.player.alliance.name = :name";
         Query<User> query = getCurrentSession().createQuery(request);
         query.setParameter("name", allianceName);
-        System.out.println(query);
         return query.list();
     }
 
@@ -136,4 +135,5 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
         Hibernate.initialize(user.getPlayer().getAlliance());
         return user;
     }
+
 }

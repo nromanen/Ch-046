@@ -19,13 +19,8 @@ import {StompService} from "../services/helpNotification/stomp.service";
 
 export class HelpComponent implements OnInit{
 
-    // EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-    // ALLIANCE_NAME = /^[a-z]{3,9}$/;
     VILLAGE = /^[A-Za-z1-9.]{3,9}$/;
     DATE = /^[1-9/-0]{3,20}/;
-    ENEMY = "Enter correct email, please!";
-    NAME_ERROR = "Enter from 3 to 10 letters";
-    LOGIN_ERROR = "Enter from 3 to 10 letters";
 
     player: Player;
     villages : Village[];

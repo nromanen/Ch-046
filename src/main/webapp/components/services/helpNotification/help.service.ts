@@ -15,12 +15,9 @@ export class HelpService {
     url = 'askhelp';
 
     constructor(private http: Http) {
-
     }
 
-
     getById(): Observable<Player> {
-        console.log(this.url);
         return this.http.get(this.url)
             .map(res => res.json());
     }
@@ -49,5 +46,4 @@ export class HelpService {
         return this.http.get("allAttack")
             .map(res => res.json());
     }
-
 }

@@ -4,34 +4,32 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.*;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
-
+/**
+ * Created by mmaksymtc on 25.01.2017.
+ */
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({"ua.cv.tim"})
-@PropertySource(value = {"classpath:hibernate.properties"})
-public class HibernateConfiguration {
+@EnableWebMvc
+@ComponentScan(basePackages = {"ua.cv.tim"}, excludeFilters={
+        @ComponentScan.Filter(type= FilterType.ASSIGNABLE_TYPE, value=HibernateConfiguration.class)})
+public class WebConfigurationTest extends WebMvcConfigurerAdapter{
 
-    private static final Logger logger = LoggerFactory.getLogger(HibernateConfiguration.class);
-
-    public HibernateConfiguration() {
-        logger.info("HibernateConfiguration  constructor working  ");
-    }
-
-    @Autowired
+    private static final Logger logger = LoggerFactory.getLogger(WebConfigurationTest.class);
+    /*@Autowired
     private Environment environment;
+*/
+
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
@@ -45,17 +43,17 @@ public class HibernateConfiguration {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
-        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
-        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/travianTest");
+        dataSource.setUsername("postgres");
+        dataSource.setPassword("root");
         return dataSource;
     }
 
     private Properties getHibernateProperties() {
         Properties properties = new Properties();
-        properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
-        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
+        properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL92Dialect");
+        properties.put("hibernate.show_sql", "true");
 //        properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
         return properties;
     }
@@ -68,3 +66,4 @@ public class HibernateConfiguration {
         return txManager;
     }
 }
+

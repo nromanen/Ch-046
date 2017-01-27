@@ -2,7 +2,6 @@
  * Created by rmochetc on 26.01.2017.
  */
 
-
 import {Component} from "@angular/core";
 import {HelpService} from "../services/helpNotification/help.service";
 

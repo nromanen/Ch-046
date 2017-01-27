@@ -34,7 +34,6 @@ public class AllianceController {
         if (alliances.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        System.out.println(alliances);
         return new ResponseEntity<>(alliances, HttpStatus.OK);
     }
 
@@ -45,25 +44,19 @@ public class AllianceController {
         user.setLogin(allianceDTO.getLeaderLogin());
         user.setEmail(allianceDTO.getLeaderEmail());
 
-        System.out.println(allianceDTO.getLeaderUuid());
-
         if (userService.isUnique(user)) {
-
             if (!allianceService.isUniqueAlliance(allianceDTO.getName(), null)) {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
-
             allianceService.addAlliance(allianceDTO);
             allianceDTO.setAllianceUuid(allianceService.getIdByName(allianceDTO.getName()));
-
-            System.out.println(allianceDTO);
         }
 
         return new ResponseEntity<>(allianceDTO, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/admin/allianceDTO/{id}", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<AllianceDTO> updateAlliance(@PathVariable("id") String uuid, @RequestBody @Valid  AllianceDTO allianceDTO) {
+    public ResponseEntity<AllianceDTO> updateAlliance(@PathVariable("id") String uuid, @RequestBody @Valid AllianceDTO allianceDTO) {
 
         Alliance updatedAlliance = allianceService.getById(uuid);
         if (updatedAlliance == null) {
