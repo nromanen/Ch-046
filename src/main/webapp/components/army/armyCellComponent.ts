@@ -14,8 +14,8 @@ import {UnitType} from "../UnitType/unitType";
      <div class="input-field"  *ngIf="isInput">
      <input class="validate"  type="text"  style=" 
      width: 20px;height: 22px" [ngModel]="army!=null?this.army.count:'0'" 
-     name="value" (ngModelChange)="newArmy.count=$event"
-     minlength="5" maxlength="7" #name="ngModel">
+     name="value" (ngModelChange)="addOrEdit($event)"
+     #name="ngModel">
      </div>
 
 `
@@ -35,13 +35,16 @@ export class ArmyCellComponent implements OnInit,OnChanges {
         }
 
         if (changes['isInput'] != null)
-            if (changes['isInput'].currentValue === true && this.army != null) {
+            if (changes['isInput'].currentValue === true && this.army.count != -1) {
                 this.currVillageArmiesService.armies.push(this.newArmy);
             }
 
     }
 
     ngOnInit(): void {
+        this.army=new Army(-1,UnitType[this.type],true);
+        this.newArmy = new Army(this.army.count, this.army.type, this.army.ownUnit);
+        this.newArmy.uuid = this.army.uuid;
         this.village.armies.forEach((army) => {
             if (this.type == army.type.toString() || UnitType[army.type] == this.type) {
                 this.army = army;
@@ -64,6 +67,15 @@ export class ArmyCellComponent implements OnInit,OnChanges {
 
     becomeDiv() {
         this.cellClicked.emit(null);
+    }
+
+    addOrEdit(event:any){
+        this.newArmy.count=event;
+        if (this.army.count==-1){
+            if (this.currVillageArmiesService.armies.indexOf(this.newArmy)==-1)
+                this.currVillageArmiesService.armies.push(this.newArmy);
+        } else
+            this.newArmy.count=event;
     }
 
 }

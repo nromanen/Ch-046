@@ -28,6 +28,7 @@ export class PlayerComponent implements OnInit {
     showAddVillageForm: boolean;
 
     constructor(private currPlayerService: CurrVillageArmiesService, private playerService: PlayerService, private route: ActivatedRoute, private villageService: VillageService) {
+
     }
 
     ngOnInit(): void {
