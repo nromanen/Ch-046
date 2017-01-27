@@ -16,7 +16,7 @@ public class HelpWebsocketController {
     public OutputObject greeting(InputObject input) throws Exception {
         Thread.sleep(1000); // simulated delay
         final OutputObject output = new OutputObject();
-        output.setOutputField("[Pushed by Spring Framework] Nice, I received "+input.getInputField());
+        output.setOutputField("Help notification send!");
         return output;
     }	
 }

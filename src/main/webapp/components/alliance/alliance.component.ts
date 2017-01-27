@@ -11,7 +11,6 @@ import {AllianceService} from "../services/alliance/alliance-service";
 
 export class AllianceComponent implements OnInit{
 
-    // Variables
     alliances: Array<Alliance> ;
     errorMessage: string = null;
     successMessage: string = null;

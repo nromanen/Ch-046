@@ -62,6 +62,9 @@ dependencies {
     testCompile group: 'org.testng', name: 'testng', version: vers.testng
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.mockito', name: 'mockito-core', version: vers.mockito
+
+    compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.23.2'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.0.1'
 }
 
 configurations.all {
