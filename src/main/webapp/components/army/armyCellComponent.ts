@@ -10,10 +10,10 @@ import {UnitType} from "../UnitType/unitType";
     selector: 'army-cell',
     outputs: ['cellClicked'],
     template: `
-     <div title="{{this.type}}" (dblclick)="hide()" *ngIf="!isInput" (click)="becomeDiv()">{{army!=null?this.army.count:"0"}}</div>
+     <div title="{{this.type}}" (dblclick)="hide()" *ngIf="!isInput" (click)="becomeDiv()">{{army.count!=-1?this.army.count:"0"}}</div>
      <div class="input-field"  *ngIf="isInput">
      <input class="validate"  type="text"  style=" 
-     width: 20px;height: 22px" [ngModel]="army!=null?this.army.count:'0'" 
+     width: 20px;height: 22px" [ngModel]="this.army.count!=-1?this.army.count:0" 
      name="value" (ngModelChange)="addOrEdit($event)"
      #name="ngModel">
      </div>
@@ -43,7 +43,11 @@ export class ArmyCellComponent implements OnInit,OnChanges {
 
     ngOnInit(): void {
         this.army=new Army(-1,UnitType[this.type],true);
+        this.army.type=UnitType[this.type];
+        console.log('inside cell');
+        console.log(UnitType[this.type]);
         this.newArmy = new Army(this.army.count, this.army.type, this.army.ownUnit);
+        this.newArmy.type=this.army.type;
         this.newArmy.uuid = this.army.uuid;
         this.village.armies.forEach((army) => {
             if (this.type == army.type.toString() || UnitType[army.type] == this.type) {

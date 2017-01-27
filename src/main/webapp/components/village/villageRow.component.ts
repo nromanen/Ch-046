@@ -10,6 +10,7 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 @Component({
     selector: '[player-ro]',
     outputs:['selectedVillageChanged'],
+    styleUrls:['css/style.css'],
     template:`
 <td>
     <div *ngIf="!isForm">{{v.name}}</div>
@@ -28,7 +29,9 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
     <input *ngIf="isForm" type="text" [ngModel]="this.v.yCoord" name="y" (ngModelChange)="this.newVillage.yCoord=$event">
 </td>
 <td >
-    <div *ngIf="!isForm">{{v.isCapital}}</div>
+    <div *ngIf="!isForm">
+    <i *ngIf="v.isCapital" class="small material-icons check">done</i>{{v.isCapital?"true":"false" }}
+    </div>
     <input *ngIf="isForm" type="checkbox" (ngModelChange)="this.newVillage.isCapital=$event" [ngModel]="this.v.isCapital" name="isCapital" id="isCapital" class="filled-in">
     <label *ngIf="isForm" for="isCapital"></label>
 </td>

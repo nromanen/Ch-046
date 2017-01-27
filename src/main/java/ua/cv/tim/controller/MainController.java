@@ -80,4 +80,9 @@ public class MainController {
             return getRedirectPath();
         }
     }
+
+    @RequestMapping(value = {"/admin","/user/init"})
+    public String mainPage(){
+        return "index.html";
+    }
 }

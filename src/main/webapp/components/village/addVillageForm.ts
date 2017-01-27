@@ -40,7 +40,7 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
 
     onSubmit(village: Village) {
         this.player.villages.push(village);
-        this.villageService.add(village);
+        // this.villageService.add(village);
         this.village = new Village;
         this.village.armies = [];
         this.wasSubmitted.emit(false);
