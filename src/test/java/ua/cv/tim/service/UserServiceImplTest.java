@@ -2,26 +2,18 @@ package ua.cv.tim.service;
 
 import org.junit.runner.RunWith;
 import org.mockito.Spy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.cv.tim.configuration.WebConfigurationTest;
-import ua.cv.tim.dao.AllianceDao;
-import ua.cv.tim.dao.PlayerDao;
-import ua.cv.tim.dao.UserDao;
-import ua.cv.tim.dto.UserInfoDTO;
+import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
-import ua.cv.tim.utils.SendMail;
 import ua.cv.tim.utils.UserServiceTestUtils;
 
 import javax.mail.MessagingException;
@@ -30,7 +22,6 @@ import java.util.Date;
 import java.util.List;
 
 import static org.testng.Assert.*;
-import static org.testng.Assert.assertEquals;
 
 /**
  * Created by mmaksymtc on 24.01.2017.
@@ -43,12 +34,7 @@ public class UserServiceImplTest extends AbstractTransactionalTestNGSpringContex
 
     @Autowired
     UserService userService;
-    @Autowired
-    private UserDao userDao;
-    @Autowired
-    private AllianceDao allianceDao;
-    @Autowired
-    private PlayerDao playerDao;
+
     @Autowired
     private UserServiceTestUtils userTestUtils;
 
@@ -140,8 +126,8 @@ public class UserServiceImplTest extends AbstractTransactionalTestNGSpringContex
     @Rollback(true)
     @Test
     public void addAllianceMemberTest() throws MessagingException {
-        UserInfoDTO member = new UserInfoDTO(null, "Jonathan", "jonatahan@ukr.net","valhala");
-        userService.addAllianceMember(member);
+        UserDTO member = new UserDTO(null, "Jonathan", "jonatahan@ukr.net","valhala");
+        userService.addUser(member);
         assertNotNull(userTestUtils.getUserByUsername("Jonathan"));
     }
     @Test

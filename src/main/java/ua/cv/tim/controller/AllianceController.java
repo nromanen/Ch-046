@@ -47,17 +47,17 @@ public class AllianceController {
 
         System.out.println(allianceDTO.getLeaderUuid());
 
-        if (!userService.isUnique(user)) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
-        if (!allianceService.isUniqueAlliance(allianceDTO.getName(), null)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+        if (userService.isUnique(user)) {
 
-        allianceService.addAlliance(allianceDTO);
-        allianceDTO.setAllianceUuid(allianceService.getIdByName(allianceDTO.getName()));
+            if (!allianceService.isUniqueAlliance(allianceDTO.getName(), null)) {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
 
-        System.out.println(allianceDTO);
+            allianceService.addAlliance(allianceDTO);
+            allianceDTO.setAllianceUuid(allianceService.getIdByName(allianceDTO.getName()));
+
+            System.out.println(allianceDTO);
+        }
 
         return new ResponseEntity<>(allianceDTO, HttpStatus.OK);
     }
@@ -74,14 +74,14 @@ public class AllianceController {
         user.setLogin(allianceDTO.getLeaderLogin());
         user.setEmail(allianceDTO.getLeaderEmail());
         user.setUuid(allianceDTO.getLeaderUuid());
-        if (!userService.isUnique(user)) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        if (userService.isUnique(user)) {
+
+            if (!allianceService.isUniqueAlliance(allianceDTO.getName(), uuid)) {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+            allianceDTO.setAllianceUuid(uuid);
+            allianceService.updateAlliance(allianceDTO);
         }
-        if (!allianceService.isUniqueAlliance(allianceDTO.getName(), uuid)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        allianceDTO.setAllianceUuid(uuid);
-        allianceService.updateAlliance(allianceDTO);
         return new ResponseEntity<>(allianceDTO, HttpStatus.OK);
     }
 

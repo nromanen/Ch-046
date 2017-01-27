@@ -1,5 +1,6 @@
 package ua.cv.tim.service;
 
+
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,18 +13,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.Test;
 import ua.cv.tim.configuration.WebConfigurationTest;
-import ua.cv.tim.dao.AllianceDao;
-import ua.cv.tim.dao.PlayerDao;
-import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.dto.AllianceDTO;
-import ua.cv.tim.model.Alliance;
-import ua.cv.tim.model.Role;
-import ua.cv.tim.model.User;
 import ua.cv.tim.utils.AllianceServiceTestUtils;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import static org.testng.Assert.*;
 
@@ -41,14 +32,6 @@ public class AllianceServiceImplTest extends AbstractTransactionalTestNGSpringCo
     AllianceServiceTestUtils allianceServiceTestUtils;
     @Autowired
     private AllianceService allianceService;
-    @Autowired
-    private AllianceDao allianceDao;
-    @Autowired
-    private UserDao userDao;
-    @Autowired
-    private PlayerDao playerDao;
-    @Autowired
-    private UserService userService;
 
     @Test
     public void getAllTest(){

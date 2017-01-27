@@ -1,38 +1,41 @@
-<my-header></my-header>
+<admin-header></admin-header>
+
 <app-modal *ngIf="deletedAlliance !== null" [confirmMsg] = "confirmMsg" (notify)='onNotifyDelete($event)'></app-modal>
+
 <div class="row container" >
     <div class="col s12">
+
         <div *ngIf="successMessage != null" class="card green lighten-5">
             <div class="card-content green-text">
-                <p>{{successMessage}} <span (click)="closeSuccess()" class="right" style="cursor: pointer;">x</span></p>
+                <p>{{successMessage}} <span (click)="closeSuccess()" class="right">x</span></p>
             </div>
         </div>
+
         <div class="card red lighten-4">
             <div *ngIf="errorMessage != null" class="card-content red-text">
-                <p>{{errorMessage}} <span (click)="closeError()" class="right" style="cursor: pointer;">x</span></p>
-
+                <p>{{errorMessage}} <span (click)="closeError()" class="right">x</span></p>
             </div>
         </div>
+
         <h3>Alliances</h3>
         <table class="highlight">
-
             <thead>
             <tr>
-                <th class="col s3"><div style="margin: 15px 0;">Alliance name</div></th>
-                <th class="col s3"><div style="margin: 15px 0;">Leader's login</div></th>
-                <th class="col s3"><div  style="margin: 15px 0;">Leader's email</div></th>
-                <th class="col s3"><div style="margin: 15px 0;">Action</div></th>
+                <th class="col s3"><div>Alliance name</div></th>
+                <th class="col s3"><div>Leader's login</div></th>
+                <th class="col s3"><div>Leader's email</div></th>
+                <th class="col s3"><div>Action</div></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let al of alliances" (dblclick)="editAlliance(al)">
                 <div *ngIf="al !== selectedAlliance">
-                    <td class="col s3"><div  style="margin: 15px 0;">{{al.name}}</div></td>
-                    <td class="col s3"><div *ngIf="al !== selectedAlliance"  style="margin: 15px 0;">{{al.leaderLogin}}</div></td>
-                    <td class="col s3"><div *ngIf="al !== selectedAlliance"  style="margin: 15px 0;">{{al.leaderEmail}}</div></td>
-                    <td class="col s3" style="text-align: center">
-                        <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="editAlliance(al)"  style="margin-top: 5px;">Edit</button>
-                        <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 red" type="submit" name="action" (click)="deleteAlliance(al)"  style="margin-top: 5px;">Delete</button>
+                    <td class="col s3"><div>{{al.name}}</div></td>
+                    <td class="col s3"><div *ngIf="al !== selectedAlliance">{{al.leaderLogin}}</div></td>
+                    <td class="col s3"><div *ngIf="al !== selectedAlliance">{{al.leaderEmail}}</div></td>
+                    <td class="col s3 text-center">
+                        <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="editAlliance(al)">Edit</button>
+                        <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 red" type="submit" name="action" (click)="deleteAlliance(al)">Delete</button>
                     </td>
                 </div>
                 <edit-alliance *ngIf="al === selectedAlliance" [editedAlliance] = "selectedAlliance" (notify)='onNotifyUpdate($event)'></edit-alliance>
@@ -41,6 +44,7 @@
         </table>
         <br>
     </div>
+
     <a class="btn-floating btn-large waves-effect waves-light cyan darken-1 center" *ngIf ="!addNewAlliance" (click)="newAlliance()"><i class="material-icons">add</i></a>
     <add-alliance *ngIf="addNewAlliance" (notify)='onNotifyCreate($event)'></add-alliance>
 </div>

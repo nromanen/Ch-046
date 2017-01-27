@@ -11,12 +11,11 @@ import ua.cv.tim.service.VillageService;
  * Created by Oleg on 05.01.2017.
  */
 
-@Service
+@Service(value = "villageService")
 @Transactional
 public class VillageServiceImp implements VillageService {
     @Autowired
     private VillageDao villageDao;
-
 
     @Override
     public void add(Village village){

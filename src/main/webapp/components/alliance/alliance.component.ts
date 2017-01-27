@@ -1,4 +1,3 @@
-
 import {Alliance} from "./alliance";
 import {Component, OnInit} from "@angular/core";
 import {AllianceService} from "../services/alliance/alliance-service";
@@ -10,20 +9,16 @@ import {AllianceService} from "../services/alliance/alliance-service";
     styleUrls: ['components/alliance/alliance.css']
 })
 
-
-
 export class AllianceComponent implements OnInit{
 
+    // Variables
     alliances: Array<Alliance> ;
     errorMessage: string = null;
     successMessage: string = null;
     addNewAlliance: boolean = false;
-
     selectedAlliance: Alliance = null;
     deletedAlliance: Alliance = null;
-
     confirmMsg: string;
-
 
     constructor(private _allianceService: AllianceService){
     }
@@ -32,21 +27,16 @@ export class AllianceComponent implements OnInit{
         this.getAlliances();
     }
 
-    newAlliance(){
-        this.addNewAlliance = true;
-    }
-
-    closeSuccess(){
-        this.successMessage = null;
-    }
-
-    closeError(){
-        this.errorMessage = null;
+    getAlliances() {
+        this._allianceService.getAlliances()
+            .subscribe(
+                alliances => this.alliances = alliances,
+                error =>  this.errorMessage = <any>error
+            );
     }
 
     onNotifyUpdate(alliance : Alliance){
         if (alliance !== null){
-            console.log(alliance);
             this._allianceService.updateAlliance(alliance)
                 .subscribe(
                     resp => {
@@ -56,14 +46,12 @@ export class AllianceComponent implements OnInit{
                         this.selectedAlliance = null;
                     },
                     error =>  {
-
                         this.errorMessage = <any>error;
                         this.successMessage = null;
                         this.selectedAlliance = null;
                     }
                 );
         } else {
-
             this.selectedAlliance = alliance;
         }
     }
@@ -78,8 +66,8 @@ export class AllianceComponent implements OnInit{
         }
         this.deletedAlliance = null;
     }
-    onNotifyCreate(alliance : Alliance){
 
+    onNotifyCreate(alliance : Alliance){
         this._allianceService.addAlliance(alliance)
             .subscribe(
                 resp => {
@@ -95,27 +83,28 @@ export class AllianceComponent implements OnInit{
         this.addNewAlliance = false;
     }
 
-    editAlliance(al: Alliance){
-        this.selectedAlliance = al;
+    newAlliance(){
+        this.addNewAlliance = true;
     }
 
-    deleteAlliance(al: Alliance){
-        console.log("ontest delete");
-        this.confirmMsg = "Are you sure you want to delete alliance " + al.name + "?";
-        this.deletedAlliance = al;
+    editAlliance(alliance: Alliance){
+        this.selectedAlliance = alliance;
+    }
 
+    deleteAlliance(alliance: Alliance){
+        this.confirmMsg = "Are you sure you want to delete alliance " + alliance.name + "?";
+        this.deletedAlliance = alliance;
     }
 
     cancelEditing(){
         this.selectedAlliance = null;
     }
 
-    getAlliances() {
-        this._allianceService.getAlliances()
-            .subscribe(
-                alliances => this.alliances = alliances,
-                error =>  this.errorMessage = <any>error
-            );
+    closeSuccess(){
+        this.successMessage = null;
     }
 
+    closeError(){
+        this.errorMessage = null;
+    }
 }

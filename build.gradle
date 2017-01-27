@@ -13,18 +13,18 @@ repositories {
 }
 
 ext.vers = [
-        hibernate: '5.2.5.Final',
-        postgresql: '9.3-1102.jdbc41',
-        spring: '4.3.5.RELEASE',
+        hibernate      : '5.2.5.Final',
+        postgresql     : '9.3-1102.jdbc41',
+        spring         : '4.3.5.RELEASE',
         spring_security: '4.2.0.RELEASE',
-        servlet: '3.1.0',
-        jstl: '1.2',
-        mail: '1.4',
-        jackson_core: '2.8.4',
-        slf4j_bridge: '1.7.21',
-        logback: '1.1.7',
-        testng: '6.9.13.6',
-        mockito: '2.3.5'
+        servlet        : '3.1.0',
+        jstl           : '1.2',
+        mail           : '1.4',
+        jackson_core   : '2.8.4',
+        slf4j_bridge   : '1.7.21',
+        logback        : '1.1.7',
+        testng         : '6.9.13.6',
+        mockito        : '2.3.5'
 ]
 
 dependencies {
@@ -39,6 +39,9 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-tx', version: vers.spring
     compile group: 'org.springframework', name: 'spring-orm', version: vers.spring
     compile group: 'org.springframework', name: 'spring-test', version: vers.spring
+
+    compile group: 'org.springframework', name: 'spring-messaging', version: vers.spring
+    compile group: 'org.springframework', name: 'spring-websocket', version: vers.spring
 
     compile group: 'org.springframework.security', name: 'spring-security-web', version: vers.spring_security
     compile group: 'org.springframework.security', name: 'spring-security-config', version: vers.spring_security
@@ -57,6 +60,7 @@ dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version: vers.logback
 
     testCompile group: 'org.testng', name: 'testng', version: vers.testng
+    testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.mockito', name: 'mockito-core', version: vers.mockito
 }
 

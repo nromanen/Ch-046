@@ -74,5 +74,24 @@ public class User extends UuidEntity implements Serializable {
 		this.player = player;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb
+				.append("User: { login: ").append(login).append(", ")
+				.append("password: ").append(password).append(", ")
+				.append("email: ").append(email).append(", ")
+				.append("roles: [ ");
 
+		for (int i = 0; i < roles.size(); i++) {
+			if (i != roles.size() - 1) {
+				sb.append(roles.get(i).toString()).append(", ");
+			} else {
+				sb.append(roles.get(i).toString());
+			}
+		}
+
+		sb.append(" ]");
+		return sb.toString();
+	}
 }

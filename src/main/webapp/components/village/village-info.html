@@ -1,0 +1,22 @@
+<td>
+    <div>{{village.name}}</div>
+<td>
+    <div>{{village.population}}</div>
+</td>
+<td>
+    <div >{{this.village.xCoord}}</div>
+</td>
+<td >
+    <div>{{village.yCoord}}</div>
+</td>
+<td>
+    <div>{{village.isCapital}}</div>
+</td>
+
+<td >
+    <div>{{village.wall}}</div>
+</td>
+
+<td *ngFor="let type of unitValues">
+    <army-cell-info [type]="type" [village]="village"></army-cell-info>
+</td>
