@@ -3,6 +3,7 @@ package ua.cv.tim.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.AllianceDao;
@@ -132,7 +133,8 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		user.setLogin(member.getLogin());
 		user.setEmail(member.getEmail());
-		user.setPassword(generatePassword(10));
+		String password = generatePassword(10);
+		user.setPassword(encodePassword(password));
 		logger.info("Password is {} ", user.getPassword());
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.USER);
@@ -146,14 +148,14 @@ public class UserServiceImpl implements UserService {
 		player.setAlliance(allianceDao.getAllianceByName(member.getAlliance()));
 		user.setPlayer(player);
 		playerDao.add(player);
-		sendEmail(user);
+		sendEmail(user, password);
 	}
 
-	public void sendEmail(User user) throws MessagingException {
+	public void sendEmail(User user, String password) throws MessagingException {
 		try {
 			sendMail.send(user.getEmail(), "Travian user's info", "Your login is" + user.getLogin() + " and password: "
-					+ user.getPassword() + "  role " + user.getRoles());
-			logger.info("Password {} has been sent on user's e-mail {}", user.getPassword(), user.getEmail());
+					+ password + "  role " + user.getRoles());
+			logger.info("Password {} has been sent on user's e-mail {}", password, user.getEmail());
 		} catch (MessagingException e) {
 			logger.error("The e-mail {} hasn't been sent {}", user.getEmail(), e);
 		}
@@ -183,6 +185,11 @@ public class UserServiceImpl implements UserService {
 		}
 		logger.info("Auto-generated password is {}", new String(password));
 		return new String(password);
+	}
+
+	private String encodePassword(String password) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		return passwordEncoder.encode(password);
 	}
 
 	public boolean isUserUnique(UserDTO member) {
