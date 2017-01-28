@@ -1,8 +1,7 @@
 package ua.cv.tim.model;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +10,7 @@ import java.util.List;
 
 @Entity
 
-public class Alliance extends UuidEntity {
+public class Alliance extends UuidEntity implements Serializable {
 
 
     @Column(nullable = false, unique = true)
