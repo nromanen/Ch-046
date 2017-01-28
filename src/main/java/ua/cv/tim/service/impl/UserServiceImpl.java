@@ -26,7 +26,7 @@ import java.util.Random;
  * Created by Oleg on 04.01.2017.
  */
 
-@Service
+@Service(value = "userService")
 @Transactional
 public class UserServiceImpl implements UserService {
 
@@ -207,5 +207,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserWithAlliance(String username) {
 		return userDao.getUserWithAlliance(username);
+	}
+
+	@Override
+	public User getFullUserByUsername(String username) {
+		return userDao.getFullUserByUsername(username);
 	}
 }

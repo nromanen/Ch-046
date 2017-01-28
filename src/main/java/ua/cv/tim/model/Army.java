@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Army extends UuidEntity implements Comparable<Army> {
+public class Army extends UuidEntity implements Comparable<Army>, Serializable {
 
     @Enumerated(EnumType.STRING)
     private UnitType type;
