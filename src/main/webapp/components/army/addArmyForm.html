@@ -1,3 +1,5 @@
+<div [formGroup]="addVillageForm.controls.armies.controls[i]">
+    <div  style="background:blue ">
 <div class="input-field col s6 offset-s3">
     <select class="browser-default" [ngModel]="army.type"
             (ngModelChange)="army.type = $event" name="type" #type>
@@ -30,4 +32,6 @@
         <span class="lever"></span>
         Yes
     </label>
+</div>
+</div>
 </div>

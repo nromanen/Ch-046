@@ -12,6 +12,7 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
     outputs:['selectedVillageChanged'],
     styleUrls:['css/style.css'],
     template:`
+
 <td>
     <div *ngIf="!isForm">{{v.name}}</div>
     <input *ngIf="isForm" (ngModelChange)="this.newVillage.name=$event" type="text" [ngModel]="this.v.name"  name="name"></td>
@@ -47,11 +48,15 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 </td>
 <td>
     <button (click)="!isForm?showEdit():changeVillage()" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action"
-            style="margin-top: 5px;"
-    >{{!isForm?"Edit":"Save"}}
+            style="margin-top: 5px;" >
+            {{!isForm?"Edit":"Save"}}
+         
     </button>
+     
+    <div>  {{heroForm?"yes":"no"}}</div>
     
 </td>
+
 `
 })
 export class VillageRow implements OnInit,AfterViewChecked{

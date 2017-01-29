@@ -5,47 +5,51 @@ import {Component, Input, OnInit, AfterViewChecked, Output, EventEmitter, ViewCh
 import {Army} from "./army";
 import {UnitType} from "../UnitType/unitType";
 import {Village} from "../village/village";
-import {NgForm} from "@angular/forms";
+import {NgForm, FormGroup} from "@angular/forms";
 @Component({
     selector:"[add-army]",
     template:`
-<div class="input-field col s6 offset-s3">
-    <select class="browser-default" [ngModel]="army.type"
-            (ngModelChange)="army.type = $event" name="type" #type>
+<div [formGroup]="group">
+
+<div class="input-field col s6 offset-s3" >
+    <select class="browser-default" name="type" formControlName="type">
         <option value="" disabled selected>Choose your option</option>
         <option *ngFor="let type of unitTypes" [ngValue]="type">{{unitTypeStrings[type]}}</option>
     </select>
 </div>
-<div class="input-field col s6 offset-s3">
-    <input id="count" type="text" class="validate" [(ngModel)]="army.count" name="count" pattern="[1-9][0-9]*"
-           #count="ngModel" required>
-    <label for="count">Count</label>
-    <div *ngIf="count.errors && (count.dirty || count.touched)"
-         class="alert alert-danger">
-        <div [hidden]="!count.errors.required">
-            Count is required
-        </div>
-        <div [hidden]="!count.errors.pattern">
-            Coordinates can contain chars only!
-        </div>
-    </div>
-</div>
 
+<div class="input-field col s6 offset-s3">
+    <input id="count" type="text" class="validate" formControlName="count" required>
+    <label for="count">Count</label>
+        <div *ngIf="!group.controls.count.valid">
+        <div [hidden]=" (!group.controls['count'].touched || !group.controls['count'].dirty)||
+        !group.controls['count'].errors.required">
+            Count is required!
+        </div>
+        <div [hidden]="(!group.controls['count'].touched ||
+         !group.controls['count'].dirty) || !group.controls['count'].errors.pattern">
+           Count can contain numbers only!
+        </div>
+        </div>
+    
+</div>
 <div class="input-field col s6 offset-s3">
     Is own unit?
 </div>
 <div class="switch ">
     <label class="col offset-s3">
         No
-        <input type="checkbox" [(ngModel)]="army.ownUnit" name="isCapital">
+        <input type="checkbox"  formControlName="isOwnUnit">
         <span class="lever"></span>
         Yes
     </label>
 </div>
+</div>
 `
 })
 export class AddArmyForm implements OnInit,AfterViewChecked{
-
+@Input()
+    group:FormGroup;
     unitTypes:Array<number>;
     unitTypeStrings:Array<string>;
 
@@ -66,7 +70,7 @@ export class AddArmyForm implements OnInit,AfterViewChecked{
     @Input() village:Village;
     @Output () armyIsValid:EventEmitter<boolean>;
     ngOnInit(): void {
-        this.army.type=UnitType.Axeman;
+        // this.army.type=UnitType.Axeman;
     }
     ngAfterViewChecked(): void {
         this.armyIsValid.emit(true);

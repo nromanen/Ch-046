@@ -44,8 +44,7 @@ export class ArmyCellComponent implements OnInit,OnChanges {
     ngOnInit(): void {
         this.army=new Army(-1,UnitType[this.type],true);
         this.army.type=UnitType[this.type];
-        console.log('inside cell');
-        console.log(UnitType[this.type]);
+
         this.newArmy = new Army(this.army.count, this.army.type, this.army.ownUnit);
         this.newArmy.type=this.army.type;
         this.newArmy.uuid = this.army.uuid;
