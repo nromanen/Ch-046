@@ -22,14 +22,12 @@ export class PlayerList implements OnInit {
 
     constructor(private currVillageService: CurrVillageArmiesService, private villageService: VillageService) {
         this.unitValues = [];
-        this.selectedVillage = null;
+        this.selectedVillage = new Village();
         console.log(this.unitValues);
     }
 
     ngOnInit(): void {
         console.log(UnitType.Legionnaire);
-        console.log(this.player.villages[0].armies[0].type);
-        console.log(UnitType[UnitType.Legionnaire] == this.player.villages[0].armies[0].type.toString());
         this.villageService.villages = this.player.villages;
     }
 

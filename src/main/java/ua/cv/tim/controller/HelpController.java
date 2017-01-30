@@ -53,7 +53,7 @@ public class HelpController {
         Player player = playerService.getByIdWithVillages(id);
         PlayerDTO playerDTO = new PlayerDTO(player.getUser().getLogin(),
                 player.getUser().getPassword(), player.getUser().getEmail(),
-                player.getRace(), player.getVillages(), player.getAlliance());
+                player.getRace(), player.getVillages(), player.getAlliance(), userByUsername.getRoles().size() == 2);
 
         return new ResponseEntity<>(playerDTO, HttpStatus.OK);
     }
