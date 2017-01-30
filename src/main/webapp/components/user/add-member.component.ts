@@ -24,7 +24,7 @@ export class MemberForm {
             'login': ['', Validators.compose([Validators.required, Validators.pattern(this.USER_LOGIN)])],
             'email': ['', Validators.compose([Validators.required, Validators.pattern(this.EMAIL_REGEXP)])],
             'alliance': [''],
-            'leader':['']
+            'isLeader':['']
         });
     }
 
@@ -32,7 +32,7 @@ export class MemberForm {
         console.log(`MemberForm.addMember() method is working`);
         console.log(`Form value is: ${JSON.stringify(value)}`);
 
-        let member = new User(value.login, value.email, value.uuid, value.alliance, value.leader);
+        let member = new User(value.login, value.email, value.uuid, value.alliance, value.isLeader);
         this.addMemberForm.emit(member);
         this.memberForm.reset();
     }

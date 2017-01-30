@@ -1,4 +1,5 @@
-<leader-header></leader-header>
+<player-head [isLeader]="leader.isLeader"></player-head>
+
 <app-modal *ngIf="deletedMember !== null" [confirmMsg]="confirmMsg" (notify)='onConfirmDelete($event)'></app-modal>
 
 <div class="row container" *ngIf="successMessage != null || errorMessage != null">
