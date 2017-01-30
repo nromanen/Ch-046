@@ -3,19 +3,22 @@
  */
 import {PlayerRow} from "./playerRow.component";
 import {Player} from "./player";
-import {Component, Input, OnInit, OnChanges, SimpleChanges, DoCheck} from "@angular/core";
+import {Component, Input, OnInit, OnChanges, SimpleChanges, DoCheck, ViewChild} from "@angular/core";
 import {Village} from "../village/village";
 import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 import {UnitType} from "../UnitType/unitType";
 import {Army} from "../army/army";
 import {VillageService} from "../services/villageService";
+import {FormGroup, FormBuilder, FormControl, Validators, FormArray} from "@angular/forms";
+import {forbiddenXValidator} from "../village/forbidden-x.directive";
 @Component
 ({
     selector: 'player-list',
     // templateUrl: "components/player/playerList.html"
     template:`
-<form #heroForm="ngForm">
+
 <div class="row ">
+<form  (ngSubmit)="onSubmit()">
     <table>
         <thead>
         <tr>
@@ -57,17 +60,24 @@ import {VillageService} from "../services/villageService";
         </thead>
 
         <tbody>
+       
         <tr player-ro [v]="v" *ngFor="let v of player.villages" [isForm]="v==selectedVillage"
-            (selectedVillageChanged)="changeSelectedVillage($event)">
+            (selectedVillageChanged)="changeSelectedVillage($event)" [editVillageForm]="editVillageForm" >       
+</tr>
+         
         </tbody>
+         {{heroForm?"yes":"no"}}
     </table>
-
+    </form>
 </div>
-</form>
+
 `
 
 })
 export class PlayerList implements OnInit, OnChanges,DoCheck {
+    editVillageForm: FormGroup;
+    POPULATION_REGEXP=/^\d*$/;
+    COORD_REGEXP=/^[0-9]*$/;
     ngDoCheck(): void {
 
     }
@@ -78,15 +88,61 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
     unitValues: Array<string>;
     selectedVillage: Village;
 
-    constructor(private currVillageService: CurrVillageArmiesService, private villageService: VillageService) {
+    constructor(private currVillageService: CurrVillageArmiesService, private villageService: VillageService,private _fBuilder:FormBuilder) {
         this.unitValues = [];
     }
 
     ngOnInit(): void {
-        // console.log(this.player);
         this.villageService.villages = this.player.villages;
+        this.editVillageForm=this._fBuilder.group({
+            // test:[this.selectedVillage.name,[]]
+        });
     }
 
+    buildForm(){
+        // this.editVillageForm=null;
+        this.editVillageForm=this._fBuilder.group({
+           // name:[this.selectedVillage.name,[]]
+            'name':new FormControl(this.selectedVillage.name,[Validators.required]),
+            'population':[this.selectedVillage.population,[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
+            ],
+            'xCoord': [this.selectedVillage.xCoord,
+                [Validators.required, forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
+            ],
+            'yCoord':[this.selectedVillage.yCoord,
+
+                [Validators.required,forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
+            ],
+            'wall':[this.selectedVillage.wall,
+                [Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
+            ],
+            'isCapital':[this.selectedVillage.isCapital],
+            'armies':this._fBuilder.array([]),
+        });
+
+        const control = <FormArray>this.editVillageForm.controls['armies'];
+        let i=0;
+        // this.selectedVillage.armies.forEach(army=>{
+        //     control.push(this.initArmies(i));
+        //
+        // });
+        for (let i=0;i<27;i++) {
+            control.push(this.initArmies(i));
+
+        }
+
+        console.log(control);
+    }
+
+    initArmies(ord:number) {
+        // initialize our address
+        let h:string;
+
+        return this._fBuilder.group({
+            // value: [this.selectedVillage.armies[ord]!=undefined?this.selectedVillage.armies[ord].count:''],
+            value:['',[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]],
+        });
+    }
 
     wasEdited(village: Village) {
         this.currVillageService.village = village;
@@ -94,7 +150,17 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
 
     changeSelectedVillage(village: Village) {
         this.selectedVillage = village;
+        console.log(this.selectedVillage);
+        console.log(this.editVillageForm);
+        this.buildForm();
         // console.log(this.selectedVillage);
+    }
+
+    onSubmit(){
+
+        let v:Village=this.editVillageForm.value;
+        v.armies=this.currVillageService.armies;
+        console.log(this.editVillageForm.value);
     }
 
 

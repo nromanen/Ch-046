@@ -4,7 +4,7 @@
 
 
 import {Player} from "./player";
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {PlayerService} from "../services/player.service";
 import {ActivatedRoute} from "@angular/router";
 import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
@@ -19,13 +19,11 @@ import {VillageService} from "../services/villageService";
                 <button (click)="showAddForm()" class="btn waves-effect waves-light">add</button>
             </div>
             <add-vill-form [player]="player" *ngIf="showAddVillageForm" (wasSubmitted)="hideAddForm($event)"></add-vill-form>
-        </div>
-        <button (click)="changePlayer()">ghfh</button>
+        </div>        
 `
 })
 export class PlayerComponent implements OnInit {
     player: Player;
-
     showAddVillageForm: boolean;
 
     constructor(private currPlayerService: CurrVillageArmiesService, private playerService: PlayerService, private route: ActivatedRoute, private villageService: VillageService) {
@@ -39,6 +37,8 @@ export class PlayerComponent implements OnInit {
                     this.player = player;
                 }
             );
+
+
     }
 
     hideAddForm(): void {
@@ -49,10 +49,6 @@ export class PlayerComponent implements OnInit {
         this.showAddVillageForm = true;
     }
 
-    changePlayer(){
-        let i:number;
-        i++;
-        this.player.login=''+i;
-    }
+
 }
 

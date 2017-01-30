@@ -38,7 +38,6 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
     }
 
     ngAfterViewChecked() {
-
     }
 
     buildForm() {
@@ -137,12 +136,12 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
             'minlength': 'Name must be at least 4 characters long.',
             'maxlength': 'Name cannot be more than 24 characters long.',
         },
-        'x': {
+        'xCoord': {
             'required': 'X coordinate is required.',
             'forbiddenCoordinate': 'X can only range between -400 and 400.',
-            'pattern':"Y coordinate can contain numbers only"
+            'pattern':"X coordinate can contain numbers only"
         },
-        'y': {
+        'yCoord': {
             'required': 'Y coordinate is required.',
             'forbiddenCoordinate': 'Y can only range between -400 and 400.',
             'pattern':"Y coordinate can contain numbers only"

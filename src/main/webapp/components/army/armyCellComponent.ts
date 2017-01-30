@@ -1,7 +1,7 @@
 /**
  * Created by okunetc on 19.01.2017.
  */
-import {Component, Input, OnInit, EventEmitter, OnChanges, SimpleChanges} from "@angular/core";
+import {Component, Input, OnInit, EventEmitter, OnChanges, SimpleChanges, AfterViewChecked} from "@angular/core";
 import {Village} from "../village/village";
 import {Army} from "./army";
 import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
@@ -11,18 +11,16 @@ import {UnitType} from "../UnitType/unitType";
     outputs: ['cellClicked'],
     template: `
      <div title="{{this.type}}" (dblclick)="hide()" *ngIf="!isInput" (click)="becomeDiv()">{{army.count!=-1?this.army.count:"0"}}</div>
-     <div class="input-field"  *ngIf="isInput">
-     <input class="validate"  type="text"  style=" 
-     width: 20px;height: 22px" [ngModel]="this.army.count!=-1?this.army.count:0" 
-     name="value" (ngModelChange)="addOrEdit($event)"
-     #name="ngModel">
+     <div class="input-field"  *ngIf="isInput" [formGroup]="group">
+     <input class="validate"  type="text"  style=" width: 20px;height: 22px" [ngModel]="army.count"
+     formControlName="value" (ngModelChange)="addOrEdit($event)">
      </div>
-
 `
 })
 export class ArmyCellComponent implements OnInit,OnChanges {
     @Input() type: string;
     @Input() village: Village;
+    @Input() group;
     army: Army;
     newArmy: Army;
     @Input() isInput: boolean;
@@ -36,9 +34,10 @@ export class ArmyCellComponent implements OnInit,OnChanges {
 
         if (changes['isInput'] != null)
             if (changes['isInput'].currentValue === true && this.army.count != -1) {
+                console.log('here');
                 this.currVillageArmiesService.armies.push(this.newArmy);
             }
-
+        console.log(this.currVillageArmiesService);
     }
 
     ngOnInit(): void {
