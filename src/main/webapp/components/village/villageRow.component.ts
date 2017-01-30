@@ -1,7 +1,10 @@
 /**
  * Created by okunetc on 19.01.2017.
  */
-import {Component, Input, EventEmitter, OnInit, AfterViewChecked, ViewChild} from "@angular/core";
+import {
+    Component, Input, EventEmitter, OnInit, AfterViewChecked, ViewChild, ChangeDetectorRef,
+    AfterViewInit
+} from "@angular/core";
 import {UnitType} from "../UnitType/unitType";
 import {Village} from "./village";
 import {VillageService} from "../services/villageService";
@@ -49,8 +52,8 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
     (cellClicked)="cellClick($event)" [isInput]="isForm" [ifSave]="ifSaveChanges"></army-cell>
 </td>
 <td>
-    <button (click)="!isForm?showEdit():null" type="submit"
-     
+    <button (click)="!isForm?showEdit():submit()" type="button"
+    
     class="btn waves-effect waves-light col offset-s1"  name="action" 
             style="margin-top: 5px;" >
             {{!isForm?"Edit":"Save"}}      
@@ -59,19 +62,24 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 
 `
 })
-export class VillageRow implements OnInit,AfterViewChecked{
+export class VillageRow implements OnInit,AfterViewChecked,AfterViewInit{
+    ngAfterViewInit(): void {
+        this.cdr.detectChanges();
+    }
     @Input() v:Village;
     @Input() isForm:boolean;
     @Input() editVillageForm;
 
     unitValues:Array<string>;
     selectedVillageChanged:EventEmitter<Village>;
+    private cdr: ChangeDetectorRef;
     ngAfterViewChecked(): void {
 
     }
     private newVillage: Village;
     private villBefore;
     ngOnInit(): void {
+
         this.newVillage=new Village();
         this.newVillage.name=this.v.name;
         this.newVillage.uuid=this.v.uuid;
@@ -86,11 +94,11 @@ export class VillageRow implements OnInit,AfterViewChecked{
 
 
     ifSaveChanges:boolean;
-    constructor( private villageService:VillageService, private currVillageArmiesService:CurrVillageArmiesService){
+    constructor( private villageService:VillageService, private currVillageArmiesService:CurrVillageArmiesService,cdr: ChangeDetectorRef){
         this.selectedVillageChanged=new EventEmitter<Village>(false);
         this.unitValues=[];
         this.ifSaveChanges=false;
-
+        this.cdr = cdr;
     }
 
 
@@ -99,6 +107,7 @@ export class VillageRow implements OnInit,AfterViewChecked{
         for (let m in UnitType){
             if (typeof UnitType[m] === 'number'){
                 this.unitValues.push(m);
+            } else {
             }
         }
 
@@ -136,14 +145,23 @@ export class VillageRow implements OnInit,AfterViewChecked{
     showEdit(){
 
             // this.selectedVillageChanged.emit(null);
+
             this.selectedVillageChanged.emit(this.v);
+        this.cdr.detectChanges();
              this.ifSaveChanges=false;
+
              this.currVillageArmiesService.armies.length=0;
              // this.v.armies.forEach(army=>{
              //     this.currVillageArmiesService.armies.push(army);
              // });
              console.log(this.currVillageArmiesService.armies);
 
+    }
+
+    submit(){
+        console.log(this.editVillageForm.value);
+        this.v.armies=this.currVillageArmiesService.armies;
+        console.log(this.v);
     }
 
 }

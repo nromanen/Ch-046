@@ -34,10 +34,9 @@ export class ArmyCellComponent implements OnInit,OnChanges {
 
         if (changes['isInput'] != null)
             if (changes['isInput'].currentValue === true && this.army.count != -1) {
-                console.log('here');
                 this.currVillageArmiesService.armies.push(this.newArmy);
             }
-        console.log(this.currVillageArmiesService);
+        // console.log(this.currVillageArmiesService);
     }
 
     ngOnInit(): void {

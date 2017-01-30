@@ -3,7 +3,7 @@
  */
 import {PlayerRow} from "./playerRow.component";
 import {Player} from "./player";
-import {Component, Input, OnInit, OnChanges, SimpleChanges, DoCheck, ViewChild} from "@angular/core";
+import {Component, Input, OnInit, OnChanges, SimpleChanges, DoCheck, ViewChild, ChangeDetectorRef} from "@angular/core";
 import {Village} from "../village/village";
 import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 import {UnitType} from "../UnitType/unitType";
@@ -78,6 +78,7 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
     editVillageForm: FormGroup;
     POPULATION_REGEXP=/^\d*$/;
     COORD_REGEXP=/^[0-9]*$/;
+    private cdRef: ChangeDetectorRef;
     ngDoCheck(): void {
 
     }
@@ -88,8 +89,10 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
     unitValues: Array<string>;
     selectedVillage: Village;
 
-    constructor(private currVillageService: CurrVillageArmiesService, private villageService: VillageService,private _fBuilder:FormBuilder) {
+
+    constructor(private currVillageService: CurrVillageArmiesService, private villageService: VillageService,private _fBuilder:FormBuilder, cdRef:ChangeDetectorRef) {
         this.unitValues = [];
+        this.cdRef=cdRef
     }
 
     ngOnInit(): void {
@@ -153,6 +156,11 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
         console.log(this.selectedVillage);
         console.log(this.editVillageForm);
         this.buildForm();
+        this.editVillageForm.valueChanges
+            .subscribe(data =>
+            {
+                this.cdRef.detectChanges();
+            });
         // console.log(this.selectedVillage);
     }
 
