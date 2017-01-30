@@ -83,11 +83,11 @@ public class UserServiceImpl implements UserService {
 	private String createErrorMessage(boolean[] isLoginEmailUnique) {
 		String errorMessage = null;
 		if (!isLoginEmailUnique[0] && !isLoginEmailUnique[1]) {
-			errorMessage = "User with the same login and email has already existed!";
+			errorMessage = "User with the same login and email exists!";
 		} else if (!isLoginEmailUnique[0]) {
-			errorMessage = "User with the same login has already existed!";
+			errorMessage = "User with the same login exists!";
 		} else if (!isLoginEmailUnique[1]) {
-			errorMessage = "User with the same email has already existed!";
+			errorMessage = "User with the same email exists!";
 		}
 		return errorMessage;
 	}

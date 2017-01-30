@@ -12,7 +12,8 @@ import {VillageService} from "../services/villageService";
 @Component({
     selector: 'player',
     template: `
-        <player-head></player-head>
+        <player-head *ngIf="!player.isLeader"></player-head>
+        <leader-header *ngIf="player.isLeader"></leader-header>
         <player-list *ngIf="player" [player]="player"></player-list>
         <div class="row">
             <div class="col offset-s5">
@@ -27,7 +28,8 @@ export class PlayerComponent implements OnInit {
 
     showAddVillageForm: boolean;
 
-    constructor(private currPlayerService: CurrVillageArmiesService, private playerService: PlayerService, private route: ActivatedRoute, private villageService: VillageService) {
+    constructor(private playerService: PlayerService) {
+        this.player = new Player();
     }
 
     ngOnInit(): void {

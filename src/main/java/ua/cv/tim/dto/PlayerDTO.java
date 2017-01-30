@@ -32,15 +32,18 @@ public class PlayerDTO {
     @JsonIgnore
     private Alliance alliance;
 
+    private boolean isLeader;
+
     public PlayerDTO() { }
 
-    public PlayerDTO(String login, String password, String email, Race race, List<Village> villages, Alliance alliance) {
+    public PlayerDTO(String login, String password, String email, Race race, List<Village> villages, Alliance alliance, boolean isLeader) {
         this.login = login;
         this.password = password;
         this.email = email;
         this.race = race;
         this.villages = villages;
         this.alliance = alliance;
+        this.isLeader = isLeader;
     }
 
     public String getPassword() {
@@ -93,6 +96,15 @@ public class PlayerDTO {
         this.login = login;
     }
 
+    public boolean getIsLeader() {
+        return isLeader;
+    }
+
+    public PlayerDTO setIsLeader(boolean leader) {
+        isLeader = leader;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "PlayerDTO{" +
@@ -102,6 +114,7 @@ public class PlayerDTO {
                 ", race=" + race +
                 ", villages=" + villages +
                 ", alliance=" + alliance +
+                ", isLeader=" + isLeader +
                 '}';
     }
 }
