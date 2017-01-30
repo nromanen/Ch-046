@@ -12,7 +12,7 @@ import {UnitType} from "../UnitType/unitType";
     template: `
      <div title="{{this.type}}" (dblclick)="hide()" *ngIf="!isInput" (click)="becomeDiv()">{{army.count!=-1?this.army.count:"0"}}</div>
      <div class="input-field"  *ngIf="isInput" [formGroup]="group">
-     <input class="validate"  type="text"  style=" width: 20px;height: 22px" [ngModel]="army.count"
+     <input class="validate"  type="text"  style=" width: 20px;height: 22px" [ngModel]="this.army.count!=-1?this.army.count:0"
      formControlName="value" (ngModelChange)="addOrEdit($event)">
      </div>
 `
@@ -74,7 +74,7 @@ export class ArmyCellComponent implements OnInit,OnChanges {
     addOrEdit(event:any){
         this.newArmy.count=event;
         if (this.army.count==-1){
-            if (this.currVillageArmiesService.armies.indexOf(this.newArmy)==-1)
+            if (this.currVillageArmiesService.armies.indexOf(this.newArmy)==-1 && this.newArmy.count>0)
                 this.currVillageArmiesService.armies.push(this.newArmy);
         } else
             this.newArmy.count=event;

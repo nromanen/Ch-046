@@ -49,7 +49,8 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
     (cellClicked)="cellClick($event)" [isInput]="isForm" [ifSave]="ifSaveChanges"></army-cell>
 </td>
 <td>
-    <button (click)="!isForm?showEdit():null" type="submit" [disabled]="!editVillageForm.valid && isForm"
+    <button (click)="!isForm?showEdit():null" type="submit"
+     
     class="btn waves-effect waves-light col offset-s1"  name="action" 
             style="margin-top: 5px;" >
             {{!isForm?"Edit":"Save"}}      

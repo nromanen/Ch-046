@@ -161,6 +161,7 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
         let v:Village=this.editVillageForm.value;
         v.armies=this.currVillageService.armies;
         console.log(this.editVillageForm.value);
+        // this.editVillageForm.valid=false;
     }
 
 
