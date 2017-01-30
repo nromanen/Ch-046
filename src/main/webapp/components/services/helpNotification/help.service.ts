@@ -8,6 +8,7 @@ import {Http, Headers, Response} from "@angular/http";
 import {Observable} from 'rxjs/Rx';
 import {Player} from "../../player/player";
 import {Attack} from "../../help/attack";
+import {Alliance} from "../../alliance/alliance";
 
 @Injectable()
 export class HelpService {
@@ -15,12 +16,9 @@ export class HelpService {
     url = 'askhelp';
 
     constructor(private http: Http) {
-
     }
 
-
     getById(): Observable<Player> {
-        console.log(this.url);
         return this.http.get(this.url)
             .map(res => res.json());
     }
@@ -47,6 +45,12 @@ export class HelpService {
     getActiveHelp(): Observable<any[]> {
         console.log(this.url);
         return this.http.get("allAttack")
+            .map(res => res.json());
+    }
+
+    getAlliance(): Observable<Alliance> {
+        console.log("INIT ALLIANCE");
+        return this.http.get("user/helpInit/")
             .map(res => res.json());
     }
 

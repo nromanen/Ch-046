@@ -1,4 +1,4 @@
-System.register(["@angular/core", "rxjs/Subject", "node_modules/stompjs/lib/stomp.min.js"], function (exports_1, context_1) {
+System.register(["@angular/core", "rxjs/Subject", "node_modules/stompjs/lib/stomp.min.js", "../../app.component"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,7 +10,7 @@ System.register(["@angular/core", "rxjs/Subject", "node_modules/stompjs/lib/stom
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, Subject_1, StompService, StompService_1;
+    var core_1, Subject_1, app_component_1, StompService, StompService_1;
     return {
         setters: [
             function (core_1_1) {
@@ -20,6 +20,9 @@ System.register(["@angular/core", "rxjs/Subject", "node_modules/stompjs/lib/stom
                 Subject_1 = Subject_1_1;
             },
             function (_1) {
+            },
+            function (app_component_1_1) {
+                app_component_1 = app_component_1_1;
             }
         ],
         execute: function () {
@@ -27,22 +30,29 @@ System.register(["@angular/core", "rxjs/Subject", "node_modules/stompjs/lib/stom
                 function StompService() {
                     this.stompSubject = new Subject_1.Subject();
                     this.WEBSOCKETURL = 'ws://localhost:8080/travian/stompTest';
+                    this.connectInit();
+                }
+                StompService.prototype.connectInit = function () {
+                    var self = this;
+                    var e = new Date().getTime() + 300;
+                    while (new Date().getTime() <= e) {
+                    }
                     var webSocket = new WebSocket(this.WEBSOCKETURL);
                     StompService_1.stompClient = Stomp.over(webSocket);
-                }
-                StompService.prototype.connect = function () {
-                    var self = this;
-                    if (!StompService_1.stompClient.isConnected) {
-                        console.log("Use static! Connecting to websocket server");
-                        StompService_1.stompClient.connect({}, function (frame) {
-                            StompService_1.stompClient.subscribe('/topic/greetings', function (stompResponse) {
-                                self.stompSubject.next(JSON.parse(stompResponse.body));
-                            });
+                    console.log("Use static! Connecting to websocket server");
+                    StompService_1.stompClient.connect({}, function (frame) {
+                        StompService_1.stompClient.subscribe('/topic/greetings/' + app_component_1.AppComponent.alliance.allianceUuid, function (stompResponse) {
+                            self.stompSubject.next(JSON.parse(stompResponse.body));
                         });
+                    });
+                };
+                StompService.prototype.connect = function () {
+                    if (StompService_1.stompClient.OPENED) {
+                        this.connectInit();
                     }
                 };
                 StompService.prototype.send = function (payload) {
-                    StompService_1.stompClient.send("/app/hello", {}, JSON.stringify({ 'message': 'askHelp' }));
+                    StompService_1.stompClient.send("/app/hello/" + app_component_1.AppComponent.alliance.allianceUuid, {}, JSON.stringify({ 'message': 'askHelp' }));
                 };
                 StompService.prototype.getObservable = function () {
                     return this.stompSubject.asObservable();

@@ -1,8 +1,26 @@
 group 'ua.cv.tim'
 version '1.0-SNAPSHOT'
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:+'
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'org.akhikhl.gretty'
+
+gretty {
+    port = 8080
+    contextPath = 'travian'
+    servletContainer = 'jetty9'
+}
+
+
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -12,19 +30,20 @@ repositories {
     maven { url "https://clojars.org/repo" }
 }
 
+
 ext.vers = [
-        hibernate: '5.2.5.Final',
-        postgresql: '9.3-1102.jdbc41',
-        spring: '4.3.5.RELEASE',
+        hibernate      : '5.2.5.Final',
+        postgresql     : '9.3-1102.jdbc41',
+        spring         : '4.3.5.RELEASE',
         spring_security: '4.2.0.RELEASE',
-        servlet: '3.1.0',
-        jstl: '1.2',
-        mail: '1.4',
-        jackson_core: '2.8.4',
-        slf4j_bridge: '1.7.21',
-        logback: '1.1.7',
-        testng: '6.9.13.6',
-        mockito: '2.3.5'
+        servlet        : '3.1.0',
+        jstl           : '1.2',
+        mail           : '1.4',
+        jackson_core   : '2.8.4',
+        slf4j_bridge   : '1.7.21',
+        logback        : '1.1.7',
+        testng         : '6.9.13.6',
+        mockito        : '2.3.5'
 ]
 
 dependencies {
@@ -40,15 +59,12 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-orm', version: vers.spring
     compile group: 'org.springframework', name: 'spring-test', version: vers.spring
 
+    compile group: 'org.springframework', name: 'spring-messaging', version: vers.spring
+    compile group: 'org.springframework', name: 'spring-websocket', version: vers.spring
+
     compile group: 'org.springframework.security', name: 'spring-security-web', version: vers.spring_security
     compile group: 'org.springframework.security', name: 'spring-security-config', version: vers.spring_security
     compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: vers.spring_security
-
-    // https://mvnrepository.com/artifact/org.springframework/spring-messaging
-    compile group: 'org.springframework', name: 'spring-messaging', version: '4.3.5.RELEASE'
-    // https://mvnrepository.com/artifact/org.springframework/spring-websocket
-    compile group: 'org.springframework', name: 'spring-helpNotification', version: '4.3.5.RELEASE'
-
 
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: vers.servlet
     compile group: 'javax.servlet', name: 'jstl', version: vers.jstl
@@ -64,11 +80,34 @@ dependencies {
 
     testCompile group: 'org.testng', name: 'testng', version: vers.testng
     testCompile group: 'org.mockito', name: 'mockito-core', version: vers.mockito
+
+    compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.23.2'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.0.1'
 }
 
 configurations.all {
     exclude group: "commons-logging", module: "commons-logging"
 }
+
+
+task npm_install(type:Exec) {
+    workingDir 'src/main/webapp'
+    commandLine 'cmd', '/c', 'npm', 'install'
+    standardOutput = new ByteArrayOutputStream()
+    ext.output = {
+        return standardOutput.toString()
+    }
+}
+
+task npmRunTsc(type:Exec) {
+    workingDir 'src/main/webapp'
+    commandLine 'cmd', '/c', 'npm', 'run', 'tsc'
+    standardOutput = new ByteArrayOutputStream()
+    ext.output = {
+        return standardOutput.toString()
+    }
+}
+
 
 war {
     archiveName = 'travian.war'

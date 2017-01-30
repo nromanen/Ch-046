@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="row">
-                <button type="submit" class="btn waves-effect waves-teal">Submit</button>
+                <button type="submit" class="btn waves-effect waves-teal">Login</button>
             </div>
         </form>
     </div>

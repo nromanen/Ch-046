@@ -1,7 +1,7 @@
 /**
  * Created by okunetc on 16.01.2017.
  */
-import {Component, Input} from "@angular/core";
+import {Component} from "@angular/core";
 import {StompService} from "../services/helpNotification/stomp.service";
 
 @Component(
@@ -13,8 +13,6 @@ import {StompService} from "../services/helpNotification/stomp.service";
 )
 export class PlayerHeader{
 
-    // @Input() id: string;
-
     public serverResponse: string;
 
     showNotif: boolean = false;
@@ -23,7 +21,6 @@ export class PlayerHeader{
     }
 
     public ngOnInit(): void {
-        console.log(this.id);
         this.stompService.connect();
         this.stompService.getObservable().subscribe(payload => {
             this.serverResponse = payload.outputField;

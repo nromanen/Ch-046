@@ -28,11 +28,9 @@ System.register(["@angular/core", "./alliance", "@angular/forms"], function (exp
                 function AllianceForm(fb) {
                     this.fb = fb;
                     this.notify = new core_1.EventEmitter();
-                    //Constants regex
                     this.EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
                     this.ALLIANCE_NAME = /^[a-z]{3,9}$/;
                     this.USER_LOGIN = /^[a-z1-9]{3,9}$/;
-                    // Constants errors messages
                     this.EMAIL_ERROR = "Enter correct email, please!";
                     this.NAME_ERROR = "Enter from 3 to 10 letters";
                     this.LOGIN_ERROR = "Enter from 3 to 10 letters";

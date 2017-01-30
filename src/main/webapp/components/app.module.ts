@@ -3,18 +3,28 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RoutesModule} from "./app.routers";
-import {AppComponent} from "./app.component";
+
+import {AppComponent}  from './app.component';
 import {AllianceComponent} from "./alliance/alliance.component";
 import {HeaderComponent} from "./header/header.component";
-import {AllianceForm} from "./alliance/add-alliance.component";
+import {LeaderHeaderComponent} from "./header/leader-header.component";
+
 import {EditAllianceComponent} from "./alliance/edit-alliance.component";
 import {ConfirmComponent} from "./modal_window/modal";
+
 import {PlayerComponent} from "./player/player.component";
 import {PlayerList} from "./player/playerList.component";
 import {PlayerRow} from "./player/playerRow.component";
 import {PlayerHeader} from "./header/player-header.component";
+import {PlayerListComponent} from "./player/player-list.component";
+import {VillageInfoComponent} from "./village/village-info.component";
+import {ArmyCellInfoComponent} from "./army/army-cell-info.component";
+
 import {TimerComponent} from "./timer/timer.component";
 import {LeaderManagerComponent} from "./leader/leader-manager.component";
+import {LeaderMainComponent} from "./leader/leader-main.component";
+
+import {AllianceForm} from "./alliance/add-alliance.component";
 import {MemberForm} from "./user/add-member.component";
 import {EditMemberComponent} from "./user/edit-member.component";
 import {ArmyCellComponent} from "./army/armyCellComponent";
@@ -52,14 +62,19 @@ import {StompService} from "./services/helpNotification/stomp.service";
         PlayerHeader,
         TimerComponent,
         LeaderManagerComponent,
+        LeaderMainComponent,
         MemberForm,
         EditMemberComponent,
         ArmyCellComponent,
         VillageRow,
         AddVillageForm,
+        VillageInfoComponent,
+        PlayerListComponent,
+        ArmyCellInfoComponent,
+        LeaderHeaderComponent,
         AddArmyForm,
         HelpComponent,
-        AllHelps
+        AllHelps,
     ],
     providers: [
         AllianceService,

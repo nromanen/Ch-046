@@ -1,7 +1,7 @@
-import {AllianceComponent} from "./alliance/alliance.component";
-import {HeaderComponent} from "./header/header.component";
+
 import {Component} from "@angular/core";
-import {CurrVillageArmiesService} from "./services/newVillageArmiesService";
+import {HelpService} from "./services/helpNotification/help.service";
+import {Alliance} from "./alliance/alliance";
 
 @Component({
     selector: 'my-app',
@@ -11,7 +11,21 @@ import {CurrVillageArmiesService} from "./services/newVillageArmiesService";
 })
 
 export class AppComponent {
-constructor(currPlayerService:CurrVillageArmiesService){
+    public static alliance: Alliance;
+
+constructor(private helpService:HelpService){
 
 }
+
+    public ngOnInit(): void {
+               console.log("INIT APP_COMPONENT");
+            this.helpService.getAlliance()
+                .subscribe(
+                    resp => {
+                        console.log("APP_COMPONENT_SUBSCRIBE");
+                        AppComponent.alliance = resp;
+                        console.log(AppComponent.alliance);
+                    }
+                );
+    }
 }

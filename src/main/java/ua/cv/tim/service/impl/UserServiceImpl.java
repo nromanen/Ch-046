@@ -3,6 +3,7 @@ package ua.cv.tim.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.AllianceDao;
@@ -25,7 +26,7 @@ import java.util.Random;
  * Created by Oleg on 04.01.2017.
  */
 
-@Service(value = "userService")
+@Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
@@ -33,8 +34,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
-	@Autowired
-	private AllianceDao allianceDao;
+    @Autowired
+    private AllianceDao allianceDao;
 	@Autowired
 	private PlayerDao playerDao;
 	@Autowired
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByUsername(String username) {
-		return userDao.getUserByName(username);
+		return userDao.getUserByUsername(username);
 	}
 
 	public void add(User user) {
@@ -53,7 +54,6 @@ public class UserServiceImpl implements UserService {
 	public List<User> getAll() {
 		return userDao.getAll();
 	}
-
 	@Override
 	public void update(User user) {
 		userDao.update(user);
@@ -62,20 +62,34 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void delete(User user) {
-		userDao.delete(user);
+	    userDao.delete(user);
 	}
 
 	@Override
 	public boolean isUnique(User user) {
+		boolean[] isLoginEmailUnique = new boolean[2];
+		User compareUser = userDao.getUserByUsername(user.getLogin());
+		isLoginEmailUnique[0] = compareUser == null || compareUser.getUuid().equals(user.getUuid());
+		compareUser = userDao.getByMail(user.getEmail());
+		isLoginEmailUnique[1] = compareUser == null || compareUser.getUuid().equals(user.getUuid());
 
+		String errorMessage = createErrorMessage(isLoginEmailUnique);
+		if (errorMessage != null) {
+			throw new IllegalArgumentException(errorMessage);
+		}
+		return true;
+	}
 
-		if (userDao.isUserUnique(user.getLogin(), user.getUuid())) {
-			return true;
+	private String createErrorMessage(boolean[] isLoginEmailUnique) {
+		String errorMessage = null;
+		if (!isLoginEmailUnique[0] && !isLoginEmailUnique[1]) {
+			errorMessage = "User with the same login and email has already existed!";
+		} else if (!isLoginEmailUnique[0]) {
+			errorMessage = "User with the same login has already existed!";
+		} else if (!isLoginEmailUnique[1]) {
+			errorMessage = "User with the same email has already existed!";
 		}
-		if (userDao.getByMail(user.getEmail(), user.getUuid()) != null) {
-			return true;
-		}
-		return false;
+		return errorMessage;
 	}
 
 	@Override
@@ -119,7 +133,8 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		user.setLogin(member.getLogin());
 		user.setEmail(member.getEmail());
-		user.setPassword(generatePassword(10));
+		String password = generatePassword(10);
+		user.setPassword(encodePassword(password));
 		logger.info("Password is {} ", user.getPassword());
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.USER);
@@ -133,14 +148,14 @@ public class UserServiceImpl implements UserService {
 		player.setAlliance(allianceDao.getAllianceByName(member.getAlliance()));
 		user.setPlayer(player);
 		playerDao.add(player);
-		sendEmail(user);
+		sendEmail(user, password);
 	}
 
-	public void sendEmail(User user) throws MessagingException {
+	public void sendEmail(User user, String password) throws MessagingException {
 		try {
 			sendMail.send(user.getEmail(), "Travian user's info", "Your login is" + user.getLogin() + " and password: "
-					+ user.getPassword() + "  role " + user.getRoles());
-			logger.info("Password {} has been sent on user's e-mail {}", user.getPassword(), user.getEmail());
+					+ password + "  role " + user.getRoles());
+			logger.info("Password {} has been sent on user's e-mail {}", password, user.getEmail());
 		} catch (MessagingException e) {
 			logger.error("The e-mail {} hasn't been sent {}", user.getEmail(), e);
 		}
@@ -172,6 +187,11 @@ public class UserServiceImpl implements UserService {
 		return new String(password);
 	}
 
+	private String encodePassword(String password) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		return passwordEncoder.encode(password);
+	}
+
 	public boolean isUserUnique(UserDTO member) {
 		User user = new User();
 		user.setLogin(member.getLogin());
@@ -184,4 +204,8 @@ public class UserServiceImpl implements UserService {
 		} else return true;
 	}
 
+	@Override
+	public User getUserWithAlliance(String username) {
+		return userDao.getUserWithAlliance(username);
+	}
 }

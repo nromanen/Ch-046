@@ -32,6 +32,8 @@ public class PlayerDTO {
     @JsonIgnore
     private Alliance alliance;
 
+    public PlayerDTO() { }
+
     public PlayerDTO(String login, String password, String email, Race race, List<Village> villages, Alliance alliance) {
         this.login = login;
         this.password = password;

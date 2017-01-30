@@ -40,13 +40,8 @@ System.register(["@angular/core", "@angular/forms", "./attack", "../services/hel
                     this.helpService = helpService;
                     this.formBuilder = formBuilder;
                     this.stompService = stompService;
-                    // EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-                    // ALLIANCE_NAME = /^[a-z]{3,9}$/;
                     this.VILLAGE = /^[A-Za-z1-9.]{3,9}$/;
                     this.DATE = /^[1-9/-0]{3,20}/;
-                    this.ENEMY = "Enter correct email, please!";
-                    this.NAME_ERROR = "Enter from 3 to 10 letters";
-                    this.LOGIN_ERROR = "Enter from 3 to 10 letters";
                     this.successMessage = null;
                     this.errorMessage = null;
                     this.helpForm = this.formBuilder.group({

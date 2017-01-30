@@ -35,7 +35,6 @@ System.register(["rxjs/Rx", "@angular/core", "@angular/http"], function (exports
                     this.url = 'askhelp';
                 }
                 HelpService.prototype.getById = function () {
-                    console.log(this.url);
                     return this.http.get(this.url)
                         .map(function (res) { return res.json(); });
                 };
@@ -57,6 +56,11 @@ System.register(["rxjs/Rx", "@angular/core", "@angular/http"], function (exports
                 HelpService.prototype.getActiveHelp = function () {
                     console.log(this.url);
                     return this.http.get("allAttack")
+                        .map(function (res) { return res.json(); });
+                };
+                HelpService.prototype.getAlliance = function () {
+                    console.log("INIT ALLIANCE");
+                    return this.http.get("user/helpInit/")
                         .map(function (res) { return res.json(); });
                 };
                 return HelpService;

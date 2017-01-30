@@ -27,11 +27,9 @@ System.register(["@angular/core", "./alliance", "@angular/forms"], function (exp
             EditAllianceComponent = (function () {
                 function EditAllianceComponent(formBuilder) {
                     this.formBuilder = formBuilder;
-                    //Constants regex
                     this.EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
                     this.ALLIANCE_NAME = /^[a-z]{3,9}$/;
                     this.USER_LOGIN = /^[a-z1-9]{3,9}$/;
-                    // Constants errors messages
                     this.EMAIL_ERROR = "Enter correct email, please!";
                     this.NAME_ERROR = "Enter from 3 to 10 letters";
                     this.LOGIN_ERROR = "Enter from 3 to 10 letters";

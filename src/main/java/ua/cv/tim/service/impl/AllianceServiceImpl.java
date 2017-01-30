@@ -58,10 +58,13 @@ public class AllianceServiceImpl implements AllianceService {
             }
             allianceDTOS.add(new AllianceDTO(alliance.getUuid(), leader.getUuid(), alliance.getName(), leader.getLogin(), leader.getEmail()));
         }
+        logger.info("Alliances: {}", allianceDTOS);
         return allianceDTOS;
     }
 
     public void addAlliance(AllianceDTO allianceDTO){
+
+        logger.info("Adding new alliance: {}", allianceDTO);
         Alliance alliance = new Alliance();
         alliance.setName(allianceDTO.getName());
 
@@ -93,6 +96,8 @@ public class AllianceServiceImpl implements AllianceService {
         } catch (MessagingException e) {
             logger.error("The e-mail hasn't been sent {}", e);
         }
+
+        logger.info("New alliance added successfully: {}", allianceDTO);
     }
 
     public String getIdByName(String name){
@@ -101,48 +106,46 @@ public class AllianceServiceImpl implements AllianceService {
 
     public void updateAlliance(AllianceDTO allianceDTO){
 
+        logger.info("Updating alliance: {}", allianceDTO);
         Alliance alliance = allianceDao.getById(allianceDTO.getAllianceUuid());
-
         alliance.setName(allianceDTO.getName());
 
         User leader = null;
-
         for(Player player : alliance.getPlayers()){
             if (player.getUser().getRoles().contains(Role.LEADER)){
                 leader = player.getUser();
             }
         }
-
         leader.setLogin(allianceDTO.getLeaderLogin());
-        leader.setPassword(allianceDTO.getLeaderEmail());
+        leader.setEmail(allianceDTO.getLeaderEmail());
 
+        try {
+            sendMail.send(leader.getEmail(), "Travian user's info",
+                    "Your login is" + leader.getLogin() + " and password: " + leader.getPassword() + "  role " + leader.getRoles());
+            logger.info("Password {} has been sent on user's e-mail {}", leader.getPassword(), leader.getEmail());
+        } catch (MessagingException e) {
+            logger.error("The e-mail hasn't been sent {}", e);
+        }
         allianceDao.update(alliance);
+
+        logger.info("Alliance updated successfully: {}", allianceDTO);
     }
 
     public void deleteAlliance(String  id){
 
+        logger.info("Deleting alliance id = {}", id);
         Alliance alliance = allianceDao.getById(id);
-
-        System.out.println(alliance);
-
-
         if (alliance != null){
             for (Player player: alliance.getPlayers()){
-                System.out.println("before delete");
                 userDao.delete(player.getUser());
-                System.out.println("after delete");
-                //playerDao.delete(player);
             }
             allianceDao.delete(alliance);
+            logger.info("Alliance deleted successfully: {}", alliance);
         }
     }
 
     public Alliance getById(String  uuid){
-
-        System.out.println(uuid);
-
         return allianceDao.getById(uuid);
-
     }
 
     public boolean isUniqueAlliance(String name, String uuid){

@@ -1,5 +1,7 @@
 package ua.cv.tim.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import ua.cv.tim.service.PlayerService;
 import ua.cv.tim.service.UserService;
 import ua.cv.tim.service.VillageService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +27,9 @@ import java.util.List;
 
 @RestController
 public class PlayerController {
+
+	private static final Logger log = LoggerFactory.getLogger(PlayerController.class);
+
     @Autowired
     VillageService villageService;
 
@@ -88,4 +94,35 @@ public class PlayerController {
         playerService.delete(player);
         return new ResponseEntity<>(player, HttpStatus.NO_CONTENT);
     }
+
+	@RequestMapping(value = "/player/alliance", method = RequestMethod.GET) // todo change to get allianceID from principal
+	public ResponseEntity<List<PlayerDTO>> getPlayersByAlliance() {
+		String allianceName = getAllianceName();  // todo change this after principal will
+		log.info("Alliance name: {}", allianceName);
+		List<Player> players = playerService.getPlayersByAllianceWithVillages(allianceName);
+		log.info("Players from DB: {}", players);
+		List<PlayerDTO> playerDTOs = initPlayerDTOs(players);
+		return new ResponseEntity<>(playerDTOs, HttpStatus.OK);
+	}
+
+	private String getAllianceName() {
+		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserWithAlliance(principal.getUsername());
+		return user.getPlayer().getAlliance().getName();
+	}
+
+	private List<PlayerDTO> initPlayerDTOs(List<Player> players) {
+		List<PlayerDTO> playerDTOs = new ArrayList<>();
+
+		for (Player player : players) {
+			PlayerDTO playerDTO = new PlayerDTO();
+			playerDTO.setLogin(player.getUser().getLogin());
+			playerDTO.setRace(player.getRace());
+			playerDTO.setAlliance(player.getAlliance());
+			playerDTO.setVillages(player.getVillages());
+			playerDTOs.add(playerDTO);
+		}
+
+		return playerDTOs;
+	}
 }

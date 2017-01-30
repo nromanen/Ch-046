@@ -28,7 +28,6 @@ System.register(["@angular/core", "../services/helpNotification/stomp.service"],
                 }
                 PlayerHeader.prototype.ngOnInit = function () {
                     var _this = this;
-                    console.log(this.id);
                     this.stompService.connect();
                     this.stompService.getObservable().subscribe(function (payload) {
                         _this.serverResponse = payload.outputField;

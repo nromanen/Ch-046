@@ -41,10 +41,6 @@ System.register(["@angular/core", "../services/player.service", "@angular/router
                     this.playerService = playerService;
                     this.route = route;
                     this.villageService = villageService;
-                    // this.route.params.subscribe((param: any) => {
-                    //     this.id = param['id'];
-                    // });
-                    // this.showAddVillageForm = false;
                 }
                 PlayerComponent.prototype.ngOnInit = function () {
                     var _this = this;

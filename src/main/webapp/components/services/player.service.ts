@@ -5,20 +5,31 @@
 import {Injectable} from "@angular/core";
 import {Player} from "../player/player";
 import {Http} from "@angular/http";
-import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
+
+
 @Injectable()
-export class PlayerService{
-        player:Player;
-        url='player/';
-    constructor(private _http:Http, private _activatedRoute:ActivatedRoute){
+export class PlayerService {
+    
+    players:Array<Player>;
+    player:Player;
+    id:string;
+    url = 'player/';
+
+    constructor(private http:Http) {
 
     }
+    
+    getById():Observable<Player> {
+        console.log(this.url);
+        return this.http.get(this.url)
+            .map(res => res.json());
+    }
 
+    getPlayersByAlliance():Observable<Player[]> {
+        console.log(`PlayerService.getPlayersByAlliance() method is working`);
 
-    getById():Observable<Player>{
-
-        return this._http.get(this.url)
+        return this.http.get(`${this.url}alliance`)
             .map(res => res.json());
     }
 
