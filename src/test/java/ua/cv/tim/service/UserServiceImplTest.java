@@ -1,92 +1,166 @@
 package ua.cv.tim.service;
 
 
-import org.mockito.Spy;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
+import org.mockito.*;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import ua.cv.tim.configuration.WebConfigurationTest;
+import ua.cv.tim.dao.AllianceDao;
+import ua.cv.tim.dao.PlayerDao;
+import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.dto.UserDTO;
+import ua.cv.tim.model.Alliance;
+import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
-import ua.cv.tim.utils.UserServiceTestUtils;
+import ua.cv.tim.service.impl.UserServiceImpl;
+import ua.cv.tim.utils.SendMail;
 
 import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.testng.Assert.*;
+import static sun.audio.AudioPlayer.player;
 
 /**
  * Created by mmaksymtc on 24.01.2017.
  */
 
+public class UserServiceImplTest {
 
-@WebAppConfiguration
-@ContextConfiguration(classes = {WebConfigurationTest.class})
-public class UserServiceImplTest extends AbstractTransactionalTestNGSpringContextTests {
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    private UserServiceTestUtils userTestUtils;
+    @Mock
+    UserDao userDao;
+    @Mock
+    AllianceDao allianceDao;
+    @Mock
+    PlayerDao playerDao;
+    @Mock
+    SendMail sendMail;
+    @InjectMocks
+    UserServiceImpl userService;
+    @Captor
+    ArgumentCaptor<User> captor;
 
     @Spy
     List<User> users = new ArrayList<User>();
 
     @BeforeClass
     public void setUp(){
+        MockitoAnnotations.initMocks(this);
         users=getUserList();
     }
 
     @Test
     public void getUserByUsernameTest() {
+       User user = users.get(0);
+        when(userDao.getUserByUsername("neo")).thenReturn(user);
+        assertEquals(userService.getUserByUsername("neo"), user);
+        verify(userDao, times(1)).getUserByUsername("neo");
         assertNotNull(userService.getUserByUsername("neo"));
     }
-
     @Test
-    @Transactional
-    @Rollback(true)
     public void addUserTest(){
-        userService.add(users.get(1));
-        User testUser = userTestUtils.getUserByUsername(users.get(1).getLogin());
-        assertEquals(userTestUtils.getUsersList().size(),4);
-        assertNotNull(userTestUtils.getById(testUser.getUuid()));
-    }
-    @Transactional
-    @Rollback(true)
-    @Test
-    public void deleteByIdTest(){
-        User testUser = userTestUtils.getUserByUsername("neo");
-        userService.deleteById(testUser.getUuid());
-        assertEquals(userTestUtils.getUsersList().size(),2);
-        assertNull(userTestUtils.getById(testUser.getUuid()));
+        doNothing().when(userDao).add(any(User.class));
+        userService.add(users.get(0));
+        verify(userDao, times(1)).add(captor.capture());
+        Assert.assertEquals(captor.getValue().getLogin(), "neo");
+        Assert.assertEquals(2, users.size());
+        verify(users, times(1)).add(any(User.class));
     }
     @Test
-    public void getAllTest(){
-        assertEquals(userService.getAll().size(),3);
+    public void deleteTest(){
+        doNothing().when(userDao).delete(any(User.class));
+        userService.delete(users.get(0));
+        verify(userDao, times(1)).delete(any(User.class));
     }
-
-    @Transactional
-    @Rollback(true)
+    @Test
+    public void getAllTest()
+    {
+        when(userDao.getAll()).thenReturn(users);
+        Assert.assertEquals(userService.getAll(), users);
+        verify(userDao, times(1)).getAll();
+    }
     @Test
     public void updateTest(){
-        User testUser = userTestUtils.getUserByUsername("neo");
+        User testUser = users.get(0);
         testUser.setLogin("updatedNeo");
+        doNothing().when(userDao).update(any(User.class));
         userService.update(testUser);
-        assertEquals(userTestUtils.getById(testUser.getUuid()),testUser);
+        verify(userDao, times(1)).update(captor.capture());
+        Assert.assertEquals(captor.getValue().getLogin(), "updatedNeo");
+    }
+    @Test(expectedExceptions = RuntimeException.class)
+    public void isUniqueTest(){
+        User user = users.get(0);
+        when(userDao.getUserByUsername("neo")).thenReturn(user);
+        when(userDao.getByMail("neo@ukr.net")).thenReturn(user);
+        assertFalse(userService.isUnique(user));
+        verify(userDao, times(1)).getUserByUsername(anyString());
+        verify(userDao, times(1)).getByMail(anyString());
     }
 
     @Test
-    public void isUniqueTest(){
+    public void getWithRolesByIdTest(){
+        User user = users.get(0);
+        when(userDao.getWithRolesById(anyString())).thenReturn(user);
+        assertEquals(userService.getWithRolesById("3455-ede34-de4dee-de34d"),user);
+        verify(userDao, times(1)).getWithRolesById(anyString());
+    }
+    @Test
+    public void getAllWithRolesTest(){
+        when(userDao.getAllWithRoles()).thenReturn(users);
+        assertEquals(userService.getAllWithRoles(),users);
+        verify(userDao, times(1)).getAllWithRoles();
+    }
+    @Test
+    public void getByIdTest(){
+        User user = users.get(0);
+        when(userDao.getById(anyString())).thenReturn(user);
+        assertEquals(userService.getById("3455-ede34-de4dee-de34d"),user);
+        verify(userDao, times(1)).getById(anyString());
+    }
+    @Test(expectedExceptions = MessagingException.class)
+    public void addUserDTOTest() throws MessagingException {
+        User user = new User();
+        user.setLogin("Jonathan");
+        user.setEmail("jonatahan@ukr.net");
+        UserDTO member = new UserDTO(null, user.getLogin(), user.getEmail(),"valhala");
+        Alliance alliance = new Alliance();
+        alliance.setName("valhala");
+        doNothing().when(userDao).add(any(User.class));
+        when(allianceDao.getAllianceByName(anyString())).thenReturn(alliance);
+        doNothing().when(playerDao).add(any(Player.class));
+        //when(userService.sendEmail(user));
+        userService.addUser(member);
+        verify(userDao, times(1)).add(captor.capture());
+//        verify(userService, times(1)).sendEmail(any(User.class));
+        Assert.assertEquals(captor.getValue().getLogin(), "Jonathan");
+        doThrow(RuntimeException.class).when(userService).sendEmail(user);
+      //  verify(users, times(2)).add(any(User.class));
+       // assertNotNull(userTestUtils.getUserByUsername("Jonathan"));
+    }
+    @Test
+    public void getUserWithAllianceTest(){
+        User user = users.get(0);
+        when(userDao.getUserWithAlliance(anyString())).thenReturn(user);
+        assertEquals(userService.getUserWithAlliance("valhala"),user);
+        verify(userDao, times(1)).getUserWithAlliance(anyString());
+    }
+    @Test
+    public void getUsersByAllianceTest(){
+
+        when(userDao.getUsersByAlliance(anyString())).thenReturn(users);
+        assertNotNull(userService.getUsersByAlliance("valhala"));
+        verify(userDao, times(1)).getUsersByAlliance(anyString());
+    }
+
+    private List<User> getUserList(){
         User user0=new User();
         user0.setLogin("neo");
         List<Role> roles=new ArrayList<>();
@@ -94,61 +168,16 @@ public class UserServiceImplTest extends AbstractTransactionalTestNGSpringContex
         roles.add(Role.LEADER);
         user0.setRoles(roles);
         user0.setPassword("111");
-        user0.setUuid("7564d81e-b4c7-440f-8f55-ea8938ec0f37");
+        user0.setUuid("3455-ede34-de4dee-de34d");
         user0.setLastModified(new Date());
         user0.setEmail("neo@ukr.net");
         user0.setRoles(roles);
-        //User testUser = userTestUtils.getUsersList().get(0);
-        //logger.info("Unique user {}  ",user0);
-        //User testUser2 = getUserList().get(1);
-        assertTrue(userService.isUnique(user0));
-        //assertTrue(userService.isUnique(testUser2));
-    }
-    @Test
-    public void getCountTest() {
-        assertEquals(userService.getCount(),3);
-    }
-    @Test
-    public void getWithRolesByIdTest(){
-        User testUser = userTestUtils.getUserByUsername("neo");
-        assertEquals(userService.getWithRolesById(testUser.getUuid()),testUser);
-    }
-    @Test
-    public void getAllWithRolesTest(){
-        assertEquals(userService.getAllWithRoles().size(),3);
-        assertNotNull(userService.getAllWithRoles().get(0).getRoles());
-    }
-    @Test
-    public void getByIdTest(){
-        assertEquals(userService.getById("7564d81e-b4c7-440f-8f55-ea8938ec0f37"),userTestUtils.getUserByUsername("neo"));
-        assertNull(userService.getById("64d81e-b4c7-440f-8f55-ea8938ec0f37"));
-    }
-    @Transactional
-    @Rollback(true)
-    @Test
-    public void addAllianceMemberTest() throws MessagingException {
-        UserDTO member = new UserDTO(null, "Jonathan", "jonatahan@ukr.net","valhala");
-        userService.addUser(member);
-        assertNotNull(userTestUtils.getUserByUsername("Jonathan"));
-    }
-    @Test
-    public void getUsersByAllianceTest(){
-        assertEquals(userService.getUsersByAlliance("valhala").get(0).getLogin(),"neo");
-        assertEquals(userService.getUsersByAlliance("valhala").size(),1);
-    }
-
-
-    private List<User> getUserList(){
-        User user0=new User();
-        user0.setLogin("JimBean");
-        List<Role> roles=new ArrayList<>();
-        roles.add(Role.ADMIN);
-        roles.add(Role.LEADER);
-        user0.setRoles(roles);
-        user0.setPassword("kkhsj0~fkO");
-        user0.setLastModified(new Date());
-        user0.setEmail("johnee@ukr.net");
-        user0.setRoles(roles);
+        Player player0 = new Player();
+        player0.setUser(user0);
+        Alliance alliance = new Alliance();
+        alliance.setName("valhala");
+        player0.setAlliance(alliance);
+        user0.setPlayer(player0);
 
         User user1=new User();
         user1.setLogin("JackDaniels");
@@ -157,10 +186,14 @@ public class UserServiceImplTest extends AbstractTransactionalTestNGSpringContex
         roles1.add(Role.LEADER);
         user1.setRoles(roles1);
         user1.setPassword("khyg5DkO");
-       // user1.setUuid("11a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
+        user1.setUuid("11a66a3f-551d-4320-a6d0-9fd4fb6ff2e7");
         user1.setLastModified(new Date());
         user1.setEmail("jackee@ukr.net");
         user1.setRoles(roles1);
+        Player player1 = new Player();
+        player1.setUser(user1);
+        player1.setAlliance(alliance);
+        user1.setPlayer(player1);
 
         users.add(user0);
         users.add(user1);
