@@ -31,7 +31,7 @@ System.register(["@angular/core", "../village/village", "@angular/http"], functi
                 }
                 VillageService.prototype.update = function (village) {
                     var _this = this;
-                    var villageBefore = new village_1.Village();
+                    var villageBefore = new village_1.Village("");
                     villageBefore.name = village.name;
                     villageBefore.uuid = village.uuid;
                     villageBefore.armies = village.armies;

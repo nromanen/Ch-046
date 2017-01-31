@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.AllianceDao;
-import ua.cv.tim.dao.PlayerDao;
-import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.dto.AllianceDTO;
+import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.model.Alliance;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.AllianceService;
+import ua.cv.tim.service.PlayerService;
 import ua.cv.tim.service.UserService;
 import ua.cv.tim.utils.SendMail;
 
@@ -33,13 +33,10 @@ public class AllianceServiceImpl implements AllianceService {
     private AllianceDao allianceDao;
 
     @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private PlayerDao playerDao;
-
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    private PlayerService playerService;
 
     @Autowired
     private SendMail sendMail;
@@ -62,40 +59,39 @@ public class AllianceServiceImpl implements AllianceService {
         return allianceDTOS;
     }
 
-    public void addAlliance(AllianceDTO allianceDTO){
+    public void addAlliance(AllianceDTO allianceDTO) throws MessagingException {
 
         logger.info("Adding new alliance: {}", allianceDTO);
         Alliance alliance = new Alliance();
         alliance.setName(allianceDTO.getName());
-
-        User user = new User();
-        user.setLogin(allianceDTO.getLeaderLogin());
-        user.setEmail(allianceDTO.getLeaderEmail());
-        user.setPassword("111");
-        List<Role> roles = new ArrayList<>();
-        roles.add(Role.USER);
-        roles.add(Role.LEADER);
-        user.setRoles(roles);
-
-        userDao.add(user);
-
-        Player player = new Player();
-        player.setUser(user);
-        playerDao.add(player);
-        user.setPlayer(player);
-        List<Player> players = new ArrayList<>();
-        players.add(player);
-        alliance.setPlayers(players);
         allianceDao.add(alliance);
-        player.setAlliance(alliance);
 
-        try {
-            sendMail.send(user.getEmail(), "Travian user's info",
-                    "Your login is" + user.getLogin() + " and password: " + user.getPassword() + "  role " + user.getRoles());
-            logger.info("Password {} has been sent on user's e-mail {}", user.getPassword(), user.getEmail());
-        } catch (MessagingException e) {
-            logger.error("The e-mail hasn't been sent {}", e);
-        }
+        UserDTO user = new UserDTO(null,allianceDTO.getLeaderLogin(), allianceDTO.getLeaderEmail(), allianceDTO.getName(), Role.LEADER);
+//        user.setLogin(allianceDTO.getLeaderLogin());
+//        user.setEmail(allianceDTO.getLeaderEmail());
+//        List<Role> roles = new ArrayList<>();
+//        roles.add(Role.USER);
+//        roles.add(Role.LEADER);
+//        user.setRoles(roles);
+
+        userService.addUser(user);
+
+//        Player player = new Player();
+//        player.setUser(user);
+//        playerService.add(player);
+//        user.setPlayer(player);
+//        List<Player> players = new ArrayList<>();
+//        players.add(player);
+//        alliance.setPlayers(players);
+//        player.setAlliance(alliance);
+
+//        try {
+//            sendMail.send(user.getEmail(), "Travian user's info",
+//                    "Your login is" + user.getLogin() + " and password: " + user.getPassword() + "  role " + user.getRoles());
+//            logger.info("Password {} has been sent on user's e-mail {}", user.getPassword(), user.getEmail());
+//        } catch (MessagingException e) {
+//            logger.error("The e-mail hasn't been sent {}", e);
+//        }
 
         logger.info("New alliance added successfully: {}", allianceDTO);
     }
@@ -137,7 +133,7 @@ public class AllianceServiceImpl implements AllianceService {
         Alliance alliance = allianceDao.getById(id);
         if (alliance != null){
             for (Player player: alliance.getPlayers()){
-                userDao.delete(player.getUser());
+                userService.delete(player.getUser());
             }
             allianceDao.delete(alliance);
             logger.info("Alliance deleted successfully: {}", alliance);

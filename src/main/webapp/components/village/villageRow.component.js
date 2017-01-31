@@ -46,7 +46,7 @@ System.register(["@angular/core", "../UnitType/unitType", "./village", "../servi
                     console.log("inside village row");
                     console.log(this.v);
                     // alert(JSON.stringify(this.v));
-                    this.newVillage = new village_1.Village();
+                    this.newVillage = new village_1.Village("");
                     this.newVillage.name = this.v.name;
                     this.newVillage.uuid = this.v.uuid;
                     this.newVillage.armies = this.v.armies;

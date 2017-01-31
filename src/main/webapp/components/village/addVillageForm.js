@@ -30,7 +30,7 @@ System.register(["@angular/core", "../village/village", "../army/army", "../serv
             AddVillageForm = (function () {
                 function AddVillageForm(villageService) {
                     this.villageService = villageService;
-                    this.village = new village_1.Village;
+                    this.village = new village_1.Village("");
                     this.village.armies = [];
                     this.village.isCapital = false;
                     this.wasSubmitted = new core_1.EventEmitter();
@@ -48,7 +48,7 @@ System.register(["@angular/core", "../village/village", "../army/army", "../serv
                 AddVillageForm.prototype.onSubmit = function (village) {
                     this.player.villages.push(village);
                     this.villageService.add(village);
-                    this.village = new village_1.Village;
+                    this.village = new village_1.Village("");
                     this.village.armies = [];
                     this.wasSubmitted.emit(false);
                 };

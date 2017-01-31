@@ -12,7 +12,7 @@ export class VillageService{
     villages:Array<Village>;
     update(village:Village){
 
-        let villageBefore=new Village();
+        let villageBefore = new Village("");
         villageBefore.name=village.name;
         villageBefore.uuid=village.uuid;
         villageBefore.armies=village.armies;

@@ -10,7 +10,7 @@ public class UserDTO {
 	private String uuid;
 	private String login;
 	private String email;
-	private String alliance;
+	private String allianceName;
 	private Role role;
 
 	public UserDTO() {
@@ -20,7 +20,7 @@ public class UserDTO {
 		this.uuid = uuid;
 		this.login = login;
 		this.email = email;
-		this.alliance = alliance;
+		this.allianceName = alliance;
 		this.role = role;
 	}
 
@@ -28,7 +28,7 @@ public class UserDTO {
 		this.uuid = uuid;
 		this.login = login;
 		this.email = email;
-		this.alliance = alliance;
+		this.allianceName = alliance;
 	}
 
 	public String getUuid() {
@@ -55,12 +55,12 @@ public class UserDTO {
 		this.email = email;
 	}
 
-	public String getAlliance() {
-		return alliance;
+	public String getAllianceName() {
+		return allianceName;
 	}
 
-	public void setAlliance(String alliance) {
-		this.alliance = alliance;
+	public void setAllianceName(String allianceName) {
+		this.allianceName = allianceName;
 	}
 
 	public Role getRole() {
@@ -79,7 +79,7 @@ public class UserDTO {
 				.append("login: ").append(login).append(", ")
 				.append("email: ").append(email).append(", ")
 				.append("role: ").append(role).append(", ")
-				.append("alliance: ").append(alliance).append(" } ");
+				.append("allianceName: ").append(allianceName).append(" } ");
 		return sb.toString();
 	}
 }

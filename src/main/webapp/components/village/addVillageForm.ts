@@ -20,7 +20,7 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
     @Output() wasSubmitted: EventEmitter<any>;
 
     constructor(private villageService: VillageService) {
-        this.village = new Village;
+        this.village = new Village("");
         this.village.armies = [];
         this.village.isCapital = false;
         this.wasSubmitted = new EventEmitter();
@@ -41,7 +41,7 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
     onSubmit(village: Village) {
         this.player.villages.push(village);
         this.villageService.add(village);
-        this.village = new Village;
+        this.village = new Village("");
         this.village.armies = [];
         this.wasSubmitted.emit(false);
     }

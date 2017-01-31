@@ -3,6 +3,7 @@ package ua.cv.tim.service;
 import ua.cv.tim.dto.AllianceDTO;
 import ua.cv.tim.model.Alliance;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ public interface AllianceService {
 
 	List<AllianceDTO> getAll();
 
-	void addAlliance(AllianceDTO allianceDTO);
+	void addAlliance(AllianceDTO allianceDTO) throws MessagingException;
 
 	String getIdByName(String name);
 

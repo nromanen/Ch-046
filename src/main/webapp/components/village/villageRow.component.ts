@@ -61,7 +61,7 @@ export class VillageRow implements OnInit,AfterViewChecked{
         console.log("inside village row");
         console.log(this.v);
         // alert(JSON.stringify(this.v));
-        this.newVillage=new Village();
+        this.newVillage=new Village("");
         this.newVillage.name=this.v.name;
         this.newVillage.uuid=this.v.uuid;
         this.newVillage.armies=this.v.armies;

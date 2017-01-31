@@ -145,7 +145,7 @@ public class UserServiceImpl implements UserService {
 		userDao.add(user);
 		Player player = new Player();
 		player.setUser(user);
-		player.setAlliance(allianceDao.getAllianceByName(member.getAlliance()));
+		player.setAlliance(allianceDao.getAllianceByName(member.getAllianceName()));
 		user.setPlayer(player);
 		playerDao.add(player);
 		sendEmail(user, password);

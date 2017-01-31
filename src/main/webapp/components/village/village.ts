@@ -17,9 +17,6 @@ export class Village{
         this.uuid = uuid;
     }
 
-
     player:Player;
-    constructor(){
-    }
 
 }

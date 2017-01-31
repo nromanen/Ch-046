@@ -9,7 +9,7 @@ import {AllianceComponent} from "./alliance/alliance.component";
 import {HeaderComponent} from "./header/header.component";
 import {LeaderHeaderComponent} from "./header/leader-header.component";
 
-import {EditAllianceComponent} from "./alliance/edit-alliance.component";
+
 import {ConfirmComponent} from "./modal_window/modal";
 
 import {PlayerComponent} from "./player/player.component";
@@ -40,6 +40,7 @@ import {CurrVillageArmiesService} from "./services/newVillageArmiesService";
 import {VillageService} from "./services/villageService";
 import {HelpService} from "./services/helpNotification/help.service";
 import {StompService} from "./services/helpNotification/stomp.service";
+import {EditAllianceComponent} from "./alliance/edit-alliance.component";
 
 @NgModule({
     imports: [

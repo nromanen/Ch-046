@@ -20,7 +20,7 @@
 
 <div class="row container">
     <div class="col s12 center-align">
-        <h3>{{ leader.alliance }} Members</h3>
+        <h3>{{ leader.allianceName }} Members</h3>
     </div>
 </div>
 <div class="row container">
@@ -43,7 +43,7 @@
                      (dblclick)="selectMember(member)">
                     <td class="col s3">{{ member.login }}</td>
                     <td class="col s3">{{ member.email }}</td>
-                    <td class="col s3">{{ member.alliance }}</td>
+                    <td class="col s3">{{ member.allianceName }}</td>
                     <td class="col s3">
                         <button (click)="selectMember(member)" class="waves-effect waves-light  btn"
                                 style="background-color: #9cd1af; width: 90px; padding: 0px 10px">

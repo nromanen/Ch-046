@@ -11,6 +11,7 @@ import ua.cv.tim.model.User;
 import ua.cv.tim.service.AllianceService;
 import ua.cv.tim.service.UserService;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class AllianceController {
     }
 
     @RequestMapping(value = "/admin/allianceDTO", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<AllianceDTO> createAlliance(@RequestBody @Valid AllianceDTO allianceDTO) {
+    public ResponseEntity<AllianceDTO> createAlliance(@RequestBody @Valid AllianceDTO allianceDTO) throws MessagingException {
 
         User user = new User();
         user.setLogin(allianceDTO.getLeaderLogin());
