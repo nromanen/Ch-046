@@ -14,12 +14,13 @@ import {forbiddenXValidator} from "../village/forbidden-x.directive";
 @Component
 ({
     selector: 'player-list',
+    styleUrls:['components/style.css'],
     // templateUrl: "components/player/playerList.html"
     template:`
 
 <div class="row ">
 <form  (ngSubmit)="onSubmit()">
-    <table>
+    <table class="fi responsive-table">
         <thead>
         <tr>
             <th>Village</th>
@@ -28,33 +29,33 @@ import {forbiddenXValidator} from "../village/forbidden-x.directive";
             <th>Y</th>
             <th>Capital?</th>
             <th>Wall level</th>
-            <td><img src="images/Gauls/GalFal.gif"></td>
-            <td><img src="images/Gauls/GalSwordsman.gif"></td>
-            <td><img src="images/Gauls/GalPathFinder.gif"></td>
-            <td><img src="images/Gauls/GalTewtThunder.gif"></td>
-            <td><img src="images/Gauls/GalDruid.gif"></td>
-            <td><img src="images/Gauls/Edui.gif"></td>
-            <td><img src="images/Gauls/GalRam.gif"></td>
-            <td><img src="images/Gauls/GalCatapult.gif"></td>
-            <td><img src="images/Gauls/GaLeader.gif"></td>
-            <td><img src="images/Germans/Clubswinger.gif"></td>
-            <td><img src="images/Germans/Spearman.gif"></td>
-            <td><img src="images/Germans/Toporshchik.gif"></td>
-            <td><img src="images/Germans/Skaut.gif"></td>
-            <td><img src="images/Germans/Paladin.gif"></td>
-            <td><img src="images/Germans/Tevtonskaya-konnitsa.gif"></td>
-            <td><img src="images/Germans/Taran-ger.gif"></td>
-            <td><img src="images/Germans/Katapulta-ger.gif"></td>
-            <td><img src="images/Germans/Leader.gif"></td>
-            <td><img src="images/Rome/Legioner.gif"></td>
-            <td><img src="images/Rome/Praetorian.gif"></td>
-            <td><img src="images/Rome/Imperianets.gif"></td>
-            <td><img src="images/Rome/Konnyy-razvedchik.gif"></td>
-            <td><img src="images/Rome/Konnitsa-imperatora.gif"></td>
-            <td><img src="images/Rome/Konnitsa-Tsezarya.gif"></td>
-            <td><img src="images/Rome/Taran-rim.gif"></td>
-            <td><img src="images/Rome/Ognennaya-katapulta.gif"></td>
-            <td><img src="images/Rome/Senator.gif"></td>
+            <th><img src="images/Gauls/GalFal.gif"></th>
+            <th><img src="images/Gauls/GalSwordsman.gif"></th>
+            <th><img src="images/Gauls/GalPathFinder.gif"></th>
+            <th><img src="images/Gauls/GalTewtThunder.gif"></th>
+            <th><img src="images/Gauls/GalDruid.gif"></th>
+            <th><img src="images/Gauls/Edui.gif"></th>
+            <th><img src="images/Gauls/GalRam.gif"></th>
+            <th><img src="images/Gauls/GalCatapult.gif"></th>
+            <th><img src="images/Gauls/GaLeader.gif"></th>
+            <th><img src="images/Germans/Clubswinger.gif"></th>
+            <th><img src="images/Germans/Spearman.gif"></th>
+            <th><img src="images/Germans/Toporshchik.gif"></th>
+            <th><img src="images/Germans/Skaut.gif"></th>
+            <th><img src="images/Germans/Paladin.gif"></th>
+            <th><img src="images/Germans/Tevtonskaya-konnitsa.gif"></th>
+            <th><img src="images/Germans/Taran-ger.gif"></th>
+            <th><img src="images/Germans/Katapulta-ger.gif"></th>
+            <th><img src="images/Germans/Leader.gif"></th>
+            <th><img src="images/Rome/Legioner.gif"></th>
+            <th><img src="images/Rome/Praetorian.gif"></th>
+            <th><img src="images/Rome/Imperianets.gif"></th>
+            <th><img src="images/Rome/Konnyy-razvedchik.gif"></th>
+            <th><img src="images/Rome/Konnitsa-imperatora.gif"></th>
+            <th><img src="images/Rome/Konnitsa-Tsezarya.gif"></th>
+            <th><img src="images/Rome/Taran-rim.gif"></th>
+            <th><img src="images/Rome/Ognennaya-katapulta.gif"></th>
+            <th><img src="images/Rome/Senator.gif"></th>
             <th></th>
         </tr>
         </thead>
@@ -62,11 +63,10 @@ import {forbiddenXValidator} from "../village/forbidden-x.directive";
         <tbody>
        
         <tr player-ro [v]="v" *ngFor="let v of player.villages" [isForm]="v==selectedVillage"
-            (selectedVillageChanged)="changeSelectedVillage($event)" [editVillageForm]="editVillageForm" >       
+            (selectedVillageChanged)="changeSelectedVillage($event)" [editVillageForm]="editVillageForm" (keyup)="cancelEditing($event.keyCode)">       
 </tr>
          
         </tbody>
-         {{heroForm?"yes":"no"}}
     </table>
     </form>
 </div>
@@ -170,6 +170,10 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
         v.armies=this.currVillageService.armies;
         console.log(this.editVillageForm.value);
         // this.editVillageForm.valid=false;
+    }
+
+    cancelEditing(event){
+
     }
 
 

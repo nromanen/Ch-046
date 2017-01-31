@@ -90,12 +90,13 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         // this.player.villages.push(village);
         // this.village = new Village;
         // this.village.armies = [];
-        // this.wasSubmitted.emit(false);
+
         this.submitted = true;
         this.village = this.addVillageForm.value;
         this.village.player=this.player;
         console.log(this.village);
         this.villageService.add(this.village);
+        this.wasSubmitted.emit(false);
     }
 
     showAddArmy(ifShow: boolean) {

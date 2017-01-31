@@ -1,7 +1,10 @@
 /**
  * Created by okunetc on 19.01.2017.
  */
-import {Component, Input, OnInit, EventEmitter, OnChanges, SimpleChanges, AfterViewChecked} from "@angular/core";
+import {
+    Component, Input, OnInit, EventEmitter, OnChanges, SimpleChanges,
+    Output
+} from "@angular/core";
 import {Village} from "../village/village";
 import {Army} from "./army";
 import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
@@ -9,10 +12,16 @@ import {UnitType} from "../UnitType/unitType";
 @Component({
     selector: 'army-cell',
     outputs: ['cellClicked'],
+    styleUrls:['css/army.css'],
+//     styles:[`
+//         div {
+//             text-align: center;
+// }
+//     `],
     template: `
-     <div title="{{this.type}}" (dblclick)="hide()" *ngIf="!isInput" (click)="becomeDiv()">{{army.count!=-1?this.army.count:"0"}}</div>
+     <div title="{{this.type}}" (dblclick)="hide()" *ngIf="!isInput" (click)="becomeDiv()">{{army.count!=-1?this.army.count:"-1"}}</div>
      <div class="input-field"  *ngIf="isInput" [formGroup]="group">
-     <input class="validate"  type="text"  style=" width: 20px;height: 22px" [ngModel]="this.army.count!=-1?this.army.count:0"
+     <input class="validate"  type="text"  style=" width: 20px;height: 22px" [ngModel]="this.army.count!=-1?this.army.count:0" (keyup)="cancelEditing($event.keyCode)"
      formControlName="value" (ngModelChange)="addOrEdit($event)">
      </div>
 `
@@ -21,22 +30,18 @@ export class ArmyCellComponent implements OnInit,OnChanges {
     @Input() type: string;
     @Input() village: Village;
     @Input() group;
-    army: Army;
-    newArmy: Army;
     @Input() isInput: boolean;
     @Input() ifSave: boolean;
+    army: Army;
+    newArmy: Army;
     cellClicked: EventEmitter<Village>;
+    @Output() cancelEdit:EventEmitter<Village>;
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (this.ifSave && this.army != null) {
-            this.army.count = this.newArmy.count;
-        }
+    constructor(private currVillageArmiesService: CurrVillageArmiesService) {
+        this.isInput = true;
+        this.cellClicked = new EventEmitter<Village>();
+        this.cancelEdit=new EventEmitter<Village>();
 
-        if (changes['isInput'] != null)
-            if (changes['isInput'].currentValue === true && this.army.count != -1) {
-                this.currVillageArmiesService.armies.push(this.newArmy);
-            }
-        // console.log(this.currVillageArmiesService);
     }
 
     ngOnInit(): void {
@@ -55,10 +60,15 @@ export class ArmyCellComponent implements OnInit,OnChanges {
         });
     }
 
-    constructor(private currVillageArmiesService: CurrVillageArmiesService) {
-        this.isInput = true;
-        this.cellClicked = new EventEmitter<Village>();
+    ngOnChanges(changes: SimpleChanges): void {
+        if (this.ifSave && this.army != null) {
+            this.army.count = this.newArmy.count;
+        }
 
+        if (changes['isInput'] != null)
+            if (changes['isInput'].currentValue === true && this.army.count != -1) {
+                this.currVillageArmiesService.armies.push(this.newArmy);
+            }
     }
 
     hide() {
@@ -77,6 +87,12 @@ export class ArmyCellComponent implements OnInit,OnChanges {
                 this.currVillageArmiesService.armies.push(this.newArmy);
         } else
             this.newArmy.count=event;
+    }
+
+    cancelEditing(event){
+        if (event===27)
+        this.cancelEdit.emit(null);
+
     }
 
 }
