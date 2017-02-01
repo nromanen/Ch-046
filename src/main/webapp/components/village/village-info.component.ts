@@ -25,10 +25,14 @@ export class VillageInfoComponent implements OnInit {
     }
 
     getStringUnitTypeValues() {
-        for (let m in UnitType) {
-            if (typeof UnitType[m] === 'number') {
-                this.unitValues.push(m);
-            }
+        // for (let m in UnitType) {
+        //     if (typeof UnitType[m] === 'number') {
+        //         this.unitValues.push(m);
+        //     }
+        // }
+
+        for (let type in UnitType){
+            this.unitValues.push(type);
         }
     }
 }
