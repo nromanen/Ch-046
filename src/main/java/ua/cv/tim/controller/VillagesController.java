@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import ua.cv.tim.model.UnitType;
 import ua.cv.tim.model.User;
 import ua.cv.tim.model.Village;
 import ua.cv.tim.service.UserService;
@@ -21,7 +22,6 @@ import ua.cv.tim.service.VillageService;
 
 @RestController
 public class VillagesController {
-
     @Autowired
     VillageService villageService;
     @Autowired
@@ -40,6 +40,10 @@ public class VillagesController {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User userByUsername = userService.getUserByUsername(principal.getUsername());
         village.setPlayer(userByUsername.getPlayer());
+        for (UnitType type: UnitType.values()
+             ) {
+
+        }
         villageService.add(village);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(builder.path("/village/{id}").buildAndExpand(village.getUuid()).toUri());
@@ -75,4 +79,5 @@ public class VillagesController {
         villageService.delete(Village);
         return new ResponseEntity<>(Village, HttpStatus.NO_CONTENT);
     }
+
 }

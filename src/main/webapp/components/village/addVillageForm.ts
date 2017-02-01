@@ -7,6 +7,7 @@ import {Army} from "../army/army";
 import {VillageService} from "../services/villageService";
 import {FormGroup, FormBuilder, Validators, FormArray} from "@angular/forms";
 import {forbiddenXValidator} from "./forbidden-x.directive";
+import {UnitType} from "../UnitType/unitType";
 @Component({
     selector: "add-vill-form",
     templateUrl: "components/village/addVillageForm.html"
@@ -73,7 +74,7 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         return this._fBuilder.group({
             type: ['', Validators.required],
             count: ['',[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]],
-            isOwnUnit:[false,[]]
+            ownUnit:[false,[]]
         });
     }
 
@@ -89,14 +90,30 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
     onSubmit(village: Village) {
         // this.player.villages.push(village);
         // this.village = new Village;
-        // this.village.armies = [];
-
+        // this.village.allArmies = [];
+        let allArmies:Array<Army>=[];
+        for (let type in UnitType)
+        {
+            let army=new Army(0,UnitType[UnitType[type]],false);
+            allArmies.push(army);
+        }
         this.submitted = true;
         this.village = this.addVillageForm.value;
+        console.log(this.village);
+        this.village.armies.forEach(army=>{
+            allArmies.forEach(armyInAll=>{
+                if (army.type==armyInAll.type){
+                    console.log(army.type);
+                    armyInAll.count=army.count;
+                    armyInAll.ownUnit=army.ownUnit;
+                }
+            })
+        });
         this.village.player=this.player;
+        this.village.armies=allArmies;
         console.log(this.village);
         this.villageService.add(this.village);
-        this.wasSubmitted.emit(false);
+        // this.wasSubmitted.emit(false);
     }
 
     showAddArmy(ifShow: boolean) {

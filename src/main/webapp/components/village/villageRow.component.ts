@@ -49,7 +49,7 @@ import {forbiddenXValidator} from "./forbidden-x.directive";
 
 <td *ngFor="let tp of unitValues; let i=index;" >
     <army-cell [type]="tp" [village]="v" [group]="editVillageForm.controls.armies?editVillageForm.controls.armies.controls[i]:null"
-    (cancelEdit)="cancelEditing($event)" [armiesArrayControl]="armiesArrayControl"
+    (cancelEdit)="cancelEditing($event)" [armiesArrayControl]="armiesArrayControl" [index]="i"
     (cellClicked)="cellClick($event)" [isInput]="isForm" [ifSave]="ifSaveChanges"></army-cell>
 </td>
 <td>
@@ -84,6 +84,7 @@ export class VillageRow implements OnInit,AfterViewInit,OnChanges{
     private armiesArrayControl: FormArray;
     ngOnInit(): void {
         this.getStringUnitTypeValues();
+        // this.buildForm();
     }
 
 
@@ -139,6 +140,7 @@ export class VillageRow implements OnInit,AfterViewInit,OnChanges{
     showEdit(){
         this.selectedVillageChanged.emit(this.v);
         this.buildForm();
+        // this.buildForm();
         // this.cdr.detectChanges();
     }
 
@@ -163,7 +165,6 @@ export class VillageRow implements OnInit,AfterViewInit,OnChanges{
                 [Validators.required, forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
             ],
             'yCoord':[this.v.yCoord,
-
                 [Validators.required,forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
             ],
             'wall':[this.v.wall,
@@ -173,20 +174,19 @@ export class VillageRow implements OnInit,AfterViewInit,OnChanges{
             'armies':this._fBuilder.array([]),
         });
         this.armiesArrayControl = <FormArray>this.editVillageForm.controls['armies'];
-        for (let t in UnitType) {
-            this.armiesArrayControl.push(this.initArmies(t));
-
+        for (let i=0; i<this.v.armies.length; i++) {
+            this.armiesArrayControl.push(this.initArmies(this.v.armies[i]));
         }
 
         // console.log(armiesArrayControl);
     }
 
-    initArmies(type) {
-        let h:string;
+    initArmies(army:Army) {
         return this._fBuilder.group({
-            count:['',[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]],
-            type:[type,[] ],
-            ownUnit:[]
+            count:['',[Validators.required]],
+            type:[army.type,[] ],
+            ownUnit:[],
+            uuid:[army.uuid,[]]
         });
     }
 

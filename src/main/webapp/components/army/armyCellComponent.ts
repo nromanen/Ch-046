@@ -3,13 +3,13 @@
  */
 import {
     Component, Input, OnInit, EventEmitter, OnChanges, SimpleChanges,
-    Output, DoCheck
+    Output, DoCheck, group
 } from "@angular/core";
 import {Village} from "../village/village";
 import {Army} from "./army";
 import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 import {UnitType} from "../UnitType/unitType";
-import {Validators, FormBuilder} from "@angular/forms";
+import {Validators, FormBuilder, FormGroup, FormArray} from "@angular/forms";
 @Component({
     selector: 'army-cell',
     outputs: ['cellClicked'],
@@ -33,10 +33,11 @@ export class ArmyCellComponent implements OnInit,OnChanges,DoCheck {
     }
     @Input() type: string;
     @Input() village: Village;
-    @Input() group;
+    @Input() group:FormGroup;
     @Input() isInput: boolean;
     @Input() ifSave: boolean;
-    @Input() armiesArrayControl;
+    @Input() armiesArrayControl:FormArray;
+    @Input() index;
     army: Army;
     newArmy: Army;
     cellClicked: EventEmitter<Village>;
@@ -50,6 +51,8 @@ export class ArmyCellComponent implements OnInit,OnChanges,DoCheck {
     }
 
     ngOnInit(): void {
+        // this.armiesArrayControl[this.index]=this.initArmies(this.type);
+
         this.army=new Army(-1,UnitType[this.type],true);
         this.army.type=UnitType[this.type];
 
@@ -67,9 +70,7 @@ export class ArmyCellComponent implements OnInit,OnChanges,DoCheck {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        // if (this.ifSave && this.army != null) {
-        //     this.army.count = this.newArmy.count;
-        // }
+
 
         if (changes['village']){
             this.army=new Army(-1,UnitType[this.type],true);
@@ -85,30 +86,31 @@ export class ArmyCellComponent implements OnInit,OnChanges,DoCheck {
                     this.newArmy.uuid = this.army.uuid;
                 }
             });
-            console.log(this.army);
+
         }
 
         if (changes['isInput'] != null)
-            console.log(changes['armiesArrayControl']);
+            // console.log(changes['armiesArrayControl']);
+            // this.armiesArrayControl[this.index] = this.initArmies(this.type);
             if (changes['isInput'].currentValue === true && this.army.count != -1) {
                 this.currVillageArmiesService.armies.push(this.newArmy);
 
             }
-
-        if (changes['armiesArrayControl']){
-            // console.log(changes['armiesArrayControl']);
-            // this.initArmies(this.type);
-        }
+        //
+        // if (changes['armiesArrayControl']){
+        //     console.log('khj');
+        //     try {
+        //         // this.armiesArrayControl[this.index] = this.initArmies(this.type);
+        //     } catch (e){}
+        //     // this.armiesArrayControl[this.armiesArrayControl.controls.indexOf(this.group)]=this.initArmies(this.type);
+        //
+        //     // console.log(this.armiesArrayControl.controls.indexOf(this.group));
+        //     // this.group=this.initArmies(this.type);
+        //     // console.log(this.group);
+        // }
     }
 
-    initArmies(type) {
-        let h:string;
-        return this._fBuilder.group({
-            count:['',[Validators.required,Validators.pattern(/^\d$/)]],
-            type:[type,[] ],
-            ownUnit:[]
-        });
-    }
+
 
     hide() {
         this.isInput = true;

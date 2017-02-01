@@ -10,6 +10,7 @@ import {ActivatedRoute} from "@angular/router";
 import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 import {VillageService} from "../services/villageService";
 import {UnitType} from "../UnitType/unitType";
+import {Army} from "../army/army";
 @Component({
     selector: 'player',
     template: `
@@ -28,6 +29,7 @@ export class PlayerComponent implements OnInit {
     showAddVillageForm: boolean;
 
     constructor(private currPlayerService: CurrVillageArmiesService, private playerService: PlayerService, private route: ActivatedRoute, private villageService: VillageService) {
+
     }
 
     ngOnInit(): void {
