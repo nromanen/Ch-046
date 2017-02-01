@@ -11,21 +11,7 @@ import {Alliance} from "./alliance/alliance";
 })
 
 export class AppComponent {
-    public static alliance: Alliance;
 
-constructor(private helpService:HelpService){
 
-}
 
-    public ngOnInit(): void {
-               console.log("INIT APP_COMPONENT");
-            this.helpService.getAlliance()
-                .subscribe(
-                    resp => {
-                        console.log("APP_COMPONENT_SUBSCRIBE");
-                        AppComponent.alliance = resp;
-                        console.log(AppComponent.alliance);
-                    }
-                );
-    }
 }

@@ -1,5 +1,6 @@
-System.register(["@angular/core", "../village/village", "../army/army", "../services/villageService"], function (exports_1, context_1) {
+System.register(["@angular/core", "../village/village", "../army/army", "../services/villageService"], function(exports_1, context_1) {
     "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,10 +10,10 @@ System.register(["@angular/core", "../village/village", "../army/army", "../serv
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var __moduleName = context_1 && context_1.id;
-    var core_1, village_1, army_1, villageService_1, AddVillageForm;
+    var core_1, village_1, army_1, villageService_1;
+    var AddVillageForm;
     return {
-        setters: [
+        setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
@@ -24,9 +25,8 @@ System.register(["@angular/core", "../village/village", "../army/army", "../serv
             },
             function (villageService_1_1) {
                 villageService_1 = villageService_1_1;
-            }
-        ],
-        execute: function () {
+            }],
+        execute: function() {
             AddVillageForm = (function () {
                 function AddVillageForm(villageService) {
                     this.villageService = villageService;
@@ -55,25 +55,26 @@ System.register(["@angular/core", "../village/village", "../army/army", "../serv
                 AddVillageForm.prototype.showAddArmy = function (ifShow) {
                     this.showAddArmyButton = ifShow;
                 };
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Object)
+                ], AddVillageForm.prototype, "player", void 0);
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', (typeof (_a = typeof core_1.EventEmitter !== 'undefined' && core_1.EventEmitter) === 'function' && _a) || Object)
+                ], AddVillageForm.prototype, "wasSubmitted", void 0);
+                AddVillageForm = __decorate([
+                    core_1.Component({
+                        selector: "add-vill-form",
+                        templateUrl: "components/village/addVillageForm.html"
+                    }), 
+                    __metadata('design:paramtypes', [villageService_1.VillageService])
+                ], AddVillageForm);
                 return AddVillageForm;
+                var _a;
             }());
-            __decorate([
-                core_1.Input(),
-                __metadata("design:type", Object)
-            ], AddVillageForm.prototype, "player", void 0);
-            __decorate([
-                core_1.Output(),
-                __metadata("design:type", core_1.EventEmitter)
-            ], AddVillageForm.prototype, "wasSubmitted", void 0);
-            AddVillageForm = __decorate([
-                core_1.Component({
-                    selector: "add-vill-form",
-                    templateUrl: "components/village/addVillageForm.html"
-                }),
-                __metadata("design:paramtypes", [villageService_1.VillageService])
-            ], AddVillageForm);
             exports_1("AddVillageForm", AddVillageForm);
         }
-    };
+    }
 });
 //# sourceMappingURL=addVillageForm.js.map

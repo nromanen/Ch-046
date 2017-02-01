@@ -4,6 +4,9 @@
 
 import {Component} from "@angular/core";
 import {StompService} from "../services/helpNotification/stomp.service";
+import {PlayerHeader} from "./player-header.component";
+import {HelpService} from "../services/helpNotification/help.service";
+import {Alliance} from "../alliance/alliance";
 
 
 @Component({
@@ -31,21 +34,33 @@ import {StompService} from "../services/helpNotification/stomp.service";
 })
 export class LeaderHeaderComponent {
     public serverResponse: string;
+    public static alliance: Alliance = null;
 
     showNotif: boolean = false;
 
-    constructor(private stompService: StompService){
+
+    constructor(private stompService: StompService, private helpService: HelpService){
     }
 
     public ngOnInit(): void {
+        this.websocketConnect();
+    }
+
+
+    websocketConnect(){
+        console.log("Connection start");
         this.stompService.connect();
         this.stompService.getObservable().subscribe(payload => {
-            this.serverResponse = payload.outputField;
+            console.log("Show notification");
+            // this.serverResponse = payload.outputField;
             this.showNotification();
         });
+
+
     }
 
     showNotification(){
+        console.log("Show not true");
         this.showNotif = true;
     }
 

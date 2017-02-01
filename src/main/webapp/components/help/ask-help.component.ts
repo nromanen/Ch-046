@@ -52,8 +52,6 @@ export class HelpComponent implements OnInit{
                     console.log(this.villages);
                 }
             );
-
-
     }
 
     submitForm(value: any){
@@ -72,7 +70,7 @@ export class HelpComponent implements OnInit{
                 resp => {
                     this.successMessage = "Ask help added successfully";
                     this.errorMessage = null;
-                    this.stompService.send(this.player.login);
+                    this.stompService.send();
                 },
                 error =>  {
                     this.errorMessage = <any>error;

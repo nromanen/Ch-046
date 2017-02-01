@@ -4,6 +4,8 @@ import {Observable} from 'rxjs/Observable';
 
 import 'node_modules/stompjs/lib/stomp.min.js';
 import {AppComponent} from "../../app.component";
+import {HelpService} from "./help.service";
+import {Alliance} from "../../alliance/alliance";
 
 declare let Stomp: any;
 
@@ -14,37 +16,46 @@ export class StompService {
     private stompSubject: Subject<any> = new Subject<any>();
     private WEBSOCKETURL = 'ws://localhost:8080/travian/stompTest';
 
-    constructor() {
-        this.connectInit();
+    public  alliance: Alliance = null;
+
+    constructor(private helpService: HelpService) {
+        //this.connectInit();
     }
 
     private connectInit(){
         let self = this;
-        let e = new Date().getTime() + 300;
-        while (new Date().getTime() <= e) {
-        }
-        let webSocket = new WebSocket(this.WEBSOCKETURL);
-        StompService.stompClient = Stomp.over(webSocket);
-        console.log("Use static! Connecting to websocket server");
-        StompService.stompClient.connect({}, function (frame) {
+
+        this.helpService.getAlliance()
+                .subscribe(
+                    resp => {
+                        console.log("APP_COMPONENT_SUBSCRIBE");
+                        this.alliance = resp;
+                        console.log(this.alliance);
+
+                        let webSocket = new WebSocket(this.WEBSOCKETURL);
+                        StompService.stompClient = Stomp.over(webSocket);
+                        console.log("Use static! Connecting to websocket server");
+                        StompService.stompClient.connect({}, function (frame) {
 
 
-            StompService.stompClient.subscribe('/topic/greetings/' + AppComponent.alliance.allianceUuid, function (stompResponse) {
-                self.stompSubject.next(JSON.parse(stompResponse.body));
-            });
-        });
+                            StompService.stompClient.subscribe('/topic/greetings/' + resp.allianceUuid, function (stompResponse) {
+                                self.stompSubject.next(JSON.parse(stompResponse.body));
+                            });
+                        });
+                    }
+                )
     }
 
     public connect(): void {
 
-        if (StompService.stompClient.OPENED) {
+        if (StompService.stompClient == null || StompService.stompClient.OPENED) {
             this.connectInit();
         }
     }
 
 
-    public send(payload: string) {
-        StompService.stompClient.send("/app/hello/" + AppComponent.alliance.allianceUuid, {}, JSON.stringify({'message': 'askHelp'}));
+    public send() {
+        StompService.stompClient.send("/app/hello/" + this.alliance.allianceUuid, {}, JSON.stringify({'message': 'askHelp'}));
     }
 
     public getObservable(): Observable<any> {

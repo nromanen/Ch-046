@@ -1,5 +1,6 @@
-System.register(["@angular/core", "../village/village", "./army", "../services/newVillageArmiesService", "../UnitType/unitType"], function (exports_1, context_1) {
+System.register(["@angular/core", "../village/village", "./army", "../services/newVillageArmiesService", "../UnitType/unitType"], function(exports_1, context_1) {
     "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,10 +10,10 @@ System.register(["@angular/core", "../village/village", "./army", "../services/n
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var __moduleName = context_1 && context_1.id;
-    var core_1, village_1, army_1, newVillageArmiesService_1, unitType_1, ArmyCellComponent;
+    var core_1, village_1, army_1, newVillageArmiesService_1, unitType_1;
+    var ArmyCellComponent;
     return {
-        setters: [
+        setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
@@ -27,9 +28,8 @@ System.register(["@angular/core", "../village/village", "./army", "../services/n
             },
             function (unitType_1_1) {
                 unitType_1 = unitType_1_1;
-            }
-        ],
-        execute: function () {
+            }],
+        execute: function() {
             ArmyCellComponent = (function () {
                 function ArmyCellComponent(currVillageArmiesService) {
                     this.currVillageArmiesService = currVillageArmiesService;
@@ -62,34 +62,34 @@ System.register(["@angular/core", "../village/village", "./army", "../services/n
                 ArmyCellComponent.prototype.becomeDiv = function () {
                     this.cellClicked.emit(null);
                 };
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', String)
+                ], ArmyCellComponent.prototype, "type", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', village_1.Village)
+                ], ArmyCellComponent.prototype, "village", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Boolean)
+                ], ArmyCellComponent.prototype, "isInput", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Boolean)
+                ], ArmyCellComponent.prototype, "ifSave", void 0);
+                ArmyCellComponent = __decorate([
+                    core_1.Component({
+                        selector: 'army-cell',
+                        outputs: ['cellClicked'],
+                        template: "\n     <div title=\"{{this.type}}\" (dblclick)=\"hide()\" *ngIf=\"!isInput\" (click)=\"becomeDiv()\">{{army!=null?this.army.count:\"0\"}}</div>\n     <div class=\"input-field\"  *ngIf=\"isInput\">\n     <input class=\"validate\"  type=\"text\"  style=\" \n     width: 20px;height: 22px\" [ngModel]=\"army!=null?this.army.count:'0'\" \n     name=\"value\" (ngModelChange)=\"newArmy.count=$event\"\n     minlength=\"5\" maxlength=\"7\" #name=\"ngModel\">\n     </div>\n\n"
+                    }), 
+                    __metadata('design:paramtypes', [newVillageArmiesService_1.CurrVillageArmiesService])
+                ], ArmyCellComponent);
                 return ArmyCellComponent;
             }());
-            __decorate([
-                core_1.Input(),
-                __metadata("design:type", String)
-            ], ArmyCellComponent.prototype, "type", void 0);
-            __decorate([
-                core_1.Input(),
-                __metadata("design:type", village_1.Village)
-            ], ArmyCellComponent.prototype, "village", void 0);
-            __decorate([
-                core_1.Input(),
-                __metadata("design:type", Boolean)
-            ], ArmyCellComponent.prototype, "isInput", void 0);
-            __decorate([
-                core_1.Input(),
-                __metadata("design:type", Boolean)
-            ], ArmyCellComponent.prototype, "ifSave", void 0);
-            ArmyCellComponent = __decorate([
-                core_1.Component({
-                    selector: 'army-cell',
-                    outputs: ['cellClicked'],
-                    template: "\n     <div title=\"{{this.type}}\" (dblclick)=\"hide()\" *ngIf=\"!isInput\" (click)=\"becomeDiv()\">{{army!=null?this.army.count:\"0\"}}</div>\n     <div class=\"input-field\"  *ngIf=\"isInput\">\n     <input class=\"validate\"  type=\"text\"  style=\" \n     width: 20px;height: 22px\" [ngModel]=\"army!=null?this.army.count:'0'\" \n     name=\"value\" (ngModelChange)=\"newArmy.count=$event\"\n     minlength=\"5\" maxlength=\"7\" #name=\"ngModel\">\n     </div>\n\n"
-                }),
-                __metadata("design:paramtypes", [newVillageArmiesService_1.CurrVillageArmiesService])
-            ], ArmyCellComponent);
             exports_1("ArmyCellComponent", ArmyCellComponent);
         }
-    };
+    }
 });
 //# sourceMappingURL=armyCellComponent.js.map

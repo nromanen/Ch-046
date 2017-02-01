@@ -108,20 +108,18 @@ task npmRunTsc(type:Exec) {
     }
 }
 
-task runApp(type:Exec) {
-    workingDir 'src/main/webapp'
-    commandLine 'cmd', '/c', 'npm', 'install'
-    workingDir 'src/main/webapp'
-    commandLine 'cmd', '/c', 'npm', 'run', 'tsc'
-    workingDir './'
-    commandLine 'cmd', '/c', 'gradle', 'appStart'
-    standardOutput = new ByteArrayOutputStream()
-    ext.output = {
-        return standardOutput.toString()
-    }
-}
-
-
+//task runApp(type:Exec) {
+//    workingDir 'src/main/webapp'
+//    commandLine 'cmd', '/c', 'npm', 'install'
+//    workingDir 'src/main/webapp'
+//    commandLine 'cmd', '/c', 'npm', 'run', 'tsc'
+//    workingDir './'
+//    commandLine 'cmd', '/c', 'gradle', 'appStart'
+//    standardOutput = new ByteArrayOutputStream()
+//    ext.output = {
+//        return standardOutput.toString()
+//    }
+//}
 
 war {
     archiveName = 'travian.war'

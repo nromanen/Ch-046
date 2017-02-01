@@ -1,10 +1,10 @@
-System.register([], function (exports_1, context_1) {
+System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var UnitType;
     return {
-        setters: [],
-        execute: function () {
+        setters:[],
+        execute: function() {
             /**
              * Created by okunetc on 19.01.2017.
              */
@@ -39,6 +39,6 @@ System.register([], function (exports_1, context_1) {
             })(UnitType || (UnitType = {}));
             exports_1("UnitType", UnitType);
         }
-    };
+    }
 });
 //# sourceMappingURL=unitType.js.map

@@ -1,5 +1,6 @@
-System.register(["./player", "@angular/core", "../services/newVillageArmiesService", "../UnitType/unitType", "../services/villageService"], function (exports_1, context_1) {
+System.register(["./player", "@angular/core", "../services/newVillageArmiesService", "../UnitType/unitType", "../services/villageService"], function(exports_1, context_1) {
     "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,10 +10,10 @@ System.register(["./player", "@angular/core", "../services/newVillageArmiesServi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var __moduleName = context_1 && context_1.id;
-    var player_1, core_1, newVillageArmiesService_1, unitType_1, villageService_1, PlayerList;
+    var player_1, core_1, newVillageArmiesService_1, unitType_1, villageService_1;
+    var PlayerList;
     return {
-        setters: [
+        setters:[
             function (player_1_1) {
                 player_1 = player_1_1;
             },
@@ -27,9 +28,8 @@ System.register(["./player", "@angular/core", "../services/newVillageArmiesServi
             },
             function (villageService_1_1) {
                 villageService_1 = villageService_1_1;
-            }
-        ],
-        execute: function () {
+            }],
+        execute: function() {
             PlayerList = (function () {
                 function PlayerList(currVillageService, villageService) {
                     this.currVillageService = currVillageService;
@@ -51,21 +51,21 @@ System.register(["./player", "@angular/core", "../services/newVillageArmiesServi
                     this.selectedVillage = village;
                     console.log(this.selectedVillage);
                 };
+                __decorate([
+                    core_1.Input('player'), 
+                    __metadata('design:type', player_1.Player)
+                ], PlayerList.prototype, "player", void 0);
+                PlayerList = __decorate([
+                    core_1.Component({
+                        selector: 'player-list',
+                        templateUrl: "components/player/playerList.html"
+                    }), 
+                    __metadata('design:paramtypes', [newVillageArmiesService_1.CurrVillageArmiesService, villageService_1.VillageService])
+                ], PlayerList);
                 return PlayerList;
             }());
-            __decorate([
-                core_1.Input('player'),
-                __metadata("design:type", player_1.Player)
-            ], PlayerList.prototype, "player", void 0);
-            PlayerList = __decorate([
-                core_1.Component({
-                    selector: 'player-list',
-                    templateUrl: "components/player/playerList.html"
-                }),
-                __metadata("design:paramtypes", [newVillageArmiesService_1.CurrVillageArmiesService, villageService_1.VillageService])
-            ], PlayerList);
             exports_1("PlayerList", PlayerList);
         }
-    };
+    }
 });
 //# sourceMappingURL=playerList.component.js.map
