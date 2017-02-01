@@ -14,7 +14,6 @@ import {ConfirmComponent} from "./modal_window/modal";
 
 import {PlayerComponent} from "./player/player.component";
 import {PlayerList} from "./player/playerList.component";
-import {PlayerRow} from "./player/playerRow.component";
 import {PlayerHeader} from "./header/player-header.component";
 import {PlayerListComponent} from "./player/player-list.component";
 import {VillageInfoComponent} from "./village/village-info.component";
@@ -58,7 +57,6 @@ import {StompService} from "./services/helpNotification/stomp.service";
         ConfirmComponent,
         PlayerComponent,
         PlayerList,
-        PlayerRow,
         PlayerHeader,
         TimerComponent,
         LeaderManagerComponent,

@@ -3,12 +3,15 @@
  */
 import {
     Component, Input, EventEmitter, OnInit, AfterViewChecked, ViewChild, ChangeDetectorRef,
-    AfterViewInit, Output
+    AfterViewInit, Output, OnChanges, SimpleChanges
 } from "@angular/core";
 import {UnitType} from "../UnitType/unitType";
 import {Village} from "./village";
 import {VillageService} from "../services/villageService";
 import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
+import {Army} from "../army/army";
+import {FormControl, Validators, FormArray, FormBuilder} from "@angular/forms";
+import {forbiddenXValidator} from "./forbidden-x.directive";
 @Component({
     selector: '[player-ro]',
     outputs:['selectedVillageChanged'],
@@ -46,21 +49,25 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 
 <td *ngFor="let tp of unitValues; let i=index;" >
     <army-cell [type]="tp" [village]="v" [group]="editVillageForm.controls.armies?editVillageForm.controls.armies.controls[i]:null"
-    (cancelEdit)="cancelEditing($event)"
+    (cancelEdit)="cancelEditing($event)" [armiesArrayControl]="armiesArrayControl"
     (cellClicked)="cellClick($event)" [isInput]="isForm" [ifSave]="ifSaveChanges"></army-cell>
 </td>
 <td>
     <button (click)="!isForm?showEdit():changeVillage()" type="button"
-    
     class="btn waves-effect waves-light col offset-s1"  name="action" 
-            style="margin-top: 5px;" >
+    [disabled]="!editVillageForm.valid && isForm" style="margin-top: 5px;" >
             {{!isForm?"Edit":"Save"}}      
     </button>
 </td>
 
 `
 })
-export class VillageRow implements OnInit,AfterViewChecked,AfterViewInit{
+export class VillageRow implements OnInit,AfterViewInit,OnChanges{
+    ngOnChanges(changes: SimpleChanges): void {
+
+    }
+    POPULATION_REGEXP=/^\d*$/;
+    COORD_REGEXP=/^[0-9]*$/;
     ngAfterViewInit(): void {
         this.cdr.detectChanges();
     }
@@ -72,28 +79,17 @@ export class VillageRow implements OnInit,AfterViewChecked,AfterViewInit{
     selectedVillageChanged:EventEmitter<Village>;
     ifSaveChanges:boolean;
     private cdr: ChangeDetectorRef;
-    ngAfterViewChecked(): void {
 
-    }
-    private newVillage: Village;
     private villBefore;
+    private armiesArrayControl: FormArray;
     ngOnInit(): void {
-
-        this.newVillage=new Village();
-        this.newVillage.name=this.v.name;
-        this.newVillage.uuid=this.v.uuid;
-        this.newVillage.armies=this.v.armies;
-        this.newVillage.isCapital=this.v.isCapital;
-        this.newVillage.population=this.v.population;
-        this.newVillage.xCoord=this.v.xCoord;
-        this.newVillage.yCoord=this.v.yCoord;
-        this.newVillage.wall=this.v.wall;
         this.getStringUnitTypeValues();
     }
 
 
 
-    constructor( private villageService:VillageService, private currVillageArmiesService:CurrVillageArmiesService,cdr: ChangeDetectorRef){
+    constructor( private villageService:VillageService, private currVillageArmiesService:CurrVillageArmiesService,cdr: ChangeDetectorRef,
+                private _fBuilder:FormBuilder){
         this.selectedVillageChanged=new EventEmitter<Village>(false);
         this.unitValues=[];
         this.ifSaveChanges=false;
@@ -105,12 +101,7 @@ export class VillageRow implements OnInit,AfterViewChecked,AfterViewInit{
 
     getStringUnitTypeValues(){
         for (let m in UnitType){
-
             this.unitValues.push(m);
-            if (typeof UnitType[m] === 'number'){
-                this.unitValues.push(m);
-            } else {
-            }
         }
 
     }
@@ -123,45 +114,32 @@ export class VillageRow implements OnInit,AfterViewChecked,AfterViewInit{
 
     changeVillage(){
         this.ifSaveChanges=true;
-        // console.log('insideChange');
-        // console.log(this.v.armies);
-        // this.v.name=this.newVillage.name;
-        let uuid=this.v.uuid;
-        this.v=this.editVillageForm.value;
-        this.v.uuid=uuid;
-        this.v.armies=this.currVillageArmiesService.armies;
-
-        // this.v.xCoord=this.newVillage.xCoord;
-        // this.v.yCoord=this.newVillage.yCoord;
-        // this.v.isCapital=this.newVillage.isCapital;
-        // this.v.population=this.newVillage.population;
-        // this.v.wall=this.newVillage.wall;
-
-        console.log('insideChange');
-        console.log(this.v);
-        this.submitEdit();
-        // this.isForm=false;
+        let index:number=this.villageService.villages.indexOf(this.v);
+        this.villageService.villages[index]=this.v;
+        console.log(this.villageService.villages.indexOf(this.v));
+        console.log(this.editVillageForm.value);
+        let newVillage=this.editVillageForm.value;
+        // this.villageService.villages[index]=newVillage;
+        console.log(newVillage);
+        this.villageService.update(newVillage).subscribe(
+            response=>{
+                 this.villageService.villages[index]=response;
+                console.log('resp');
+                console.log(response);
+            },
+            error=>{
+                console.log(error);
+            }
+        );
+        this.selectedVillageChanged.emit(new Village);
         this.ifSaveChanges=false;
-        // console.log("inside save");
-        // console.log(this.ifSaveChanges);
-        // this.ifSaveChanges=false;
+
     }
 
     showEdit(){
-
-            // this.selectedVillageChanged.emit(null);
-            this.selectedVillageChanged.emit(this.v);
-
-
-        this.cdr.detectChanges();
-             this.ifSaveChanges=false;
-
-             this.currVillageArmiesService.armies.length=0;
-             // this.v.armies.forEach(army=>{
-             //     this.currVillageArmiesService.armies.push(army);
-             // });
-             console.log(this.currVillageArmiesService.armies);
-
+        this.selectedVillageChanged.emit(this.v);
+        this.buildForm();
+        // this.cdr.detectChanges();
     }
 
     submit(){
@@ -173,6 +151,43 @@ export class VillageRow implements OnInit,AfterViewChecked,AfterViewInit{
     cancelEditing(){
         this.isForm=false;
         this.cdr.detectChanges();
+    }
+
+    buildForm(){
+        this.editVillageForm=this._fBuilder.group({
+            'uuid':[this.v.uuid,[]],
+            'name':new FormControl(this.v.name,[Validators.required]),
+            'population':[this.v.population,[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
+            ],
+            'xCoord': [this.v.xCoord,
+                [Validators.required, forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
+            ],
+            'yCoord':[this.v.yCoord,
+
+                [Validators.required,forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
+            ],
+            'wall':[this.v.wall,
+                [Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
+            ],
+            'isCapital':[this.v.isCapital],
+            'armies':this._fBuilder.array([]),
+        });
+        this.armiesArrayControl = <FormArray>this.editVillageForm.controls['armies'];
+        for (let t in UnitType) {
+            this.armiesArrayControl.push(this.initArmies(t));
+
+        }
+
+        // console.log(armiesArrayControl);
+    }
+
+    initArmies(type) {
+        let h:string;
+        return this._fBuilder.group({
+            count:['',[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]],
+            type:[type,[] ],
+            ownUnit:[]
+        });
     }
 
 }

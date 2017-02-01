@@ -12,28 +12,25 @@ export class VillageService{
     villages:Array<Village>;
     update(village:Village){
 
-        let villageBefore=new Village();
-        villageBefore.name=village.name;
-        villageBefore.uuid=village.uuid;
-        villageBefore.armies=village.armies;
-        villageBefore.isCapital=village.isCapital;
-        villageBefore.population=village.population;
-        villageBefore.xCoord=village.xCoord;
-        villageBefore.yCoord=village.yCoord;
-        villageBefore.wall=village.wall;
+        // let headers = new Headers();
+        // headers.append('Content-Type', 'application/json');
+        // this.http.put(this.villageURL + village.uuid, JSON.stringify(village), {
+        //     headers: headers
+        // }).subscribe(
+        //     response => {
+        //         console.log(response);
+        //         let newVillage=response.json();
+        //         console.log(newVillage);
+        //          this.villages[this.villages.indexOf(village)] = newVillage;
+        //     },
+        //     error => console.log(error)
+        // );
+
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        this.http.put(this.villageURL + village.uuid, JSON.stringify(village), {
+        return this.http.put(this.villageURL + village.uuid, JSON.stringify(village), {
             headers: headers
-        }).subscribe(
-            response => {
-                console.log(response);
-                let newVillage=response.json();
-                console.log(newVillage);
-                 this.villages[this.villages.indexOf(village)] = newVillage;
-            },
-            error => console.log(error)
-        );
+        }).map(res=>res.json());
     }
 
     add(village:Village){

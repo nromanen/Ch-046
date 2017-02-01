@@ -4,13 +4,13 @@
 
   td:nth-child(1){
     word-wrap: break-word;
-    background: darkred;
+
       width: 130px;
 }
 
  table.fi thead th {
 height: 50px;
-     background: red;
+
 }
 
  td div{

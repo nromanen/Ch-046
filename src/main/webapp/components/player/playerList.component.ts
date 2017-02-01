@@ -1,7 +1,7 @@
 /**
  * Created by Oleg on 14.01.2017.
  */
-import {PlayerRow} from "./playerRow.component";
+
 import {Player} from "./player";
 import {Component, Input, OnInit, OnChanges, SimpleChanges, DoCheck, ViewChild, ChangeDetectorRef} from "@angular/core";
 import {Village} from "../village/village";
@@ -11,6 +11,7 @@ import {Army} from "../army/army";
 import {VillageService} from "../services/villageService";
 import {FormGroup, FormBuilder, FormControl, Validators, FormArray} from "@angular/forms";
 import {forbiddenXValidator} from "../village/forbidden-x.directive";
+import {type} from "os";
 @Component
 ({
     selector: 'player-list',
@@ -90,7 +91,8 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
     selectedVillage: Village;
 
 
-    constructor(private currVillageService: CurrVillageArmiesService, private villageService: VillageService,private _fBuilder:FormBuilder, cdRef:ChangeDetectorRef) {
+    constructor(private currVillageService: CurrVillageArmiesService, private villageService: VillageService,
+                private _fBuilder:FormBuilder, cdRef:ChangeDetectorRef) {
         this.unitValues = [];
         this.cdRef=cdRef
     }
@@ -102,50 +104,44 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
         });
     }
 
-    buildForm(){
-        // this.editVillageForm=null;
-        this.editVillageForm=this._fBuilder.group({
-           // name:[this.selectedVillage.name,[]]
-            'name':new FormControl(this.selectedVillage.name,[Validators.required]),
-            'population':[this.selectedVillage.population,[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
-            ],
-            'xCoord': [this.selectedVillage.xCoord,
-                [Validators.required, forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
-            ],
-            'yCoord':[this.selectedVillage.yCoord,
-
-                [Validators.required,forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
-            ],
-            'wall':[this.selectedVillage.wall,
-                [Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
-            ],
-            'isCapital':[this.selectedVillage.isCapital],
-            'armies':this._fBuilder.array([]),
-        });
-
-        const control = <FormArray>this.editVillageForm.controls['armies'];
-        let i=0;
-        // this.selectedVillage.armies.forEach(army=>{
-        //     control.push(this.initArmies(i));
-        //
-        // });
-        for (let i=0;i<27;i++) {
-            control.push(this.initArmies(i));
-
-        }
-
-        console.log(control);
-    }
-
-    initArmies(ord:number) {
-        // initialize our address
-        let h:string;
-
-        return this._fBuilder.group({
-            // value: [this.selectedVillage.armies[ord]!=undefined?this.selectedVillage.armies[ord].count:''],
-            value:['',[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]],
-        });
-    }
+    // buildForm(){
+    //     // this.editVillageForm=null;
+    //     this.editVillageForm=this._fBuilder.group({
+    //        'uuid':[this.selectedVillage.uuid,[]],
+    //         'name':new FormControl(this.selectedVillage.name,[Validators.required]),
+    //         'population':[this.selectedVillage.population,[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
+    //         ],
+    //         'xCoord': [this.selectedVillage.xCoord,
+    //             [Validators.required, forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
+    //         ],
+    //         'yCoord':[this.selectedVillage.yCoord,
+    //
+    //             [Validators.required,forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
+    //         ],
+    //         'wall':[this.selectedVillage.wall,
+    //             [Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
+    //         ],
+    //         'isCapital':[this.selectedVillage.isCapital],
+    //         'armies':this._fBuilder.array([]),
+    //     });
+    //     const control = <FormArray>this.editVillageForm.controls['armies'];
+    //     for (let t in UnitType) {
+    //         control.push(this.initArmies(t));
+    //
+    //     }
+    //
+    //     console.log(control);
+    // }
+    //
+    // initArmies(type) {
+    //     let h:string;
+    //     return this._fBuilder.group({
+    //         // value: [this.selectedVillage.armies[ord]!=undefined?this.selectedVillage.armies[ord].count:''],
+    //         count:['',[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]],
+    //         type:[type,[] ],
+    //         ownUnit:[]
+    //     });
+    // }
 
     wasEdited(village: Village) {
         this.currVillageService.village = village;
@@ -153,19 +149,24 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
 
     changeSelectedVillage(village: Village) {
         this.selectedVillage = village;
-        console.log(this.selectedVillage);
-        console.log(this.editVillageForm);
-        this.buildForm();
+        console.log("v changed");
+        // this.buildForm();
         this.editVillageForm.valueChanges
             .subscribe(data =>
             {
                 this.cdRef.detectChanges();
             });
-        // console.log(this.selectedVillage);
+
+        this.player.villages.forEach(v=>{
+            console.log();
+            if (village==v){
+                console.log('found equal');
+            }
+        });
+
     }
 
     onSubmit(){
-
         let v:Village=this.editVillageForm.value;
         v.armies=this.currVillageService.armies;
         console.log(this.editVillageForm.value);
