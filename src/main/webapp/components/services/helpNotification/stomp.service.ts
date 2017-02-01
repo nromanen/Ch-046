@@ -19,7 +19,6 @@ export class StompService {
     public  alliance: Alliance = null;
 
     constructor(private helpService: HelpService) {
-        //this.connectInit();
     }
 
     private connectInit(){

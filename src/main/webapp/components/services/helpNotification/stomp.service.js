@@ -31,7 +31,6 @@ System.register(['@angular/core', 'rxjs/Subject', 'node_modules/stompjs/lib/stom
                     this.stompSubject = new Subject_1.Subject();
                     this.WEBSOCKETURL = 'ws://localhost:8080/travian/stompTest';
                     this.alliance = null;
-                    //this.connectInit();
                 }
                 StompService.prototype.connectInit = function () {
                     var _this = this;

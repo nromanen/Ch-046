@@ -39,39 +39,50 @@
 
 <div class="container">
     <div class="row col s12" style="margin-top: 50px">
-        <spring:url value="/login" var="loginUrl"/>
-        <form action="${loginUrl}" method="post" class="col s3 offset-s4 center-align">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <c:if test="${param.error != null}">
-                <div class="card red lighten-4">
-                    <div class="card-content red-text">
-                        <p class="center-align">Invalid username or password</p>
+        <div class="col s3 offset-s4 center-align">
+            <spring:url value="/login" var="loginUrl"/>
+            <form action="${loginUrl}" method="post">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <c:if test="${param.error != null}">
+                    <div class="card red lighten-4">
+                        <div class="card-content red-text">
+                            <p class="center-align">Invalid username or password</p>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${param.logout != null}">
+                    <div class="card green lighten-4">
+                        <div class="card-content green-text">
+                            <p class="center-align">You have been logged out</p>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${email_send != null}">
+                    <div class="card green lighten-4">
+                        <div class="card-content green-text">
+                            <p class="center-align">${email_send}</p>
+                        </div>
+                    </div>
+                </c:if>
+                <div class="row">
+                    <div class="input-field">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" class="validate" required/>
                     </div>
                 </div>
-            </c:if>
-            <c:if test="${param.logout != null}">
-                <div class="card green lighten-4">
-                    <div class="card-content green-text">
-                        <p class="center-align">You have been logged out</p>
+                <div class="row">
+                    <div class="input-field">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" class="validate" required/>
                     </div>
                 </div>
-            </c:if>
-            <div class="row">
-                <div class="input-field">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" class="validate" required/>
+                <div class="row">
+                    <button type="submit" class="btn waves-effect waves-teal">Login</button>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" class="validate" required/>
-                </div>
-            </div>
-            <div class="row">
-                <button type="submit" class="btn waves-effect waves-teal">Login</button>
-            </div>
-        </form>
+            </form>
+            <br>
+            <p style="color: red;"><a href="forgotPassword"> Forgot password?</a></p>
+        </div>
     </div>
 </div>
 </body>

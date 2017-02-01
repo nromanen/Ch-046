@@ -153,7 +153,7 @@ public class UserServiceImpl implements UserService {
 
 	public void sendEmail(User user, String password) throws MessagingException {
 		try {
-			sendMail.send(user.getEmail(), "Travian user's info", "Your login is" + user.getLogin() + " and password: "
+			sendMail.send(user.getEmail(), "Travian user's info", "Your login is " + user.getLogin() + " and password: "
 					+ password + "  role " + user.getRoles());
 			logger.info("Password {} has been sent on user's e-mail {}", password, user.getEmail());
 		} catch (MessagingException e) {
@@ -207,5 +207,20 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserWithAlliance(String username) {
 		return userDao.getUserWithAlliance(username);
+	}
+
+	@Override
+	public User getUseByEmail(String email) {
+
+		User user =  userDao.getByMail(email);
+
+		if(user != null){
+			try {
+				sendEmail(user, user.getPassword());
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
+		}
+		return user;
 	}
 }
