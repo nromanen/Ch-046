@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ua.cv.tim.exception.EntityNotUniqueException;
+import ua.cv.tim.exception.VillageNotUniqueException;
 import ua.cv.tim.service.UserService;
 
 import javax.mail.MessagingException;
@@ -45,6 +46,14 @@ public class ExceptionHandlerControllerAdvice {
     @ExceptionHandler(value = Exception.class)
     public String generalExceptionHandler(Exception e) {
         logger.error("Exception: {}", e.getMessage());
+        e.printStackTrace();
+        return e.getMessage();
+    }
+
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(value = VillageNotUniqueException.class)
+    public String villageNotUniqueHandler(VillageNotUniqueException e){
+        logger.error("VillageNotUniqueException: {}", e.getMessage());
         e.printStackTrace();
         return e.getMessage();
     }
