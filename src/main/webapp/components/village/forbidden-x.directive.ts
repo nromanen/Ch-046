@@ -13,28 +13,3 @@ export function forbiddenXValidator() {
         return null;
     };
 }
-
-// @Directive({
-    // selector: '[forbiddenName]',
-    // providers: [{provide: NG_VALIDATORS, useExisting: ForbiddenValidatorDirective, multi: true}]
-// })
-
-// export class ForbiddenValidatorDirective implements Validator, OnChanges {
-//     @Input() forbiddenName: string;
-//     private valFn = Validators.nullValidator;
-//
-//     ngOnChanges(changes: SimpleChanges): void {
-//         const change = changes['forbiddenName'];
-//         if (change) {
-//             const val: string | RegExp = change.currentValue;
-//             const re = val instanceof RegExp ? val : new RegExp(val, 'i');
-//             this.valFn = forbiddenXValidator(re);
-//         } else {
-//             this.valFn = Validators.nullValidator;
-//         }
-//     }
-//
-//     validate(control: AbstractControl): {[key: string]: any} {
-//         return this.valFn(control);
-//     }
-// }

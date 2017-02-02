@@ -13,7 +13,9 @@ import {UnitType} from "../UnitType/unitType";
     templateUrl: "components/village/addVillageForm.html"
 })
 export class AddVillageForm implements OnInit,AfterViewChecked {
-
+    @Input() player;
+    @Output() wasSubmitted: EventEmitter<any>;
+    village: Village;
     submitted = false;
     addVillageForm: FormGroup;
     COORD_REGEXP=/^[0-9]*$/;
@@ -24,10 +26,6 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         this.buildForm();
     }
 
-    showAddArmyButton: boolean;
-    village: Village;
-    @Input() player;
-    @Output() wasSubmitted: EventEmitter<any>;
 
     constructor(private villageService: VillageService, private _fBuilder: FormBuilder) {
         this.village = new Village;
@@ -35,7 +33,7 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         // this.village.name="";
         this.village.isCapital = false;
         this.wasSubmitted = new EventEmitter();
-        this.showAddArmyButton = true;
+        // this.showAddArmyButton = true;
     }
 
     ngAfterViewChecked() {
@@ -113,12 +111,12 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         this.village.armies=allArmies;
         console.log(this.village);
         this.villageService.add(this.village);
-        // this.wasSubmitted.emit(false);
+        this.wasSubmitted.emit(false);
     }
 
-    showAddArmy(ifShow: boolean) {
-        this.showAddArmyButton = ifShow;
-    }
+    // showAddArmy(ifShow: boolean) {
+    //     this.showAddArmyButton = ifShow;
+    // }
 
     onValueChanged(data?: any) {
         if (!this.addVillageForm) {

@@ -62,15 +62,9 @@ import {forbiddenXValidator} from "./forbidden-x.directive";
 
 `
 })
-export class VillageRow implements OnInit,AfterViewInit,OnChanges{
-    ngOnChanges(changes: SimpleChanges): void {
-
-    }
+export class VillageRow implements OnInit,AfterViewInit{
     POPULATION_REGEXP=/^\d*$/;
     COORD_REGEXP=/^[0-9]*$/;
-    ngAfterViewInit(): void {
-        this.cdr.detectChanges();
-    }
     @Input() v:Village;
     @Input() isForm:boolean;
     @Input() editVillageForm;
@@ -79,18 +73,10 @@ export class VillageRow implements OnInit,AfterViewInit,OnChanges{
     selectedVillageChanged:EventEmitter<Village>;
     ifSaveChanges:boolean;
     private cdr: ChangeDetectorRef;
-
-    private villBefore;
     private armiesArrayControl: FormArray;
-    ngOnInit(): void {
-        this.getStringUnitTypeValues();
-        // this.buildForm();
-    }
 
-
-
-    constructor( private villageService:VillageService, private currVillageArmiesService:CurrVillageArmiesService,cdr: ChangeDetectorRef,
-                private _fBuilder:FormBuilder){
+    constructor( private villageService:VillageService,cdr: ChangeDetectorRef,
+                 private _fBuilder:FormBuilder){
         this.selectedVillageChanged=new EventEmitter<Village>(false);
         this.unitValues=[];
         this.ifSaveChanges=false;
@@ -98,7 +84,14 @@ export class VillageRow implements OnInit,AfterViewInit,OnChanges{
         this.cancelEdit=new EventEmitter<Village>();
     }
 
+    ngOnInit(): void {
+        this.getStringUnitTypeValues();
+        // this.buildForm();
+    }
 
+    ngAfterViewInit(): void {
+        this.cdr.detectChanges();
+    }
 
     getStringUnitTypeValues(){
         for (let m in UnitType){
@@ -106,9 +99,7 @@ export class VillageRow implements OnInit,AfterViewInit,OnChanges{
         }
 
     }
-    submitEdit(){
-        this.villageService.update(this.v);
-    }
+
     cellClick(village:Village){
         this.selectedVillageChanged.emit(village);
     }
@@ -140,14 +131,7 @@ export class VillageRow implements OnInit,AfterViewInit,OnChanges{
     showEdit(){
         this.selectedVillageChanged.emit(this.v);
         this.buildForm();
-        // this.buildForm();
         // this.cdr.detectChanges();
-    }
-
-    submit(){
-        console.log(this.editVillageForm.value);
-        this.v.armies=this.currVillageArmiesService.armies;
-        console.log(this.v);
     }
 
     cancelEditing(){

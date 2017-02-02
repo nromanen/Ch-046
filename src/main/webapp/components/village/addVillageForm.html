@@ -62,7 +62,7 @@
         </div>
             <div formArrayName="armies">
                 <div *ngFor="let p of addVillageForm.controls.armies.controls; let i=index" >
-                    <div add-army [army]="village.armies[i]" [group]="addVillageForm.controls.armies.controls[i]" (armyIsValid)="showAddArmy($event)"></div>
+                    <div add-army [army]="village.armies[i]" [group]="addVillageForm.controls.armies.controls[i]"></div>
                 </div>
             </div>
 

@@ -2,7 +2,6 @@ package ua.cv.tim.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import ua.cv.tim.exception.VillageNotUniqueException;
 import ua.cv.tim.model.UnitType;
 import ua.cv.tim.model.User;
 import ua.cv.tim.model.Village;
@@ -42,6 +40,8 @@ public class VillagesController {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User userByUsername = userService.getUserByUsername(principal.getUsername());
         village.setPlayer(userByUsername.getPlayer());
+
+        villageService.add(village);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(builder.path("/village/{id}").buildAndExpand(village.getUuid()).toUri());
         return new ResponseEntity<>(village, HttpStatus.CREATED);

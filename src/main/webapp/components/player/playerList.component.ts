@@ -100,52 +100,11 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
     ngOnInit(): void {
         this.villageService.villages = this.player.villages;
         this.editVillageForm=this._fBuilder.group({
-            // test:[this.selectedVillage.name,[]]
         });
     }
 
-    // buildForm(){
-    //     // this.editVillageForm=null;
-    //     this.editVillageForm=this._fBuilder.group({
-    //        'uuid':[this.selectedVillage.uuid,[]],
-    //         'name':new FormControl(this.selectedVillage.name,[Validators.required]),
-    //         'population':[this.selectedVillage.population,[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
-    //         ],
-    //         'xCoord': [this.selectedVillage.xCoord,
-    //             [Validators.required, forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
-    //         ],
-    //         'yCoord':[this.selectedVillage.yCoord,
-    //
-    //             [Validators.required,forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
-    //         ],
-    //         'wall':[this.selectedVillage.wall,
-    //             [Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
-    //         ],
-    //         'isCapital':[this.selectedVillage.isCapital],
-    //         'armies':this._fBuilder.array([]),
-    //     });
-    //     const control = <FormArray>this.editVillageForm.controls['armies'];
-    //     for (let t in UnitType) {
-    //         control.push(this.initArmies(t));
-    //
-    //     }
-    //
-    //     console.log(control);
-    // }
-    //
-    // initArmies(type) {
-    //     let h:string;
-    //     return this._fBuilder.group({
-    //         // value: [this.selectedVillage.armies[ord]!=undefined?this.selectedVillage.armies[ord].count:''],
-    //         count:['',[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]],
-    //         type:[type,[] ],
-    //         ownUnit:[]
-    //     });
-    // }
 
-    wasEdited(village: Village) {
-        this.currVillageService.village = village;
-    }
+
 
     changeSelectedVillage(village: Village) {
         this.selectedVillage = village;
