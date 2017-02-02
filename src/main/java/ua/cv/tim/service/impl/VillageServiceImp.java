@@ -45,10 +45,10 @@ public class VillageServiceImp implements VillageService {
     @Override
     public boolean isUnique(Village village) {
         boolean[] nameAndCoordUnique=new boolean[2];
-        Village comparingVillageByCoord = getByCoordinates((short) 25, (short) 25);
+        Village comparingVillageByCoord = getByCoordinates(village.getxCoord(),village.getyCoord());
         Village comparingVillageByName = getByName(village.getName());
-        nameAndCoordUnique[0] = comparingVillageByCoord == null;
-        nameAndCoordUnique[1] =comparingVillageByName == null;
+        nameAndCoordUnique[0] = comparingVillageByCoord == null || comparingVillageByCoord.getUuid().equals(village.getUuid());
+        nameAndCoordUnique[1] =comparingVillageByName == null || comparingVillageByName.getUuid().equals(village.getUuid());
 
         String errorMessage = createErrorMessage(nameAndCoordUnique);
         if (errorMessage != null) {
@@ -63,9 +63,10 @@ public class VillageServiceImp implements VillageService {
             errorMessage = "Village with the same coordinates already exists!";
         } else if (!nameAndCoordinatesUnique[1]) {
             errorMessage = "Village with the same name  already exists!";
-        } else {
-            errorMessage="Village with the same name and coordinates already exists!";
         }
+//        else if (!nameAndCoordinatesUnique[0] && !nameAndCoordinatesUnique[1]){
+//            errorMessage="Village with the same name and coordinates already exists!";
+//        }
         return errorMessage;
     }
 

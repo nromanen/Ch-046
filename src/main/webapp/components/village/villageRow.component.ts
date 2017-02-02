@@ -15,11 +15,11 @@ import {forbiddenXValidator} from "./forbidden-x.directive";
 @Component({
     selector: '[player-ro]',
     outputs:['selectedVillageChanged'],
-    styleUrls:['components/style.css'],
+    styleUrls:['styles/style.css'],
     template:`
 <td [formGroup]="editVillageForm" >
     <div *ngIf="!isForm" class="ss1">{{v.name}}</div>
-    <input *ngIf="isForm" type="text" formControlName="name">
+    <input *ngIf="isForm" type="text" formControlName="name" (keyup)="cancelEditingInRow($event.keyCode)">
     </td>
   
 <td [formGroup]="editVillageForm">
@@ -54,7 +54,7 @@ import {forbiddenXValidator} from "./forbidden-x.directive";
 </td>
 <td>
     <button (click)="!isForm?showEdit():changeVillage()" type="button"
-    class="btn waves-effect waves-light col offset-s1"  name="action" 
+    class="btn waves-effect waves-light col offset-s3"  name="action" 
     [disabled]="!editVillageForm.valid && isForm" style="margin-top: 5px;" >
             {{!isForm?"Edit":"Save"}}      
     </button>
@@ -120,7 +120,7 @@ export class VillageRow implements OnInit,AfterViewInit{
                 console.log(response);
             },
             error=>{
-                console.log(error);
+                console.log(<any>error);
             }
         );
         this.selectedVillageChanged.emit(new Village);
@@ -135,8 +135,10 @@ export class VillageRow implements OnInit,AfterViewInit{
     }
 
     cancelEditing(){
-        this.isForm=false;
+        // this.isForm=false;
+        this.selectedVillageChanged.emit(new Village);
         this.cdr.detectChanges();
+
     }
 
     buildForm(){
@@ -172,6 +174,12 @@ export class VillageRow implements OnInit,AfterViewInit{
             ownUnit:[],
             uuid:[army.uuid,[]]
         });
+    }
+
+    cancelEditingInRow(event){
+        if (event===27){
+            this.selectedVillageChanged.emit(new Village);
+        }
     }
 
 }

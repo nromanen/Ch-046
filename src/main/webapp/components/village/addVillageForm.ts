@@ -10,7 +10,8 @@ import {forbiddenXValidator} from "./forbidden-x.directive";
 import {UnitType} from "../UnitType/unitType";
 @Component({
     selector: "add-vill-form",
-    templateUrl: "components/village/addVillageForm.html"
+    templateUrl: "components/village/addVillageForm.html",
+    styleUrls:['']
 })
 export class AddVillageForm implements OnInit,AfterViewChecked {
     @Input() player;
@@ -18,22 +19,22 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
     village: Village;
     submitted = false;
     addVillageForm: FormGroup;
-    COORD_REGEXP=/^[0-9]*$/;
-    POPULATION_REGEXP=/^\d*$/;
-
+    COORD_REGEXP=/^[0-9]|-[0-9]*$/;
+    POPULATION_REGEXP=/^\d|-\d*$/;
+    @Output() successMessage:EventEmitter<string>;
+    @Output() errorMessage:EventEmitter<string>;
     ngOnInit(): void {
         console.log(this.village);
         this.buildForm();
     }
 
-
     constructor(private villageService: VillageService, private _fBuilder: FormBuilder) {
         this.village = new Village;
         this.village.armies = [];
-        // this.village.name="";
         this.village.isCapital = false;
         this.wasSubmitted = new EventEmitter();
-        // this.showAddArmyButton = true;
+        this.errorMessage=new EventEmitter<string>();
+        this.successMessage=new EventEmitter<string>();
     }
 
     ngAfterViewChecked() {
@@ -68,7 +69,6 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
     }
 
     initArmies() {
-        // initialize our address
         return this._fBuilder.group({
             type: ['', Validators.required],
             count: ['',[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]],
@@ -82,13 +82,9 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         const control = <FormArray>this.addVillageForm.controls['armies'];
         control.push(this.initArmies());
         console.log(this.village);
-        // this.showAddArmyButton = false;
     }
 
     onSubmit(village: Village) {
-        // this.player.villages.push(village);
-        // this.village = new Village;
-        // this.village.allArmies = [];
         let allArmies:Array<Army>=[];
         for (let type in UnitType)
         {
@@ -110,13 +106,18 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         this.village.player=this.player;
         this.village.armies=allArmies;
         console.log(this.village);
-        this.villageService.add(this.village);
-        this.wasSubmitted.emit(false);
-    }
+        this.villageService.add(this.village).subscribe(
+            response=>{
+                this.player.villages.push(response);
+                this.successMessage.emit('The village has successfully been created!');
+                this.wasSubmitted.emit(false);
+            },
+                    error=>{
+                        this.errorMessage.emit(error._body);
+                    }
+        );
 
-    // showAddArmy(ifShow: boolean) {
-    //     this.showAddArmyButton = ifShow;
-    // }
+    }
 
     onValueChanged(data?: any) {
         if (!this.addVillageForm) {
@@ -145,7 +146,6 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         'wall':'',
     };
 
-    s: string;
     validationMessages = {
         'name': {
             'required': 'Name is required.',

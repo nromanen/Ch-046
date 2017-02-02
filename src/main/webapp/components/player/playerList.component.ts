@@ -15,8 +15,7 @@ import {type} from "os";
 @Component
 ({
     selector: 'player-list',
-    styleUrls:['components/style.css'],
-    // templateUrl: "components/player/playerList.html"
+    styleUrls:['styles/style.css'],
     template:`
 
 <div class="row ">

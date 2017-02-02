@@ -1,9 +1,9 @@
-<form [formGroup]="addVillageForm"   (ngSubmit)="onSubmit()" >
+<form [formGroup]="addVillageForm" (ngSubmit)="onSubmit()" >
     <div class="row container">
         <div class="input-field col s6 offset-s3">
             <input id="name" type="text" class="validate" required formControlName="name">
             <label for="name">Name</label>
-            <div *ngIf="formErrors.name" class="alert alert-danger">
+            <div *ngIf="formErrors.name" class="error">
                 {{ formErrors.name }}
             </div>
         </div>
@@ -73,3 +73,5 @@
         </div>
     </div>
 </form>
+
+<!--//0987687543-->

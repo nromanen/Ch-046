@@ -19,3 +19,7 @@ height: 50px;
  td div{
      text-align: center;
  }
+
+ .error{
+     color: red;
+ }

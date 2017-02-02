@@ -12,19 +12,6 @@ export class VillageService{
     villages:Array<Village>;
     update(village:Village){
 
-        // let headers = new Headers();
-        // headers.append('Content-Type', 'application/json');
-        // this.http.put(this.villageURL + village.uuid, JSON.stringify(village), {
-        //     headers: headers
-        // }).subscribe(
-        //     response => {
-        //         console.log(response);
-        //         let newVillage=response.json();
-        //         console.log(newVillage);
-        //          this.villages[this.villages.indexOf(village)] = newVillage;
-        //     },
-        //     error => console.log(error)
-        // );
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -37,15 +24,19 @@ export class VillageService{
         const body = JSON.stringify(village);
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        this.http.post(this.villageURL, body, {
+        // this.http.post(this.villageURL, body, {
+        //     headers: headers
+        // }).map(res => res.json())
+        //     .subscribe(
+        //         response => {
+        //             this.villages.push(response);
+        //         },
+        //         error => console.log(error)
+        //     );
+
+       return this.http.post(this.villageURL, body, {
             headers: headers
-        }).map(res => res.json())
-            .subscribe(
-                response => {
-                    this.villages.push(response);
-                },
-                error => console.log(error)
-            );
+        }).map(res => res.json());
     }
     constructor(private http:Http){
 

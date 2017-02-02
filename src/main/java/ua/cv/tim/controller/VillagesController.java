@@ -28,10 +28,10 @@ public class VillagesController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/village/{id}",method = RequestMethod.GET)
-    public ResponseEntity<Village> getVillageById(@PathVariable(name = "id")String id){
-        Village village= villageService.getById(id);
-        if (village==null)
+    @RequestMapping(value = "/village/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Village> getVillageById(@PathVariable(name = "id") String id) {
+        Village village = villageService.getById(id);
+        if (village == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(village, HttpStatus.OK);
     }
@@ -41,17 +41,18 @@ public class VillagesController {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User userByUsername = userService.getUserByUsername(principal.getUsername());
         village.setPlayer(userByUsername.getPlayer());
-
-        villageService.add(village);
+        if (villageService.isUnique(village)) {
+            villageService.add(village);
+        }
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(builder.path("/village/{id}").buildAndExpand(village.getUuid()).toUri());
         return new ResponseEntity<>(village, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/village/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Village> updateVillage(@PathVariable(name = "id") String id, @RequestBody Village village){
-        Village current_village= villageService.getById(id);
-        if (current_village!=null) {
+    public ResponseEntity<Village> updateVillage(@PathVariable(name = "id") String id, @RequestBody Village village) {
+        Village current_village = villageService.getById(id);
+        if (current_village != null) {
             current_village.setName(village.getName());
             current_village.setxCoord(village.getxCoord());
             current_village.setyCoord(village.getyCoord());

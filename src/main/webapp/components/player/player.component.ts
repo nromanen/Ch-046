@@ -17,18 +17,32 @@ import {Army} from "../army/army";
         <player-head></player-head>
         <player-list *ngIf="player" [player]="player"></player-list>
         <div class="row">
-            <div class="col offset-s5">
-                <button (click)="showAddForm()" class="btn waves-effect waves-light">add</button>
+            <div class="col s4 offset-s6" >
+                <button (click)="showAddForm()" class="btn waves-effect waves-light">Add</button>
             </div>
-            <add-vill-form [player]="player" *ngIf="showAddVillageForm" (wasSubmitted)="hideAddForm($event)"></add-vill-form>
-        </div>        
+            <div class="row">
+<div *ngIf="successMessage!=null||errorMessage!=null" class="col s4 offset-s4 ">
+    <div  [ngClass]="{'card':true, 'green':successMessage!=null, 'red':errorMessage!=null, 'lighten-5':true}">
+        <div [ngClass]="{'card-content':true , 'green-text':successMessage!=null,'red-text':errorMessage!=null }">
+            <p>{{successMessage!=null?successMessage:errorMessage}} <span (click)="closeDialog()" class="right">x</span></p>
+        </div>
+    </div>
+</div>
+</div>
+            <add-vill-form [player]="player" *ngIf="showAddVillageForm" (wasSubmitted)="hideAddForm($event)"
+            (successMessage)="showSuccessMessage($event)" (errorMessage)="showErrorMessage($event)"></add-vill-form>
+        </div>
+
+
 `
 })
 export class PlayerComponent implements OnInit {
     player: Player;
     showAddVillageForm: boolean;
-
-    constructor(private currPlayerService: CurrVillageArmiesService, private playerService: PlayerService, private route: ActivatedRoute, private villageService: VillageService) {
+    successMessage;
+    errorMessage;
+    h:boolean=false;
+    constructor(private playerService: PlayerService, private route: ActivatedRoute, private villageService: VillageService) {
 
     }
 
@@ -51,6 +65,19 @@ export class PlayerComponent implements OnInit {
         this.showAddVillageForm = true;
     }
 
+    closeDialog(){
+        this.errorMessage=null;
+        this.successMessage=null;
+    }
 
+    showSuccessMessage(event:string){
+        this.errorMessage=null;
+        this.successMessage=event;
+    }
+
+    showErrorMessage(event:string){
+        this.successMessage=null;
+          this.errorMessage=event;
+    }
 }
 
