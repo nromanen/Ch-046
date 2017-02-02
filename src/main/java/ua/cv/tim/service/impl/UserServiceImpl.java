@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
 		List<UserDTO> allianceUsers = new ArrayList<>();
 		for (User user : users) {
 			allianceUsers.add(new UserDTO(user.getUuid(), user.getLogin(), user.getEmail(),
-					user.getPlayer().getAlliance().getName()));
+					user.getPlayer().getAlliance().getName(), user.getRoles().size() == 2));
 		}
 		return allianceUsers;
 	}
@@ -140,7 +140,7 @@ public class UserServiceImpl implements UserService {
 		logger.info("Password is {} ", user.getPassword());
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.USER);
-		if (member.getRole() != null) {
+		if (member.getIsLeader()) {
 			roles.add(Role.LEADER);
 		}
 		user.setRoles(roles);

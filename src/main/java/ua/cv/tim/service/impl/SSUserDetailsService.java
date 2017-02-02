@@ -56,6 +56,7 @@ public class SSUserDetailsService implements UserDetailsService {
 				getAuthorities(user));
 		authorizedUser.setUuid(user.getUuid());
 		authorizedUser.setEmail(user.getEmail());
+		authorizedUser.setRoles(user.getRoles());
 		authorizedUser.setRace(user.getPlayer().getRace());
 		authorizedUser.setVillages(user.getPlayer().getVillages());
 		authorizedUser.setAlliance(user.getPlayer().getAlliance());
