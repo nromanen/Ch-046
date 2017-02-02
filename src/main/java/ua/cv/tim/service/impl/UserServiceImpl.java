@@ -3,6 +3,7 @@ package ua.cv.tim.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.AllianceDao;
@@ -25,7 +26,7 @@ import java.util.Random;
  * Created by Oleg on 04.01.2017.
  */
 
-@Service
+@Service(value = "userService")
 @Transactional
 public class UserServiceImpl implements UserService {
 
@@ -60,6 +61,7 @@ public class UserServiceImpl implements UserService {
 				+ user.getPassword() + "\",  Role: " + user.getRoles());
 	}
 
+
 	@Override
 	public void delete(User user) {
 	    userDao.delete(user);
@@ -83,11 +85,11 @@ public class UserServiceImpl implements UserService {
 	private String createErrorMessage(boolean[] isLoginEmailUnique) {
 		String errorMessage = null;
 		if (!isLoginEmailUnique[0] && !isLoginEmailUnique[1]) {
-			errorMessage = "User with the same login and email has already existed!";
+			errorMessage = "User with the same login and email exists!";
 		} else if (!isLoginEmailUnique[0]) {
-			errorMessage = "User with the same login has already existed!";
+			errorMessage = "User with the same login exists!";
 		} else if (!isLoginEmailUnique[1]) {
-			errorMessage = "User with the same email has already existed!";
+			errorMessage = "User with the same email exists!";
 		}
 		return errorMessage;
 	}
@@ -133,7 +135,8 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		user.setLogin(member.getLogin());
 		user.setEmail(member.getEmail());
-		user.setPassword(generatePassword(10));
+		String password = generatePassword(10);
+		user.setPassword(encodePassword(password));
 		logger.info("Password is {} ", user.getPassword());
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.USER);
@@ -186,20 +189,18 @@ public class UserServiceImpl implements UserService {
 		return new String(password);
 	}
 
-	public boolean isUserUnique(UserDTO member) {
-		User user = new User();
-		user.setLogin(member.getLogin());
-		user.setEmail(member.getEmail());
-
-		if (userDao.isUserUnique(user.getLogin(), user.getUuid())) {
-			return false;
-		} else if (userDao.getByMail(user.getEmail(), user.getUuid()) != null) {
-			return false;
-		} else return true;
+	private String encodePassword(String password) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		return passwordEncoder.encode(password);
 	}
 
 	@Override
 	public User getUserWithAlliance(String username) {
 		return userDao.getUserWithAlliance(username);
+	}
+
+	@Override
+	public User getFullUserByUsername(String username) {
+		return userDao.getFullUserByUsername(username);
 	}
 }

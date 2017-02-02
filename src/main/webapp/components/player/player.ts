@@ -12,6 +12,7 @@ export class Player {
     race: Race;
     villages: Village[];
     uuid: string;
+    isLeader: boolean;
 
     constructor() {
 

@@ -13,12 +13,13 @@ import {StompService} from "../services/helpNotification/stomp.service";
     <div class="nav-wrapper">
         <a class="brand-logo">Logo</a>
         <ul class="right hide-on-med-and-down">
-            <li><a routerLink="/leader" routerLinkActive="active">Main</a></li>
+            <li><a routerLink="/leader" routerLinkActive="active">Leader</a></li>
+            <li><a routerLink="/user" routerLinkActive="active">Player</a></li>
             <li><a routerLink="/leader/manager" routerLinkActive="active">Manage</a></li>
             <li><a routerLink="/help" routerLinkActive="active">Ask help</a></li>
             <li><a routerLink="/allHelps" routerLinkActive="active">Attacks</a></li>
             <li><a href="/travian/parser/">Parse</a></li>
-            <li><a href="/travian/logout">Logout</a></li>
+            <li><a href="logout">Logout</a></li>
         </ul>
     </div>
 </nav>

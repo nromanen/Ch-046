@@ -1,12 +1,12 @@
 package ua.cv.tim.model;
 
-import javax.persistence.Entity;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by rmochetc on 22.01.2017.
  */
-public class Attack extends UuidEntity{
+public class Attack extends UuidEntity implements Serializable {
 
     private Player owner;
     private Village village;

@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import ua.cv.tim.dto.PlayerDTO;
+import ua.cv.tim.model.AuthorizedUser;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.User;
 import ua.cv.tim.model.Village;
@@ -58,7 +59,7 @@ public class PlayerController {
 
         PlayerDTO playerDTO=new PlayerDTO(player.getUser().getLogin(),
                 player.getUser().getPassword(),player.getUser().getEmail(),
-                player.getRace(),player.getVillages(),player.getAlliance());
+                player.getRace(),player.getVillages(),player.getAlliance(), userByUsername.getRoles().size() == 2);
         return new ResponseEntity<>(playerDTO, HttpStatus.OK);
     }
 
@@ -95,11 +96,10 @@ public class PlayerController {
         return new ResponseEntity<>(player, HttpStatus.NO_CONTENT);
     }
 
-	@RequestMapping(value = "/player/alliance", method = RequestMethod.GET) // todo change to get allianceID from principal
+	@RequestMapping(value = "/player/alliance", method = RequestMethod.GET)
 	public ResponseEntity<List<PlayerDTO>> getPlayersByAlliance() {
-		String allianceName = getAllianceName();  // todo change this after principal will
-		log.info("Alliance name: {}", allianceName);
-		List<Player> players = playerService.getPlayersByAllianceWithVillages(allianceName);
+		AuthorizedUser principal = (AuthorizedUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<Player> players = playerService.getPlayersByAllianceWithVillages(principal.getAlliance().getName());
 		log.info("Players from DB: {}", players);
 		List<PlayerDTO> playerDTOs = initPlayerDTOs(players);
 		return new ResponseEntity<>(playerDTOs, HttpStatus.OK);

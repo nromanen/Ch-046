@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ua.cv.tim.dto.UserDTO;
+import ua.cv.tim.model.AuthorizedUser;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.UserService;
 
@@ -35,8 +36,9 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<UserDTO> getUserWithAlliance() {
 		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		AuthorizedUser authorizedUser = (AuthorizedUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		logger.info(authorizedUser.toString());
 		User user = userService.getUserWithAlliance(principal.getUsername());
-		logger.info(user.toString());
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
