@@ -28,7 +28,8 @@ public class ForgotPassController {
     @RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
     public String forgotPass( @RequestParam("email") String email, Model model) {
 
-        User user = userService.getUseByEmail(email);
+        User user = userService.getByMail(email);
+//        User user = new User();
 
         if (user != null){
             System.out.println("Password = " + user.getPassword());

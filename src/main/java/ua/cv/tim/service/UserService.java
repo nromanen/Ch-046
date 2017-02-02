@@ -28,4 +28,6 @@ public interface UserService {
 	User getUserWithAlliance(String username);
 
 	User getFullUserByUsername(String username);
+
+	User getByMail(String email);
 }

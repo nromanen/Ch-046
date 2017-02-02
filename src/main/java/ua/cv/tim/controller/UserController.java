@@ -27,10 +27,10 @@ import java.util.List;
 @RequestMapping(value = "/user")
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -47,14 +47,14 @@ public class UserController {
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 
-    @RequestMapping(value = "/userList", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> allWithRoles = userService.getAllWithRoles();
-        if (allWithRoles.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(allWithRoles, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/userList", method = RequestMethod.GET)
+	public ResponseEntity<List<User>> getAllUsers() {
+		List<User> allWithRoles = userService.getAllWithRoles();
+		if (allWithRoles.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(allWithRoles, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
 	public ResponseEntity<User> getById(@PathVariable("id") String id) {

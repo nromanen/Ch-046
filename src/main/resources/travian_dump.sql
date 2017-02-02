@@ -128,7 +128,7 @@ ALTER TABLE village OWNER TO postgres;
 
 --
 -- Data for Name: alliance; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: allianceName; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: alliance; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
