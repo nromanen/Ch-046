@@ -105,7 +105,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<UserDTO> updateUser(@PathVariable("id") String id, @RequestBody UserDTO user) {
+	public ResponseEntity<UserDTO> updateUser(@PathVariable("id") String id, @RequestBody UserDTO user) throws MessagingException {
 		logger.info("User id: {}, user body: {}", id, user);
 		User currentUser = userService.getById(id);
 		if (currentUser == null) {

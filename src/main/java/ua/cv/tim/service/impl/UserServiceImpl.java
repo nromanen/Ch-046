@@ -54,10 +54,11 @@ public class UserServiceImpl implements UserService {
 		return userDao.getAll();
 	}
 	@Override
-	public void update(User user) {
+	public void update(User user) throws MessagingException {
 		userDao.update(user);
+		sendEmail(user,"Player updated successfully, your login is \"" + user.getLogin() + "\", and password: \""
+				+ user.getPassword() + "\",  Role: " + user.getRoles());
 	}
-
 
 	@Override
 	public void delete(User user) {
@@ -146,13 +147,13 @@ public class UserServiceImpl implements UserService {
 		player.setAlliance(allianceDao.getAllianceByName(member.getAlliance()));
 		user.setPlayer(player);
 		playerDao.add(player);
-		sendEmail(user);
+		sendEmail(user,"Your login is \"" + user.getLogin() + "\", and password: \""
+						+ user.getPassword() + "\",  Role: " + user.getRoles());
 	}
 
-	public void sendEmail(User user) throws MessagingException {
+	public void sendEmail(User user, String message) throws MessagingException {
 		try {
-			sendMail.send(user.getEmail(), "Travian user's info", "Your login is" + user.getLogin() + " and password: "
-					+ user.getPassword() + "  role " + user.getRoles());
+			sendMail.send(user.getEmail(), "Travian user's info",message );
 			logger.info("Password {} has been sent on user's e-mail {}", user.getPassword(), user.getEmail());
 		} catch (MessagingException e) {
 			logger.error("The e-mail {} hasn't been sent {}", user.getEmail(), e);

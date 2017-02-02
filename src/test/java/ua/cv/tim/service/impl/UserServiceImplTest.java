@@ -1,8 +1,9 @@
-package ua.cv.tim.service;
+package ua.cv.tim.service.impl;
 
 
 import org.mockito.*;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.cv.tim.dao.AllianceDao;
@@ -13,7 +14,6 @@ import ua.cv.tim.model.Alliance;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
-import ua.cv.tim.service.impl.UserServiceImpl;
 import ua.cv.tim.utils.SendMail;
 
 import javax.mail.MessagingException;
@@ -26,7 +26,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.testng.Assert.*;
-import static sun.audio.AudioPlayer.player;
+
 
 /**
  * Created by mmaksymtc on 24.01.2017.
@@ -46,7 +46,6 @@ public class UserServiceImplTest {
     UserServiceImpl userService;
     @Captor
     ArgumentCaptor<User> captor;
-
     @Spy
     List<User> users = new ArrayList<User>();
 
@@ -54,6 +53,10 @@ public class UserServiceImplTest {
     public void setUp(){
         MockitoAnnotations.initMocks(this);
         users=getUserList();
+    }
+    @AfterMethod
+    public void resetAllMocks(){
+        Mockito.reset(allianceDao,playerDao,userDao,sendMail);
     }
 
     @Test
@@ -66,12 +69,11 @@ public class UserServiceImplTest {
     }
     @Test
     public void addUserTest(){
+        User user = users.get(0);
         doNothing().when(userDao).add(any(User.class));
-        userService.add(users.get(0));
+        userService.add(user);
         verify(userDao, times(1)).add(captor.capture());
         Assert.assertEquals(captor.getValue().getLogin(), "neo");
-        Assert.assertEquals(2, users.size());
-        verify(users, times(1)).add(any(User.class));
     }
     @Test
     public void deleteTest(){
@@ -87,20 +89,23 @@ public class UserServiceImplTest {
         verify(userDao, times(1)).getAll();
     }
     @Test
-    public void updateTest(){
+    public void updateTest() throws MessagingException {
         User testUser = users.get(0);
         testUser.setLogin("updatedNeo");
         doNothing().when(userDao).update(any(User.class));
+        doNothing().when(sendMail).send(anyString(),anyString(),anyString());
         userService.update(testUser);
         verify(userDao, times(1)).update(captor.capture());
         Assert.assertEquals(captor.getValue().getLogin(), "updatedNeo");
     }
-    @Test(expectedExceptions = RuntimeException.class)
+
+    @Test
     public void isUniqueTest(){
         User user = users.get(0);
+        User newUser = users.get(1);
         when(userDao.getUserByUsername("neo")).thenReturn(user);
         when(userDao.getByMail("neo@ukr.net")).thenReturn(user);
-        assertFalse(userService.isUnique(user));
+        assertTrue(userService.isUnique(newUser));
         verify(userDao, times(1)).getUserByUsername(anyString());
         verify(userDao, times(1)).getByMail(anyString());
     }
@@ -125,25 +130,19 @@ public class UserServiceImplTest {
         assertEquals(userService.getById("3455-ede34-de4dee-de34d"),user);
         verify(userDao, times(1)).getById(anyString());
     }
-    @Test(expectedExceptions = MessagingException.class)
+    @Test
     public void addUserDTOTest() throws MessagingException {
-        User user = new User();
-        user.setLogin("Jonathan");
-        user.setEmail("jonatahan@ukr.net");
-        UserDTO member = new UserDTO(null, user.getLogin(), user.getEmail(),"valhala");
+        UserDTO member = new UserDTO(null, "Jonathan", "jonatahan@ukr.net","valhala");
         Alliance alliance = new Alliance();
         alliance.setName("valhala");
         doNothing().when(userDao).add(any(User.class));
         when(allianceDao.getAllianceByName(anyString())).thenReturn(alliance);
         doNothing().when(playerDao).add(any(Player.class));
-        //when(userService.sendEmail(user));
+        doNothing().when(sendMail).send(anyString(),anyString(),anyString());
         userService.addUser(member);
         verify(userDao, times(1)).add(captor.capture());
-//        verify(userService, times(1)).sendEmail(any(User.class));
         Assert.assertEquals(captor.getValue().getLogin(), "Jonathan");
-        doThrow(RuntimeException.class).when(userService).sendEmail(user);
-      //  verify(users, times(2)).add(any(User.class));
-       // assertNotNull(userTestUtils.getUserByUsername("Jonathan"));
+
     }
     @Test
     public void getUserWithAllianceTest(){
