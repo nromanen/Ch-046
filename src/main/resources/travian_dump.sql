@@ -35,17 +35,17 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: allianceName; Type: TABLE; Schema: public; Owner: postgres
+-- Name: alliance; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE allianceName (
+CREATE TABLE alliance (
     uuid character varying(255) NOT NULL,
     lastmodified timestamp without time zone,
     name character varying(255) NOT NULL
 );
 
 
-ALTER TABLE allianceName OWNER TO postgres;
+ALTER TABLE alliance OWNER TO postgres;
 
 --
 -- Name: army; Type: TABLE; Schema: public; Owner: postgres
@@ -127,6 +127,7 @@ CREATE TABLE village (
 ALTER TABLE village OWNER TO postgres;
 
 --
+-- Data for Name: alliance; Type: TABLE DATA; Schema: public; Owner: postgres
 -- Data for Name: allianceName; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -235,9 +236,9 @@ INSERT INTO user_roles (user_uuid, roles) VALUES ('midle-user-4', 'USER');
 
 
 
-INSERT INTO allianceName (uuid, lastmodified, name) VALUES ('valhala', '2017-01-06 19:28:08.947', 'valhala');
-INSERT INTO allianceName (uuid, lastmodified, name) VALUES ('martix', '2017-01-06 19:28:08.947', 'martix');
-INSERT INTO allianceName (uuid, lastmodified, name) VALUES ('midleeath', '2017-01-06 19:28:08.947', 'midleeath');
+INSERT INTO alliance (uuid, lastmodified, name) VALUES ('valhala', '2017-01-06 19:28:08.947', 'valhala');
+INSERT INTO alliance (uuid, lastmodified, name) VALUES ('martix', '2017-01-06 19:28:08.947', 'martix');
+INSERT INTO alliance (uuid, lastmodified, name) VALUES ('midleeath', '2017-01-06 19:28:08.947', 'midleeath');
 
 
 insert into village (uuid, lastmodified, iscapital, name, population, wall, xcoord, ycoord, player_uuid) VALUES ('1','2017-01-06 18:52:08.947',TRUE ,'village1',50,50,12,13,'valhala-player-1');
@@ -403,10 +404,10 @@ INSERT INTO army (uuid, lastmodified, count, ownunit, type, ar_village_uuid , vi
 
 
 --
--- Name: allianceName alliance_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: alliance alliance_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY allianceName
+ALTER TABLE ONLY alliance
     ADD CONSTRAINT alliance_pkey PRIMARY KEY (uuid);
 
 
@@ -427,10 +428,10 @@ ALTER TABLE ONLY player
 
 
 --
--- Name: allianceName uk_5wwgan6t1qn6l6kx6foe521gl; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: alliance uk_5wwgan6t1qn6l6kx6foe521gl; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY allianceName
+ALTER TABLE ONLY alliance
     ADD CONSTRAINT uk_5wwgan6t1qn6l6kx6foe521gl UNIQUE (name);
 
 
@@ -495,7 +496,7 @@ ALTER TABLE ONLY user_roles
 --
 
 ALTER TABLE ONLY player
-    ADD CONSTRAINT fkhyk17jmcujmo1992pv7ibty3y FOREIGN KEY (alliance_id) REFERENCES allianceName(uuid);
+    ADD CONSTRAINT fkhyk17jmcujmo1992pv7ibty3y FOREIGN KEY (alliance_id) REFERENCES alliance(uuid);
 
 
 --

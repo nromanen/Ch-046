@@ -20,8 +20,8 @@
         <div class="col s3">
             <label>Village</label>
             <select class="browser-default" [formControl]="helpForm.controls['villageName']">
-            <option value="" disabled selected>Choose your village</option>
-            <option *ngFor="let village of villages" value="{{village.uuid}}">{{village.name}}</option>
+                <option value="" disabled selected>Choose your village</option>
+                <option *ngFor="let village of villages" value="{{village.uuid}}">{{village.name}}</option>
             </select>
             <!--<input type="text" id="village" class="validate"  [formControl]="helpForm.controls['villageName']"/>-->
             <!--<div style="color: red; font-size: 14px;" *ngIf="!complexForm.controls['villageName'].valid && complexForm.controls['villageName'].touched">{{NAME_ERROR}}</div>-->
@@ -35,7 +35,9 @@
 
         <div class="col s4">
             <label for="time">Time of attack</label>
-            <input type="text" id="time" class="validate"  [formControl]="helpForm.controls['timeAttack']" placeholder="yyyy-MM-dd-HH-mm-ss / 2017-01-27-12-00-00"/>
+            <!--<input type="text" id="time" class="validate"  [formControl]="helpForm.controls['timeAttack']" placeholder="yyyy-MM-dd-HH-mm-ss / 2017-01-27-12-00-00"/>-->
+
+            <input type="datetime-local" id="time" [formControl]="helpForm.controls['timeAttack']"/>
             <!--<div style="color: red; font-size: 14px;" *ngIf="!complexForm.controls['timeAttack'].valid && complexForm.controls['timeAttack'].touched">{{EMAIL_ERROR}}</div>-->
         </div>
         <div class="input-field col s2">
@@ -43,6 +45,19 @@
         </div>
     </div>
 </form>
+<!--<div class="row container">-->
+
+    <!--<div class="col s3">-->
+        <!--<input type="date" [(ngModel)]="birthdate"/>-->
+        <!--&lt;!&ndash;<input type="time" [(ngModel)]="time"/>&ndash;&gt;-->
+        <!--<input type="datetime-local" [(ngModel)]="time"/>-->
+
+        <!--<br>-->
+        <!--<p>{{birthdate}}</p>-->
+        <!--<p>{{time}}</p>-->
+    <!--</div>-->
+<!--</div>-->
+
 
 
 

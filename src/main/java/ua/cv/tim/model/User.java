@@ -81,17 +81,14 @@ public class User extends UuidEntity implements Serializable {
 				.append("User: { login: ").append(login).append(", ")
 				.append("password: ").append(password).append(", ")
 				.append("email: ").append(email).append(", ")
-				.append("roles: [ ");
+				.append("roles: ").append(roles);
 
-		for (int i = 0; i < roles.size(); i++) {
-			if (i != roles.size() - 1) {
-				sb.append(roles.get(i).toString()).append(", ");
-			} else {
-				sb.append(roles.get(i).toString());
-			}
+		if (player != null) {
+			sb
+					.append(", race: ").append(player.getRace()).append(", ")
+					.append(", alliance: ").append((player.getAlliance() != null) ? player.getAlliance() : null).append(", ")
+					.append(", villages: ").append((player.getVillages() != null) ? player.getVillages() : null).append(" }");
 		}
-
-		sb.append(" ]");
 		return sb.toString();
 	}
 }

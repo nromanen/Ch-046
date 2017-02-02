@@ -1,6 +1,5 @@
-System.register(["@angular/core", "./alliance", "@angular/forms"], function(exports_1, context_1) {
+System.register(["@angular/core", "./alliance", "@angular/forms"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,10 +9,10 @@ System.register(["@angular/core", "./alliance", "@angular/forms"], function(expo
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, alliance_1, forms_1;
-    var EditAllianceComponent;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, alliance_1, forms_1, EditAllianceComponent;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
@@ -22,8 +21,9 @@ System.register(["@angular/core", "./alliance", "@angular/forms"], function(expo
             },
             function (forms_1_1) {
                 forms_1 = forms_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             EditAllianceComponent = (function () {
                 function EditAllianceComponent(formBuilder) {
                     this.formBuilder = formBuilder;
@@ -52,26 +52,26 @@ System.register(["@angular/core", "./alliance", "@angular/forms"], function(expo
                 EditAllianceComponent.prototype.cancelEditing = function () {
                     this.notify.emit(null);
                 };
-                __decorate([
-                    core_1.Input(), 
-                    __metadata('design:type', alliance_1.Alliance)
-                ], EditAllianceComponent.prototype, "editedAlliance", void 0);
-                __decorate([
-                    core_1.Output(), 
-                    __metadata('design:type', core_1.EventEmitter)
-                ], EditAllianceComponent.prototype, "notify", void 0);
-                EditAllianceComponent = __decorate([
-                    core_1.Component({
-                        selector: 'edit-alliance',
-                        templateUrl: 'components/alliance/editAlliance.html',
-                        styleUrls: ['components/alliance/allianceForm.css']
-                    }), 
-                    __metadata('design:paramtypes', [forms_1.FormBuilder])
-                ], EditAllianceComponent);
                 return EditAllianceComponent;
             }());
+            __decorate([
+                core_1.Input(),
+                __metadata("design:type", alliance_1.Alliance)
+            ], EditAllianceComponent.prototype, "editedAlliance", void 0);
+            __decorate([
+                core_1.Output(),
+                __metadata("design:type", core_1.EventEmitter)
+            ], EditAllianceComponent.prototype, "notify", void 0);
+            EditAllianceComponent = __decorate([
+                core_1.Component({
+                    selector: 'edit-alliance',
+                    templateUrl: 'components/alliance/editAlliance.html',
+                    styleUrls: ['components/alliance/allianceForm.css']
+                }),
+                __metadata("design:paramtypes", [forms_1.FormBuilder])
+            ], EditAllianceComponent);
             exports_1("EditAllianceComponent", EditAllianceComponent);
         }
-    }
+    };
 });
 //# sourceMappingURL=edit-alliance.component.js.map

@@ -26,7 +26,7 @@ import java.util.Random;
  * Created by Oleg on 04.01.2017.
  */
 
-@Service
+@Service(value = "userService")
 @Transactional
 public class UserServiceImpl implements UserService {
 
@@ -83,11 +83,11 @@ public class UserServiceImpl implements UserService {
 	private String createErrorMessage(boolean[] isLoginEmailUnique) {
 		String errorMessage = null;
 		if (!isLoginEmailUnique[0] && !isLoginEmailUnique[1]) {
-			errorMessage = "User with the same login and email has already existed!";
+			errorMessage = "User with the same login and email exists!";
 		} else if (!isLoginEmailUnique[0]) {
-			errorMessage = "User with the same login has already existed!";
+			errorMessage = "User with the same login exists!";
 		} else if (!isLoginEmailUnique[1]) {
-			errorMessage = "User with the same email has already existed!";
+			errorMessage = "User with the same email exists!";
 		}
 		return errorMessage;
 	}
@@ -153,7 +153,7 @@ public class UserServiceImpl implements UserService {
 
 	public void sendEmail(User user, String password) throws MessagingException {
 		try {
-			sendMail.send(user.getEmail(), "Travian user's info", "Your login is " + user.getLogin() + " and password: "
+			sendMail.send(user.getEmail(), "Travian user's info", "Your login is" + user.getLogin() + " and password: "
 					+ password + "  role " + user.getRoles());
 			logger.info("Password {} has been sent on user's e-mail {}", password, user.getEmail());
 		} catch (MessagingException e) {
@@ -210,17 +210,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUseByEmail(String email) {
-
-		User user =  userDao.getByMail(email);
-
-		if(user != null){
-			try {
-				sendEmail(user, user.getPassword());
-			} catch (MessagingException e) {
-				e.printStackTrace();
-			}
-		}
-		return user;
+	public User getFullUserByUsername(String username) {
+		return userDao.getFullUserByUsername(username);
 	}
 }

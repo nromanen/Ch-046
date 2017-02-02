@@ -1,7 +1,7 @@
 /**
  * Created by okunetc on 16.01.2017.
  */
-import {Component, AfterContentInit} from "@angular/core";
+import {Component} from "@angular/core";
 import {StompService} from "../services/helpNotification/stomp.service";
 import {Alliance} from "../alliance/alliance";
 import {HelpService} from "../services/helpNotification/help.service";
@@ -30,7 +30,7 @@ export class PlayerHeader {
         this.websocketConnect();
     }
 
-    // getAllianceName(){
+    // getAlliance(){
     //
     //
     //     this.helpService.getAlliance()

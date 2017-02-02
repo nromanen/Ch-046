@@ -27,6 +27,8 @@ export class HelpComponent implements OnInit{
     successMessage: string = null;
     errorMessage: string = null;
     helpForm : FormGroup;
+    birthdate: any;
+    time: any;
 
 
     constructor(private helpService:HelpService, private formBuilder: FormBuilder, private stompService: StompService){
@@ -55,8 +57,14 @@ export class HelpComponent implements OnInit{
     }
 
     submitForm(value: any){
-        console.log("Complex form: " + value);
-        let newAttack = new Attack(value.villageName, value.enemy, value.timeAttack);
+        console.log("Complex form: ");
+        console.log(value);
+        let time = value.timeAttack.replace("T", "-");
+        time = time.replace(":", "-");
+        time = time + "-00"
+        console.log(time);
+        // 2017-02-17T13:59
+        let newAttack = new Attack(value.villageName, value.enemy, time);
         this.send(newAttack);
         this.helpForm.controls['villageName'].setValue("");
         this.helpForm.controls['enemy'].setValue("");

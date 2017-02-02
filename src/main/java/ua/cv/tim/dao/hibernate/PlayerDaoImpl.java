@@ -24,14 +24,14 @@ public class PlayerDaoImpl extends AbstractCrudDao<Player> implements PlayerDao 
 	@Autowired
 	VillageDao villageDao;
 
-    @Override
-    public Player getById(String id) {
-        Query query = getCurrentSession().createQuery("FROM Player WHERE id=:id");
-        query.setParameter("id", id);
-        Player player = (Player) query.uniqueResult();
-        System.out.println("DAO: " + player);
-        return player;
-    }
+	@Override
+	public Player getById(String id) {
+		Query query = getCurrentSession().createQuery("FROM Player WHERE id=:id");
+		query.setParameter("id", id);
+		Player player = (Player) query.uniqueResult();
+		System.out.println("DAO: " + player);
+		return player;
+	}
 
 	@Override
 	public Player getByIdWithVillages(String id) {
@@ -47,17 +47,18 @@ public class PlayerDaoImpl extends AbstractCrudDao<Player> implements PlayerDao 
 		query.setParameter("name", allianceName);
 		List<Player> players = query.list();
 		log.info("Players: {}", players);
-		initializePlayersVillages(players);
+		for (Player player : players) {
+			initializePlayerVillages(player);
+		}
+
 		return players;
 	}
 
-	private void initializePlayersVillages(List<Player> players) {
-		for (Player player : players) {
-			for (Village village : player.getVillages()) {
-				Hibernate.initialize(village.getArmies());
-				Hibernate.initialize(village.getArmyRequests());
-			}
-			Hibernate.initialize(player.getVillages());
+	private void initializePlayerVillages(Player player) {
+		for (Village village : player.getVillages()) {
+			Hibernate.initialize(village.getArmies());
+			Hibernate.initialize(village.getArmyRequests());
 		}
+		Hibernate.initialize(player.getVillages());
 	}
 }

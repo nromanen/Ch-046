@@ -9,8 +9,8 @@
             <div class="input-field col s3">
 
                 <label for="name">Alliance</label>
-                <input type="text" id="name" class="validate"  [formControl]="complexForm.controls['allianceName']"/>
-                <div class="error-input" *ngIf="!complexForm.controls['allianceName'].valid && complexForm.controls['allianceName'].touched">{{NAME_ERROR}}</div>
+                <input type="text" id="name" class="validate"  [formControl]="complexForm.controls['alliance']"/>
+                <div class="error-input" *ngIf="!complexForm.controls['alliance'].valid && complexForm.controls['alliance'].touched">{{NAME_ERROR}}</div>
             </div>
 
             <div class="input-field col s3">
@@ -25,7 +25,7 @@
                 <div class="error-input" *ngIf="!complexForm.controls['leaderEmail'].valid && complexForm.controls['leaderEmail'].touched">{{EMAIL_ERROR}}</div>
             </div>
             <div class="input-field col s3">
-                <button class="btn waves-effect waves-light col offset-s5 " name="action" type="submit" [disabled]="!complexForm.valid">Add allianceName
+                <button class="btn waves-effect waves-light col offset-s5 " name="action" type="submit" [disabled]="!complexForm.valid">Add alliance
                 </button>
             </div>
         </div>

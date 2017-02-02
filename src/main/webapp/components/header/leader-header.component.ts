@@ -43,6 +43,7 @@ export class LeaderHeaderComponent {
     }
 
     public ngOnInit(): void {
+
         this.websocketConnect();
     }
 

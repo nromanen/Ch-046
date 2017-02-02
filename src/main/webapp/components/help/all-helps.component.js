@@ -1,9 +1,8 @@
 /**
  * Created by rmochetc on 26.01.2017.
  */
-System.register(["@angular/core", "../services/helpNotification/help.service"], function(exports_1, context_1) {
+System.register(["@angular/core", "../services/helpNotification/help.service"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -13,17 +12,20 @@ System.register(["@angular/core", "../services/helpNotification/help.service"], 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, help_service_1;
-    var AllHelps;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, help_service_1, AllHelps;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
             function (help_service_1_1) {
                 help_service_1 = help_service_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {/**
+             * Created by rmochetc on 26.01.2017.
+             */
             AllHelps = (function () {
                 function AllHelps(helpService) {
                     this.helpService = helpService;
@@ -39,17 +41,17 @@ System.register(["@angular/core", "../services/helpNotification/help.service"], 
                         console.log(_this.attacks);
                     });
                 };
-                AllHelps = __decorate([
-                    core_1.Component({
-                        selector: 'ask-help',
-                        templateUrl: 'components/help/allHelps.html'
-                    }), 
-                    __metadata('design:paramtypes', [help_service_1.HelpService])
-                ], AllHelps);
                 return AllHelps;
             }());
+            AllHelps = __decorate([
+                core_1.Component({
+                    selector: 'ask-help',
+                    templateUrl: 'components/help/allHelps.html'
+                }),
+                __metadata("design:paramtypes", [help_service_1.HelpService])
+            ], AllHelps);
             exports_1("AllHelps", AllHelps);
         }
-    }
+    };
 });
 //# sourceMappingURL=all-helps.component.js.map

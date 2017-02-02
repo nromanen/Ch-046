@@ -1,6 +1,5 @@
-System.register(["@angular/core", "../services/helpNotification/stomp.service"], function(exports_1, context_1) {
+System.register(["@angular/core", "../services/helpNotification/stomp.service"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,17 +9,18 @@ System.register(["@angular/core", "../services/helpNotification/stomp.service"],
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, stomp_service_1;
-    var PlayerHeader;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, stomp_service_1, PlayerHeader;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
             function (stomp_service_1_1) {
                 stomp_service_1 = stomp_service_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             PlayerHeader = (function () {
                 function PlayerHeader(stompService) {
                     this.stompService = stompService;
@@ -29,7 +29,7 @@ System.register(["@angular/core", "../services/helpNotification/stomp.service"],
                 PlayerHeader.prototype.ngOnInit = function () {
                     this.websocketConnect();
                 };
-                // getAllianceName(){
+                // getAlliance(){
                 //
                 //
                 //     this.helpService.getAlliance()
@@ -59,18 +59,18 @@ System.register(["@angular/core", "../services/helpNotification/stomp.service"],
                 PlayerHeader.prototype.close = function () {
                     this.showNotif = false;
                 };
-                PlayerHeader = __decorate([
-                    core_1.Component({
-                        selector: 'player-head',
-                        templateUrl: 'components/header/playerHeader.html',
-                        styleUrls: ['components/header/playerHeader.css']
-                    }), 
-                    __metadata('design:paramtypes', [stomp_service_1.StompService])
-                ], PlayerHeader);
                 return PlayerHeader;
             }());
+            PlayerHeader = __decorate([
+                core_1.Component({
+                    selector: 'player-head',
+                    templateUrl: 'components/header/playerHeader.html',
+                    styleUrls: ['components/header/playerHeader.css']
+                }),
+                __metadata("design:paramtypes", [stomp_service_1.StompService])
+            ], PlayerHeader);
             exports_1("PlayerHeader", PlayerHeader);
         }
-    }
+    };
 });
 //# sourceMappingURL=player-header.component.js.map

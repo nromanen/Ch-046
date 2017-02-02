@@ -48,7 +48,7 @@ import {EditAllianceComponent} from "./alliance/edit-alliance.component";
         HttpModule,
         FormsModule,
         ReactiveFormsModule,
-        RoutesModule
+        RoutesModule,
     ],
     declarations: [
         AppComponent,
@@ -76,6 +76,8 @@ import {EditAllianceComponent} from "./alliance/edit-alliance.component";
         AddArmyForm,
         HelpComponent,
         AllHelps,
+
+
     ],
     providers: [
         AllianceService,

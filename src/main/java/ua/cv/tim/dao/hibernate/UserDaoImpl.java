@@ -1,7 +1,9 @@
 package ua.cv.tim.dao.hibernate;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -9,10 +11,11 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
 import ua.cv.tim.dao.AbstractCrudDao;
-import ua.cv.tim.model.Role;
-import ua.cv.tim.model.User;
+import ua.cv.tim.model.*;
 import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.service.UserService;
 
@@ -134,6 +137,26 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
         User user = query.getSingleResult();
         Hibernate.initialize(user.getPlayer().getAlliance());
         return user;
+    }
+
+    @Override
+    public User getFullUserByUsername(String username) {
+        String request = "select u from User u where u.login = :login";
+        Query<User> query = getCurrentSession().createQuery(request);
+        query.setParameter("login", username);
+        User user = query.getSingleResult();
+        if (user.getPlayer() != null) {
+            initializePlayerVillages(user.getPlayer());
+        }
+        return user;
+    }
+
+    private void initializePlayerVillages(Player player) {
+        for (Village village : player.getVillages()) {
+            Hibernate.initialize(village.getArmies());
+            Hibernate.initialize(village.getArmyRequests());
+        }
+        Hibernate.initialize(player.getVillages());
     }
 
 }

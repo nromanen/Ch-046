@@ -1,10 +1,10 @@
-System.register([], function(exports_1, context_1) {
+System.register([], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var Attack;
     return {
-        setters:[],
-        execute: function() {
+        setters: [],
+        execute: function () {
             /**
              * Created by rmochetc on 06.01.2017.
              */
@@ -18,6 +18,6 @@ System.register([], function(exports_1, context_1) {
             }());
             exports_1("Attack", Attack);
         }
-    }
+    };
 });
 //# sourceMappingURL=attack.js.map
