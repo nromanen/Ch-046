@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import ua.cv.tim.exception.EntityNotUniqueException;
 import ua.cv.tim.model.UnitType;
 import ua.cv.tim.model.User;
 import ua.cv.tim.model.Village;
@@ -36,7 +37,7 @@ public class VillagesController {
     }
 
     @RequestMapping(value = "/village/", method = RequestMethod.POST)
-    public ResponseEntity<Village> addVillage(@RequestBody Village village, UriComponentsBuilder builder) throws JsonProcessingException {
+    public ResponseEntity<Village> addVillage(@RequestBody Village village, UriComponentsBuilder builder) throws JsonProcessingException, EntityNotUniqueException {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User userByUsername = userService.getUserByUsername(principal.getUsername());
         village.setPlayer(userByUsername.getPlayer());
@@ -59,8 +60,9 @@ public class VillagesController {
             current_village.setIsCapital(village.getIsCapital());
             current_village.setUuid(village.getUuid());
             current_village.setArmies(village.getArmies());
-            villageService.update(current_village);
-
+            if (villageService.isUnique(current_village)) {
+                villageService.update(current_village);
+            }
             return new ResponseEntity<>(current_village, HttpStatus.CREATED);
         }
 

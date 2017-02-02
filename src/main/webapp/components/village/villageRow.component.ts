@@ -36,7 +36,7 @@ import {forbiddenXValidator} from "./forbidden-x.directive";
 </td>
 <td [formGroup]="editVillageForm">
     <div *ngIf="!isForm">
-    <i  class="small material-icons check">done</i>
+    <i *ngIf="v.isCapital" class="small material-icons check">done</i>
     </div>
     <input *ngIf="isForm" type="checkbox" formControlName="isCapital" id="isCapital" class="filled-in">
     <label *ngIf="isForm" for="isCapital"></label>

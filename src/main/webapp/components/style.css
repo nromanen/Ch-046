@@ -1,11 +1,14 @@
-/*table tbody tr td {*/
-    /*background: red;*/
-/*}*/
-
-  td:nth-child(1){
+ td:nth-child(1){
     word-wrap: break-word;
-
       width: 130px;
+}
+
+td:nth-child(5){
+    height: 63px;
+}
+
+table.fi thead th:nth-child(4){
+    height: 63px;
 }
 
  table.fi thead th {
@@ -16,9 +19,3 @@ height: 50px;
  td div{
      text-align: center;
  }
-
-
-/*.ss1{*/
-    /*width: 200px;*/
-/*}*/
-

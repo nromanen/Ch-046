@@ -36,4 +36,41 @@ public class VillageServiceImp implements VillageService {
     public Village getById(String id){
        return villageDao.getById(id);
     }
+
+    @Override
+    public Village getByCoordinates(short xCoord, short yCoord) {
+        return villageDao.getByCoordinates(xCoord,yCoord);
+    }
+
+    @Override
+    public boolean isUnique(Village village) {
+        boolean[] nameAndCoordUnique=new boolean[2];
+        Village comparingVillageByCoord = getByCoordinates((short) 25, (short) 25);
+        Village comparingVillageByName = getByName(village.getName());
+        nameAndCoordUnique[0] = comparingVillageByCoord == null;
+        nameAndCoordUnique[1] =comparingVillageByName == null;
+
+        String errorMessage = createErrorMessage(nameAndCoordUnique);
+        if (errorMessage != null) {
+            throw new IllegalArgumentException(errorMessage);
+        }
+        return true;
+    }
+
+    private String createErrorMessage(boolean[] nameAndCoordinatesUnique) {
+        String errorMessage = null;
+        if (!nameAndCoordinatesUnique[0]) {
+            errorMessage = "Village with the same coordinates already exists!";
+        } else if (!nameAndCoordinatesUnique[1]) {
+            errorMessage = "Village with the same name  already exists!";
+        } else {
+            errorMessage="Village with the same name and coordinates already exists!";
+        }
+        return errorMessage;
+    }
+
+    @Override
+    public Village getByName(String name) {
+        return villageDao.getByName(name);
+    }
 }

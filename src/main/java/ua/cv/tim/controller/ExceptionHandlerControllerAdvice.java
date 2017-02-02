@@ -3,12 +3,10 @@ package ua.cv.tim.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ua.cv.tim.exception.EntityNotUniqueException;
-import ua.cv.tim.exception.VillageNotUniqueException;
 import ua.cv.tim.service.UserService;
 
 import javax.mail.MessagingException;
