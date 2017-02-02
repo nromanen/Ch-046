@@ -14,7 +14,7 @@ public interface UserService {
 
 	User getUserByUsername(String username);
 	void add(User user);
-	void update(User user);
+    void update(User user) throws MessagingException;
 	void delete(User user);
 	boolean isUnique(User user);
 	long getCount();
@@ -26,6 +26,6 @@ public interface UserService {
 	List<UserDTO> getUsersByAlliance(String allianceName);
 	void deleteById(String id);
 	User getUserWithAlliance(String username);
-
 	User getFullUserByUsername(String username);
+	void sendEmail(User user, String message) throws MessagingException;
 }

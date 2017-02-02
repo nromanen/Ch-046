@@ -22,7 +22,8 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableWebMvc
 @ComponentScan(basePackages = {"ua.cv.tim"}, excludeFilters={
-        @ComponentScan.Filter(type= FilterType.ASSIGNABLE_TYPE, value=HibernateConfiguration.class)})
+        @ComponentScan.Filter(type= FilterType.ASSIGNABLE_TYPE, value=HibernateConfiguration.class)
+})
 public class WebConfigurationTest extends WebMvcConfigurerAdapter{
 
     private static final Logger logger = LoggerFactory.getLogger(WebConfigurationTest.class);

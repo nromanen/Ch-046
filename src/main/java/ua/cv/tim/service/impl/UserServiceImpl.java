@@ -55,8 +55,10 @@ public class UserServiceImpl implements UserService {
 		return userDao.getAll();
 	}
 	@Override
-	public void update(User user) {
+	public void update(User user) throws MessagingException {
 		userDao.update(user);
+		sendEmail(user,"Player updated successfully, your login is \"" + user.getLogin() + "\", and password: \""
+				+ user.getPassword() + "\",  Role: " + user.getRoles());
 	}
 
 
@@ -148,14 +150,14 @@ public class UserServiceImpl implements UserService {
 		player.setAlliance(allianceDao.getAllianceByName(member.getAlliance()));
 		user.setPlayer(player);
 		playerDao.add(player);
-		sendEmail(user, password);
+		sendEmail(user,"Your login is \"" + user.getLogin() + "\", and password: \""
+						+ user.getPassword() + "\",  Role: " + user.getRoles());
 	}
 
-	public void sendEmail(User user, String password) throws MessagingException {
+	public void sendEmail(User user, String message) throws MessagingException {
 		try {
-			sendMail.send(user.getEmail(), "Travian user's info", "Your login is" + user.getLogin() + " and password: "
-					+ password + "  role " + user.getRoles());
-			logger.info("Password {} has been sent on user's e-mail {}", password, user.getEmail());
+			sendMail.send(user.getEmail(), "Travian user's info",message );
+			logger.info("Password {} has been sent on user's e-mail {}", user.getPassword(), user.getEmail());
 		} catch (MessagingException e) {
 			logger.error("The e-mail {} hasn't been sent {}", user.getEmail(), e);
 		}
@@ -190,18 +192,6 @@ public class UserServiceImpl implements UserService {
 	private String encodePassword(String password) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		return passwordEncoder.encode(password);
-	}
-
-	public boolean isUserUnique(UserDTO member) {
-		User user = new User();
-		user.setLogin(member.getLogin());
-		user.setEmail(member.getEmail());
-
-		if (userDao.isUserUnique(user.getLogin(), user.getUuid())) {
-			return false;
-		} else if (userDao.getByMail(user.getEmail(), user.getUuid()) != null) {
-			return false;
-		} else return true;
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import ua.cv.tim.model.User;
 import ua.cv.tim.service.AllianceService;
 import ua.cv.tim.service.UserService;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -38,25 +39,23 @@ public class AllianceController {
     }
 
     @RequestMapping(value = "/admin/allianceDTO", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<AllianceDTO> createAlliance(@RequestBody @Valid AllianceDTO allianceDTO) {
+    public ResponseEntity<AllianceDTO> createAlliance(@RequestBody @Valid AllianceDTO allianceDTO) throws MessagingException {
 
         User user = new User();
         user.setLogin(allianceDTO.getLeaderLogin());
         user.setEmail(allianceDTO.getLeaderEmail());
 
-        if (userService.isUnique(user)) {
-            if (!allianceService.isUniqueAlliance(allianceDTO.getName(), null)) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
+        if (userService.isUnique(user) && allianceService.isUniqueAlliance(allianceDTO.getName(), null)) {
+
             allianceService.addAlliance(allianceDTO);
-            allianceDTO.setAllianceUuid(allianceService.getIdByName(allianceDTO.getName()));
+            allianceDTO.setAllianceUuid(allianceService.getByName(allianceDTO.getName()).getUuid());
         }
 
         return new ResponseEntity<>(allianceDTO, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/admin/allianceDTO/{id}", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<AllianceDTO> updateAlliance(@PathVariable("id") String uuid, @RequestBody @Valid AllianceDTO allianceDTO) {
+    public ResponseEntity<AllianceDTO> updateAlliance(@PathVariable("id") String uuid, @RequestBody @Valid AllianceDTO allianceDTO) throws MessagingException {
 
         Alliance updatedAlliance = allianceService.getById(uuid);
         if (updatedAlliance == null) {
