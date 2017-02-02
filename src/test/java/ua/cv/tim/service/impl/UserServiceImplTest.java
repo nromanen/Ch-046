@@ -10,10 +10,7 @@ import ua.cv.tim.dao.AllianceDao;
 import ua.cv.tim.dao.PlayerDao;
 import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.dto.UserDTO;
-import ua.cv.tim.model.Alliance;
-import ua.cv.tim.model.Player;
-import ua.cv.tim.model.Role;
-import ua.cv.tim.model.User;
+import ua.cv.tim.model.*;
 import ua.cv.tim.utils.SendMail;
 
 import javax.mail.MessagingException;
@@ -157,6 +154,29 @@ public class UserServiceImplTest {
         when(userDao.getUsersByAlliance(anyString())).thenReturn(users);
         assertNotNull(userService.getUsersByAlliance("valhala"));
         verify(userDao, times(1)).getUsersByAlliance(anyString());
+    }
+    @Test
+    public void getFullUserByUsernameTest() {
+        List<Village> villages=new ArrayList<>();
+        Village village0 = new Village();
+        village0.setName("Transilvania");
+        village0.setxCoord((short) 300);
+        village0.setyCoord((short) 177);
+        village0.setPopulation((short)33);
+        village0.setIsCapital(true);
+        List<Army> armies = new ArrayList<>();
+        Army army0 = new Army();
+        army0.setOwningVillage(village0);
+        army0.setType(UnitType.Axeman);
+        army0.setCount(300);
+        armies.add(army0);
+        village0.setArmies(armies);
+        villages.add(village0);
+        User user = users.get(0);
+        user.getPlayer().setVillages(villages);
+        when(userDao.getFullUserByUsername(anyString())).thenReturn(user);
+        assertEquals(userService.getFullUserByUsername("neo").toString(),user.toString());
+        verify(userDao, times(1)).getFullUserByUsername(anyString());
     }
 
     private List<User> getUserList(){

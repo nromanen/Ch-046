@@ -118,12 +118,19 @@ public class AllianceServiceImplTest {
         verify(allianceDao, times(1)).getById(anyString());
 
     }
-    @Test
-    public void isUniqueAllianceTest(){
-
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void isUniqueAllianceExpectExceptionTest(){
         Alliance alliance = alliancesList.get(0);
         when(allianceDao.getByName(anyString(),anyString())).thenReturn(alliance);
-        assertFalse(allianceService.isUniqueAlliance("valhala","9999d81e-b4c7-440f-8f55-ea8938ewdf54"));
+        assertTrue(allianceService.isUniqueAlliance("valhala","9999d81e-b4c7-440f-8f55-ea8938ewdf54"));
+        verify(allianceDao, times(1)).getByName(captor.capture().getName(),captor.capture().getUuid());
+        assertEquals(captor.getValue().getName(), "valhala");
+        assertEquals(captor.getValue().getUuid(), "9999d81e-b4c7-440f-8f55-ea8938ewdf54");
+    }
+    @Test
+    public void isUniqueAllianceTest(){
+        when(allianceDao.getByName(anyString(),anyString())).thenReturn(null);
+        assertTrue(allianceService.isUniqueAlliance("valhala","9999d81e-b4c7-440f-8f55-ea8938ewdf54"));
         verify(allianceDao, times(1)).getByName(anyString(),anyString());
     }
 
