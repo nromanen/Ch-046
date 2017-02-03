@@ -6,14 +6,23 @@
 import {Player} from "./player";
 import {Component, OnInit} from "@angular/core";
 import {PlayerService} from "../services/player.service";
-import {ActivatedRoute} from "@angular/router";
-import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
-import {VillageService} from "../services/villageService";
+
 @Component({
     selector: 'player',
     template: `
-        <player-head *ngIf="!player.isLeader"></player-head>
-        <leader-header *ngIf="player.isLeader"></leader-header>
+        <player-head [isLeader]="player.isLeader"></player-head>
+        
+        <div class="row container">
+    <div class="col s12 center-align">
+        <div class="col s6 left-align">
+            <h4>{{ player.login }}</h4>
+        </div>
+        <div class="col s6 right-align">
+            <h4>alliance: {{ player.alliance }}</h4>
+        </div>
+    </div>
+</div>
+        
         <player-list *ngIf="player" [player]="player"></player-list>
         <div class="row">
             <div class="col offset-s5">
@@ -36,6 +45,7 @@ export class PlayerComponent implements OnInit {
         this.playerService.getById()
             .subscribe(
                 player => {
+                    console.info(`PlayerComponent ngOnInit() is working. Player: ${JSON.stringify(player)}`);
                     this.player = player;
                 }
             );

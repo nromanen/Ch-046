@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
-    @Autowired
-    private AllianceDao allianceDao;
+	@Autowired
+	private AllianceDao allianceDao;
 	@Autowired
 	private PlayerDao playerDao;
 	@Autowired
@@ -54,17 +54,18 @@ public class UserServiceImpl implements UserService {
 	public List<User> getAll() {
 		return userDao.getAll();
 	}
+
 	@Override
 	public void update(User user) throws MessagingException {
 		userDao.update(user);
-		sendEmail(user,"Player updated successfully, your login is \"" + user.getLogin() + "\", and password: \""
-				+ user.getPassword() + "\",  Role: " + user.getRoles());
+		String message = "Player updated successfully, your login is \"" + user.getLogin() + "\", role: " + user.getRoles();
+		sendEmail(user, message);
 	}
 
 
 	@Override
 	public void delete(User user) {
-	    userDao.delete(user);
+		userDao.delete(user);
 	}
 
 	@Override
@@ -150,14 +151,15 @@ public class UserServiceImpl implements UserService {
 		player.setAlliance(allianceDao.getAllianceByName(member.getAlliance()));
 		user.setPlayer(player);
 		playerDao.add(player);
-		sendEmail(user,"Your login is \"" + user.getLogin() + "\", and password: \""
-						+ user.getPassword() + "\",  Role: " + user.getRoles());
+		String message = "Your login is \"" + user.getLogin() + "\", and password: \""
+				+ password + "\",  role: " + user.getRoles();
+		sendEmail(user, message);
 	}
 
 	public void sendEmail(User user, String message) throws MessagingException {
 		try {
-			sendMail.send(user.getEmail(), "Travian user's info",message );
-			logger.info("Password {} has been sent on user's e-mail {}", user.getPassword(), user.getEmail());
+			sendMail.send(user.getEmail(), "Travian user's info", message);
+			logger.info("Email: {}, message: {}", user.getEmail(), message);
 		} catch (MessagingException e) {
 			logger.error("The e-mail {} hasn't been sent {}", user.getEmail(), e);
 		}

@@ -20,14 +20,10 @@ export class LeaderMainComponent implements OnInit {
     leader:User;
     players:Player[];
 
-    constructor(private playerService:PlayerService, private userService:UserService, private route:ActivatedRoute) {
+    constructor(private playerService:PlayerService, private userService:UserService) {
         console.log(`LeaderMainComponent constructor is working`);
         this.leader = new User();
         this.players = [];
-        this.route.params.subscribe((param:any)=>
-        {
-            console.log(`LeaderMainComponent param value: ${JSON.stringify(param)}`);
-        });
     }
 
     ngOnInit():void {
