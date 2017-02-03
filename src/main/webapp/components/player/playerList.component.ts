@@ -10,7 +10,7 @@ import {UnitType} from "../UnitType/unitType";
 import {Army} from "../army/army";
 import {VillageService} from "../services/villageService";
 import {FormGroup, FormBuilder, FormControl, Validators, FormArray} from "@angular/forms";
-import {forbiddenXValidator} from "../village/forbidden-x.directive";
+
 import {type} from "os";
 @Component
 ({

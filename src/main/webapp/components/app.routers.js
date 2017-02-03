@@ -61,11 +61,11 @@ System.register(["@angular/router", "./alliance/alliance.component", "./leader/l
                     path: 'user',
                     component: player_component_1.PlayerComponent
                 },
-                {
-                    path: 'user/init',
-                    redirectTo: 'user',
-                    pathMatch: 'full'
-                },
+                // {
+                //     path: 'user/init',
+                //     redirectTo:'user',
+                //     pathMatch:'full'
+                // },
                 {
                     path: 'help',
                     component: ask_help_component_1.HelpComponent
@@ -73,6 +73,10 @@ System.register(["@angular/router", "./alliance/alliance.component", "./leader/l
                 {
                     path: 'allHelps',
                     component: all_helps_component_1.AllHelps
+                },
+                {
+                    path: 'user/init',
+                    component: player_component_1.PlayerComponent
                 }
             ]));
             exports_1("RoutesModule", RoutesModule = router_1.RouterModule.forRoot(routes));

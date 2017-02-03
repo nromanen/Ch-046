@@ -5,13 +5,13 @@ import {Component, OnInit, ViewChild, AfterViewChecked, Input, Output, EventEmit
 import {Village} from "../village/village";
 import {Army} from "../army/army";
 import {VillageService} from "../services/villageService";
-import {FormGroup, FormBuilder, Validators, FormArray} from "@angular/forms";
-import {forbiddenXValidator} from "./forbidden-x.directive";
+import {FormGroup, FormBuilder, Validators, FormArray, AbstractControl} from "@angular/forms";
+
 import {UnitType} from "../UnitType/unitType";
 @Component({
     selector: "add-vill-form",
     templateUrl: "components/village/addVillageForm.html",
-    styleUrls:['']
+    styleUrls:['styles/style.css']
 })
 export class AddVillageForm implements OnInit,AfterViewChecked {
     @Input() player;
@@ -19,8 +19,8 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
     village: Village;
     submitted = false;
     addVillageForm: FormGroup;
-    COORD_REGEXP=/^[0-9]|-[0-9]*$/;
-    POPULATION_REGEXP=/^\d|-\d*$/;
+    COORD_REGEXP=/^(-)?[0-9]*$/;
+    POPULATION_REGEXP=/^\d*|-\d*$/;
     @Output() successMessage:EventEmitter<string>;
     @Output() errorMessage:EventEmitter<string>;
     ngOnInit(): void {
@@ -48,10 +48,10 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
                 ]
             ],
             'xCoord': [this.village.xCoord,
-                [Validators.required, forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
+                [Validators.required, this.forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
             ],
             'yCoord':[this.village.yCoord,
-                [Validators.required,forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
+                [Validators.required,this.forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
             ],
             'population':[this.village.population,[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
             ],
@@ -172,4 +172,12 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         }
     };
 
+     forbiddenXValidator() {
+         return (control: AbstractControl): {[key: string]: any} => {
+             const coord = control.value;
+             if (coord < -400 || coord > 400)
+                 return {'forbiddenCoordinate': {coord}};
+             return null;
+         };
+     }
 }

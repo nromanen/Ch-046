@@ -45,11 +45,11 @@ export const routes:Routes = ([
         path: 'user',
         component:PlayerComponent
     },
-    {
-        path: 'user/init',
-        redirectTo:'user',
-        pathMatch:'full'
-    },
+    // {
+    //     path: 'user/init',
+    //     redirectTo:'user',
+    //     pathMatch:'full'
+    // },
     {
         path:'help',
         component: HelpComponent
@@ -57,7 +57,12 @@ export const routes:Routes = ([
     {
         path:'allHelps',
         component: AllHelps
+    },
+    {
+        path:'user/init',
+        component:PlayerComponent
     }
+
 
 
 

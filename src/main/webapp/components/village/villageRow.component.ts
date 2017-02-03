@@ -10,8 +10,7 @@ import {Village} from "./village";
 import {VillageService} from "../services/villageService";
 import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 import {Army} from "../army/army";
-import {FormControl, Validators, FormArray, FormBuilder} from "@angular/forms";
-import {forbiddenXValidator} from "./forbidden-x.directive";
+import {FormControl, Validators, FormArray, FormBuilder, AbstractControl} from "@angular/forms";
 @Component({
     selector: '[player-ro]',
     outputs:['selectedVillageChanged'],
@@ -63,8 +62,8 @@ import {forbiddenXValidator} from "./forbidden-x.directive";
 `
 })
 export class VillageRow implements OnInit,AfterViewInit{
-    POPULATION_REGEXP=/^\d*$/;
-    COORD_REGEXP=/^[0-9]*$/;
+    POPULATION_REGEXP=/^\d*|-\d*$/;
+    COORD_REGEXP=/^[0-9]*|-[0-9]*$/;
     @Input() v:Village;
     @Input() isForm:boolean;
     @Input() editVillageForm;
@@ -148,10 +147,10 @@ export class VillageRow implements OnInit,AfterViewInit{
             'population':[this.v.population,[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
             ],
             'xCoord': [this.v.xCoord,
-                [Validators.required, forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
+                [Validators.required, this.forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
             ],
             'yCoord':[this.v.yCoord,
-                [Validators.required,forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
+                [Validators.required,this.forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
             ],
             'wall':[this.v.wall,
                 [Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
@@ -180,6 +179,15 @@ export class VillageRow implements OnInit,AfterViewInit{
         if (event===27){
             this.selectedVillageChanged.emit(new Village);
         }
+    }
+
+    forbiddenXValidator() {
+        return (control: AbstractControl): {[key: string]: any} => {
+            const coord = control.value;
+            if (coord < -400 || coord > 400)
+                return {'forbiddenCoordinate': {coord}};
+            return null;
+        };
     }
 
 }
