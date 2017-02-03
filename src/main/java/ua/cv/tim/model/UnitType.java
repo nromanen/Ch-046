@@ -6,6 +6,7 @@ import java.util.List;
 import static ua.cv.tim.model.Specialty.*;
 
 public enum UnitType {
+
     Phalanx(Race.GAULS, "Phalanx", 15, 40, 50, 1, 7, Defense),
     Swordsman(Race.GAULS, "Swordsman", 65, 35, 20, 1, 6, Offense),
     Pathfinder(Race.GAULS, "Pathfinder", 0, 20, 10, 2, 17, Scouting),
@@ -51,6 +52,7 @@ public enum UnitType {
 		this.speed = speed;
 		this.specialties = Arrays.asList(specialties);
 	}
+
 
 	private Race race;
 

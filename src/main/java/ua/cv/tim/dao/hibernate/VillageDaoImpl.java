@@ -7,6 +7,7 @@ import ua.cv.tim.dao.AbstractCrudDao;
 import ua.cv.tim.dao.VillageDao;
 import ua.cv.tim.model.Village;
 
+import java.util.Collections;
 
 
 /**
@@ -18,6 +19,7 @@ public class VillageDaoImpl extends AbstractCrudDao<Village> implements VillageD
     public Village getById(String id) {
         Village village = getCurrentSession().get(Village.class, id);
         Hibernate.initialize(village.getArmies());
+        Collections.sort(village.getArmies());
         return village;
     }
 

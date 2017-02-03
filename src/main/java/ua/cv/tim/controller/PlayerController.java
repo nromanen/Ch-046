@@ -19,6 +19,7 @@ import ua.cv.tim.service.UserService;
 import ua.cv.tim.service.VillageService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -53,6 +54,9 @@ public class PlayerController {
         User userByUsername = userService.getUserByUsername(principal.getUsername());
         String id = userByUsername.getPlayer().getUuid();
         Player player = playerService.getByIdWithVillages(id);
+        for (Village village:player.getVillages()){
+            Collections.sort(village.getArmies());
+        }
         PlayerDTO playerDTO=new PlayerDTO(player.getUser().getLogin(),
                 player.getRace(),player.getVillages(),player.getAlliance());
         return new ResponseEntity<>(playerDTO, HttpStatus.OK);

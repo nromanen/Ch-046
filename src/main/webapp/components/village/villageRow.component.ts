@@ -11,6 +11,8 @@ import {VillageService} from "../services/villageService";
 import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 import {Army} from "../army/army";
 import {FormControl, Validators, FormArray, FormBuilder, AbstractControl} from "@angular/forms";
+import {AddVillageForm} from "./addVillageForm";
+import {controllerKey} from "@angular/upgrade/src/util";
 @Component({
     selector: '[player-ro]',
     outputs:['selectedVillageChanged'],
@@ -68,6 +70,7 @@ export class VillageRow implements OnInit,AfterViewInit{
     @Input() isForm:boolean;
     @Input() editVillageForm;
     @Output() cancelEdit:EventEmitter<Village>;
+    @Output() errorMessage:EventEmitter<string>;
     unitValues:Array<string>;
     selectedVillageChanged:EventEmitter<Village>;
     ifSaveChanges:boolean;
@@ -81,11 +84,12 @@ export class VillageRow implements OnInit,AfterViewInit{
         this.ifSaveChanges=false;
         this.cdr = cdr;
         this.cancelEdit=new EventEmitter<Village>();
+        this.errorMessage=new EventEmitter<string>()
     }
 
     ngOnInit(): void {
         this.getStringUnitTypeValues();
-        // this.buildForm();
+        this.buildForm();
     }
 
     ngAfterViewInit(): void {
@@ -106,9 +110,6 @@ export class VillageRow implements OnInit,AfterViewInit{
     changeVillage(){
         this.ifSaveChanges=true;
         let index:number=this.villageService.villages.indexOf(this.v);
-        this.villageService.villages[index]=this.v;
-        console.log(this.villageService.villages.indexOf(this.v));
-        console.log(this.editVillageForm.value);
         let newVillage=this.editVillageForm.value;
         // this.villageService.villages[index]=newVillage;
         console.log(newVillage);
@@ -129,7 +130,7 @@ export class VillageRow implements OnInit,AfterViewInit{
 
     showEdit(){
         this.selectedVillageChanged.emit(this.v);
-        this.buildForm();
+        // this.buildForm();
         // this.cdr.detectChanges();
     }
 
@@ -143,7 +144,7 @@ export class VillageRow implements OnInit,AfterViewInit{
     buildForm(){
         this.editVillageForm=this._fBuilder.group({
             'uuid':[this.v.uuid,[]],
-            'name':new FormControl(this.v.name,[Validators.required]),
+            'name':new FormControl(this.v.name,[Validators.required,Validators.pattern(AddVillageForm.VILLAGE_REGEXP)]),
             'population':[this.v.population,[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
             ],
             'xCoord': [this.v.xCoord,
@@ -159,16 +160,24 @@ export class VillageRow implements OnInit,AfterViewInit{
             'armies':this._fBuilder.array([]),
         });
         this.armiesArrayControl = <FormArray>this.editVillageForm.controls['armies'];
-        for (let i=0; i<this.v.armies.length; i++) {
+        // for (let i=0; i<this.v.armies.length; i++) {
+        //     this.armiesArrayControl.push(this.initArmies(this.v.armies[i]));
+        // }
+
+        for (let i=0; i<27; i++) {
             this.armiesArrayControl.push(this.initArmies(this.v.armies[i]));
         }
+
+        this.editVillageForm.valueChanges
+            .subscribe(data => this.onValueChanged());
+        this.onValueChanged();
     }
 
     initArmies(army:Army) {
         return this._fBuilder.group({
             count:['',[Validators.required,Validators.pattern(this.COORD_REGEXP)]],
             type:[army.type,[] ],
-            ownUnit:[],
+            ownUnit:[army.ownUnit,[]],
             uuid:[army.uuid,[]]
         });
     }
@@ -187,5 +196,87 @@ export class VillageRow implements OnInit,AfterViewInit{
             return null;
         };
     }
+
+    onValueChanged(data?: any) {
+        if (!this.editVillageForm) {
+            return;
+        }
+        const form = this.editVillageForm;
+        for (const field in this.formErrors) {
+            // clear previous error message (if any)
+            this.formErrors[field] = '';
+            const control = form.get(field);
+            if (control && control.dirty && !control.valid) {
+                const messages = this.validationMessages[field];
+                for (const key in control.errors) {
+                    this.formErrors[field] += messages[key] + ' ';
+                }
+            }
+        }
+        // console.log(this.editVillageForm);
+        let armiesControl:FormArray=form.get('armies');
+        for (let i=0; i<armiesControl.controls.length; i++){
+            if (!armiesControl.controls[i].valid){
+                let countControl=armiesControl.controls[i].get('count');
+                for (const key in countControl.errors) {
+                    this.formErrors['armies'] += this.validationMessages['armies'][key] + ' ';
+                }
+                if (this.isForm) {
+                    this.errorMessage.emit(this.formErrors['armies']);
+                    console.log("kjkk");
+                }
+                break;
+            }
+        }
+       // console.log(this.formErrors);
+        // armiesControl.controls.forEach(control=>{
+        //     if (!control.valid){
+        //         for (const key in control.errors) {
+        //             this.formErrors['armies'] += this.validationMessages[key] + ' ';
+        //         }
+        //         this.errorMessage.emit(this.formErrors['armies']);
+        //         break;
+        //     }
+        // });
+
+    }
+
+    formErrors = {
+        'name': '',
+        'xCoord': '',
+        'yCoord':'',
+        'population':'',
+        'wall':'',
+        'armies':'',
+    };
+
+    validationMessages = {
+        'name': {
+            'required': 'Name is required.',
+            'minlength': 'Name must be at least 4 characters long.',
+            'maxlength': 'Name cannot be more than 24 characters long.',
+        },
+        'xCoord': {
+            'required': 'X coordinate is required.',
+            'forbiddenCoordinate': 'X can only range between -400 and 400.',
+            'pattern':"X coordinate can contain numbers only"
+        },
+        'yCoord': {
+            'required': 'Y coordinate is required.',
+            'forbiddenCoordinate': 'Y can only range between -400 and 400.',
+            'pattern':"Y coordinate can contain numbers only"
+        },
+        'population':{
+            'required': 'Population is required.',
+            'pattern':"Population can contain numbers only"
+        },
+        'wall':{
+            'required': 'Wall is required.',
+            'pattern':"Wall level can contain numbers only"
+        },
+        'armies':{
+            'pattern':'Count can contain numbers only'
+        }
+    };
 
 }

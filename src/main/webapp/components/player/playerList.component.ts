@@ -62,10 +62,12 @@ import {type} from "os";
 
         <tbody>
        
-        <tr player-ro [v]="v" *ngFor="let v of player.villages" [isForm]="v==selectedVillage"
+        <tr player-ro [v]="v" *ngFor="let v of player.villages" [isForm]="v==selectedVillage" (errorMessage)="showEditError()"
             (selectedVillageChanged)="changeSelectedVillage($event)" [editVillageForm]="editVillageForm" (keyup)="cancelEditing($event.keyCode)">       
 </tr>
-<tr *ngIf=""></tr>
+<tr >
+<td *ngIf="editError!=null" colspan="33">klklkl</td>
+</tr>
          
         </tbody>
     </table>
@@ -78,6 +80,7 @@ import {type} from "os";
 export class PlayerList implements OnInit, OnChanges,DoCheck {
     editVillageForm: FormGroup;
     private cdRef: ChangeDetectorRef;
+    editError:string;
     ngDoCheck(): void {
 
     }
@@ -132,6 +135,10 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
 
     cancelEditing(event){
 
+    }
+
+    showEditError(){
+        
     }
 
 

@@ -21,6 +21,7 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
     addVillageForm: FormGroup;
     COORD_REGEXP=/^(-)?[0-9]*$/;
     POPULATION_REGEXP=/^\d*$/;
+    static VILLAGE_REGEXP=/^[A-z]*$/;
     @Output() successMessage:EventEmitter<string>;
     @Output() errorMessage:EventEmitter<string>;
     ngOnInit(): void {
@@ -105,7 +106,6 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         });
         this.village.player=this.player;
         this.village.armies=allArmies;
-        console.log(this.village);
         this.villageService.add(this.village).subscribe(
             response=>{
                 this.player.villages.push(response);
@@ -130,7 +130,6 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
             const control = form.get(field);
             if (control && control.dirty && !control.valid) {
                 const messages = this.validationMessages[field];
-
                 for (const key in control.errors) {
                     this.formErrors[field] += messages[key] + ' ';
                 }
@@ -151,6 +150,7 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
             'required': 'Name is required.',
             'minlength': 'Name must be at least 4 characters long.',
             'maxlength': 'Name cannot be more than 24 characters long.',
+            'pattern':'Name can contain chars only'
         },
         'xCoord': {
             'required': 'X coordinate is required.',

@@ -17,6 +17,8 @@ import ua.cv.tim.model.Village;
 import ua.cv.tim.service.UserService;
 import ua.cv.tim.service.VillageService;
 
+import java.util.Collections;
+
 /**
  * Created by Oleg on 08.01.2017.
  */
@@ -60,6 +62,7 @@ public class VillagesController {
             current_village.setWall(village.getWall());
             current_village.setIsCapital(village.getIsCapital());
             current_village.setUuid(village.getUuid());
+            Collections.sort(village.getArmies());
             current_village.setArmies(village.getArmies());
             if (villageService.isUnique(current_village)) {
                 villageService.update(current_village);
