@@ -65,6 +65,7 @@ import {type} from "os";
         <tr player-ro [v]="v" *ngFor="let v of player.villages" [isForm]="v==selectedVillage"
             (selectedVillageChanged)="changeSelectedVillage($event)" [editVillageForm]="editVillageForm" (keyup)="cancelEditing($event.keyCode)">       
 </tr>
+<tr *ngIf=""></tr>
          
         </tbody>
     </table>
@@ -76,8 +77,6 @@ import {type} from "os";
 })
 export class PlayerList implements OnInit, OnChanges,DoCheck {
     editVillageForm: FormGroup;
-    POPULATION_REGEXP=/^\d*$/;
-    COORD_REGEXP=/^[0-9]*$/;
     private cdRef: ChangeDetectorRef;
     ngDoCheck(): void {
 

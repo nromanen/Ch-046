@@ -16,6 +16,10 @@ height: 50px;
 
 }
 
+ table.fi thead th{
+     text-align: center;
+ }
+
  td div{
      text-align: center;
  }

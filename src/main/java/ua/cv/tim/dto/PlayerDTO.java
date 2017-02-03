@@ -1,6 +1,7 @@
 package ua.cv.tim.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.NotEmpty;
 import ua.cv.tim.model.Alliance;
 import ua.cv.tim.model.Race;
@@ -17,47 +18,22 @@ public class PlayerDTO {
     @NotEmpty
     private String login;
 
-    @NotEmpty
-    private String password;
-
-    @NotEmpty
-    private String email;
-
     @Enumerated(EnumType.STRING)
     private Race race;
 
 
     private List<Village> villages;
 
-    @JsonIgnore
+    @JsonIgnoreProperties("players")
     private Alliance alliance;
 
     public PlayerDTO() { }
 
-    public PlayerDTO(String login, String password, String email, Race race, List<Village> villages, Alliance alliance) {
+    public PlayerDTO(String login, Race race, List<Village> villages, Alliance alliance) {
         this.login = login;
-        this.password = password;
-        this.email = email;
         this.race = race;
         this.villages = villages;
         this.alliance = alliance;
-    }
-
-    public String getPassword() {
-
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Race getRace() {
@@ -97,8 +73,6 @@ public class PlayerDTO {
     public String toString() {
         return "PlayerDTO{" +
                 "login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
                 ", race=" + race +
                 ", villages=" + villages +
                 ", alliance=" + alliance +

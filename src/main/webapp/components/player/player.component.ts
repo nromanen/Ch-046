@@ -15,6 +15,13 @@ import {Army} from "../army/army";
     selector: 'player',
     template: `
         <player-head></player-head>
+        <div *ngIf="successEditMessage!=null||errorEditMessage!=null" class="col s4 offset-s4 ">
+    <div  [ngClass]="{'card':true, 'green':successEditMessage!=null, 'red':errorEditMessage!=null, 'lighten-5':true}">
+        <div [ngClass]="{'card-content':true , 'green-text':successMessage!=null,'red-text':errorMessage!=null }">
+            <p>{{successEditMessage!=null?successEditMessage:errorEditMessage}} <span (click)="closeDialog()" class="right">x</span></p>
+        </div>
+    </div>
+</div>
         <player-list *ngIf="player" [player]="player"></player-list>
         <div class="row">
             <div class="col s4 offset-s6" >
@@ -41,8 +48,9 @@ export class PlayerComponent implements OnInit {
     showAddVillageForm: boolean;
     successMessage;
     errorMessage;
-    h:boolean=false;
-    constructor(private playerService: PlayerService, private route: ActivatedRoute, private villageService: VillageService) {
+    successEditMessage;
+    errorEditMessage;
+    constructor(private playerService: PlayerService) {
 
     }
 

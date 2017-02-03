@@ -62,8 +62,8 @@ import {FormControl, Validators, FormArray, FormBuilder, AbstractControl} from "
 `
 })
 export class VillageRow implements OnInit,AfterViewInit{
-    POPULATION_REGEXP=/^\d*|-\d*$/;
-    COORD_REGEXP=/^[0-9]*|-[0-9]*$/;
+    POPULATION_REGEXP=/^\d*$/;
+    COORD_REGEXP=/^(-)?[0-9]*$/;
     @Input() v:Village;
     @Input() isForm:boolean;
     @Input() editVillageForm;
@@ -162,13 +162,11 @@ export class VillageRow implements OnInit,AfterViewInit{
         for (let i=0; i<this.v.armies.length; i++) {
             this.armiesArrayControl.push(this.initArmies(this.v.armies[i]));
         }
-
-        // console.log(armiesArrayControl);
     }
 
     initArmies(army:Army) {
         return this._fBuilder.group({
-            count:['',[Validators.required]],
+            count:['',[Validators.required,Validators.pattern(this.COORD_REGEXP)]],
             type:[army.type,[] ],
             ownUnit:[],
             uuid:[army.uuid,[]]

@@ -20,7 +20,7 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
     submitted = false;
     addVillageForm: FormGroup;
     COORD_REGEXP=/^(-)?[0-9]*$/;
-    POPULATION_REGEXP=/^\d*|-\d*$/;
+    POPULATION_REGEXP=/^\d*$/;
     @Output() successMessage:EventEmitter<string>;
     @Output() errorMessage:EventEmitter<string>;
     ngOnInit(): void {

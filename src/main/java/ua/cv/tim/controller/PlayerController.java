@@ -51,13 +51,9 @@ public class PlayerController {
 
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User userByUsername = userService.getUserByUsername(principal.getUsername());
-
         String id = userByUsername.getPlayer().getUuid();
-
         Player player = playerService.getByIdWithVillages(id);
-
         PlayerDTO playerDTO=new PlayerDTO(player.getUser().getLogin(),
-                player.getUser().getPassword(),player.getUser().getEmail(),
                 player.getRace(),player.getVillages(),player.getAlliance());
         return new ResponseEntity<>(playerDTO, HttpStatus.OK);
     }
