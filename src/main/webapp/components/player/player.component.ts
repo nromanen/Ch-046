@@ -10,15 +10,15 @@ import {PlayerService} from "../services/player.service";
 @Component({
     selector: 'player',
     template: `
-        <player-head [isLeader]="player.isLeader"></player-head>
+        <!--<player-head [isLeader]="player.isLeader"></player-head>-->
         
         <div class="row container">
     <div class="col s12 center-align">
         <div class="col s6 left-align">
-            <h4>{{ player.login }}</h4>
+            <!--<h4>{{ player.login }}</h4>-->
         </div>
         <div class="col s6 right-align">
-            <h4>alliance: {{ player.alliance }}</h4>
+            <!--<h4>alliance: {{ player.alliance }}</h4>-->
         </div>
     </div>
 </div>
