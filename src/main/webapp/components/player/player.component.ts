@@ -58,6 +58,7 @@ export class PlayerComponent implements OnInit {
             .subscribe(
                 player => {
                     this.player = player;
+                    console.log(this.player.alliance.allianceUuid);
                 }
             );
 
