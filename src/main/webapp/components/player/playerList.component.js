@@ -38,7 +38,7 @@ System.register(["./player", "@angular/core", "../village/village", "../services
                     this.currVillageService = currVillageService;
                     this.villageService = villageService;
                     this.unitValues = [];
-                    this.selectedVillage = new village_1.Village();
+                    this.selectedVillage = new village_1.Village("");
                     console.log(this.unitValues);
                 }
                 PlayerList.prototype.ngOnInit = function () {

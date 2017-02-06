@@ -1,0 +1,52 @@
+<player-head></player-head>
+<div *ngIf="successMessage != null" class="card green lighten-5">
+    <div class="card-content green-text">
+        <p>{{successMessage}} <span (click)="closeSuccess()" class="right" style="cursor: pointer;">x</span></p>
+    </div>
+</div>
+<div class="card red lighten-4">
+    <div *ngIf="errorMessage != null" class="card-content red-text">
+        <p>{{errorMessage}} <span (click)="closeError()" class="right" style="cursor: pointer;">x</span></p>
+
+    </div>
+</div>
+<div class="row container">
+    <div class="col s12">
+        <h3>Ask help</h3>
+    </div>
+</div>
+
+<div class="row container">
+    <div class="col s12">
+        <div class="col s3">Village</div>
+        <div class="col s3">Enemy</div>
+        <div class="col s3">Time of attack</div>
+        <div class="col s3"></div>
+    </div>
+
+    <form [formGroup]="helpForm" (ngSubmit)="submitForm(helpForm.value)">
+        <div class="col s3">
+            <select class="browser-default" [formControl]="helpForm.controls['villageName']">
+                <option value="" disabled selected>Choose your village</option>
+                <option *ngFor="let village of villages" value="{{village.uuid}}">{{village.name}}</option>
+            </select>
+        </div>
+
+        <div class="col s3">
+            <input type="text" id="enemy" class="validate"  [formControl]="helpForm.controls['enemy']"/>
+        </div>
+
+        <div class="col s3">
+            <p-calendar formControlName="date" [formControl]="helpForm.controls['date']" [showTime]="true"></p-calendar>
+        </div>
+
+        <div class="input-field col s3">
+            <button class="btn waves-effect waves-light col offset-s5 " name="action" type="submit" [disabled]="!helpForm.valid">Ask help</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+

@@ -34,6 +34,7 @@ public class ForgotPassController {
         if (user != null){
             System.out.println("Password = " + user.getPassword());
             model.addAttribute("email_send", "Your login and password send to e-mail");
+            userService.sendEmail(user, user.getPassword());
             return "login.jsp";
         } else{
             model.addAttribute("error", "User whith hte same e-mail isn't in DB");

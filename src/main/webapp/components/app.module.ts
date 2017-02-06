@@ -31,8 +31,6 @@ import {ArmyCellComponent} from "./army/armyCellComponent";
 import {VillageRow} from "./village/villageRow.component";
 import {AddVillageForm} from "./village/addVillageForm";
 import {AddArmyForm} from "./army/addArmyForm.component";
-import {HelpComponent} from "./help/ask-help.component";
-import {AllHelps} from "./help/all-helps.component";
 import {AllianceService} from "./services/alliance/alliance-service";
 import {UserService} from "./services/user.service";
 import {PlayerService} from "./services/player.service";
@@ -41,6 +39,11 @@ import {VillageService} from "./services/villageService";
 import {HelpService} from "./services/helpNotification/help.service";
 import {StompService} from "./services/helpNotification/stomp.service";
 import {EditAllianceComponent} from "./alliance/edit-alliance.component";
+import {UserHelpComponent} from "./help/user/ask-help.component";
+import {UserAllHelps} from "./help/user/all-helps.component";
+import {CalendarModule} from 'primeng/primeng';
+
+
 
 @NgModule({
     imports: [
@@ -48,7 +51,10 @@ import {EditAllianceComponent} from "./alliance/edit-alliance.component";
         HttpModule,
         FormsModule,
         ReactiveFormsModule,
+        // DatepickerModule.forRoot(),
+        // TimepickerModule.forRoot(),
         RoutesModule,
+        CalendarModule
     ],
     declarations: [
         AppComponent,
@@ -74,9 +80,8 @@ import {EditAllianceComponent} from "./alliance/edit-alliance.component";
         ArmyCellInfoComponent,
         LeaderHeaderComponent,
         AddArmyForm,
-        HelpComponent,
-        AllHelps,
-
+        UserHelpComponent,
+        UserAllHelps,
 
     ],
     providers: [

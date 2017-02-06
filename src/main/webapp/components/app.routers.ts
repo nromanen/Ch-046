@@ -8,13 +8,10 @@ import {AllianceComponent} from "./alliance/alliance.component";
 import {LeaderMainComponent} from "./leader/leader-main.component";
 import {LeaderManagerComponent} from "./leader/leader-manager.component";
 import {PlayerComponent} from "./player/player.component";
-import {HelpComponent} from "./help/ask-help.component";
-import {AllHelps} from "./help/all-helps.component";
-
-
+import {UserHelpComponent} from "./help/user/ask-help.component";
+import {UserAllHelps} from "./help/user/all-helps.component";
 
 export const routes:Routes = ([
-
 
     {
         path: 'admin', component: AllianceComponent
@@ -51,18 +48,13 @@ export const routes:Routes = ([
         pathMatch:'full'
     },
     {
-        path:'help',
-        component: HelpComponent
+        path:'askHelp',
+        component: UserHelpComponent
     },
     {
         path:'allHelps',
-        component: AllHelps
+        component: UserAllHelps
     }
-
-
-
-
-
 ]);
 
 export const RoutesModule: ModuleWithProviders = RouterModule.forRoot(routes);

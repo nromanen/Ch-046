@@ -13,7 +13,7 @@ export class Village{
     wall:number;
     armies:Array<Army>;
 
-    constructor(uuid: string){
+    constructor(uuid? : string){
         this.uuid = uuid;
     }
 

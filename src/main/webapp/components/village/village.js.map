@@ -1,1 +1,1 @@
-{"version":3,"file":"village.js","sourceRoot":"","sources":["village.ts"],"names":[],"mappings":";;;;;;;YAEA;;eAEG;YACH;gBAUI,iBAAY,IAAY;oBACpB,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;gBACrB,CAAC;gBAIL,cAAC;YAAD,CAAC,AAhBD,IAgBC;;QAAA,CAAC"}
+{"version":3,"file":"village.js","sourceRoot":"","sources":["village.ts"],"names":[],"mappings":";;;;;;;YAEA;;eAEG;YACH;gBAUI,iBAAY,IAAc;oBACtB,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;gBACrB,CAAC;gBAIL,cAAC;YAAD,CAAC,AAhBD,IAgBC;;QAAA,CAAC"}

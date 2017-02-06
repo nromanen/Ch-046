@@ -151,7 +151,7 @@ public class UserServiceImpl implements UserService {
 		sendEmail(user, password);
 	}
 
-	public void sendEmail(User user, String password) throws MessagingException {
+	public void sendEmail(User user, String password){
 		try {
 			sendMail.send(user.getEmail(), "Travian user's info", "Your login is" + user.getLogin() + " and password: "
 					+ password + "  role " + user.getRoles());

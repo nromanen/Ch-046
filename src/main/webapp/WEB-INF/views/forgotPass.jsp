@@ -39,7 +39,9 @@ To change this template use File | Settings | File Templates.
 
 <div class="container">
     <div class="row col s12" style="margin-top: 50px">
-        <div class="col s3 offset-s4 center-align">
+        <div class="col s4 offset-s4 center-align">
+            <h5>Enter your e-mail to send your password!</h5>
+            <br>
             <spring:url value="/login" var="loginUrl"/>
             <form action="forgotPassword" method="post">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

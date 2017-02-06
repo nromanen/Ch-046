@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'org.akhikhl.gretty:gretty:+'
+        classpath 'org.akhikhl.gretty:gretty:1.4.0'
     }
 }
 
@@ -19,8 +19,6 @@ gretty {
     contextPath = 'travian'
     servletContainer = 'jetty9'
 }
-
-
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -108,18 +106,18 @@ task npmRunTsc(type:Exec) {
     }
 }
 
-//task runApp(type:Exec) {
-//    workingDir 'src/main/webapp'
-//    commandLine 'cmd', '/c', 'npm', 'install'
-//    workingDir 'src/main/webapp'
-//    commandLine 'cmd', '/c', 'npm', 'run', 'tsc'
-//    workingDir './'
-//    commandLine 'cmd', '/c', 'gradle', 'appStart'
-//    standardOutput = new ByteArrayOutputStream()
-//    ext.output = {
-//        return standardOutput.toString()
-//    }
-//}
+task printHello {
+    print("Heelo jenkins from gradle")
+}
+
+task runApp(type:Exec) {
+    workingDir './'
+    commandLine 'cmd', '/c', 'gradle', 'npm_install', 'npmRunTsc', 'appStart'
+    standardOutput = new ByteArrayOutputStream()
+    ext.output = {
+        return standardOutput.toString()
+    }
+}
 
 war {
     archiveName = 'travian.war'

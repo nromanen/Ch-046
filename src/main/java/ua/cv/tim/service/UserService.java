@@ -26,6 +26,7 @@ public interface UserService {
 	List<UserDTO> getUsersByAlliance(String allianceName);
 	void deleteById(String id);
 	User getUserWithAlliance(String username);
+	void sendEmail(User user, String password);
 
 	User getFullUserByUsername(String username);
 

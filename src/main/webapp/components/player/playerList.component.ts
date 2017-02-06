@@ -22,7 +22,7 @@ export class PlayerList implements OnInit {
 
     constructor(private currVillageService: CurrVillageArmiesService, private villageService: VillageService) {
         this.unitValues = [];
-        this.selectedVillage = new Village();
+        this.selectedVillage = new Village("");
         console.log(this.unitValues);
     }
 

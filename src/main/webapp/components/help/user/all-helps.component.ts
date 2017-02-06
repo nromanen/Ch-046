@@ -3,14 +3,14 @@
  */
 
 import {Component} from "@angular/core";
-import {HelpService} from "../services/helpNotification/help.service";
+import {HelpService} from "../../services/helpNotification/help.service";
 
 @Component({
-    selector: 'ask-help',
-    templateUrl: 'components/help/allHelps.html'
+    selector: 'user-all-help',
+    templateUrl: 'components/help/user/allHelps.html'
 })
 
-export  class AllHelps{
+export  class UserAllHelps{
 
     attacks: any[];
 
