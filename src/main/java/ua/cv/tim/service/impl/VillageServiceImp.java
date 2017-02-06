@@ -3,9 +3,12 @@ package ua.cv.tim.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.cv.tim.controller.VillagesController;
 import ua.cv.tim.dao.VillageDao;
 import ua.cv.tim.model.Village;
 import ua.cv.tim.service.VillageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by Oleg on 05.01.2017.
@@ -14,6 +17,7 @@ import ua.cv.tim.service.VillageService;
 @Service(value = "villageService")
 @Transactional
 public class VillageServiceImp implements VillageService {
+    private static final Logger log = LoggerFactory.getLogger(VillageService.class);
     @Autowired
     private VillageDao villageDao;
 
@@ -67,6 +71,7 @@ public class VillageServiceImp implements VillageService {
         else if (!nameAndCoordinatesUnique[0]){
             errorMessage="Village with the same coordinates already exists!";
         }
+        log.error(errorMessage);
         return errorMessage;
     }
 

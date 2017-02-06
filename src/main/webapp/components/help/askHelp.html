@@ -1,4 +1,4 @@
-<player-head [isLeader]="player.isLeader"></player-head>
+<player-head *ngIf="player" [isLeader]="player.isLeader"></player-head>
 <div *ngIf="successMessage != null" class="card green lighten-5">
     <div class="card-content green-text">
         <p>{{successMessage}} <span (click)="closeSuccess()" class="right" style="cursor: pointer;">x</span></p>

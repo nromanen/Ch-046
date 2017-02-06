@@ -52,7 +52,7 @@ public class HelpController {
         String id = userByUsername.getPlayer().getUuid();
         Player player = playerService.getByIdWithVillages(id);
         PlayerDTO playerDTO = new PlayerDTO(player.getUser().getLogin(),
-                player.getRace(), player.getVillages(), player.getAlliance());
+                player.getRace(), player.getVillages(), player.getAlliance(),userByUsername.getRoles());
 
         return new ResponseEntity<>(playerDTO, HttpStatus.OK);
     }

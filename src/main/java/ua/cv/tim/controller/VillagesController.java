@@ -16,6 +16,8 @@ import ua.cv.tim.model.User;
 import ua.cv.tim.model.Village;
 import ua.cv.tim.service.UserService;
 import ua.cv.tim.service.VillageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 
@@ -25,6 +27,7 @@ import java.util.Collections;
 
 @RestController
 public class VillagesController {
+    private static final Logger log = LoggerFactory.getLogger(VillagesController.class);
     @Autowired
     VillageService villageService;
     @Autowired
@@ -45,9 +48,8 @@ public class VillagesController {
         village.setPlayer(userByUsername.getPlayer());
         if (villageService.isUnique(village)) {
             villageService.add(village);
+            log.info("Village added : {}",village);
         }
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/village/{id}").buildAndExpand(village.getUuid()).toUri());
         return new ResponseEntity<>(village, HttpStatus.CREATED);
     }
 
@@ -66,6 +68,7 @@ public class VillagesController {
             current_village.setArmies(village.getArmies());
             if (villageService.isUnique(current_village)) {
                 villageService.update(current_village);
+                log.info("Village updated : {}",current_village);
             }
             return new ResponseEntity<>(current_village, HttpStatus.CREATED);
         }
