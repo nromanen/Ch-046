@@ -40,17 +40,8 @@ export class AllianceService {
             headers: headers
         }).map((res: Response) => res.json())
             .catch(
-                (error: any) => {
-                    if (error.status == 400){
-                        return Observable.throw('ERROR!!! Invalid data. Please check entered data!');
-                    } else if(error.status == 409){
-                        return Observable.throw('ERROR!!! User with the same login or e-mail is in DB!');
-                    } else if(error.status == 403){
-                        return Observable.throw('ERROR!!! Alliance with the same name is in DB!');
-                    } else {
-                        return Observable.throw('UNKNOWN ERROR!!!');
-                    }
-                }
+                (error: any) => { return Observable.throw(error._body);
+                                   }
             );
     }
 

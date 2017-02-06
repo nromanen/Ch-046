@@ -6,8 +6,7 @@ import {Player} from "./player";
 import {Component, Input, OnInit, OnChanges, SimpleChanges, DoCheck, ViewChild, ChangeDetectorRef} from "@angular/core";
 import {Village} from "../village/village";
 import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
-import {UnitType} from "../UnitType/unitType";
-import {Army} from "../army/army";
+
 import {VillageService} from "../services/villageService";
 import {FormGroup, FormBuilder, FormControl, Validators, FormArray} from "@angular/forms";
 

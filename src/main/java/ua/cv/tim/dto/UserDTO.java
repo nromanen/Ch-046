@@ -1,7 +1,5 @@
 package ua.cv.tim.dto;
 
-import ua.cv.tim.model.Role;
-
 /**
  * Created by vyach on 15.01.2017.
  */
@@ -11,17 +9,17 @@ public class UserDTO {
 	private String login;
 	private String email;
 	private String alliance;
-	private Role role;
+	private boolean isLeader;
 
 	public UserDTO() {
 	}
 
-	public UserDTO(String uuid, String login, String email, String alliance, Role role) {
+	public UserDTO(String uuid, String login, String email, String alliance, boolean isLeader) {
 		this.uuid = uuid;
 		this.login = login;
 		this.email = email;
 		this.alliance = alliance;
-		this.role = role;
+		this.isLeader = isLeader;
 	}
 
 	public UserDTO(String uuid, String login, String email, String alliance) {
@@ -63,12 +61,12 @@ public class UserDTO {
 		this.alliance = alliance;
 	}
 
-	public Role getRole() {
-		return role;
+	public boolean getIsLeader() {
+		return isLeader;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setIsLeader(boolean isLeader) {
+		this.isLeader = isLeader;
 	}
 
 	@Override
@@ -78,7 +76,7 @@ public class UserDTO {
 				.append("UserDTO: { uuid: ").append(uuid).append(", ")
 				.append("login: ").append(login).append(", ")
 				.append("email: ").append(email).append(", ")
-				.append("role: ").append(role).append(", ")
+				.append("isLeader: ").append(isLeader).append(", ")
 				.append("alliance: ").append(alliance).append(" } ");
 		return sb.toString();
 	}

@@ -12,7 +12,6 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ua.cv.tim.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,64 +24,57 @@ import java.util.Set;
 
 @Controller
 public class MainController {
-    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
-    @Autowired
-    private AuthenticationTrustResolver authenticationTrustResolver;
+	@Autowired
+	private AuthenticationTrustResolver authenticationTrustResolver;
 
-    @Autowired
-    private UserService userService;
+	@RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
+	public String loginPage() {
+		return "login.jsp";
+	}
 
-    @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
-    public String loginPage() {
-        if (isCurrentAuthenticationAnonymous()) {
-            return "login.jsp";
-        } else {
-            return getRedirectPath();
-        }
-    }
+	private boolean isCurrentAuthenticationAnonymous() {
+		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return authenticationTrustResolver.isAnonymous(authentication);
+	}
 
-    private boolean isCurrentAuthenticationAnonymous() {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authenticationTrustResolver.isAnonymous(authentication);
-    }
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logoutPage(HttpServletRequest req, HttpServletResponse resp) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null) {
+			new SecurityContextLogoutHandler().logout(req, resp, auth);
+		}
+		return "redirect:/login?logout";
+	}
 
-    private String getRedirectPath() {
-        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Set<String> authorities = new HashSet<>();
-        for (GrantedAuthority authority : principal.getAuthorities()) {
-            authorities.add(authority.getAuthority());
-        }
-        if (authorities.contains("ROLE_ADMIN")) {
-            return "redirect:/admin";
-        } else if (authorities.contains("ROLE_LEADER")) {
-            return "redirect:/leader";
-        } else {
-            return "redirect:/user/init";
+	@RequestMapping(value = "/access_denied", method = RequestMethod.GET)
+	public String handleAccessDenied() {
+		logger.warn("Access denied");
+		if (isCurrentAuthenticationAnonymous()) {
+			return "redirect:/login";
+		} else {
+			return getRedirectPath();
+		}
+	}
 
-        }
-    }
+	private String getRedirectPath() {
+		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Set<String> authorities = new HashSet<>();
+		for (GrantedAuthority authority : principal.getAuthorities()) {
+			authorities.add(authority.getAuthority());
+		}
+		if (authorities.contains("ROLE_ADMIN")) {
+			return "redirect:/admin";
+		} else if (authorities.contains("ROLE_LEADER")) {
+			return "redirect:/leader";
+		} else {
+			return "redirect:/user/init";
+		}
+	}
 
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logoutPage(HttpServletRequest req, HttpServletResponse resp) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            new SecurityContextLogoutHandler().logout(req, resp, auth);
-        }
-        return "redirect:/login?logout";
-    }
-
-    @RequestMapping(value = "/access_denied", method = RequestMethod.GET)
-    public String handleAccessDenied() {
-        if (isCurrentAuthenticationAnonymous()) {
-            return "redirect:/login";
-        } else {
-            return getRedirectPath();
-        }
-    }
-
-    @RequestMapping(value = {"/admin","/user/init"})
-    public String mainPage(){
-        return "index.html";
-    }
+	@RequestMapping(value = {"/admin", "/leader", "/user/init"}, method = RequestMethod.GET)
+	public String showMainPage() {
+		return "index.html";
+	}
 }

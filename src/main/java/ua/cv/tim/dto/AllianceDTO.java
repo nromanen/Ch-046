@@ -98,4 +98,28 @@ public class AllianceDTO  {
                 .append("'}")
                 .toString();
        }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AllianceDTO that = (AllianceDTO) o;
+
+        if (allianceUuid != null ? !allianceUuid.equals(that.allianceUuid) : that.allianceUuid != null) return false;
+        if (leaderUuid != null ? !leaderUuid.equals(that.leaderUuid) : that.leaderUuid != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (leaderLogin != null ? !leaderLogin.equals(that.leaderLogin) : that.leaderLogin != null) return false;
+        return leaderEmail != null ? leaderEmail.equals(that.leaderEmail) : that.leaderEmail == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = allianceUuid != null ? allianceUuid.hashCode() : 0;
+        result = 31 * result + (leaderUuid != null ? leaderUuid.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (leaderLogin != null ? leaderLogin.hashCode() : 0);
+        result = 31 * result + (leaderEmail != null ? leaderEmail.hashCode() : 0);
+        return result;
+    }
 }

@@ -11,6 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ua.cv.tim.dto.UserDTO;
+import ua.cv.tim.model.AuthorizedUser;
+import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.UserService;
 
@@ -26,33 +28,35 @@ import java.util.List;
 @RequestMapping(value = "/user")
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<UserDTO> getUserWithAlliance() {
 		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		AuthorizedUser authorizedUser = (AuthorizedUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		logger.info(authorizedUser.toString());
 		User user = userService.getUserWithAlliance(principal.getUsername());
-		logger.info(user.toString());
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		UserDTO userDTO = new UserDTO(user.getUuid(), user.getLogin(), user.getEmail(), user.getPlayer().getAlliance().getName());
+		UserDTO userDTO = new UserDTO(user.getUuid(), user.getLogin(), user.getEmail(),
+				user.getPlayer().getAlliance().getName(), user.getRoles().size() == 2);
 		logger.info(userDTO.toString());
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 
-    @RequestMapping(value = "/userList", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> allWithRoles = userService.getAllWithRoles();
-        if (allWithRoles.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(allWithRoles, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/userList", method = RequestMethod.GET)
+	public ResponseEntity<List<User>> getAllUsers() {
+		List<User> allWithRoles = userService.getAllWithRoles();
+		if (allWithRoles.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(allWithRoles, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
 	public ResponseEntity<User> getById(@PathVariable("id") String id) {
@@ -105,25 +109,37 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<UserDTO> updateUser(@PathVariable("id") String id, @RequestBody UserDTO user) {
+	public ResponseEntity<UserDTO> updateUser(@PathVariable("id") String id, @RequestBody UserDTO user) throws MessagingException {
 		logger.info("User id: {}, user body: {}", id, user);
 		User currentUser = userService.getById(id);
+
 		if (currentUser == null) {
 			throw new IllegalArgumentException("User with the same id does not exist!");
 		}
+
 		currentUser.setLogin(user.getLogin());
 		currentUser.setEmail(user.getEmail());
+		changeUserRole(user, currentUser.getRoles());
+
 		if (userService.isUnique(currentUser)) {
 			userService.update(currentUser);
 		}
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
+	private void changeUserRole(UserDTO user, List<Role> currentUserRoles) {
+		if (user.getIsLeader() && currentUserRoles.size() != 2) {
+			currentUserRoles.add(Role.LEADER);
+		} else if (!user.getIsLeader() && currentUserRoles.size() == 2) {
+			currentUserRoles.remove(Role.LEADER);
+		}
+	}
+
 	@RequestMapping(value = "/alliance-users")
 	public ResponseEntity<List<UserDTO>> getUsersByAlliance() {
 		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = userService.getUserWithAlliance(principal.getUsername());
-		List<UserDTO> allianceUsers = userService.getUsersByAlliance(user.getPlayer().getAlliance().getName()); // todo change to dynamic, take from principal. delete 2 strings above
+		List<UserDTO> allianceUsers = userService.getUsersByAlliance(user.getPlayer().getAlliance().getName());
 		logger.info("Users from DB: {}", allianceUsers);
 		return new ResponseEntity<>(allianceUsers, HttpStatus.OK);
 	}

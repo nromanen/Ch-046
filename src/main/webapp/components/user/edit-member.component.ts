@@ -34,6 +34,7 @@ export class EditMemberComponent {
         this.memberForm = this.fb.group({
             'login': [this.editedMember.login, Validators.compose([Validators.required, Validators.pattern(this.USER_LOGIN)])],
             'email': [this.editedMember.email, Validators.compose([Validators.required, Validators.pattern(this.EMAIL_REGEXP)])],
+            'isLeader':[this.editedMember.isLeader]
         });
     }
 
@@ -41,7 +42,7 @@ export class EditMemberComponent {
         console.log(`EditMemberComponent.updateMember() is working. Member value is: ${JSON.stringify(value)}`);
 
         if (this.hasMemberDataChange(value)) {
-            let member:User = new User(value.login, value.email, this.editedMember.uuid, this.editedMember.alliance);
+            let member:User = new User(value.login, value.email, this.editedMember.uuid, this.editedMember.alliance, value.isLeader);
             this.editMemberForm.emit(member);
         } else {
             this.editMemberForm.emit(null);
@@ -50,7 +51,9 @@ export class EditMemberComponent {
     }
 
     hasMemberDataChange(value:any):boolean {
-        return value.login != this.editedMember.login || value.email != this.editedMember.email;
+        return value.login != this.editedMember.login
+            || value.email != this.editedMember.email
+            || value.isLeader != this.editedMember.isLeader;
     }
 
     cancelEditing() {

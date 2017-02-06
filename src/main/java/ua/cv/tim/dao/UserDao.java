@@ -30,4 +30,6 @@ public interface UserDao extends CrudDao<User> {
 	User getUserByUsername(String username);
 
 	User getUserWithAlliance(String username);
+
+	User getFullUserByUsername(String username);
 }

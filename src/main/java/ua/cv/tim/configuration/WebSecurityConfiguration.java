@@ -3,13 +3,18 @@ package ua.cv.tim.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.*;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
@@ -34,27 +39,58 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userDetailsService;
 
 	@Autowired
+	private AuthenticationSuccessHandler authenticationSuccessHandler;
+
+	@Autowired
 	protected void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService);
+		auth.authenticationProvider(authenticationProvider());
+	}
+
+	@Bean
+	public AuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+		authenticationProvider.setUserDetailsService(userDetailsService);
+		authenticationProvider.setPasswordEncoder(passwordEncoder());
+		return authenticationProvider;
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-				.antMatchers("/logout").authenticated()
-				.antMatchers("/admin**/**").access("hasRole('ADMIN')")
-				.antMatchers("/leader**/**").access("hasRole('LEADER')")
-				.antMatchers("/user**/**").access("hasRole('LEADER') or hasRole('USER')")
-				.antMatchers("/", "/login").permitAll()
-				.antMatchers("/askhelp").permitAll()
+		http
+				.authorizeRequests()
+					.antMatchers("/", "/login").permitAll()
+					.antMatchers("/logout").authenticated()
+					.antMatchers("/admin**/**").access("hasRole('ADMIN')")
+					.antMatchers("/leader**/**").access("hasRole('LEADER')")
+					.antMatchers("/user**/**").access("hasRole('LEADER') or hasRole('USER')")
+					.antMatchers("/askhelp").authenticated()
 				.and()
-				.formLogin().loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/login")
+
+				.formLogin()
+					.loginPage("/login")
+					.loginProcessingUrl("/login")
+					.successHandler(authenticationSuccessHandler)
+					.failureUrl("/login.html?error=true")
 				.and()
-				.logout().invalidateHttpSession(true).logoutSuccessUrl("/logout").deleteCookies("JSESSIONID", "XSRF-TOKEN")
+
+					.logout()
+					.invalidateHttpSession(true)
+					.logoutSuccessUrl("/logout")
+					.deleteCookies("JSESSIONID", "XSRF-TOKEN")
 				.and()
-				.exceptionHandling().accessDeniedPage("/access_denied")
-				.and().csrf()
-				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+
+				.exceptionHandling()
+					.accessDeniedPage("/access_denied")
+				.and()
+
+				.csrf()
+					.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 	}
 
 	private Filter csrfHeaderFilter() {

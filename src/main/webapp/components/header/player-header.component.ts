@@ -1,7 +1,7 @@
 /**
  * Created by okunetc on 16.01.2017.
  */
-import {Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {StompService} from "../services/helpNotification/stomp.service";
 
 @Component(
@@ -14,7 +14,7 @@ import {StompService} from "../services/helpNotification/stomp.service";
 export class PlayerHeader{
 
     public serverResponse: string;
-
+    @Input() isLeader: boolean;
     showNotif: boolean = false;
 
     constructor(private stompService: StompService){

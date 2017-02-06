@@ -38,14 +38,6 @@ public class AllianceDaoImpl extends AbstractCrudDao<Alliance>  implements Allia
         return alliances;
     }
 
-    @Override
-    public String getIdByName(String name) {
-        Session session = getCurrentSession();
-        Query query = session.createQuery("select a.uuid FROM Alliance a where name=:name");
-        query.setParameter("name", name);
-        String uuid = (String) query.uniqueResult();
-        return uuid;
-    }
 
     @Override
     public Alliance getByName(String name, String uuid) {

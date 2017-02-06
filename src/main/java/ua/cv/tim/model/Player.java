@@ -72,10 +72,12 @@ import java.util.List;
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb
-                .append("Player: { user: ").append(user).append(", ")
+                .append("Player: { login: ").append(user.getLogin()).append(", ")
+                .append("email: ").append(user.getEmail()).append(", ")
+                .append("roles: ").append(user.getRoles()).append(", ")
                 .append("race: ").append(race).append(", ")
-                .append("villages: { ").append(villages).append(" }, ")
-                .append("alliance: ").append(alliance).append(" }");
+                .append("alliance: ").append((alliance != null) ? alliance : null).append(", ")
+                .append("villages: ").append((villages != null) ? villages : null).append(" }");
         return sb.toString();
     }
 }

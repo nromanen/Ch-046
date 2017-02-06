@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.AllianceDao;
-import ua.cv.tim.dao.PlayerDao;
 import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.dto.AllianceDTO;
+import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.model.Alliance;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Role;
@@ -36,9 +36,6 @@ public class AllianceServiceImpl implements AllianceService {
     private UserDao userDao;
 
     @Autowired
-    private PlayerDao playerDao;
-
-    @Autowired
     private UserService userService;
 
     @Autowired
@@ -62,49 +59,19 @@ public class AllianceServiceImpl implements AllianceService {
         return allianceDTOS;
     }
 
-    public void addAlliance(AllianceDTO allianceDTO){
+    public void addAlliance(AllianceDTO allianceDTO) throws MessagingException {
 
         logger.info("Adding new alliance: {}", allianceDTO);
         Alliance alliance = new Alliance();
         alliance.setName(allianceDTO.getName());
-
-        User user = new User();
-        user.setLogin(allianceDTO.getLeaderLogin());
-        user.setEmail(allianceDTO.getLeaderEmail());
-        user.setPassword("111");
-        List<Role> roles = new ArrayList<>();
-        roles.add(Role.USER);
-        roles.add(Role.LEADER);
-        user.setRoles(roles);
-
-        userDao.add(user);
-
-        Player player = new Player();
-        player.setUser(user);
-        playerDao.add(player);
-        user.setPlayer(player);
-        List<Player> players = new ArrayList<>();
-        players.add(player);
-        alliance.setPlayers(players);
         allianceDao.add(alliance);
-        player.setAlliance(alliance);
-
-        try {
-            sendMail.send(user.getEmail(), "Travian user's info",
-                    "Your login is" + user.getLogin() + " and password: " + user.getPassword() + "  role " + user.getRoles());
-            logger.info("Password {} has been sent on user's e-mail {}", user.getPassword(), user.getEmail());
-        } catch (MessagingException e) {
-            logger.error("The e-mail hasn't been sent {}", e);
-        }
-
+        UserDTO user = new UserDTO(null,allianceDTO.getLeaderLogin(), allianceDTO.getLeaderEmail(), allianceDTO.getName(), true);
+        userService.addUser(user);
+        allianceDTO.setLeaderUuid(userService.getUserByUsername(allianceDTO.getLeaderLogin()).getUuid());
         logger.info("New alliance added successfully: {}", allianceDTO);
     }
 
-    public String getIdByName(String name){
-        return allianceDao.getIdByName(name);
-    }
-
-    public void updateAlliance(AllianceDTO allianceDTO){
+    public void updateAlliance(AllianceDTO allianceDTO) throws MessagingException {
 
         logger.info("Updating alliance: {}", allianceDTO);
         Alliance alliance = allianceDao.getById(allianceDTO.getAllianceUuid());
@@ -118,16 +85,8 @@ public class AllianceServiceImpl implements AllianceService {
         }
         leader.setLogin(allianceDTO.getLeaderLogin());
         leader.setEmail(allianceDTO.getLeaderEmail());
-
-        try {
-            sendMail.send(leader.getEmail(), "Travian user's info",
-                    "Your login is" + leader.getLogin() + " and password: " + leader.getPassword() + "  role " + leader.getRoles());
-            logger.info("Password {} has been sent on user's e-mail {}", leader.getPassword(), leader.getEmail());
-        } catch (MessagingException e) {
-            logger.error("The e-mail hasn't been sent {}", e);
-        }
         allianceDao.update(alliance);
-
+        userService.sendEmail(leader,"bla-bla-bla");
         logger.info("Alliance updated successfully: {}", allianceDTO);
     }
 
@@ -148,10 +107,15 @@ public class AllianceServiceImpl implements AllianceService {
         return allianceDao.getById(uuid);
     }
 
+    @Override
+    public Alliance getByName(String name) {
+        return allianceDao.getByName(name, null);
+    }
+
     public boolean isUniqueAlliance(String name, String uuid){
 
         if(allianceDao.getByName(name, uuid)!=null ) {
-            return false;
+            throw new IllegalArgumentException("Alliance with entered name already exists.");
         }
         return true;
 

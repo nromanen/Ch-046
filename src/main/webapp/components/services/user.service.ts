@@ -39,7 +39,7 @@ export class UserService {
             uuid: null,
             login: member.login,
             email: member.email,
-            role: member.role,
+            isLeader: member.isLeader,
             alliance: member.alliance
         });
         console.log(`Member value is: ${body}`);
@@ -57,15 +57,16 @@ export class UserService {
     }
 
     updateMember(member:User) {
-        console.log(`UserService.updateMember() method is working`);
+        console.info(`UserService.updateMember() method is working`);
 
         const body = JSON.stringify({
             uuid: member.uuid,
             login: member.login,
             email: member.email,
-            alliance: member.alliance
+            alliance: member.alliance,
+            isLeader: member.isLeader
         });
-        console.log(`Member value is: ${body}`);
+        console.info(`Member value is: ${body}`);
 
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: headers});
