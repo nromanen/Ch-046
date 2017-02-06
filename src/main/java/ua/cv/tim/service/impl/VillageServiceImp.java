@@ -59,14 +59,14 @@ public class VillageServiceImp implements VillageService {
 
     private String createErrorMessage(boolean[] nameAndCoordinatesUnique) {
         String errorMessage = null;
-        if (!nameAndCoordinatesUnique[0]) {
-            errorMessage = "Village with the same coordinates already exists!";
+        if (!nameAndCoordinatesUnique[0] && !nameAndCoordinatesUnique[1]) {
+            errorMessage = "Village with the same name and coordinates already exists!";
         } else if (!nameAndCoordinatesUnique[1]) {
             errorMessage = "Village with the same name  already exists!";
         }
-//        else if (!nameAndCoordinatesUnique[0] && !nameAndCoordinatesUnique[1]){
-//            errorMessage="Village with the same name and coordinates already exists!";
-//        }
+        else if (!nameAndCoordinatesUnique[0]){
+            errorMessage="Village with the same coordinates already exists!";
+        }
         return errorMessage;
     }
 

@@ -27,3 +27,7 @@ height: 50px;
  .error{
      color: red;
  }
+
+ .centerCard{
+     text-align: center;
+ }

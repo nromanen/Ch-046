@@ -11,7 +11,6 @@ import {Army} from "../army/army";
 import {VillageService} from "../services/villageService";
 import {FormGroup, FormBuilder, FormControl, Validators, FormArray} from "@angular/forms";
 
-import {type} from "os";
 @Component
 ({
     selector: 'player-list',
@@ -60,13 +59,22 @@ import {type} from "os";
         </tr>
         </thead>
 
-        <tbody>
+        <tbody *ngFor="let v of player.villages">
        
-        <tr player-ro [v]="v" *ngFor="let v of player.villages" [isForm]="v==selectedVillage" (errorMessage)="showEditError()"
+        <tr player-ro [v]="v"  [isForm]="v==selectedVillage" (errorMessage)="showEditError($event)"
+        (successMessage)="showSuccessMessage($event)" (editedVillage)="this.editedVillage=$event"
             (selectedVillageChanged)="changeSelectedVillage($event)" [editVillageForm]="editVillageForm" (keyup)="cancelEditing($event.keyCode)">       
 </tr>
-<tr >
-<td *ngIf="editError!=null" colspan="33">klklkl</td>
+<tr>
+<td *ngIf="(editError!=undefined && v==selectedVillage)|| (successMessage!=undefined && editedVillage==v)" colspan="33">
+ <div *ngIf="successMessage!=null||editError!=null" class="col s4 offset-s4 ">
+    <div  [ngClass]="{'card':true, 'green':successMessage!=null, 'red':editError!=null, 'lighten-5':true}">
+        <div [ngClass]="{'card-content':true , 'green-text':successMessage!=null,'red-text':editError!=null }">
+            <p class="centerCard">{{editError!=null?editError:successMessage}} <span (click)="closeDialog()" class="right">x</span></p>
+        </div>
+    </div>
+</div>
+</td>
 </tr>
          
         </tbody>
@@ -81,6 +89,7 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
     editVillageForm: FormGroup;
     private cdRef: ChangeDetectorRef;
     editError:string;
+    successMessage:string;
     ngDoCheck(): void {
 
     }
@@ -90,7 +99,7 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
     @Input('player') player: Player;
     unitValues: Array<string>;
     selectedVillage: Village;
-
+    editedVillage:Village;
 
     constructor(private currVillageService: CurrVillageArmiesService, private villageService: VillageService,
                 private _fBuilder:FormBuilder, cdRef:ChangeDetectorRef) {
@@ -109,6 +118,7 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
 
     changeSelectedVillage(village: Village) {
         this.selectedVillage = village;
+
         console.log("v changed");
         // this.buildForm();
         this.editVillageForm.valueChanges
@@ -117,12 +127,7 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
                 this.cdRef.detectChanges();
             });
 
-        this.player.villages.forEach(v=>{
-            console.log();
-            if (village==v){
-                console.log('found equal');
-            }
-        });
+
 
     }
 
@@ -137,9 +142,28 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
 
     }
 
-    showEditError(){
-        
+    showEditError(event:{}){
+        this.editError=null;
+        this.successMessage=null;
+        if (event!=null) {
+            this.editError = '';
+            for (let field in event) {
+                this.editError += event[field] + " ";
+            }
+            console.log(this.editError);
+        }
     }
 
+    showSuccessMessage(event){
+        this.editError=null;
+        this.successMessage=null;
+        this.successMessage=event;
+
+    }
+
+    closeDialog(){
+        this.editError=null;
+        this.successMessage=null;
+    }
 
 }

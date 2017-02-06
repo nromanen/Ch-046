@@ -45,7 +45,7 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         this.addVillageForm = this._fBuilder.group({
             'name': [
                 this.village.name,
-                [Validators.required, Validators.minLength(5),
+                [Validators.required, Validators.minLength(5),Validators.maxLength(14),Validators.pattern(AddVillageForm.VILLAGE_REGEXP)
                 ]
             ],
             'xCoord': [this.village.xCoord,
@@ -153,14 +153,14 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
             'pattern':'Name can contain chars only'
         },
         'xCoord': {
-            'required': 'X coordinate is required.',
+            'required': 'X  is required.',
             'forbiddenCoordinate': 'X can only range between -400 and 400.',
-            'pattern':"X coordinate can contain numbers only"
+            'pattern':"X  can contain numbers only"
         },
         'yCoord': {
-            'required': 'Y coordinate is required.',
-            'forbiddenCoordinate': 'Y can only range between -400 and 400.',
-            'pattern':"Y coordinate can contain numbers only"
+            'required': 'Y  is required!\n',
+            'forbiddenCoordinate': 'Y can only range between -400 and 400.\n',
+            'pattern':"Y can contain numbers only"
         },
         'population':{
             'required': 'Population is required.',

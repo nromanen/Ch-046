@@ -2,17 +2,16 @@
  * Created by okunetc on 19.01.2017.
  */
 import {
-    Component, Input, EventEmitter, OnInit, AfterViewChecked, ViewChild, ChangeDetectorRef,
-    AfterViewInit, Output, OnChanges, SimpleChanges
+    Component, Input, EventEmitter, OnInit, ChangeDetectorRef,
+    AfterViewInit, Output
 } from "@angular/core";
 import {UnitType} from "../UnitType/unitType";
 import {Village} from "./village";
 import {VillageService} from "../services/villageService";
-import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 import {Army} from "../army/army";
 import {FormControl, Validators, FormArray, FormBuilder, AbstractControl} from "@angular/forms";
 import {AddVillageForm} from "./addVillageForm";
-import {controllerKey} from "@angular/upgrade/src/util";
+import {el} from "@angular/platform-browser/testing/browser_util";
 @Component({
     selector: '[player-ro]',
     outputs:['selectedVillageChanged'],
@@ -70,7 +69,9 @@ export class VillageRow implements OnInit,AfterViewInit{
     @Input() isForm:boolean;
     @Input() editVillageForm;
     @Output() cancelEdit:EventEmitter<Village>;
-    @Output() errorMessage:EventEmitter<string>;
+    @Output() errorMessage:EventEmitter<{}>;
+    @Output() successMessage:EventEmitter<string>;
+    @Output() editedVillage;
     unitValues:Array<string>;
     selectedVillageChanged:EventEmitter<Village>;
     ifSaveChanges:boolean;
@@ -84,12 +85,14 @@ export class VillageRow implements OnInit,AfterViewInit{
         this.ifSaveChanges=false;
         this.cdr = cdr;
         this.cancelEdit=new EventEmitter<Village>();
-        this.errorMessage=new EventEmitter<string>()
+        this.errorMessage=new EventEmitter<{}>();
+        this.successMessage=new EventEmitter<string>();
+        this.editedVillage=new EventEmitter<Village>();
     }
 
     ngOnInit(): void {
         this.getStringUnitTypeValues();
-        this.buildForm();
+        // this.buildForm();
     }
 
     ngAfterViewInit(): void {
@@ -116,21 +119,22 @@ export class VillageRow implements OnInit,AfterViewInit{
         this.villageService.update(newVillage).subscribe(
             response=>{
                  this.villageService.villages[index]=response;
-                console.log('resp');
-                console.log(response);
+                this.successMessage.emit("Village has successfully been updated ");
+                this.editedVillage.emit(response);
             },
             error=>{
-                console.log(<any>error);
+                this.errorMessage.emit({error:error._body});
             }
         );
-        this.selectedVillageChanged.emit(new Village);
+        // this.selectedVillageChanged.emit(new Village);
         this.ifSaveChanges=false;
 
     }
 
     showEdit(){
         this.selectedVillageChanged.emit(this.v);
-        // this.buildForm();
+        this.errorMessage.emit(null);
+        this.buildForm();
         // this.cdr.detectChanges();
     }
 
@@ -175,7 +179,7 @@ export class VillageRow implements OnInit,AfterViewInit{
 
     initArmies(army:Army) {
         return this._fBuilder.group({
-            count:['',[Validators.required,Validators.pattern(this.COORD_REGEXP)]],
+            count:['',[Validators.pattern(this.POPULATION_REGEXP)]],
             type:[army.type,[] ],
             ownUnit:[army.ownUnit,[]],
             uuid:[army.uuid,[]]
@@ -213,32 +217,16 @@ export class VillageRow implements OnInit,AfterViewInit{
                 }
             }
         }
+
+
         // console.log(this.editVillageForm);
         let armiesControl:FormArray=form.get('armies');
-        for (let i=0; i<armiesControl.controls.length; i++){
-            if (!armiesControl.controls[i].valid){
-                let countControl=armiesControl.controls[i].get('count');
-                for (const key in countControl.errors) {
-                    this.formErrors['armies'] += this.validationMessages['armies'][key] + ' ';
-                }
-                if (this.isForm) {
-                    this.errorMessage.emit(this.formErrors['armies']);
-                    console.log("kjkk");
-                }
-                break;
-            }
+        if (!armiesControl.valid) {
+            this.formErrors['armies']='Count can contain numbers only!';
         }
-       // console.log(this.formErrors);
-        // armiesControl.controls.forEach(control=>{
-        //     if (!control.valid){
-        //         for (const key in control.errors) {
-        //             this.formErrors['armies'] += this.validationMessages[key] + ' ';
-        //         }
-        //         this.errorMessage.emit(this.formErrors['armies']);
-        //         break;
-        //     }
-        // });
-
+        if (!this.editVillageForm.valid) {
+            this.errorMessage.emit(this.formErrors);
+        } else  this.errorMessage.emit(null);
     }
 
     formErrors = {
@@ -252,30 +240,31 @@ export class VillageRow implements OnInit,AfterViewInit{
 
     validationMessages = {
         'name': {
-            'required': 'Name is required.',
-            'minlength': 'Name must be at least 4 characters long.',
-            'maxlength': 'Name cannot be more than 24 characters long.',
+            'required': 'Name is required!',
+            'minlength': 'Name must be at least 4 characters long!',
+            'maxlength': 'Name cannot be more than 24 characters long!',
+            'pattern':'Pattern!'
         },
         'xCoord': {
-            'required': 'X coordinate is required.',
-            'forbiddenCoordinate': 'X can only range between -400 and 400.',
-            'pattern':"X coordinate can contain numbers only"
+            'required': 'X  is required!',
+            'forbiddenCoordinate': 'X can only range between -400 and 400!',
+            'pattern':"X  can contain numbers only!"
         },
         'yCoord': {
             'required': 'Y coordinate is required.',
-            'forbiddenCoordinate': 'Y can only range between -400 and 400.',
-            'pattern':"Y coordinate can contain numbers only"
+            'forbiddenCoordinate': 'Y can only range between -400 and 400!',
+            'pattern':"Y  can contain numbers only!"
         },
         'population':{
             'required': 'Population is required.',
-            'pattern':"Population can contain numbers only"
+            'pattern':"Population can contain numbers only!"
         },
         'wall':{
             'required': 'Wall is required.',
-            'pattern':"Wall level can contain numbers only"
+            'pattern':"Wall level can contain numbers only!"
         },
         'armies':{
-            'pattern':'Count can contain numbers only'
+            'pattern':'Count can contain numbers only!'
         }
     };
 

@@ -48,8 +48,7 @@ export class PlayerComponent implements OnInit {
     showAddVillageForm: boolean;
     successMessage;
     errorMessage;
-    successEditMessage;
-    errorEditMessage;
+
     constructor(private playerService: PlayerService) {
 
     }
