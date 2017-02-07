@@ -87,7 +87,7 @@ public class AttackServiceImpl implements AttackService {
         List<Attack> attacks = attackDao.getActive();
 
         for (Attack attack : attacks) {
-//            if (attack.getAttackTime().after(new Date()) && attack.getOwner().getAlliance().getName().equals(user.getPlayer().getAlliance().getName())) {
+            if (attack.getOwner().getAlliance().getName().equals(user.getPlayer().getAlliance().getName())) {
                 AttackDTO attackDTO = new AttackDTO();
                 attackDTO.setUuid(attack.getUuid());
                 attackDTO.setEnemy(attack.getEnemy());
@@ -97,7 +97,7 @@ public class AttackServiceImpl implements AttackService {
                 attackDTO.setVillageId(attack.getVillage().getUuid());
                 attackDTO.setVillageName(attack.getVillage().getName() + "[" + attack.getVillage().getxCoord() + " , " + attack.getVillage().getyCoord() + "]");
                 activeAttacks.add(attackDTO);
-//            }
+            }
         }
 
         System.out.println("GET ALL: " + activeAttacks);

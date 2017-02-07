@@ -535,3 +535,23 @@ ALTER TABLE ONLY army
 -- PostgreSQL database dump complete
 --
 
+CREATE TABLE attack
+(
+    uuid character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    lastmodified timestamp without time zone,
+    attacktime timestamp without time zone,
+    enemy character varying(255) COLLATE pg_catalog."default",
+    owner_uuid character varying(255) COLLATE pg_catalog."default",
+    village_uuid character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT attack_pkey PRIMARY KEY (uuid),
+    CONSTRAINT fkk6cne8p42ydeigc6qv2dnk3ol FOREIGN KEY (owner_uuid)
+        REFERENCES public.player (uuid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT village_delete FOREIGN KEY (village_uuid)
+        REFERENCES public.village (uuid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+);
+
+ALTER TABLE public.attack  OWNER to postgres;
