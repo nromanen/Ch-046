@@ -2,7 +2,7 @@
  * Created by vyach on 25.01.2017.
  */
 
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, OnInit} from '@angular/core';
 
 import {Player} from "./player";
 
@@ -13,6 +13,6 @@ import {Player} from "./player";
 })
 
 export class PlayerListComponent {
-    
+
     @Input() player: Player;
 }

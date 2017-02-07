@@ -23,7 +23,7 @@ public class VillageParser {
 
 
         String villageNameString = driver.findElement(By.cssSelector("#villageNameField")).getText();
-        villageNameString = villageNameString.substring(8);
+//        villageNameString = villageNameString.substring(8);
         village.setName(villageNameString);
 
 

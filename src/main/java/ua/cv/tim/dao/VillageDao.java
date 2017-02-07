@@ -8,4 +8,6 @@ import ua.cv.tim.model.Village;
  */
 public interface VillageDao extends CrudDao<Village> {
     Village getById(String id);
+    Village getByCoordinates(short xCoort, short yCoord);
+    Village getByName(String name);
 }

@@ -14,4 +14,10 @@ public interface VillageService {
 
 	Village getById(String id);
 
+	Village getByCoordinates(short xCoord, short yCoord);
+
+	boolean isUnique(Village village);
+
+	Village getByName(String name);
+
 }
