@@ -81,6 +81,9 @@ dependencies {
 
     compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.23.2'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.0.1'
+
+    compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.2.1'
+
 }
 
 configurations.all {
@@ -116,6 +119,34 @@ task runApp(type:Exec) {
     standardOutput = new ByteArrayOutputStream()
     ext.output = {
         return standardOutput.toString()
+    }
+}
+
+test {
+    // enable TestNG support (default is JUnit)
+    useTestNG()
+
+    // set a system property for the test JVM(s)
+    systemProperty 'some.prop', 'value'
+
+    // show standard out and standard error of the test JVM(s) on the console
+    testLogging.showStandardStreams = true
+
+    // set heap size for the test JVM(s)
+    minHeapSize = "128m"
+    maxHeapSize = "512m"
+
+    // set JVM arguments for the test JVM(s)
+    jvmArgs '-XX:MaxPermSize=256m'
+
+    // listen to events in the test execution lifecycle
+    beforeTest { descriptor ->
+        logger.lifecycle("Running test: " + descriptor)
+    }
+
+    // listen to standard out and standard error of the test JVM(s)
+    onOutput { descriptor, event ->
+        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)
     }
 }
 

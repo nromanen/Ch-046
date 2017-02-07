@@ -14,7 +14,7 @@ export class StompService {
 
     private static stompClient;
     private stompSubject: Subject<any> = new Subject<any>();
-    private WEBSOCKETURL = 'ws://localhost:8070/travian/stompTest';
+    private WEBSOCKETURL = 'ws://localhost:8080/travian/stompTest';
 
     public  alliance: Alliance = null;
 
@@ -51,7 +51,6 @@ export class StompService {
             this.connectInit();
         }
     }
-
 
     public send() {
         StompService.stompClient.send("/app/hello/" + this.alliance.allianceUuid, {}, JSON.stringify({'message': 'askHelp'}));

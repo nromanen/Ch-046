@@ -24,11 +24,15 @@ export class HelpService {
     }
 
     addAttack(attack: Attack):  Observable<Attack> {
+        let time = (attack.timeAttack + "");
         const body = JSON.stringify({
             villageId: attack.village,
             enemy: attack.enemy,
-            attackTime: attack.timeAttack
+            attackTime: time
         });
+
+        console.log("BODY");
+        console.log(body);
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 

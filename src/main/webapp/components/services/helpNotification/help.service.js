@@ -39,11 +39,14 @@ System.register(["rxjs/Rx", "@angular/core", "@angular/http"], function (exports
                         .map(function (res) { return res.json(); });
                 };
                 HelpService.prototype.addAttack = function (attack) {
+                    var time = (attack.timeAttack + "");
                     var body = JSON.stringify({
                         villageId: attack.village,
                         enemy: attack.enemy,
-                        attackTime: attack.timeAttack
+                        attackTime: time
                     });
+                    console.log("BODY");
+                    console.log(body);
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
                     return this.http.post(this.url, body, {

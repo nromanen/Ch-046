@@ -27,7 +27,8 @@ export class UserHelpComponent implements OnInit{
 
        constructor(private helpService:HelpService, private formBuilder: FormBuilder, private stompService: StompService){
         this.helpForm = this.formBuilder.group({
-            'villageName' : ['', Validators.compose([Validators.required])],
+            // 'villageName' : ['', Validators.compose([Validators.required])],
+            'villageName' : [''],
             'enemy': ['',Validators.compose([Validators.required])],
             'date' : ['']
         });
@@ -52,7 +53,8 @@ export class UserHelpComponent implements OnInit{
     submitForm(value: any){
         console.log(value);
         let newAttack = new Attack(value.villageName, value.enemy, value.date);
-        // this.send(newAttack);
+        //let locDate = value.date.
+        this.send(newAttack);
         this.helpForm.controls['villageName'].setValue("");
         this.helpForm.controls['enemy'].setValue("");
         this.helpForm.controls['date'].setValue("");

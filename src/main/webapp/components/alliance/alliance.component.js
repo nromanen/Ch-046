@@ -29,6 +29,7 @@ System.register(["@angular/core", "../services/alliance/alliance-service"], func
                     this.addNewAlliance = false;
                     this.selectedAlliance = null;
                     this.deletedAlliance = null;
+                    this.alliances = [];
                 }
                 AllianceComponent.prototype.ngOnInit = function () {
                     this.getAlliances();
