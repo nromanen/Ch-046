@@ -44,7 +44,7 @@ public class UserServiceImplTest {
     @Captor
     ArgumentCaptor<User> captor;
     @Spy
-    List<User> users = new ArrayList<User>();
+    List<User> users = new ArrayList<>();
 
     @BeforeClass
     public void setUp(){

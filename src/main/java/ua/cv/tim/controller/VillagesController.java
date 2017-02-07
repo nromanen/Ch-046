@@ -41,6 +41,14 @@ public class VillagesController {
         return new ResponseEntity<>(village, HttpStatus.OK);
     }
 
+    /**
+     * Adds new village in a database.
+     * @param village
+     * @param builder
+     * @return added village.
+     * @throws JsonProcessingException
+     * @throws EntityNotUniqueException
+     */
     @RequestMapping(value = "/village/", method = RequestMethod.POST)
     public ResponseEntity<Village> addVillage(@RequestBody Village village, UriComponentsBuilder builder) throws JsonProcessingException, EntityNotUniqueException {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -53,6 +61,12 @@ public class VillagesController {
         return new ResponseEntity<>(village, HttpStatus.CREATED);
     }
 
+    /**
+     * Updates village.
+     * @param id
+     * @param village
+     * @return updated village.
+     */
     @RequestMapping(value = "/village/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Village> updateVillage(@PathVariable(name = "id") String id, @RequestBody Village village) {
         Village current_village = villageService.getById(id);

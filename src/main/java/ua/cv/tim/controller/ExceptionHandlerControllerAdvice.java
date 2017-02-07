@@ -48,12 +48,5 @@ public class ExceptionHandlerControllerAdvice {
         return e.getMessage();
     }
 
-//    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-//    @ExceptionHandler(value = VillageNotUniqueException.class)
-//    public String villageNotUniqueHandler(VillageNotUniqueException e){
-//        logger.error("VillageNotUniqueException: {}", e.getMessage());
-//        e.printStackTrace();
-//        return e.getMessage();
-//    }
 
 }

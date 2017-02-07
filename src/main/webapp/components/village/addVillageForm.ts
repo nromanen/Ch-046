@@ -21,11 +21,11 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
     addVillageForm: FormGroup;
     COORD_REGEXP=/^(-)?[0-9]*$/;
     POPULATION_REGEXP=/^\d*$/;
-    static VILLAGE_REGEXP=/^[A-z]*$/;
+    static VILLAGE_REGEXP=/^\w*$/;
     @Output() successMessage:EventEmitter<string>;
     @Output() errorMessage:EventEmitter<string>;
+    private unitTypeStrings: Array<string>;
     ngOnInit(): void {
-        console.log(this.village);
         this.buildForm();
     }
 
@@ -36,6 +36,9 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         this.wasSubmitted = new EventEmitter();
         this.errorMessage=new EventEmitter<string>();
         this.successMessage=new EventEmitter<string>();
+        this.unitTypeStrings=[];
+        this.initUnitTypes();
+        console.log(this.unitTypeStrings);
     }
 
     ngAfterViewChecked() {
@@ -75,6 +78,11 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
             count: ['',[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]],
             ownUnit:[false,[]]
         });
+    }
+
+    f(){
+        this.unitTypeStrings.push('klkl');
+        this.unitTypeStrings=[];
     }
 
 
@@ -180,4 +188,14 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
              return null;
          };
      }
+
+    initUnitTypes(){
+        for(let type in UnitType){
+            this.unitTypeStrings.push(type);
+        }
+    }
+
+    updateTypes(types){
+        this.unitTypeStrings=types;
+    }
 }

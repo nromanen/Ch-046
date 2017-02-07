@@ -48,6 +48,10 @@ public class PlayerController {
         return new ResponseEntity<>(villages, HttpStatus.OK);
     }
 
+    /**
+     *
+     * @return player with villages in JSON-format.
+     */
     @RequestMapping(value = "/player", method = RequestMethod.GET)
     public ResponseEntity<PlayerDTO> getPlayerById() {
 
@@ -64,6 +68,12 @@ public class PlayerController {
         return new ResponseEntity<>(playerDTO, HttpStatus.OK);
     }
 
+    /**
+     * Adds new player in a database
+     * @param player player in JSON-format
+     * @param builder
+     * @return created player.
+     */
     @RequestMapping(value = "/player/", method = RequestMethod.POST)
     public ResponseEntity<Player> addPlayer(@RequestBody Player player, UriComponentsBuilder builder) {
         playerService.add(player);
@@ -72,6 +82,12 @@ public class PlayerController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
+    /**
+     *
+     * @param id
+     * @param player
+     * @return updated player.
+     */
     @RequestMapping(value = "/player/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Player> updatePlayer(@PathVariable(name = "id") String id, @RequestBody Player player) {
         Player current_player = playerService.getById(id);
