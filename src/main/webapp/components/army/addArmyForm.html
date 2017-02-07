@@ -1,33 +1,33 @@
-<div class="input-field col s6 offset-s3">
-    <select class="browser-default" [ngModel]="army.type"
-            (ngModelChange)="army.type = $event" name="type" #type>
-        <option value="" disabled selected>Choose your option</option>
-        <option *ngFor="let type of unitTypes" [ngValue]="type">{{unitTypeStrings[type]}}</option>
-    </select>
-</div>
-<div class="input-field col s6 offset-s3">
-    <input id="count" type="text" class="validate" [(ngModel)]="army.count" name="count" pattern="[1-9][0-9]*"
-           #count="ngModel" required>
-    <label for="count">Count</label>
-    <div *ngIf="count.errors && (count.dirty || count.touched)"
-         class="alert alert-danger">
-        <div [hidden]="!count.errors.required">
-            Count is required
-        </div>
-        <div [hidden]="!count.errors.pattern">
-            Coordinates can contain chars only!
-        </div>
+<div [formGroup]="group">
+    <div class="input-field col s6 offset-s3" >
+        <select class="browser-default" name="type" formControlName="type">
+            <option value="" disabled selected>Choose type of army</option>
+            <option *ngFor="let type of unitTypeStrings" [ngValue]="type">{{type}}</option>
+        </select>
     </div>
-</div>
 
-<div class="input-field col s6 offset-s3">
-    Is own unit?
-</div>
-<div class="switch ">
-    <label class="col offset-s3">
-        No
-        <input type="checkbox" [(ngModel)]="army.ownUnit" name="isCapital">
-        <span class="lever"></span>
-        Yes
-    </label>
+    <div class="input-field col s6 offset-s3">
+        <input id="count" type="text" class="validate" formControlName="count" required>
+        <label for="count">Count</label>
+        <div *ngIf="!group.controls.count.valid && (group.controls.count.touched || group.controls.count.dirty)">
+            <div [hidden]="!group.controls['count'].errors.required">
+                Count is required!
+            </div>
+            <div [hidden]="!group.controls['count'].errors.pattern">
+                Count can contain numbers only!
+            </div>
+        </div>
+
+    </div>
+    <div class="input-field col s6 offset-s3">
+        Is own unit?
+    </div>
+    <div class="switch ">
+        <label class="col offset-s3">
+            No
+            <input type="checkbox"  formControlName="ownUnit">
+            <span class="lever"></span>
+            Yes
+        </label>
+    </div>
 </div>

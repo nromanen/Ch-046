@@ -5,19 +5,19 @@
 
 import {Component, Output, EventEmitter, OnInit} from "@angular/core";
 import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
-import {Attack} from "./../attack";
-import {Player} from "../../player/player";
-import {Village} from "../../village/village";
-import {HelpService} from "../../services/helpNotification/help.service";
-import {StompService} from "../../services/helpNotification/stomp.service";
+import {Attack} from "./attack";
+import {Player} from "../player/player";
+import {Village} from "../village/village";
+import {HelpService} from "../services/helpNotification/help.service";
+import {StompService} from "../services/helpNotification/stomp.service";
 
 
 @Component({
-    selector: 'user-ask-help',
-    templateUrl: 'components/help/user/askHelp.html'
+    selector: 'ask-help',
+    templateUrl: 'components/help/askHelp.html'
 })
 
-export class UserHelpComponent implements OnInit{
+export class HelpComponent implements OnInit{
 
     player: Player;
     villages : Village[];

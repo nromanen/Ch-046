@@ -16,13 +16,13 @@ public interface AllianceService {
 
 	void addAlliance(AllianceDTO allianceDTO) throws MessagingException;
 
-	String getIdByName(String name);
-
 	void deleteAlliance(String id);
 
 	Alliance getById(String uuid);
 
-	void updateAlliance(AllianceDTO allianceDTO);
+	Alliance getByName(String name);
+
+	void updateAlliance(AllianceDTO allianceDTO) throws MessagingException;
 
 	boolean isUniqueAlliance(String name, String uuid);
 }

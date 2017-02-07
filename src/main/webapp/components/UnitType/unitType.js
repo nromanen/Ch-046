@@ -9,33 +9,62 @@ System.register([], function (exports_1, context_1) {
              * Created by okunetc on 19.01.2017.
              */
             (function (UnitType) {
-                UnitType[UnitType["Phalanx"] = 0] = "Phalanx";
-                UnitType[UnitType["Swordsman"] = 1] = "Swordsman";
-                UnitType[UnitType["Pathfinder"] = 2] = "Pathfinder";
-                UnitType[UnitType["TheutatesThunder"] = 3] = "TheutatesThunder";
-                UnitType[UnitType["Druidrider"] = 4] = "Druidrider";
-                UnitType[UnitType["Haeduan"] = 5] = "Haeduan";
-                UnitType[UnitType["RamG"] = 6] = "RamG";
-                UnitType[UnitType["Trebuchet"] = 7] = "Trebuchet";
-                UnitType[UnitType["Chieftain"] = 8] = "Chieftain";
-                UnitType[UnitType["Clubswinger"] = 9] = "Clubswinger";
-                UnitType[UnitType["Spearman"] = 10] = "Spearman";
-                UnitType[UnitType["Axeman"] = 11] = "Axeman";
-                UnitType[UnitType["Scout"] = 12] = "Scout";
-                UnitType[UnitType["Paladin"] = 13] = "Paladin";
-                UnitType[UnitType["TeutonicKnight"] = 14] = "TeutonicKnight";
-                UnitType[UnitType["RamT"] = 15] = "RamT";
-                UnitType[UnitType["Catapult"] = 16] = "Catapult";
-                UnitType[UnitType["Chief"] = 17] = "Chief";
-                UnitType[UnitType["Legionnaire"] = 18] = "Legionnaire";
-                UnitType[UnitType["Praetorian"] = 19] = "Praetorian";
-                UnitType[UnitType["Imperian"] = 20] = "Imperian";
-                UnitType[UnitType["EquitesLegati"] = 21] = "EquitesLegati";
-                UnitType[UnitType["EquitesImperatoris"] = 22] = "EquitesImperatoris";
-                UnitType[UnitType["EquitesCaesaris"] = 23] = "EquitesCaesaris";
-                UnitType[UnitType["BatteringRam"] = 24] = "BatteringRam";
-                UnitType[UnitType["FireCatapult"] = 25] = "FireCatapult";
-                UnitType[UnitType["Senator"] = 26] = "Senator";
+                // Phalanx,
+                // Swordsman,
+                // Pathfinder,
+                // TheutatesThunder,
+                // Druidrider,
+                // Haeduan,
+                // RamG,
+                // Trebuchet,
+                // Chieftain,
+                //
+                // Clubswinger,
+                // Spearman,
+                // Axeman,
+                // Scout,
+                // Paladin,
+                // TeutonicKnight,
+                // RamT,
+                // Catapult,
+                // Chief,
+                //
+                // Legionnaire,
+                // Praetorian,
+                // Imperian,
+                // EquitesLegati,
+                // EquitesImperatoris,
+                // EquitesCaesaris,
+                // BatteringRam,
+                // FireCatapult,
+                // Senator,
+                UnitType[UnitType["Phalanx"] = "Phalanx"] = "Phalanx";
+                UnitType[UnitType["Swordsman"] = "Swordsman"] = "Swordsman";
+                UnitType[UnitType["Pathfinder"] = "Pathfinder"] = "Pathfinder";
+                UnitType[UnitType["TheutatesThunder"] = "TheutatesThunder"] = "TheutatesThunder";
+                UnitType[UnitType["Druidrider"] = "Druidrider"] = "Druidrider";
+                UnitType[UnitType["Haeduan"] = "Haeduan"] = "Haeduan";
+                UnitType[UnitType["RamG"] = "RamG"] = "RamG";
+                UnitType[UnitType["Trebuchet"] = "Trebuchet"] = "Trebuchet";
+                UnitType[UnitType["Chieftain"] = "Chieftain"] = "Chieftain";
+                UnitType[UnitType["Clubswinger"] = "Clubswinger"] = "Clubswinger";
+                UnitType[UnitType["Spearman"] = "Spearman"] = "Spearman";
+                UnitType[UnitType["Axeman"] = "Axeman"] = "Axeman";
+                UnitType[UnitType["Scout"] = "Scout"] = "Scout";
+                UnitType[UnitType["Paladin"] = "Paladin"] = "Paladin";
+                UnitType[UnitType["TeutonicKnight"] = "TeutonicKnight"] = "TeutonicKnight";
+                UnitType[UnitType["RamT"] = "RamT"] = "RamT";
+                UnitType[UnitType["Catapult"] = "Catapult"] = "Catapult";
+                UnitType[UnitType["Chief"] = "Chief"] = "Chief";
+                UnitType[UnitType["Legionnaire"] = "Legionnaire"] = "Legionnaire";
+                UnitType[UnitType["Praetorian"] = "Praetorian"] = "Praetorian";
+                UnitType[UnitType["Imperian"] = "Imperian"] = "Imperian";
+                UnitType[UnitType["EquitesLegati"] = "EquitesLegati"] = "EquitesLegati";
+                UnitType[UnitType["EquitesImperatoris"] = "EquitesImperatoris"] = "EquitesImperatoris";
+                UnitType[UnitType["EquitesCaesaris"] = "EquitesCaesaris"] = "EquitesCaesaris";
+                UnitType[UnitType["BatteringRam"] = "BatteringRam"] = "BatteringRam";
+                UnitType[UnitType["FireCatapult"] = "FireCatapult"] = "FireCatapult";
+                UnitType[UnitType["Senator"] = "Senator"] = "Senator";
             })(UnitType || (UnitType = {}));
             exports_1("UnitType", UnitType);
         }

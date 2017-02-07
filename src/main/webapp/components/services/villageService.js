@@ -1,4 +1,4 @@
-System.register(["@angular/core", "../village/village", "@angular/http"], function (exports_1, context_1) {
+System.register(["@angular/core", "@angular/http"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,14 +10,11 @@ System.register(["@angular/core", "../village/village", "@angular/http"], functi
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, village_1, http_1, VillageService;
+    var core_1, http_1, VillageService;
     return {
         setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (village_1_1) {
-                village_1 = village_1_1;
             },
             function (http_1_1) {
                 http_1 = http_1_1;
@@ -30,38 +27,28 @@ System.register(["@angular/core", "../village/village", "@angular/http"], functi
                     this.villageURL = "village/";
                 }
                 VillageService.prototype.update = function (village) {
-                    var _this = this;
-                    var villageBefore = new village_1.Village("");
-                    villageBefore.name = village.name;
-                    villageBefore.uuid = village.uuid;
-                    villageBefore.armies = village.armies;
-                    villageBefore.isCapital = village.isCapital;
-                    villageBefore.population = village.population;
-                    villageBefore.xCoord = village.xCoord;
-                    villageBefore.yCoord = village.yCoord;
-                    villageBefore.wall = village.wall;
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
-                    this.http.put(this.villageURL + village.uuid, JSON.stringify(village), {
+                    return this.http.put(this.villageURL + village.uuid, JSON.stringify(village), {
                         headers: headers
-                    }).subscribe(function (response) {
-                        console.log(response);
-                        var newVillage = response.json();
-                        console.log(newVillage);
-                        _this.villages[_this.villages.indexOf(village)] = newVillage;
-                    }, function (error) { return console.log(error); });
+                    }).map(function (res) { return res.json(); });
                 };
                 VillageService.prototype.add = function (village) {
-                    var _this = this;
                     var body = JSON.stringify(village);
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
-                    this.http.post(this.villageURL, body, {
+                    // this.http.post(this.villageURL, body, {
+                    //     headers: headers
+                    // }).map(res => res.json())
+                    //     .subscribe(
+                    //         response => {
+                    //             this.villages.push(response);
+                    //         },
+                    //         error => console.log(error)
+                    //     );
+                    return this.http.post(this.villageURL, body, {
                         headers: headers
-                    }).map(function (res) { return res.json(); })
-                        .subscribe(function (response) {
-                        _this.villages.push(response);
-                    }, function (error) { return console.log(error); });
+                    }).map(function (res) { return res.json(); });
                 };
                 return VillageService;
             }());

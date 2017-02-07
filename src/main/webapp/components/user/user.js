@@ -6,12 +6,12 @@ System.register([], function (exports_1, context_1) {
         setters: [],
         execute: function () {
             User = (function () {
-                function User(login, email, uuid, alliance, role) {
+                function User(login, email, uuid, alliance, isLeader) {
                     this.uuid = uuid || null;
                     this.login = login;
                     this.email = email;
                     this.alliance = alliance || null;
-                    this.role = role == true ? 'LEADER' : null;
+                    this.isLeader = isLeader;
                 }
                 return User;
             }());

@@ -1,7 +1,7 @@
 /**
  * Created by okunetc on 13.01.2017.
  */
-System.register(["./player", "@angular/core", "../services/player.service"], function (exports_1, context_1) {
+System.register(["@angular/core", "../services/player.service"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -13,12 +13,9 @@ System.register(["./player", "@angular/core", "../services/player.service"], fun
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var player_1, core_1, player_service_1, PlayerComponent;
+    var core_1, player_service_1, PlayerComponent;
     return {
         setters: [
-            function (player_1_1) {
-                player_1 = player_1_1;
-            },
             function (core_1_1) {
                 core_1 = core_1_1;
             },
@@ -32,13 +29,14 @@ System.register(["./player", "@angular/core", "../services/player.service"], fun
             PlayerComponent = (function () {
                 function PlayerComponent(playerService) {
                     this.playerService = playerService;
-                    this.player = new player_1.Player();
                 }
                 PlayerComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this.playerService.getById()
                         .subscribe(function (player) {
+                        console.info("PlayerComponent ngOnInit() is working. Player: " + JSON.stringify(player));
                         _this.player = player;
+                        console.log(_this.player.alliance);
                     });
                 };
                 PlayerComponent.prototype.hideAddForm = function () {
@@ -47,12 +45,24 @@ System.register(["./player", "@angular/core", "../services/player.service"], fun
                 PlayerComponent.prototype.showAddForm = function () {
                     this.showAddVillageForm = true;
                 };
+                PlayerComponent.prototype.closeDialog = function () {
+                    this.errorMessage = null;
+                    this.successMessage = null;
+                };
+                PlayerComponent.prototype.showSuccessMessage = function (event) {
+                    this.errorMessage = null;
+                    this.successMessage = event;
+                };
+                PlayerComponent.prototype.showErrorMessage = function (event) {
+                    this.successMessage = null;
+                    this.errorMessage = event;
+                };
                 return PlayerComponent;
             }());
             PlayerComponent = __decorate([
                 core_1.Component({
                     selector: 'player',
-                    template: "\n        <player-head *ngIf=\"!player.isLeader\"></player-head>\n        <leader-header *ngIf=\"player.isLeader\"></leader-header>\n        <player-list *ngIf=\"player\" [player]=\"player\"></player-list>\n        <div class=\"row\">\n            <div class=\"col offset-s5\">\n                <button (click)=\"showAddForm()\" class=\"btn waves-effect waves-light\">add</button>\n            </div>\n            <add-vill-form [player]=\"player\" *ngIf=\"showAddVillageForm\" (wasSubmitted)=\"hideAddForm($event)\"></add-vill-form>\n        </div>\n"
+                    template: "\n        <player-head *ngIf=\"player\" [isLeader]=\"player.isLeader\"></player-head>\n        \n        <div class=\"row container\">\n    <div class=\"col s12 center-align\">\n        <div class=\"col s6 left-align\">\n            <h4 *ngIf=\"player\">login:{{ player.login }}</h4>\n        </div>\n        <div class=\"col s6 right-align\">\n            <h4 *ngIf=\"player\">alliance: {{ player.alliance.name }}</h4>\n        </div>\n    </div>\n</div>\n                 <div class=\"row\">\n<div *ngIf=\"successMessage!=null||errorMessage!=null\" class=\"col s4 offset-s4 \">\n    <div  [ngClass]=\"{'card':true, 'green':successMessage!=null, 'red':errorMessage!=null, 'lighten-5':true}\">\n        <div [ngClass]=\"{'card-content':true , 'green-text':successMessage!=null,'red-text':errorMessage!=null }\">\n            <p>{{successMessage!=null?successMessage:errorMessage}} <span (click)=\"closeDialog()\" class=\"right\">x</span></p>\n        </div>\n    </div>\n</div>\n</div>\n        <player-list *ngIf=\"player\" [player]=\"player\"></player-list>\n        <div class=\"row\">\n            <div class=\"col s4 offset-s6\" >\n                <button (click)=\"showAddForm()\" class=\"btn waves-effect waves-light\">Add</button>\n            </div>\n         \n            <add-vill-form [player]=\"player\" *ngIf=\"showAddVillageForm\" (wasSubmitted)=\"hideAddForm($event)\"\n            (successMessage)=\"showSuccessMessage($event)\" (errorMessage)=\"showErrorMessage($event)\"></add-vill-form>\n      \n\n\n"
                 }),
                 __metadata("design:paramtypes", [player_service_1.PlayerService])
             ], PlayerComponent);

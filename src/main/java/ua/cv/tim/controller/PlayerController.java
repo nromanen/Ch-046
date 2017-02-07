@@ -20,6 +20,7 @@ import ua.cv.tim.service.UserService;
 import ua.cv.tim.service.VillageService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -52,14 +53,14 @@ public class PlayerController {
 
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User userByUsername = userService.getUserByUsername(principal.getUsername());
-
         String id = userByUsername.getPlayer().getUuid();
 
         Player player = playerService.getByIdWithVillages(id);
-
+        for (Village village:player.getVillages()){
+            Collections.sort(village.getArmies());
+        }
         PlayerDTO playerDTO=new PlayerDTO(player.getUser().getLogin(),
-                player.getUser().getPassword(),player.getUser().getEmail(),
-                player.getRace(),player.getVillages(),player.getAlliance(), userByUsername.getRoles().size() == 2);
+                player.getRace(),player.getVillages(),player.getAlliance(),userByUsername.getRoles());
         return new ResponseEntity<>(playerDTO, HttpStatus.OK);
     }
 
@@ -80,7 +81,6 @@ public class PlayerController {
             current_player.setVillages(player.getVillages());
             current_player.setAlliance(player.getAlliance());
             playerService.add(current_player);
-
             return new ResponseEntity<>(current_player, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

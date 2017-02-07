@@ -54,9 +54,12 @@ public class UserServiceImpl implements UserService {
 	public List<User> getAll() {
 		return userDao.getAll();
 	}
+
 	@Override
-	public void update(User user) {
+	public void update(User user) throws MessagingException {
 		userDao.update(user);
+		String message = "Player updated successfully, your login is \"" + user.getLogin() + "\", role: " + user.getRoles();
+		sendEmail(user, message);
 	}
 
 
@@ -124,7 +127,7 @@ public class UserServiceImpl implements UserService {
 		List<UserDTO> allianceUsers = new ArrayList<>();
 		for (User user : users) {
 			allianceUsers.add(new UserDTO(user.getUuid(), user.getLogin(), user.getEmail(),
-					user.getPlayer().getAlliance().getName()));
+					user.getPlayer().getAlliance().getName(), user.getRoles().size() == 2));
 		}
 		return allianceUsers;
 	}
@@ -138,7 +141,7 @@ public class UserServiceImpl implements UserService {
 		logger.info("Password is {} ", user.getPassword());
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.USER);
-		if (member.getRole() != null) {
+		if (member.getIsLeader()) {
 			roles.add(Role.LEADER);
 		}
 		user.setRoles(roles);
@@ -148,14 +151,15 @@ public class UserServiceImpl implements UserService {
 		player.setAlliance(allianceDao.getAllianceByName(member.getAlliance()));
 		user.setPlayer(player);
 		playerDao.add(player);
-		sendEmail(user, password);
+		String message = "Your login is \"" + user.getLogin() + "\", and password: \""
+				+ password + "\",  role: " + user.getRoles();
+		sendEmail(user, message);
 	}
 
-	public void sendEmail(User user, String password){
+	public void sendEmail(User user, String message) throws MessagingException {
 		try {
-			sendMail.send(user.getEmail(), "Travian user's info", "Your login is" + user.getLogin() + " and password: "
-					+ password + "  role " + user.getRoles());
-			logger.info("Password {} has been sent on user's e-mail {}", password, user.getEmail());
+			sendMail.send(user.getEmail(), "Travian user's info", message);
+			logger.info("Email: {}, message: {}", user.getEmail(), message);
 		} catch (MessagingException e) {
 			logger.error("The e-mail {} hasn't been sent {}", user.getEmail(), e);
 		}
@@ -190,18 +194,6 @@ public class UserServiceImpl implements UserService {
 	private String encodePassword(String password) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		return passwordEncoder.encode(password);
-	}
-
-	public boolean isUserUnique(UserDTO member) {
-		User user = new User();
-		user.setLogin(member.getLogin());
-		user.setEmail(member.getEmail());
-
-		if (userDao.isUserUnique(user.getLogin(), user.getUuid())) {
-			return false;
-		} else if (userDao.getByMail(user.getEmail(), user.getUuid()) != null) {
-			return false;
-		} else return true;
 	}
 
 	@Override

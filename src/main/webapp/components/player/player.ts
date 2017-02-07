@@ -14,6 +14,7 @@ export class Player {
     villages: Village[];
     uuid: string;
     isLeader: boolean;
+    alliance:Alliance;
 
     constructor() {
 

@@ -14,7 +14,6 @@ import {ConfirmComponent} from "./modal_window/modal";
 
 import {PlayerComponent} from "./player/player.component";
 import {PlayerList} from "./player/playerList.component";
-import {PlayerRow} from "./player/playerRow.component";
 import {PlayerHeader} from "./header/player-header.component";
 import {PlayerListComponent} from "./player/player-list.component";
 import {VillageInfoComponent} from "./village/village-info.component";
@@ -39,9 +38,9 @@ import {VillageService} from "./services/villageService";
 import {HelpService} from "./services/helpNotification/help.service";
 import {StompService} from "./services/helpNotification/stomp.service";
 import {EditAllianceComponent} from "./alliance/edit-alliance.component";
-import {UserHelpComponent} from "./help/user/ask-help.component";
-import {UserAllHelps} from "./help/user/all-helps.component";
 import {CalendarModule} from 'primeng/primeng';
+import {AllHelps} from "./help/all-helps.component";
+import {HelpComponent} from "./help/ask-help.component";
 
 
 
@@ -65,7 +64,6 @@ import {CalendarModule} from 'primeng/primeng';
         ConfirmComponent,
         PlayerComponent,
         PlayerList,
-        PlayerRow,
         PlayerHeader,
         TimerComponent,
         LeaderManagerComponent,
@@ -80,8 +78,8 @@ import {CalendarModule} from 'primeng/primeng';
         ArmyCellInfoComponent,
         LeaderHeaderComponent,
         AddArmyForm,
-        UserHelpComponent,
-        UserAllHelps,
+        HelpComponent,
+        AllHelps,
 
     ],
     providers: [

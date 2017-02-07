@@ -1,7 +1,7 @@
 /**
  * Created by okunetc on 16.01.2017.
  */
-import {Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {StompService} from "../services/helpNotification/stomp.service";
 import {Alliance} from "../alliance/alliance";
 import {HelpService} from "../services/helpNotification/help.service";
@@ -19,7 +19,7 @@ import {error} from "util";
 export class PlayerHeader {
 
     public serverResponse: string;
-
+    @Input() isLeader: boolean=false;
     showNotif: boolean = false;
 
 

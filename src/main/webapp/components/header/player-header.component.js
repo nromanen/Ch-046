@@ -24,6 +24,7 @@ System.register(["@angular/core", "../services/helpNotification/stomp.service"],
             PlayerHeader = (function () {
                 function PlayerHeader(stompService) {
                     this.stompService = stompService;
+                    this.isLeader = false;
                     this.showNotif = false;
                 }
                 PlayerHeader.prototype.ngOnInit = function () {
@@ -61,6 +62,10 @@ System.register(["@angular/core", "../services/helpNotification/stomp.service"],
                 };
                 return PlayerHeader;
             }());
+            __decorate([
+                core_1.Input(),
+                __metadata("design:type", Boolean)
+            ], PlayerHeader.prototype, "isLeader", void 0);
             PlayerHeader = __decorate([
                 core_1.Component({
                     selector: 'player-head',

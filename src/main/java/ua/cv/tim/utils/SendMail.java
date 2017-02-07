@@ -23,34 +23,7 @@ public class SendMail {
 	@Autowired
 	private EmailConfiguration emailConfig;
 
-	 /**
-     * Send email using GMail SMTP server.
-     *
-     * @param username GMail username
-     * @param password GMail password
-     * @param recipientEmail TO recipient
-     * @param title title of the message
-     * @param message message to be sent
-     * @throws AddressException if the email address parse failed
-     * @throws MessagingException if the connection is dead or not in the connected state or if the message is not a MimeMessage
-     */
-    public void send( String recipientEmail, String title, String message) throws AddressException, MessagingException {
-    	send(recipientEmail, "", title, message);
-    }
-
-    /**
-     * Send email using GMail SMTP server.
-     *
-     * @param username GMail username
-     * @param password GMail password
-     * @param recipientEmail TO recipient
-     * @param ccEmail CC recipient. Can be empty if there is no CC recipient
-     * @param title title of the message
-     * @param message message to be sent
-     * @throws AddressException if the email address parse failed
-     * @throws MessagingException if the connection is dead or not in the connected state or if the message is not a MimeMessage
-     */
-    private void send(String recipientEmail, String ccEmail, String title, String message) throws AddressException, MessagingException {
+    public void send(String recipientEmail, String title, String message) throws  MessagingException {
 
     	Properties properties = emailConfig.getEmailProperties();
 
@@ -60,23 +33,10 @@ public class SendMail {
 
         Session session = Session.getInstance(properties, null);
 
-        // -- Create a new message --
         final MimeMessage msg = new MimeMessage(session);
-
-		/*
-		 * If set to false, the QUIT command is sent and the connection is
-		 * immediately closed. If set to true (the default), causes the
-		 * transport to wait for the response to the QUIT command.
-		 *
-		 */
 
 		msg.setFrom(new InternetAddress(sender));
 		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail, false));
-
-		if (ccEmail.length() > 0) {
-			msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmail, false));
-		}
-
 		msg.setSubject(title);
 		msg.setText(message, "utf-8");
 		msg.setSentDate(new Date());
