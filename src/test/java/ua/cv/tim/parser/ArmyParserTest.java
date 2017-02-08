@@ -9,23 +9,31 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.Test;
 import ua.cv.tim.configuration.HibernateConfiguration;
+import ua.cv.tim.configuration.WebSocketConfiguration;
+import ua.cv.tim.model.Army;
 import ua.cv.tim.model.Village;
-import ua.cv.tim.service.impl.VillageParser;
+import ua.cv.tim.service.VillageService;
+import ua.cv.tim.service.impl.ArmyParser;
+
+import java.util.List;
 
 /**
- * Created by Serhii Starovoit on 1/26/2017 in 12:03 AM.
+ * Created by Serhii Starovoit on 2/6/2017 in 01:08PM.
  */
 
 @Transactional
 @WebAppConfiguration
-@ContextConfiguration(classes = {HibernateConfiguration.class})
-public class ParserImplTest extends AbstractTestNGSpringContextTests {
+@ContextConfiguration(classes = {HibernateConfiguration.class, WebSocketConfiguration.class})
+public class ArmyParserTest  extends AbstractTestNGSpringContextTests {
 
     @Autowired
-    VillageParser villageParser ;
+    ArmyParser armyParser;
+
+    @Autowired
+    VillageService villageService;
 
     @Test
-    public void testDoOperation() throws Exception {
+    public void testPars() throws Exception {
         HtmlUnitDriver driver = new HtmlUnitDriver();
         driver.setJavascriptEnabled(true);
 
@@ -35,11 +43,9 @@ public class ParserImplTest extends AbstractTestNGSpringContextTests {
         driver.findElements(By.name("password")).clear();
         driver.findElements(By.name("password")).get(0).sendKeys("321654aaa");
         driver.findElement(By.cssSelector("div.button-content")).click();
-
-        Village village = villageParser.pars(driver);
-        villageParser.sync(village, "1");
-        driver.quit();
-
+        Village village = villageService.getById("1");
+        List<Army> armies = armyParser.pars(driver, village) ;
+        System.out.println(armies);
     }
 
 }

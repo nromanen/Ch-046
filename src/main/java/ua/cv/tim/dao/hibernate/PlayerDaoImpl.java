@@ -49,7 +49,6 @@ public class PlayerDaoImpl extends AbstractCrudDao<Player> implements PlayerDao 
 		for (Player player : players) {
 			initializePlayerVillages(player);
 		}
-
 		return players;
 	}
 
