@@ -54,11 +54,4 @@ public class VillageParserTest  extends AbstractTestNGSpringContextTests {
         driver.quit();
     }
 
-    @Test
-    public void testSync() throws Exception {
-        Village village = villageService.getById("1");
-        village.setName("1s222i");
-        villageParser.sync(village, "1");
-    }
-
 }
