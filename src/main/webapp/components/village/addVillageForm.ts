@@ -118,6 +118,7 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
             response=>{
                 this.player.villages.push(response);
                 this.successMessage.emit('The village has successfully been created!');
+                console.log(JSON.stringify(response));
                 this.wasSubmitted.emit(false);
             },
                     error=>{

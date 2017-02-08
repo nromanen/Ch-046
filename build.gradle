@@ -38,7 +38,10 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-webmvc', version: vers.spring
     compile group: 'org.springframework', name: 'spring-tx', version: vers.spring
     compile group: 'org.springframework', name: 'spring-orm', version: vers.spring
-    compile group: 'org.springframework', name: 'spring-test', version: vers.spring
+// https://mvnrepository.com/artifact/org.springframework/spring-test
+    compile group: 'org.springframework', name: 'spring-test', version: '4.0.2.RELEASE'
+
+
 
     compile group: 'org.springframework', name: 'spring-messaging', version: vers.spring
     compile group: 'org.springframework', name: 'spring-websocket', version: vers.spring
@@ -65,6 +68,11 @@ dependencies {
 
     compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.23.2'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.0.1'
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
+    compile group: 'org.springframework.security', name: 'spring-security-test', version: '4.0.1.RELEASE'
+
+
 }
 
 configurations.all {

@@ -26,6 +26,8 @@ public class VillageServiceImpTest {
     private VillageDao villageDao;
     @Captor
     ArgumentCaptor<Village> captor;
+    @Captor
+    ArgumentCaptor<Short> shortArgumentCaptor;
     @Spy
     List<Village> villages=new ArrayList<>();
 
@@ -51,12 +53,21 @@ public class VillageServiceImpTest {
 
     @Test
     public void testUpdate() throws Exception {
-
+        doNothing().when(villageDao).update(any());
+        Village village=villages.get(0);
+        village.setName("new name");
+        villageServiceImp.update(village);
+        verify(villageDao,times(1)).update(captor.capture());
+        assertEquals(captor.getValue().getName(),"new name");
     }
 
     @Test
     public void testDelete() throws Exception {
-
+        Village village=villages.get(0);
+        doNothing().when(villageDao).delete(any());
+        villageServiceImp.delete(village);
+        verify(villageDao,times(1)).delete(captor.capture());
+        assertEquals(captor.getValue(),village);
     }
 
     @Test
@@ -69,16 +80,28 @@ public class VillageServiceImpTest {
 
     @Test
     public void testGetByCoordinates() throws Exception {
-
+        Village village=villages.get(0);
+        when(villageDao.getByCoordinates(anyShort(),anyShort())).thenReturn(village);
+        assertEquals(villageServiceImp.getByCoordinates(village.getxCoord(),village.getyCoord()),village);
+        verify(villageDao,times(1)).getByCoordinates(anyShort(),anyShort());
     }
 
     @Test
     public void testIsUnique() throws Exception {
-
+          Village village=villages.get(0);
+          when(villageDao.getByName(village.getName())).thenReturn(village);
+          when(villageDao.getByCoordinates(village.getxCoord(),village.getyCoord())).thenReturn(village);
+          assertTrue(villageServiceImp.isUnique(village));
+          verify(villageDao,times(1)).getByName(village.getName());
+          verify(villageDao,times(1)).getByCoordinates(village.getxCoord(),village.getyCoord());
     }
 
     @Test
     public void testGetByName() throws Exception {
+        Village village=villages.get(0);
+        when(villageDao.getByName(village.getName())).thenReturn(village);
+        assertEquals(villageServiceImp.getByName(village.getName()),village);
+        verify(villageDao,times(1)).getByName(village.getName());
 
     }
 
@@ -105,6 +128,7 @@ public class VillageServiceImpTest {
         village.setIsCapital(true);
         village.setPopulation((short) 500);
         village.setWall((byte) 20);
+        village.setUuid("0");
         villages.add(village);
 
         Village village1 = new Village();
@@ -116,6 +140,7 @@ public class VillageServiceImpTest {
         village1.setIsCapital(true);
         village1.setPopulation((short) 50);
         village1.setWall((byte) 2);
+        village.setUuid("1");
 
         villages.add(village);
         villages.add(village1);
