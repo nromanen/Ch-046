@@ -14,7 +14,7 @@ import {StompService} from "../services/helpNotification/stomp.service";
 export class PlayerHeader{
 
     public serverResponse: string;
-    @Input() isLeader: boolean;
+    @Input() isLeader: boolean=false;
     showNotif: boolean = false;
 
     constructor(private stompService: StompService){

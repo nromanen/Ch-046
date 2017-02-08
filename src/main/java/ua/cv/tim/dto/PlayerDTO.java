@@ -5,9 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.NotEmpty;
 import ua.cv.tim.model.Alliance;
 import ua.cv.tim.model.Race;
+import ua.cv.tim.model.Role;
 import ua.cv.tim.model.Village;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +19,8 @@ public class PlayerDTO {
 
     @NotEmpty
     private String login;
+
+    private boolean isLeader;
 
     @Enumerated(EnumType.STRING)
     private Race race;
@@ -29,11 +33,12 @@ public class PlayerDTO {
 
     public PlayerDTO() { }
 
-    public PlayerDTO(String login, Race race, List<Village> villages, Alliance alliance) {
+    public PlayerDTO(String login, Race race, List<Village> villages, Alliance alliance, List<Role> roles) {
         this.login = login;
         this.race = race;
         this.villages = villages;
         this.alliance = alliance;
+        this.isLeader = roles.contains(Role.LEADER);
     }
 
     public Race getRace() {
