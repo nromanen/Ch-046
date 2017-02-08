@@ -46,6 +46,7 @@ dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-web', version: vers.spring_security
     compile group: 'org.springframework.security', name: 'spring-security-config', version: vers.spring_security
     compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: vers.spring_security
+    compile group: 'org.springframework.security', name: 'spring-security-test', version: '4.0.0.RELEASE'
 
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: vers.servlet
     compile group: 'javax.servlet', name: 'jstl', version: vers.jstl
@@ -62,6 +63,7 @@ dependencies {
 
     testCompile group: 'org.testng', name: 'testng', version: vers.testng
     testCompile group: 'org.mockito', name: 'mockito-core', version: vers.mockito
+    testCompile 'com.jayway.jsonpath:json-path:2.2.0'
 
     compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.23.2'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.0.1'
@@ -78,7 +80,7 @@ test {
     // enable TestNG support (default is JUnit)
     useTestNG()
 
-    // set a system property for the test JVM(s)
+   /* // set a system property for the test JVM(s)
     systemProperty 'some.prop', 'value'
 
     // show standard out and standard error of the test JVM(s) on the console
@@ -98,6 +100,5 @@ test {
 
     // listen to standard out and standard error of the test JVM(s)
     onOutput { descriptor, event ->
-        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)
+        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)*/
     }
-}

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -48,11 +50,11 @@ public class PlayerController {
     }
 
     @RequestMapping(value = "/player", method = RequestMethod.GET)
-    public ResponseEntity<PlayerDTO> getPlayerById() {
-
-        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userByUsername = userService.getUserByUsername(principal.getUsername());
-
+    public ResponseEntity<PlayerDTO> getPlayerById(@AuthenticationPrincipal AuthorizedUser authorizedUser) {
+        log.info("AuthorizedUser : {}",authorizedUser);
+        //  UserDetails principal = (AuthorizedUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userByUsername = userService.getUserByUsername(authorizedUser.getUsername());
+        log.info("AuthorizedUser : {}",authorizedUser.toString());
         String id = userByUsername.getPlayer().getUuid();
 
         Player player = playerService.getByIdWithVillages(id);
@@ -83,7 +85,7 @@ public class PlayerController {
 
             return new ResponseEntity<>(current_player, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        throw new IllegalArgumentException("Player doesn't exist");
     }
 
     @RequestMapping(value = "/player/{id}", method = RequestMethod.DELETE)
@@ -93,7 +95,7 @@ public class PlayerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         playerService.delete(player);
-        return new ResponseEntity<>(player, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(player, HttpStatus.OK);
     }
 
 	@RequestMapping(value = "/player/alliance", method = RequestMethod.GET)

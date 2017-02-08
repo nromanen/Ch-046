@@ -57,8 +57,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void update(User user) throws MessagingException {
 		userDao.update(user);
-		sendEmail(user,"Player updated successfully, your login is \"" + user.getLogin() + "\", and password: \""
-				+ user.getPassword() + "\",  Role: " + user.getRoles());
+		String message ="Player updated successfully, your login is \"" + user.getLogin() + "\", and password: \""
+				+ user.getPassword() + "\",  Role: " + user.getRoles();
+		sendEmail(user,message);
 	}
 
 
@@ -150,17 +151,14 @@ public class UserServiceImpl implements UserService {
 		player.setAlliance(allianceDao.getAllianceByName(member.getAlliance()));
 		user.setPlayer(player);
 		playerDao.add(player);
-		sendEmail(user,"Your login is \"" + user.getLogin() + "\", and password: \""
-						+ user.getPassword() + "\",  Role: " + user.getRoles());
+		String message = "Your login is \"" + user.getLogin() + "\", and password: \""
+				+ user.getPassword() + "\",  Role: " + user.getRoles();
+		sendEmail(user,message);
 	}
-
+	@Override
 	public void sendEmail(User user, String message) throws MessagingException {
-		try {
 			sendMail.send(user.getEmail(), "Travian user's info",message );
-			logger.info("Password {} has been sent on user's e-mail {}", user.getPassword(), user.getEmail());
-		} catch (MessagingException e) {
-			logger.error("The e-mail {} hasn't been sent {}", user.getEmail(), e);
-		}
+
 	}
 
 	private String generatePassword(int length) {

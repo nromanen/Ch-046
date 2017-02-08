@@ -39,9 +39,6 @@ public class AllianceServiceImpl implements AllianceService {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private SendMail sendMail;
-
 
     public List<AllianceDTO> getAll(){
         List<Alliance> alliances = allianceDao.getAll();
