@@ -1,0 +1,20 @@
+p span.close-ico {
+    cursor: pointer;
+}
+
+table tr div {
+    height: 55px;
+}
+
+table tr td button {
+    width: 90px;
+    padding: 0px 10px;
+}
+
+table tr td button.btn.edit {
+    background-color: #9cd1af;
+}
+
+table tr td button.btn.delete {
+    background-color: #f21036;
+}
