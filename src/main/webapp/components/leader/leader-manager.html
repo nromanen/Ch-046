@@ -33,7 +33,7 @@
                 <div class="valign-wrapper" style="height: 50px">
                     <th class="col s3">Login</th>
                     <th class="col s3">E-mail</th>
-                    <th class="col s3">Alliance</th>
+                    <th class="col s3">Leader</th>
                     <th class="col s3">Action</th>
                 </div>
             </tr>
@@ -44,9 +44,12 @@
                      (dblclick)="selectMember(member)">
                     <td class="col s3">{{ member.login }}</td>
                     <td class="col s3">{{ member.email }}</td>
-                    <td class="col s3">{{ member.alliance }}</td>
                     <td class="col s3">
-                        <button (click)="selectMember(member)" class="waves-effect waves-light  btn"
+                        <i *ngIf="member.isLeader" class="material-icons">done</i>
+                        <span *ngIf="!member.isLeader">-</span>
+                    </td>
+                    <td class="col s3">
+                        <button (click)="selectMember(member)" class="waves-effect waves-light btn"
                                 style="background-color: #9cd1af; width: 90px; padding: 0px 10px">
                             <i class="material-icons">mode_edit</i>
                         </button>
