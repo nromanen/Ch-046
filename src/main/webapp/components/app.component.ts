@@ -6,6 +6,7 @@ import {CurrVillageArmiesService} from "./services/newVillageArmiesService";
 @Component({
     selector: 'my-app',
     template: `
+<h1 i18n>Hello!</h1>
          <router-outlet></router-outlet>
     `,
 })

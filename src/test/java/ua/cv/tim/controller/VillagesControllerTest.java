@@ -6,9 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -27,8 +30,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ua.cv.tim.configuration.WebConfiguration;
+import ua.cv.tim.configuration.WebSecurityConfiguration;
+import ua.cv.tim.model.AuthorizedUser;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Village;
 import ua.cv.tim.service.UserService;
@@ -41,22 +47,19 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 
 /**
  * Created by okunetc on 08.02.2017.
  */
 
-//@ContextConfiguration
-//@TestExecutionListeners(listeners={ServletTestExecutionListener.class,
-//        DependencyInjectionTestExecutionListener.class,
-//        DirtiesContextTestExecutionListener.class,
-//        TransactionalTestExecutionListener.class,
-//        WithSecurityContextTestExecutionListener.class})
-//@WithUserDetails
-@ContextConfiguration(classes = {WebConfiguration.class})
+@ContextConfiguration(classes = {WebConfiguration.class, WebSecurityConfiguration.class})
 @WebAppConfiguration
 public class VillagesControllerTest extends AbstractTestNGSpringContextTests {
-@Mock
+
+
     VillageService villageService;
 
      @Mock
@@ -64,6 +67,12 @@ public class VillagesControllerTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private WebApplicationContext context;
+
+
+    @Autowired
+    private FilterChainProxy springSecurityFilterChain;
+
+
 
     @InjectMocks
     VillagesController villagesController;
@@ -73,10 +82,11 @@ public class VillagesControllerTest extends AbstractTestNGSpringContextTests {
     List<Village> alliances = new ArrayList<>();
     @BeforeClass
     public void setUp(){
-
+this.villageService=mock(VillageService.class,withSettings().verboseLogging());
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
+//                .addFilters(this.springSecurityFilterChain)
                 .build();
 
     }
@@ -87,7 +97,9 @@ public class VillagesControllerTest extends AbstractTestNGSpringContextTests {
 
 
 
+
     @Test
+//    @WithMockUser(username = "trinity",password = "222",roles = {"USER"})
     public void testAddVillage() throws Exception {
         Village village = new Village();
         village.setName("Villkljkj");
@@ -102,21 +114,30 @@ public class VillagesControllerTest extends AbstractTestNGSpringContextTests {
 
 
       when(userService.getUserByUsername(anyString())).thenReturn(new ua.cv.tim.model.User());
-        doNothing().when(villageService).add(any(Village.class));
+
+        doNothing().when(villageService).add(village);
+
         MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.post("/village/")
+                MockMvcRequestBuilders.post("/villagkjje")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(convertObjectToJsonBytes(village));
+//                        .with(user("trinity").password("222").roles("ADMIN"));
         this.mockMvc.perform(builder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
-        ArgumentCaptor<Village> villageArgumentCaptor = ArgumentCaptor.forClass(Village.class);
-//        verify(villageService, VerificationModeFactory.times(1)).add(village);
+                .andExpect(unauthenticated())
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+//                .andDo(MockMvcResultHandlers.print());
+
+
+
+
+  //      ArgumentCaptor<Village> villageArgumentCaptor = ArgumentCaptor.forClass(Village.class);
+        verify(villageService, times(1)).add(village);
 //        verify(villageService,times(1))
     }
 
 
     @Test
+//    @WithMockUser(username = "trinity",password = "222",roles = {"USER"})
     public void testUpdateVillage() throws Exception {
         Village village = new Village();
         village.setName("Villkljkj");
@@ -129,13 +150,15 @@ public class VillagesControllerTest extends AbstractTestNGSpringContextTests {
         village.setWall((byte) 20);
         village.setUuid("0");
 when(villageService.getById("0")).thenReturn(village);
-when(villageService.isUnique(village)).thenReturn(false);
+when(villageService.isUnique(village)).thenReturn(true);
         MockHttpServletRequestBuilder builder =
                 MockMvcRequestBuilders.post("/village/0")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(convertObjectToJsonBytes(village));
+                        .content(convertObjectToJsonBytes(village))
+                        .with(user("trinity").password("222").roles("USER")).with(csrf());
         this.mockMvc.perform(builder)
-//                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(authenticated())
                 .andDo(MockMvcResultHandlers.print());
 //        verify(villageService, times(0)).update(village);
     }

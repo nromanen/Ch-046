@@ -55,18 +55,16 @@ public class VillagesController {
      * @throws EntityNotUniqueException
      */
     @RequestMapping(value = "/village/", method = RequestMethod.POST)
-    public ResponseEntity<Village> addVillage(@RequestBody Village village
-//                                              @AuthenticationPrincipal AuthorizedUser principal
-    ) throws JsonProcessingException, EntityNotUniqueException {
+    public ResponseEntity<Village> addVillage(@RequestBody Village village) throws JsonProcessingException, EntityNotUniqueException {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
        log.info("I'm here");
-//        User userByUsername = userService.getUserByUsername(principal.getUsername());
-//        village.setPlayer(userByUsername.getPlayer());
+        User userByUsername = userService.getUserByUsername(principal.getUsername());
+        village.setPlayer(userByUsername.getPlayer());
 
-//        if (villageService.isUnique(village)) {
-//            villageService.add(village);
+        if (villageService.isUnique(village)) {
+            villageService.add(village);
             log.info("Village added : {}",village);
-//        }
+        }
         return new ResponseEntity<>(village, HttpStatus.CREATED);
     }
 
