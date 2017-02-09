@@ -61,7 +61,7 @@ export class PlayerComponent implements OnInit {
                     console.info(`PlayerComponent ngOnInit() is working. Player: ${JSON.stringify(player)}`);
                     this.player = player;
                     console.log(this.player.alliance);
-
+                    console.info(this.player.isLeader);
                 }
             );
     }

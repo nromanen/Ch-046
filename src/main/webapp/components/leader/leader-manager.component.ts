@@ -7,7 +7,7 @@ import {UserService} from "../services/user.service";
 @Component({
     selector: "leader-manager",
     templateUrl: "components/leader/leader-manager.html",
-    providers: [UserService]
+    styleUrls: ["components/leader/leader-manager.css"]
 })
 
 export class LeaderManagerComponent implements OnInit {

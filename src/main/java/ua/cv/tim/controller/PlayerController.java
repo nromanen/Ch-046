@@ -32,58 +32,60 @@ public class PlayerController {
 
 	private static final Logger log = LoggerFactory.getLogger(PlayerController.class);
 
-    @Autowired
-    VillageService villageService;
+	@Autowired
+	VillageService villageService;
 
-    @Autowired
-    PlayerService playerService;
+	@Autowired
+	PlayerService playerService;
 
-    @Autowired
-    UserService userService;
+	@Autowired
+	UserService userService;
 
-    @RequestMapping(value = "/player/{id}/village", method = RequestMethod.GET)
-    public ResponseEntity<List<Village>> getUsersVillages(@PathVariable(name = "id") String id) {
-        Player byIdWithVillages = playerService.getByIdWithVillages(id);
-        List<Village> villages = byIdWithVillages.getVillages();
-        return new ResponseEntity<>(villages, HttpStatus.OK);
-    }
+	@RequestMapping(value = "/player/{id}/village", method = RequestMethod.GET)
+	public ResponseEntity<List<Village>> getUsersVillages(@PathVariable(name = "id") String id) {
+		Player byIdWithVillages = playerService.getByIdWithVillages(id);
+		List<Village> villages = byIdWithVillages.getVillages();
+		return new ResponseEntity<>(villages, HttpStatus.OK);
+	}
 
-    @RequestMapping(value = "/player", method = RequestMethod.GET)
-    public ResponseEntity<PlayerDTO> getPlayerById() {
+	@RequestMapping(value = "/player", method = RequestMethod.GET)
+	public ResponseEntity<PlayerDTO> getPlayerById() {
 
-        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userByUsername = userService.getUserByUsername(principal.getUsername());
-        String id = userByUsername.getPlayer().getUuid();
+		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User userByUsername = userService.getUserByUsername(principal.getUsername());
+		String id = userByUsername.getPlayer().getUuid();
 
-        Player player = playerService.getByIdWithVillages(id);
-        for (Village village:player.getVillages()){
-            Collections.sort(village.getArmies());
-        }
-        PlayerDTO playerDTO=new PlayerDTO(player.getUser().getLogin(),
-                player.getRace(),player.getVillages(),player.getAlliance(),userByUsername.getRoles());
-        return new ResponseEntity<>(playerDTO, HttpStatus.OK);
-    }
+		Player player = playerService.getByIdWithVillages(id);
+		for (Village village : player.getVillages()) {
+			Collections.sort(village.getArmies());
+		}
+		PlayerDTO playerDTO = new PlayerDTO(player.getUser().getLogin(),
+				player.getRace(), player.getVillages(), player.getAlliance(), userByUsername.getRoles());
+		log.info(playerDTO.toString());
+		return new ResponseEntity<>(playerDTO, HttpStatus.OK);
+	}
 
-    @RequestMapping(value = "/player/", method = RequestMethod.POST)
-    public ResponseEntity<Player> addPlayer(@RequestBody Player player, UriComponentsBuilder builder) {
-        playerService.add(player);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/player/{id}").buildAndExpand(player.getUser().getUuid()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
-    }
+	@RequestMapping(value = "/player/", method = RequestMethod.POST)
+	public ResponseEntity<Player> addPlayer(@RequestBody Player player, UriComponentsBuilder builder) {
+		playerService.add(player);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(builder.path("/player/{id}").buildAndExpand(player.getUser().getUuid()).toUri());
+		log.info(player.toString());
+		return new ResponseEntity<>(headers, HttpStatus.CREATED);
+	}
 
     @RequestMapping(value = "/player/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Player> updatePlayer(@PathVariable(name = "id") String id, @RequestBody Player player) {
-        Player current_player = playerService.getById(id);
-        if (current_player != null) {
+        Player currentPlayer = playerService.getById(id);
+        if (currentPlayer != null) {
             System.out.println("here is");
-            current_player.setRace(player.getRace());
-            current_player.setUser(player.getUser());
-            current_player.setVillages(player.getVillages());
-            current_player.setAlliance(player.getAlliance());
-            playerService.add(current_player);
+            currentPlayer.setRace(player.getRace());
+            currentPlayer.setUser(player.getUser());
+            currentPlayer.setVillages(player.getVillages());
+            currentPlayer.setAlliance(player.getAlliance());
+            playerService.add(currentPlayer);
 
-            return new ResponseEntity<>(current_player, HttpStatus.CREATED);
+            return new ResponseEntity<>(currentPlayer, HttpStatus.CREATED);
         }
         throw new IllegalArgumentException("Player doesn't exist");
     }
@@ -92,7 +94,7 @@ public class PlayerController {
     public ResponseEntity<Player> deletePlayer(@PathVariable(name = "id") String id) {
         Player player = playerService.getById(id);
         if (player == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // todo throw IllegalArgumentException
         }
         playerService.delete(player);
         return new ResponseEntity<>(player, HttpStatus.OK);
@@ -105,12 +107,6 @@ public class PlayerController {
 		log.info("Players from DB: {}", players);
 		List<PlayerDTO> playerDTOs = initPlayerDTOs(players);
 		return new ResponseEntity<>(playerDTOs, HttpStatus.OK);
-	}
-
-	private String getAllianceName() {
-		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userService.getUserWithAlliance(principal.getUsername());
-		return user.getPlayer().getAlliance().getName();
 	}
 
 	private List<PlayerDTO> initPlayerDTOs(List<Player> players) {

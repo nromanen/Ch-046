@@ -1,0 +1,24 @@
+div.record {
+    height: 70px;
+}
+
+div form {
+    height: 55px;
+}
+
+input.validate {
+    margin-bottom: 5px;
+}
+
+td button {
+    width: 90px;
+    padding: 0px 10px;
+}
+
+td button.btn.edit {
+    background-color: #9cd1af;
+}
+
+td button.btn.delete {
+    background-color: #f21036;
+}
