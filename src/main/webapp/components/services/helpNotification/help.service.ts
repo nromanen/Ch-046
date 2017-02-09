@@ -8,6 +8,7 @@ import {Http, Headers, Response} from "@angular/http";
 import {Observable} from 'rxjs/Rx';
 import {Player} from "../../player/player";
 import {Attack} from "../../help/attack";
+import {Alliance} from "../../alliance/alliance";
 
 @Injectable()
 export class HelpService {
@@ -23,11 +24,15 @@ export class HelpService {
     }
 
     addAttack(attack: Attack):  Observable<Attack> {
+        let time = (attack.timeAttack + "");
         const body = JSON.stringify({
             villageId: attack.village,
             enemy: attack.enemy,
-            attackTime: attack.timeAttack
+            attackTime: time
         });
+
+        console.log("BODY");
+        console.log(body);
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
@@ -46,4 +51,11 @@ export class HelpService {
         return this.http.get("allAttack")
             .map(res => res.json());
     }
+
+    getAlliance(): Observable<Alliance> {
+        console.log("INIT ALLIANCE");
+        return this.http.get("user/helpInit/")
+            .map(res => res.json());
+    }
+
 }
