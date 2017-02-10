@@ -12,6 +12,7 @@ import {Army} from "../army/army";
 import {FormControl, Validators, FormArray, FormBuilder, AbstractControl} from "@angular/forms";
 import {AddVillageForm} from "./addVillageForm";
 import {el} from "@angular/platform-browser/testing/browser_util";
+import {TranslateService} from "ng2-translate";
 @Component({
     selector: '[player-ro]',
     outputs:['selectedVillageChanged'],
@@ -58,6 +59,7 @@ import {el} from "@angular/platform-browser/testing/browser_util";
     [disabled]="!editVillageForm.valid && isForm" style="margin-top: 5px;" >
             {{!isForm?"Edit":"Save"}}      
     </button>
+   
 </td>
 
 `
@@ -77,9 +79,10 @@ export class VillageRow implements OnInit,AfterViewInit{
     ifSaveChanges:boolean;
     private cdr: ChangeDetectorRef;
     private armiesArrayControl: FormArray;
-
+    private stringSuccessMessage:string;
+    private stringErrorMessage:string;
     constructor( private villageService:VillageService,cdr: ChangeDetectorRef,
-                 private _fBuilder:FormBuilder){
+                 private _fBuilder:FormBuilder,private translate: TranslateService){
         this.selectedVillageChanged=new EventEmitter<Village>(false);
         this.unitValues=[];
         this.ifSaveChanges=false;
@@ -88,6 +91,13 @@ export class VillageRow implements OnInit,AfterViewInit{
         this.errorMessage=new EventEmitter<{}>();
         this.successMessage=new EventEmitter<string>();
         this.editedVillage=new EventEmitter<Village>();
+        translate.get('Success message').subscribe(message=>{
+            this.stringSuccessMessage=message;
+        });
+        // translate.get("Error message").subscribe((message:string)=>{
+        //     this.stringErrorMessage=message;
+        // });
+        this.stringErrorMessage="Error message";
     }
 
     ngOnInit(): void {
@@ -119,7 +129,7 @@ export class VillageRow implements OnInit,AfterViewInit{
         this.villageService.update(newVillage).subscribe(
             response=>{
                  this.villageService.villages[index]=response;
-                this.successMessage.emit("Village has successfully been updated ");
+                this.successMessage.emit(this.stringSuccessMessage);
                 this.editedVillage.emit(response);
             },
             error=>{
@@ -164,9 +174,7 @@ export class VillageRow implements OnInit,AfterViewInit{
             'armies':this._fBuilder.array([]),
         });
         this.armiesArrayControl = <FormArray>this.editVillageForm.controls['armies'];
-        // for (let i=0; i<this.v.armies.length; i++) {
-        //     this.armiesArrayControl.push(this.initArmies(this.v.armies[i]));
-        // }
+
 
         for (let i=0; i<27; i++) {
             this.armiesArrayControl.push(this.initArmies(this.v.armies[i]));

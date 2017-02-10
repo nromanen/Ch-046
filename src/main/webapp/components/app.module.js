@@ -1,4 +1,4 @@
-System.register(["@angular/core", "@angular/platform-browser", "@angular/http", "@angular/forms", "./app.routers", "./app.component", "./alliance/alliance.component", "./header/header.component", "./header/leader-header.component", "./modal_window/modal", "./player/player.component", "./player/playerList.component", "./header/player-header.component", "./player/player-list.component", "./village/village-info.component", "./army/army-cell-info.component", "./timer/timer.component", "./leader/leader-manager.component", "./leader/leader-main.component", "./alliance/add-alliance.component", "./user/add-member.component", "./user/edit-member.component", "./army/armyCellComponent", "./village/villageRow.component", "./village/addVillageForm", "./army/addArmyForm.component", "./services/alliance/alliance-service", "./services/user.service", "./services/player.service", "./services/newVillageArmiesService", "./services/villageService", "./services/helpNotification/help.service", "./services/helpNotification/stomp.service", "./alliance/edit-alliance.component", "primeng/primeng", "./help/all-helps.component", "./help/ask-help.component"], function (exports_1, context_1) {
+System.register(["@angular/core", "@angular/platform-browser", "@angular/http", "@angular/forms", "./app.routers", "./app.component", "./alliance/alliance.component", "./header/header.component", "./header/leader-header.component", "./modal_window/modal", "./player/player.component", "./player/playerList.component", "./header/player-header.component", "./player/player-list.component", "./village/village-info.component", "./army/army-cell-info.component", "./timer/timer.component", "./leader/leader-manager.component", "./leader/leader-main.component", "./alliance/add-alliance.component", "./user/add-member.component", "./user/edit-member.component", "./army/armyCellComponent", "./village/villageRow.component", "./village/addVillageForm", "./army/addArmyForm.component", "./services/alliance/alliance-service", "./services/user.service", "./services/player.service", "./services/newVillageArmiesService", "./services/villageService", "./services/helpNotification/help.service", "./services/helpNotification/stomp.service", "./alliance/edit-alliance.component", "primeng/primeng", "./help/all-helps.component", "./help/ask-help.component", "ng2-translate", "angular2-cookie/services/cookies.service"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7,7 +7,7 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, platform_browser_1, http_1, forms_1, app_routers_1, app_component_1, alliance_component_1, header_component_1, leader_header_component_1, modal_1, player_component_1, playerList_component_1, player_header_component_1, player_list_component_1, village_info_component_1, army_cell_info_component_1, timer_component_1, leader_manager_component_1, leader_main_component_1, add_alliance_component_1, add_member_component_1, edit_member_component_1, armyCellComponent_1, villageRow_component_1, addVillageForm_1, addArmyForm_component_1, alliance_service_1, user_service_1, player_service_1, newVillageArmiesService_1, villageService_1, help_service_1, stomp_service_1, edit_alliance_component_1, primeng_1, all_helps_component_1, ask_help_component_1, AppModule;
+    var core_1, platform_browser_1, http_1, forms_1, app_routers_1, app_component_1, alliance_component_1, header_component_1, leader_header_component_1, modal_1, player_component_1, playerList_component_1, player_header_component_1, player_list_component_1, village_info_component_1, army_cell_info_component_1, timer_component_1, leader_manager_component_1, leader_main_component_1, add_alliance_component_1, add_member_component_1, edit_member_component_1, armyCellComponent_1, villageRow_component_1, addVillageForm_1, addArmyForm_component_1, alliance_service_1, user_service_1, player_service_1, newVillageArmiesService_1, villageService_1, help_service_1, stomp_service_1, edit_alliance_component_1, primeng_1, all_helps_component_1, ask_help_component_1, ng2_translate_1, cookies_service_1, AppModule;
     return {
         setters: [
             function (core_1_1) {
@@ -120,6 +120,12 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
             },
             function (ask_help_component_1_1) {
                 ask_help_component_1 = ask_help_component_1_1;
+            },
+            function (ng2_translate_1_1) {
+                ng2_translate_1 = ng2_translate_1_1;
+            },
+            function (cookies_service_1_1) {
+                cookies_service_1 = cookies_service_1_1;
             }
         ],
         execute: function () {
@@ -135,6 +141,12 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
                         http_1.HttpModule,
                         forms_1.FormsModule,
                         forms_1.ReactiveFormsModule,
+                        app_routers_1.RoutesModule,
+                        ng2_translate_1.TranslateModule.forRoot({
+                            provide: ng2_translate_1.TranslateLoader,
+                            useFactory: function (http) { return new ng2_translate_1.TranslateStaticLoader(http, 'assets/i18/', '.json'); },
+                            deps: [http_1.Http]
+                        }),
                         // DatepickerModule.forRoot(),
                         // TimepickerModule.forRoot(),
                         app_routers_1.RoutesModule,
@@ -172,6 +184,7 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/http", 
                         player_service_1.PlayerService,
                         newVillageArmiesService_1.CurrVillageArmiesService,
                         villageService_1.VillageService,
+                        cookies_service_1.CookieService,
                         help_service_1.HelpService,
                         stomp_service_1.StompService
                     ],

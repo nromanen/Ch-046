@@ -104,10 +104,6 @@ public class UserServiceImpl implements UserService {
 		return errorMessage;
 	}
 
-	@Override
-	public long getCount() {
-		return userDao.getCount();
-	}
 
 	@Override
 	public User getWithRolesById(String id) {

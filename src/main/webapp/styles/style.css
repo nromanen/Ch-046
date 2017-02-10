@@ -31,3 +31,19 @@ height: 50px;
  .centerCard{
      text-align: center;
  }
+
+ .c_switch{
+     margin-top: 10px;
+ }
+ .x{
+     cursor: pointer;
+ }
+
+ .army_block{
+     margin-top: 10px;
+ }
+
+ .cap_Switch{
+     margin-top: 3px;
+     margin-left:68px ;
+ }

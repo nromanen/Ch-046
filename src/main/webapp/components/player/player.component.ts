@@ -6,6 +6,7 @@
 import {Player} from "./player";
 import {Component, OnInit} from "@angular/core";
 import {PlayerService} from "../services/player.service";
+import {TranslateService} from "ng2-translate";
 
 @Component({
     selector: 'player',
@@ -26,7 +27,7 @@ import {PlayerService} from "../services/player.service";
 <div *ngIf="successMessage!=null||errorMessage!=null" class="col s4 offset-s4 ">
     <div  [ngClass]="{'card':true, 'green':successMessage!=null, 'red':errorMessage!=null, 'lighten-5':true}">
         <div [ngClass]="{'card-content':true , 'green-text':successMessage!=null,'red-text':errorMessage!=null }">
-            <p>{{successMessage!=null?successMessage:errorMessage}} <span (click)="closeDialog()" class="right">x</span></p>
+            <p>{{successMessage!=null?successMessage:errorMessage}} <span (click)="closeDialog()" class="right x">x</span></p>
         </div>
     </div>
 </div>
@@ -50,7 +51,7 @@ export class PlayerComponent implements OnInit {
     successMessage;
     errorMessage;
 
-    constructor(private playerService: PlayerService) {
+    constructor(private playerService: PlayerService,translate: TranslateService) {
 
     }
 
@@ -60,7 +61,7 @@ export class PlayerComponent implements OnInit {
                 player => {
                     console.info(`PlayerComponent ngOnInit() is working. Player: ${JSON.stringify(player)}`);
                     this.player = player;
-                    console.log(this.player.alliance);
+                    console.log(this.player.isLeader);
 
                 }
             );

@@ -17,7 +17,7 @@ public interface UserService {
     void update(User user) throws MessagingException;
 	void delete(User user);
 	boolean isUnique(User user);
-	long getCount();
+
 	User getWithRolesById(String id);
 	List<User> getAllWithRoles();
 	List<User> getAll();
