@@ -6,6 +6,7 @@ import {Alliance} from "../alliance/alliance";
  */
 
 export class Player {
+
     login: string;
     password: string;
     email: string;
@@ -13,6 +14,7 @@ export class Player {
     villages: Village[];
     uuid: string;
     isLeader: boolean;
+    alliance:Alliance;
 
     constructor() {
 

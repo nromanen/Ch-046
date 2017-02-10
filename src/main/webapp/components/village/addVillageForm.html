@@ -1,85 +1,44 @@
-<form #heroForm="ngForm" (ngSubmit)="onSubmit(village)" >
+<form [formGroup]="addVillageForm" (ngSubmit)="onSubmit()" >
     <div class="row container">
         <div class="input-field col s6 offset-s3">
-            <input id="name" type="text" class="validate" required [(ngModel)]="this.village.name" name="name" #name="ngModel" minlength="3" maxlength="14" pattern="[A-z]*">
+            <input id="name" type="text" class="validate" required formControlName="name">
             <label for="name">Name</label>
-            <div *ngIf="name.errors && (name.dirty|| x.touched)"
-                 class="alert alert-danger">
-                <div [hidden]="!name.errors.required">
-                    Name is required
-                </div>
-                <div [hidden]="!name.errors.minlength">
-                    Name cannot be less than 3 characters long.
-                </div>
-                <div [hidden]="!name.errors.pattern">
-                    Name is incorrect!
-                </div>
-                <div [hidden]="!name.errors.maxlength">
-                    Name cannot be more than 14 characters long.
-                </div>
+            <div *ngIf="formErrors.name" class="error">
+                {{ formErrors.name }}
             </div>
         </div>
 
-        <div class="input-field col s6 offset-s3">
-            <input id="x" type="text" class="validate" [(ngModel)]="this.village.xCoord" required name="x" pattern="[0-9]*" #x="ngModel">
+        <div class="input-field col s6 offset-s3" >
+            <input id="x" type="text" class="validate" required formControlName="xCoord">
             <label for="x">X</label>
-            <div *ngIf="x.errors && (x.dirty || x.touched)"
-                 class="alert alert-danger">
-                <div [hidden]="!x.errors.required">
-                    X coordinate is required
-                </div>
-
-                <div [hidden]="!x.errors.pattern">
-                    Coordinates can contain numbers only!
-                </div>
-
+            <div *ngIf="formErrors.xCoord" class="error">
+                {{formErrors.xCoord}}
             </div>
         </div>
 
         <div class="input-field col s6 offset-s3">
-            <input id="y" type="text" class="validate" [(ngModel)]="village.yCoord" name="y" pattern="[0-9]*" required #y="ngModel">
+            <input id="y" type="text" class="validate" formControlName="yCoord" required >
             <label for="y">Y</label>
-            <div *ngIf="y.errors && (y.dirty || y.touched)"
-                 class="alert alert-danger">
-                <div [hidden]="!y.errors.required">
-                    Y coordinate is required
-                </div>
-
-                <div [hidden]="!y.errors.pattern">
-                    Coordinates can contain numbers only!
-                </div>
+            <div *ngIf="formErrors.yCoord" class="error">
+              {{formErrors.yCoord}}
             </div>
         </div>
 
         <div class="input-field col s6 offset-s3">
-            <input id="population" type="text" class="validate" required [(ngModel)]="village.population"
-                   name="population" pattern="[0-9]*" #population="ngModel">
+            <input id="population" type="text" class="validate" required
+                   formControlName="population" >
             <label for="population">Population</label>
-            <div *ngIf="population.errors && (population.dirty || population.touched)"
-                 class="alert alert-danger">
-                <div [hidden]="!population.errors.required">
-                    Population  is required
-                </div>
-
-                <div [hidden]="!population.errors.pattern">
-                    Population value can contain numbers only!
-                </div>
+            <div *ngIf="formErrors.population" class="error">
+                {{formErrors.population}}
             </div>
         </div>
 
         <div class="input-field col s6 offset-s3">
-            <input id="wall" type="text" class="validate" [(ngModel)]="village.wall" name="wall" pattern="[0-9]*" required #wall="ngModel">
+            <input id="wall" type="text" class="validate" formControlName="wall" required >
             <label for="wall">Wall</label>
-            <div *ngIf="wall.errors && (wall.dirty || wall.touched)"
-                 class="alert alert-danger">
-                <div [hidden]="!wall.errors.required">
-                    Wall level is required!
-                </div>
-
-                <div [hidden]="!wall.errors.pattern">
-                    Wall level can contain numbers only!
-                </div>
-            </div>
+            <div *ngIf="formErrors.wall" class="error">
+               {{formErrors.wall}}
+        </div>
         </div>
 
         <div class="input-field col s6 offset-s3">
@@ -88,7 +47,7 @@
         <div class="switch ">
             <label class="col offset-s3">
                 No
-                <input type="checkbox" [(ngModel)]="village.isCapital" name="isCapital">
+                <input type="checkbox"  formControlName="isCapital">
                 <span class="lever"></span>
                 Yes
             </label>
@@ -97,13 +56,22 @@
 
 
         <div  class="input-field col s6 offset-s3">
-            <button  (click)="addArmies()" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></button>
+            <button  (click)="addArmies()" class="btn-floating btn-large waves-effect waves-light red">
+                <i class="material-icons">add</i>
+            </button> Add army
         </div>
+            <div formArrayName="armies">
+                <div *ngFor="let p of addVillageForm.controls.armies.controls; let i=index" >
+                    <div add-army [army]="village.armies[i]" [group]="addVillageForm.controls.armies.controls[i]"></div>
+                </div>
+            </div>
 
-        <div add-army *ngFor="let army of village.armies" [army]="army" (armyIsValid)="showAddArmy($event)"></div>
+
         <div class="input-field col s6 offset-s3">
             <button type="submit" class="btn btn-default"
-                    [disabled]="!heroForm.form.valid">Submit</button>
+            [disabled]="!addVillageForm.valid">Submit</button>
         </div>
     </div>
 </form>
+
+<!--//0987687543-->

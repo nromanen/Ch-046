@@ -1,8 +1,24 @@
 group 'ua.cv.tim'
 version '1.0-SNAPSHOT'
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:1.4.0'
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'org.akhikhl.gretty'
+
+gretty {
+    port = 8070
+    contextPath = 'travian'
+    servletContainer = 'jetty9'
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -73,14 +89,40 @@ configurations.all {
     exclude group: "commons-logging", module: "commons-logging"
 }
 
-war {
-    archiveName = 'travian.war'
+
+task npm_install(type:Exec) {
+    workingDir 'src/main/webapp'
+    commandLine 'cmd', '/c', 'npm', 'install'
+    standardOutput = new ByteArrayOutputStream()
+    ext.output = {
+        return standardOutput.toString()
+    }
 }
+
+task npmRunTsc(type:Exec) {
+    workingDir 'src/main/webapp'
+    commandLine 'cmd', '/c', 'npm', 'run', 'tsc'
+    standardOutput = new ByteArrayOutputStream()
+    ext.output = {
+        return standardOutput.toString()
+    }
+}
+
+
+task runApp(type:Exec) {
+    workingDir './'
+    commandLine 'cmd', '/c', 'gradle', 'npm_install', 'npmRunTsc', 'appStart'
+    standardOutput = new ByteArrayOutputStream()
+    ext.output = {
+        return standardOutput.toString()
+    }
+}
+
 test {
     // enable TestNG support (default is JUnit)
     useTestNG()
 
-   /* // set a system property for the test JVM(s)
+    // set a system property for the test JVM(s)
     systemProperty 'some.prop', 'value'
 
     // show standard out and standard error of the test JVM(s) on the console
@@ -100,5 +142,10 @@ test {
 
     // listen to standard out and standard error of the test JVM(s)
     onOutput { descriptor, event ->
-        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)*/
+        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)
     }
+}
+
+war {
+    archiveName = 'travian.war'
+}

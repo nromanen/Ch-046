@@ -3,6 +3,8 @@ package ua.cv.tim.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import ua.cv.tim.utils.SendMail;
 import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 
@@ -26,7 +29,6 @@ import java.util.Random;
  * @author Oleg on 04.01.2017.
  *
  */
-
 
 @Service(value = "userService")
 @Transactional
@@ -42,6 +44,8 @@ public class UserServiceImpl implements UserService {
 	private PlayerDao playerDao;
 	@Autowired
 	private SendMail sendMail;
+	@Autowired
+	private MessageSource messageSource;
 
 	@Override
 	public User getUserByUsername(String username) {
@@ -66,11 +70,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void update(User user) throws MessagingException {
 		userDao.update(user);
-		String message ="Player updated successfully, your login is \"" + user.getLogin() + "\", and password: \""
-				+ user.getPassword() + "\",  Role: " + user.getRoles();
-		sendEmail(user,message);
+		String message = "Player updated successfully, your login is \"" + user.getLogin() + "\", role: " + user.getRoles();
+		sendEmail(user, message);
 		logger.info("User with login {} and id {} was updated, message sent on his email {} ",user.getLogin(),user.getUuid(),user.getEmail());
 	}
+
 
 	@Override
 	public void delete(User user) {
@@ -100,13 +104,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private String createErrorMessage(boolean[] isLoginEmailUnique) {
+		Locale locale = LocaleContextHolder.getLocale();
 		String errorMessage = null;
 		if (!isLoginEmailUnique[0] && !isLoginEmailUnique[1]) {
-			errorMessage = "User with the same login and email exists!";
+			errorMessage = messageSource.getMessage("userService.errorMessage.loginAndEmail", null, locale);
 		} else if (!isLoginEmailUnique[0]) {
-			errorMessage = "User with the same login exists!";
+			errorMessage = messageSource.getMessage("userService.errorMessage.login", null, locale);
 		} else if (!isLoginEmailUnique[1]) {
-			errorMessage = "User with the same email exists!";
+			errorMessage = messageSource.getMessage("userService.errorMessage.email", null, locale);
 		}
 		return errorMessage;
 	}
@@ -138,7 +143,7 @@ public class UserServiceImpl implements UserService {
 		List<UserDTO> allianceUsers = new ArrayList<>();
 		for (User user : users) {
 			allianceUsers.add(new UserDTO(user.getUuid(), user.getLogin(), user.getEmail(),
-					user.getPlayer().getAlliance().getName()));
+					user.getPlayer().getAlliance().getName(), user.getRoles().size() == 2));
 		}
 		return allianceUsers;
 	}
@@ -154,9 +159,10 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(member.getEmail());
 		String password = generatePassword(10);
 		user.setPassword(encodePassword(password));
+		logger.info("Password is {} ", user.getPassword());
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.USER);
-		if (member.getRole() != null) {
+		if (member.getIsLeader()) {
 			roles.add(Role.LEADER);
 		}
 		user.setRoles(roles);
@@ -228,5 +234,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getFullUserByUsername(String username) {
 		return userDao.getFullUserByUsername(username);
+	}
+
+
+	@Override
+	public User getByMail(String email) {
+		return userDao.getByMail(email);
 	}
 }

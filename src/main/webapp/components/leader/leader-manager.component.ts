@@ -95,7 +95,7 @@ export class LeaderManagerComponent implements OnInit {
     }
 
     updateMember(member:User) {
-        console.log(`LeaderManagerComponent.updateMember() method is working. Member value: ${JSON.stringify(member)}`);
+        console.info(`LeaderManagerComponent.updateMember() method is working. Member value: ${JSON.stringify(member)}`);
         if (member !== null) {
             this.userService.updateMember(member)
                 .subscribe(

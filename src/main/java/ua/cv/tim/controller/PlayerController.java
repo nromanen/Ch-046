@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +20,7 @@ import ua.cv.tim.service.UserService;
 import ua.cv.tim.service.VillageService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -50,18 +49,18 @@ public class PlayerController {
     }
 
     @RequestMapping(value = "/player", method = RequestMethod.GET)
-    public ResponseEntity<PlayerDTO> getPlayerById(@AuthenticationPrincipal AuthorizedUser authorizedUser) {
-        log.info("AuthorizedUser : {}",authorizedUser);
-        //  UserDetails principal = (AuthorizedUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userByUsername = userService.getUserByUsername(authorizedUser.getUsername());
-        log.info("AuthorizedUser : {}",authorizedUser.toString());
+    public ResponseEntity<PlayerDTO> getPlayerById() {
+
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userByUsername = userService.getUserByUsername(principal.getUsername());
         String id = userByUsername.getPlayer().getUuid();
 
         Player player = playerService.getByIdWithVillages(id);
-
+        for (Village village:player.getVillages()){
+            Collections.sort(village.getArmies());
+        }
         PlayerDTO playerDTO=new PlayerDTO(player.getUser().getLogin(),
-                player.getUser().getPassword(),player.getUser().getEmail(),
-                player.getRace(),player.getVillages(),player.getAlliance(), userByUsername.getRoles().size() == 2);
+                player.getRace(),player.getVillages(),player.getAlliance(),userByUsername.getRoles());
         return new ResponseEntity<>(playerDTO, HttpStatus.OK);
     }
 
@@ -77,6 +76,7 @@ public class PlayerController {
     public ResponseEntity<Player> updatePlayer(@PathVariable(name = "id") String id, @RequestBody Player player) {
         Player current_player = playerService.getById(id);
         if (current_player != null) {
+            System.out.println("here is");
             current_player.setRace(player.getRace());
             current_player.setUser(player.getUser());
             current_player.setVillages(player.getVillages());

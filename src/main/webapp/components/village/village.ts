@@ -12,14 +12,13 @@ export class Village{
     isCapital:boolean;
     wall:number;
     armies:Array<Army>;
-
-    constructor(uuid: string){
+    player:Player;
+    constructor(uuid?: string){
         this.uuid = uuid;
     }
 
 
-    player:Player;
-    constructor(){
-    }
+
+
 
 }

@@ -12,43 +12,31 @@ export class VillageService{
     villages:Array<Village>;
     update(village:Village){
 
-        let villageBefore=new Village();
-        villageBefore.name=village.name;
-        villageBefore.uuid=village.uuid;
-        villageBefore.armies=village.armies;
-        villageBefore.isCapital=village.isCapital;
-        villageBefore.population=village.population;
-        villageBefore.xCoord=village.xCoord;
-        villageBefore.yCoord=village.yCoord;
-        villageBefore.wall=village.wall;
+
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        this.http.put(this.villageURL + village.uuid, JSON.stringify(village), {
+        return this.http.put(this.villageURL + village.uuid, JSON.stringify(village), {
             headers: headers
-        }).subscribe(
-            response => {
-                console.log(response);
-                let newVillage=response.json();
-                console.log(newVillage);
-                 this.villages[this.villages.indexOf(village)] = newVillage;
-            },
-            error => console.log(error)
-        );
+        }).map(res=>res.json());
     }
 
     add(village:Village){
         const body = JSON.stringify(village);
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        this.http.post(this.villageURL, body, {
+        // this.http.post(this.villageURL, body, {
+        //     headers: headers
+        // }).map(res => res.json())
+        //     .subscribe(
+        //         response => {
+        //             this.villages.push(response);
+        //         },
+        //         error => console.log(error)
+        //     );
+
+       return this.http.post(this.villageURL, body, {
             headers: headers
-        }).map(res => res.json())
-            .subscribe(
-                response => {
-                    this.villages.push(response);
-                },
-                error => console.log(error)
-            );
+        }).map(res => res.json());
     }
     constructor(private http:Http){
 

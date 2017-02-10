@@ -3,9 +3,6 @@ package ua.cv.tim.controller;
 import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -22,7 +19,6 @@ import org.testng.annotations.Test;
 import ua.cv.tim.configuration.WebConfiguration;
 import ua.cv.tim.configuration.WebSecurityConfiguration;
 import ua.cv.tim.dto.UserDTO;
-import ua.cv.tim.model.AuthorizedUser;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.UserService;
@@ -30,18 +26,13 @@ import ua.cv.tim.utils.TestUtil;
 
 import javax.servlet.ServletContext;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -53,12 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = {WebSecurityConfiguration.class,/*WebSecurityInitializer.class,*/ WebConfiguration.class})
 @WebAppConfiguration
 public class UserControllerTest  {
-    @Autowired
-    private ServletContext servletContext;
-    @Autowired
-    private WebApplicationContext context;
-    @Autowired
-    private FilterChainProxy springSecurityFilterChain;
+
     @Mock
     UserService userService;
     @InjectMocks
@@ -80,21 +66,6 @@ public class UserControllerTest  {
         Mockito.reset(userService);
     }
 
-    @Test
-   // @WithUserDetails
-    public void testGetUserWithAlliance() throws Exception {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(userController)
-                .addFilter(springSecurityFilterChain)
-//                .apply(springSecurity(springSecurityFilterChain))
-                .build();
-        MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.get("/user");
-                     //   .contentType(MediaType.APPLICATION_JSON);
-        this.mockMvc.perform(builder)
-                .andExpect(status().isOk())
-                .andDo(MockMvcResultHandlers.print());
-    //  verify(userService, times(1)).getUserWithAlliance(anyString());
-    }
 
     @Test
     public void testGetAllUsersWhereEmptyList() throws Exception {
@@ -274,40 +245,6 @@ public class UserControllerTest  {
         userController.updateUser(testUserDTO.getUuid(), testUserDTO);
         verify(userService, times(1)).isUnique(userCaptor.capture());
         Assert.assertEquals(userCaptor.getValue().getUuid(), testUserDTO.getUuid());
-    }
-    @WithUserDetails
-    @Test
-    public void testGetUsersByAlliance() throws Exception {
-
-        mockMvc = MockMvcBuilders
-                //.standaloneSetup(userController)
-             .webAppContextSetup(context)
-               .apply(springSecurity())
-                .addFilter(springSecurityFilterChain)
-                .build();
-
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_USER");
-        authorities.add(grantedAuthority);
-        AuthorizedUser authorizedUser = new AuthorizedUser("name0","222",authorities);
-
-        List<UserDTO> userDTOsList = new ArrayList<>();
-        UserDTO userDTO0 = new UserDTO();
-        userDTO0.setLogin("login");
-        userDTO0.setUuid("123-321");
-        userDTO0.setEmail("mail@ll.ll");
-        userDTOsList.add(userDTO0);
-        //when(userService.getUsersByAlliance(anyString())).thenReturn(userDTOsList);
-        MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.get("/alliance-users").with(user(authorizedUser))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(TestUtil.convertObjectToJsonBytes(userDTOsList));
-
-        mockMvc.perform(builder)
-                .andExpect(authenticated())
-                .andExpect(status().isOk())
-                .andDo(MockMvcResultHandlers.print());
-        verify(userService, times(1)).getUsersByAlliance(anyString());
     }
 
     private List<User> getUsersList() {

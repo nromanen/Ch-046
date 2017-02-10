@@ -26,5 +26,7 @@ public interface UserService {
 	void deleteById(String id);
 	User getUserWithAlliance(String username);
 	User getFullUserByUsername(String username);
+
+	User getByMail(String email);
 	void sendEmail(User user, String message) throws MessagingException;
 }

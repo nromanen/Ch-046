@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.model.AuthorizedUser;
+import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.UserService;
 
@@ -36,7 +37,7 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<UserDTO> getUserWithAlliance(@AuthenticationPrincipal AuthorizedUser authorizedUser) {
-		UserDTO userDTO = new UserDTO(authorizedUser.getUuid(), authorizedUser.getUsername(), authorizedUser.getEmail(), authorizedUser.getAlliance().getName());
+		UserDTO userDTO = new UserDTO(authorizedUser.getUuid(), authorizedUser.getUsername(), authorizedUser.getEmail(), authorizedUser.getAlliance().getName(),authorizedUser.getRoles().size()==2);
 		logger.info(userDTO.toString());
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
@@ -45,7 +46,7 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> allWithRoles = userService.getAllWithRoles();
         if (allWithRoles.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(allWithRoles, HttpStatus.OK);
     }
@@ -59,7 +60,7 @@ public class UserController {
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO member) throws MessagingException {
 		User user = new User();
 		user.setLogin(member.getLogin());
@@ -72,7 +73,6 @@ public class UserController {
 	}
 
 	private boolean addUserToDataBase(@RequestBody UserDTO member) throws MessagingException {
-
 		try {
 			userService.addUser(member);
 		} catch (MessagingException e) {
@@ -107,11 +107,21 @@ public class UserController {
 		}
 		currentUser.setLogin(user.getLogin());
 		currentUser.setEmail(user.getEmail());
+        changeUserRole(user, currentUser.getRoles());
+
 		if (userService.isUnique(currentUser)) {
 			userService.update(currentUser);
 		}
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
+
+    private void changeUserRole(UserDTO user, List<Role> currentUserRoles) {
+        if (user.getIsLeader() && currentUserRoles.size() != 2) {
+            currentUserRoles.add(Role.LEADER);
+        } else if (!user.getIsLeader() && currentUserRoles.size() == 2) {
+            currentUserRoles.remove(Role.LEADER);
+        }
+    }
 
 	@RequestMapping(value = "/alliance-users", method = RequestMethod.GET)
 	public ResponseEntity<List<UserDTO>> getUsersByAlliance(@AuthenticationPrincipal AuthorizedUser authorizedUser) {

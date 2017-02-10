@@ -1,12 +1,14 @@
 package ua.cv.tim.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.NotEmpty;
 import ua.cv.tim.model.Alliance;
 import ua.cv.tim.model.Race;
+import ua.cv.tim.model.Role;
 import ua.cv.tim.model.Village;
 
-import javax.persistence.*;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.List;
 
 /**
@@ -17,11 +19,7 @@ public class PlayerDTO {
     @NotEmpty
     private String login;
 
-    @NotEmpty
-    private String password;
-
-    @NotEmpty
-    private String email;
+    private boolean isLeader;
 
     @Enumerated(EnumType.STRING)
     private Race race;
@@ -29,38 +27,17 @@ public class PlayerDTO {
 
     private List<Village> villages;
 
-    @JsonIgnore
+    @JsonIgnoreProperties("players")
     private Alliance alliance;
-
-    private boolean isLeader;
 
     public PlayerDTO() { }
 
-    public PlayerDTO(String login, String password, String email, Race race, List<Village> villages, Alliance alliance, boolean isLeader) {
+    public PlayerDTO(String login, Race race, List<Village> villages, Alliance alliance, List<Role> roles) {
         this.login = login;
-        this.password = password;
-        this.email = email;
         this.race = race;
         this.villages = villages;
         this.alliance = alliance;
-        this.isLeader = isLeader;
-    }
-
-    public String getPassword() {
-
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+        this.isLeader = roles.contains(Role.LEADER);
     }
 
     public Race getRace() {
@@ -100,21 +77,18 @@ public class PlayerDTO {
         return isLeader;
     }
 
-    public PlayerDTO setIsLeader(boolean leader) {
+    public void setIsLeader(boolean leader) {
         isLeader = leader;
-        return this;
     }
 
     @Override
     public String toString() {
         return "PlayerDTO{" +
                 "login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
+                ", isLeader=" + isLeader +
                 ", race=" + race +
                 ", villages=" + villages +
                 ", alliance=" + alliance +
-                ", isLeader=" + isLeader +
                 '}';
     }
 }

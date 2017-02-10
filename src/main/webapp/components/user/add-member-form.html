@@ -10,8 +10,8 @@
             <input type="text" id="login" class="validate"
                    required minlength="3" maxlength="9"
                    [formControl]="memberForm.controls['login']"/>
-            <div style="color: red; font-size: 14px;" *ngIf="!memberForm.controls['login'].valid
-            && (memberForm.controls['login'].touched || memberForm.controls['login'].dirty)">{{LOGIN_ERROR}}
+            <div style="color: red; font-size: 14px;" *ngIf="(!memberForm.controls['login'].valid
+            && memberForm.controls['login'].touched && memberForm.controls['login'].dirty && memberForm.controls['login'].value != '')">{{LOGIN_ERROR}}
             </div>
         </div>
 
@@ -19,13 +19,14 @@
             <label for="email">Email</label>
             <input type="text" id="email" class="validate" [formControl]="memberForm.controls['email']"/>
             <div style="color: red; font-size: 14px;"
-                 *ngIf="!memberForm.controls['email'].valid && memberForm.controls['email'].touched">
+                 *ngIf="(!memberForm.controls['email'].valid && memberForm.controls['email'].touched && memberForm.controls['email'].dirty
+                 && memberForm.controls['email'].value != '')">
                 {{EMAIL_ERROR}}
             </div>
         </div>
         <div class="input-field col s1">
-            <input type="checkbox" class="messageCheckbox" id="test5" [formControl]="memberForm.controls['leader']"
-                   name="Role" value="LEADER"/> <label for="test5">Leader</label>
+            <input type="checkbox" class="messageCheckbox" id="test5" [formControl]="memberForm.controls['isLeader']"
+                   name="isLeader"/> <label for="test5">Leader</label>
         </div>
 
         <div class="input-field col s2">

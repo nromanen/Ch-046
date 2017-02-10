@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.AllianceDao;
-import ua.cv.tim.dao.PlayerDao;
 import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.dto.AllianceDTO;
 import ua.cv.tim.dto.UserDTO;
@@ -63,7 +62,7 @@ public class AllianceServiceImpl implements AllianceService {
         Alliance alliance = new Alliance();
         alliance.setName(allianceDTO.getName());
         allianceDao.add(alliance);
-        UserDTO user = new UserDTO(null,allianceDTO.getLeaderLogin(), allianceDTO.getLeaderEmail(), allianceDTO.getName(), Role.LEADER);
+        UserDTO user = new UserDTO(null,allianceDTO.getLeaderLogin(), allianceDTO.getLeaderEmail(), allianceDTO.getName(), true);
         userService.addUser(user);
         allianceDTO.setLeaderUuid(userService.getUserByUsername(allianceDTO.getLeaderLogin()).getUuid());
         logger.info("New alliance added successfully: {}", allianceDTO);
@@ -84,7 +83,8 @@ public class AllianceServiceImpl implements AllianceService {
         leader.setLogin(allianceDTO.getLeaderLogin());
         leader.setEmail(allianceDTO.getLeaderEmail());
         allianceDao.update(alliance);
-        userService.sendEmail(leader,"bla-bla-bla");
+        userService.sendEmail(leader,"Alliance " + allianceDTO.getName() + " updated successfully. Your are leader of alliance, your login is "
+                + leader.getLogin() + ".");
         logger.info("Alliance updated successfully: {}", allianceDTO);
     }
 

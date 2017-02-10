@@ -13,6 +13,7 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
 
 	private String uuid;
 	private String email;
+	private List<Role> roles;
 	private Race race;
 	private List<Village> villages;
 	private Alliance alliance;
@@ -35,6 +36,15 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public AuthorizedUser setRoles(List<Role> roles) {
+		this.roles = roles;
+		return this;
 	}
 
 	public Race getRace() {
@@ -68,8 +78,9 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
 				.append("Authorized user: { uuid: ").append(uuid).append(", ")
 				.append("login: ").append(getUsername()).append(", ")
 				.append("email: ").append(email).append(", ")
+				.append("roles: [ ").append(roles).append(" ], ")
 				.append("race: ").append(race).append(", ")
-				.append("villages: ").append((villages != null) ? villages : null).append(", ")
+				.append("villages: [ ").append((villages != null) ? villages : null).append(" ] , ")
 				.append("alliance : ").append((alliance != null) ? alliance : null).append(", ");
 		return sb.toString();
 	}
