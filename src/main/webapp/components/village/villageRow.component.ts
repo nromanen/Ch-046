@@ -57,7 +57,7 @@ import {TranslateService} from "ng2-translate";
     <button (click)="!isForm?showEdit():changeVillage()" type="button"
     class="btn waves-effect waves-light col offset-s3"  name="action" 
     [disabled]="!editVillageForm.valid && isForm" style="margin-top: 5px;" >
-            {{!isForm?"Edit":"Save"}}      
+           <i class="material-icons">play_arrow</i>
     </button>
    
 </td>
@@ -91,12 +91,10 @@ export class VillageRow implements OnInit,AfterViewInit{
         this.errorMessage=new EventEmitter<{}>();
         this.successMessage=new EventEmitter<string>();
         this.editedVillage=new EventEmitter<Village>();
-        translate.get('Success message').subscribe(message=>{
+        translate.get('Village was updated successfully.').subscribe(message=>{
             this.stringSuccessMessage=message;
         });
-        // translate.get("Error message").subscribe((message:string)=>{
-        //     this.stringErrorMessage=message;
-        // });
+
         this.stringErrorMessage="Error message";
     }
 
