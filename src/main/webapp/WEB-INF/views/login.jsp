@@ -16,12 +16,15 @@
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <spring:url value="/css" var="cssUrl"/>
+    <link href="${cssUrl}/flag-icon.min.css" rel="stylesheet"/>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.css">
     <!-- Compiled and minified JavaScript -->
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.js"></script>
+
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -39,7 +42,12 @@
 
 <div class="container row">
     <spring:url value="/login" var="loginUrl"/>
-    <a href="${loginUrl}?locale=en">English</a> | <a href="${loginUrl}?locale=uk">Ukraine</a>
+    <a href="${loginUrl}?locale=en">
+        <span class="flag-icon flag-icon-gb" title="English"></span>
+    </a> |
+    <a href="${loginUrl}?locale=uk">
+        <span class="flag-icon flag-icon-ua" title="Ukraine"></span>
+    </a>
 </div>
 
 <div class="container">
