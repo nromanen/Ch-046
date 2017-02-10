@@ -1,6 +1,6 @@
 ﻿import {NgModule}      from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpModule} from '@angular/http';
+import {HttpModule, Http} from '@angular/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RoutesModule} from "./app.routers";
 
@@ -39,6 +39,8 @@ import {CurrVillageArmiesService} from "./services/newVillageArmiesService";
 import {VillageService} from "./services/villageService";
 import {HelpService} from "./services/helpNotification/help.service";
 import {StompService} from "./services/helpNotification/stomp.service";
+import {TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-translate";
+
 
 @NgModule({
     imports: [
@@ -46,7 +48,12 @@ import {StompService} from "./services/helpNotification/stomp.service";
         HttpModule,
         FormsModule,
         ReactiveFormsModule,
-        RoutesModule
+        RoutesModule,
+        TranslateModule.forRoot({
+            provide: TranslateLoader,
+            useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18/', '.json'),
+            deps: [Http]
+        })
     ],
     declarations: [
         AppComponent,

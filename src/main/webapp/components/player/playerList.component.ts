@@ -9,6 +9,7 @@ import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 
 import {VillageService} from "../services/villageService";
 import {FormGroup, FormBuilder,} from "@angular/forms";
+import {TranslateService} from "ng2-translate";
 
 @Component
 ({
@@ -25,7 +26,7 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
     ngDoCheck(): void {
 
     }
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(changes: SimpleChanges,): void {
 
     }
     @Input('player') player: Player;
@@ -33,7 +34,7 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
     selectedVillage: Village;
 
     constructor(private currVillageService: CurrVillageArmiesService, private villageService: VillageService,
-                private _fBuilder:FormBuilder, cdRef:ChangeDetectorRef) {
+                private _fBuilder:FormBuilder, cdRef:ChangeDetectorRef,private translate:TranslateService) {
         this.unitValues = [];
         this.cdRef=cdRef
     }
@@ -70,9 +71,18 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
         if (event!=null) {
             this.editError = '';
             for (let field in event) {
-                this.editError += event[field] + " ";
+                // this.editError += event[field] + " ";
+                if(event[field]!='') {
+                    console.log(event[field]);
+                    console.log(event[field]=="Population can contain numbers only!");
+                    this.translate.get(event[field])
+                        .subscribe(msg=>{
+                            console.log(msg);
+                            this.editError += msg + " ";
+                        });
+                }
             }
-            console.log(this.editError);
+
         }
     }
 

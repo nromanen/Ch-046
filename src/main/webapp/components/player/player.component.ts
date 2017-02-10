@@ -6,6 +6,7 @@
 import {Player} from "./player";
 import {Component, OnInit} from "@angular/core";
 import {PlayerService} from "../services/player.service";
+import {TranslateService} from "ng2-translate";
 
 @Component({
     selector: 'player',
@@ -50,7 +51,7 @@ export class PlayerComponent implements OnInit {
     successMessage;
     errorMessage;
 
-    constructor(private playerService: PlayerService) {
+    constructor(private playerService: PlayerService,translate: TranslateService) {
 
     }
 
@@ -60,7 +61,7 @@ export class PlayerComponent implements OnInit {
                 player => {
                     console.info(`PlayerComponent ngOnInit() is working. Player: ${JSON.stringify(player)}`);
                     this.player = player;
-                    console.log(this.player.alliance);
+                    console.log(this.player.isLeader);
 
                 }
             );
