@@ -3,6 +3,8 @@ package ua.cv.tim.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import ua.cv.tim.utils.SendMail;
 import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 
@@ -40,6 +43,8 @@ public class UserServiceImpl implements UserService {
 	private PlayerDao playerDao;
 	@Autowired
 	private SendMail sendMail;
+	@Autowired
+	private MessageSource messageSource;
 
 	@Override
 	public User getUserByUsername(String username) {
@@ -84,13 +89,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private String createErrorMessage(boolean[] isLoginEmailUnique) {
+		Locale locale = LocaleContextHolder.getLocale();
 		String errorMessage = null;
 		if (!isLoginEmailUnique[0] && !isLoginEmailUnique[1]) {
-			errorMessage = "User with the same login and email exists!";
+//			errorMessage = "User with the same login and email exists!"; // todo delete comments
+			errorMessage = messageSource.getMessage("userService.errorMessage.loginAndEmail", null, locale);
 		} else if (!isLoginEmailUnique[0]) {
-			errorMessage = "User with the same login exists!";
+//			errorMessage = "User with the same login exists!";
+			errorMessage = messageSource.getMessage("userService.errorMessage.login", null, locale);
 		} else if (!isLoginEmailUnique[1]) {
-			errorMessage = "User with the same email exists!";
+//			errorMessage = "User with the same email exists!";
+			errorMessage = messageSource.getMessage("userService.errorMessage.email", null, locale);
 		}
 		return errorMessage;
 	}
