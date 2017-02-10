@@ -15,7 +15,6 @@ import {AllHelps} from "./help/all-helps.component";
 
 export const routes:Routes = ([
 
-
     {
         path: 'admin', component: AllianceComponent
     },
@@ -45,11 +44,6 @@ export const routes:Routes = ([
         path: 'user',
         component:PlayerComponent
     },
-    // {
-    //     path: 'user/init',
-    //     redirectTo:'user',
-    //     pathMatch:'full'
-    // },
     {
         path:'help',
         component: HelpComponent

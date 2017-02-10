@@ -66,6 +66,7 @@ public class HelpController {
 
         attack.setPlayerId(id);
         logger.info("add new ask help. Attack: {}", attack);
+        System.out.println(attack);
 
         attackService.addAttack(attack);
 

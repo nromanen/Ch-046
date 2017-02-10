@@ -86,7 +86,8 @@ public class AllianceServiceImpl implements AllianceService {
         leader.setLogin(allianceDTO.getLeaderLogin());
         leader.setEmail(allianceDTO.getLeaderEmail());
         allianceDao.update(alliance);
-        userService.sendEmail(leader,"bla-bla-bla");
+        userService.sendEmail(leader,"Alliance " + allianceDTO.getName() + " updated successfully. Your are leader of alliance, your login is "
+                + leader.getLogin() + ".");
         logger.info("Alliance updated successfully: {}", allianceDTO);
     }
 
