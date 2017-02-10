@@ -153,4 +153,5 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
         }
         Hibernate.initialize(player.getVillages());
     }
+
 }

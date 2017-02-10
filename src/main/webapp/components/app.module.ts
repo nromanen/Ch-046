@@ -9,7 +9,7 @@ import {AllianceComponent} from "./alliance/alliance.component";
 import {HeaderComponent} from "./header/header.component";
 import {LeaderHeaderComponent} from "./header/leader-header.component";
 
-import {EditAllianceComponent} from "./alliance/edit-alliance.component";
+
 import {ConfirmComponent} from "./modal_window/modal";
 
 import {PlayerComponent} from "./player/player.component";
@@ -30,8 +30,6 @@ import {ArmyCellComponent} from "./army/armyCellComponent";
 import {VillageRow} from "./village/villageRow.component";
 import {AddVillageForm} from "./village/addVillageForm";
 import {AddArmyForm} from "./army/addArmyForm.component";
-import {HelpComponent} from "./help/ask-help.component";
-import {AllHelps} from "./help/all-helps.component";
 import {AllianceService} from "./services/alliance/alliance-service";
 import {UserService} from "./services/user.service";
 import {PlayerService} from "./services/player.service";
@@ -39,7 +37,13 @@ import {CurrVillageArmiesService} from "./services/newVillageArmiesService";
 import {VillageService} from "./services/villageService";
 import {HelpService} from "./services/helpNotification/help.service";
 import {StompService} from "./services/helpNotification/stomp.service";
+
+import {EditAllianceComponent} from "./alliance/edit-alliance.component";
+import {CalendarModule} from 'primeng/primeng';
+import {AllHelps} from "./help/all-helps.component";
+import {HelpComponent} from "./help/ask-help.component";
 import {TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-translate";
+
 
 
 @NgModule({
@@ -53,7 +57,11 @@ import {TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-trans
             provide: TranslateLoader,
             useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18/', '.json'),
             deps: [Http]
-        })
+        }),
+        // DatepickerModule.forRoot(),
+        // TimepickerModule.forRoot(),
+        RoutesModule,
+        CalendarModule
     ],
     declarations: [
         AppComponent,
@@ -79,7 +87,8 @@ import {TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-trans
         LeaderHeaderComponent,
         AddArmyForm,
         HelpComponent,
-        AllHelps
+        AllHelps,
+
     ],
     providers: [
         AllianceService,
@@ -87,7 +96,7 @@ import {TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-trans
         PlayerService,
         CurrVillageArmiesService,
         VillageService,
-
+        CookieService,
         HelpService,
         StompService
     ],

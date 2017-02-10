@@ -26,6 +26,9 @@
             // other libraries
             'rxjs': 'npm:rxjs',
             'underscore': 'npm:underscore/underscore.js',
+            'moment': 'npm: moment',
+            'ng2-bootstrap':              'npm:ng2-bootstrap',
+            'primeng':                   'npm:primeng',
             'ng2-translate': 'npm:ng2-translate/bundles/ng2-translate.umd.js',
 
         },
@@ -38,7 +41,12 @@
             rxjs: {
                 defaultExtension: 'js'
             },
-            'ng2-translate' : { defaultExtension: 'js' }
+            'ng2-translate' : { defaultExtension: 'js' },
+
+            // ng2-bootstrap
+            'ng2-bootstrap':              { format: 'cjs', main: 'bundles/ng2-bootstrap.umd.js', defaultExtension: 'js' },
+            'moment':                     { main: 'moment.js', defaultExtension: 'js' },
+            'primeng':                      { defaultExtension: 'js'}
         }
     });
 })(this);

@@ -19,23 +19,19 @@ import {StompService} from "../services/helpNotification/stomp.service";
 
 export class HelpComponent implements OnInit{
 
-    VILLAGE = /^[A-Za-z1-9.]{3,9}$/;
-    DATE = /^[1-9/-0]{3,20}/;
-
     player: Player;
     villages : Village[];
     successMessage: string = null;
     errorMessage: string = null;
     helpForm : FormGroup;
 
-
-    constructor(private helpService:HelpService, private formBuilder: FormBuilder, private stompService: StompService){
+       constructor(private helpService:HelpService, private formBuilder: FormBuilder, private stompService: StompService){
         this.helpForm = this.formBuilder.group({
-            'villageName' : ['', Validators.compose([Validators.required])],
-            'enemy': ['',Validators.compose([Validators.required, Validators.pattern(this.VILLAGE)])],
-            'timeAttack' : ['',Validators.compose([Validators.required, Validators.pattern(this.DATE)])]
+            // 'villageName' : ['', Validators.compose([Validators.required])],
+            'villageName' : [''],
+            'enemy': ['',Validators.compose([Validators.required])],
+            'date' : ['']
         });
-
     }
 
     public ngOnInit(): void {
@@ -52,27 +48,25 @@ export class HelpComponent implements OnInit{
                     console.log(this.villages);
                 }
             );
-
-
     }
 
     submitForm(value: any){
-        console.log("Complex form: " + value);
-        let newAttack = new Attack(value.villageName, value.enemy, value.timeAttack);
+        console.log(value);
+        let newAttack = new Attack(value.villageName, value.enemy, value.date);
+        //let locDate = value.date.
         this.send(newAttack);
         this.helpForm.controls['villageName'].setValue("");
         this.helpForm.controls['enemy'].setValue("");
-        this.helpForm.controls['timeAttack'].setValue("");
+        this.helpForm.controls['date'].setValue("");
     }
 
     public send(attack : Attack): void {
-
         this.helpService.addAttack(attack)
             .subscribe(
                 resp => {
                     this.successMessage = "Ask help added successfully";
                     this.errorMessage = null;
-                    this.stompService.send(this.player.login);
+                    this.stompService.send();
                 },
                 error =>  {
                     this.errorMessage = <any>error;

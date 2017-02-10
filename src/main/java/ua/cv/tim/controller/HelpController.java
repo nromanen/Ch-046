@@ -57,7 +57,7 @@ public class HelpController {
         return new ResponseEntity<>(playerDTO, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/askhelp", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/askhelp", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     public ResponseEntity<AttackDTO> createHelp(@RequestBody AttackDTO attack) {
 
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -66,13 +66,14 @@ public class HelpController {
 
         attack.setPlayerId(id);
         logger.info("add new ask help. Attack: {}", attack);
+        System.out.println(attack);
 
         attackService.addAttack(attack);
 
         return new ResponseEntity<>(attack, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/allAttack", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/allAttack", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     public ResponseEntity<List<AttackDTO>> allActiveAttack() {
         logger.info("All active attack RequestMethod.GET");
         return new ResponseEntity<>(attackService.getActive(), HttpStatus.OK);

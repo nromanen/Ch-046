@@ -67,7 +67,7 @@ public class UserController {
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO member) throws MessagingException {
 		logger.info("Alliance name: {}", member.toString());
 		User user = new User();

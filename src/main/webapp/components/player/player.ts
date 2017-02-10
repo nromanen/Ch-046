@@ -6,6 +6,7 @@ import {Alliance} from "../alliance/alliance";
  */
 
 export class Player {
+
     login: string;
     password: string;
     email: string;
