@@ -3,13 +3,10 @@ package ua.cv.tim.parser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.socket.config.annotation.DelegatingWebSocketMessageBrokerConfiguration;
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.testng.annotations.Test;
 import ua.cv.tim.configuration.HibernateConfiguration;
 import ua.cv.tim.configuration.WebSocketConfiguration;
@@ -53,12 +50,4 @@ public class VillageParserTest  extends AbstractTestNGSpringContextTests {
         System.out.println(village.getIsCapital());
         driver.quit();
     }
-
-    @Test
-    public void testSync() throws Exception {
-        Village village = villageService.getById("1");
-        village.setName("1s222i");
-        villageParser.sync(village, "1");
-    }
-
 }

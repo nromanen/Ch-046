@@ -1,0 +1,33 @@
+ td:nth-child(1){
+    word-wrap: break-word;
+      width: 130px;
+}
+
+td:nth-child(5){
+    height: 63px;
+}
+
+table.fi thead th:nth-child(4){
+    height: 63px;
+}
+
+ table.fi thead th {
+height: 50px;
+
+}
+
+ table.fi thead th{
+     text-align: center;
+ }
+
+ td div{
+     text-align: center;
+ }
+
+ .error{
+     color: red;
+ }
+
+ .centerCard{
+     text-align: center;
+ }

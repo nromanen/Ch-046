@@ -2,7 +2,7 @@
     <form [formGroup]="editForm" (ngSubmit)="updateAlliance(editForm.value)" >
         <td class="col s3">
             <div>
-                <input type="text" name="allianceName" id="editName" class="validate" [formControl]="editForm.controls['allianceName']"/>
+                <input type="text" name="alliance" id="editName" class="validate" [formControl]="editForm.controls['allianceName']"/>
                 <div class="error-input" *ngIf="!editForm.controls['allianceName'].valid && editForm.controls['allianceName'].touched">{{NAME_ERROR}}</div>
             </div>
         </td>

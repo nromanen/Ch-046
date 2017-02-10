@@ -3,9 +3,12 @@ package ua.cv.tim.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.cv.tim.controller.VillagesController;
 import ua.cv.tim.dao.VillageDao;
 import ua.cv.tim.model.Village;
 import ua.cv.tim.service.VillageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by Oleg on 05.01.2017.
@@ -14,6 +17,7 @@ import ua.cv.tim.service.VillageService;
 @Service(value = "villageService")
 @Transactional
 public class VillageServiceImp implements VillageService {
+    private static final Logger log = LoggerFactory.getLogger(VillageService.class);
     @Autowired
     private VillageDao villageDao;
 
@@ -35,5 +39,44 @@ public class VillageServiceImp implements VillageService {
     @Override
     public Village getById(String id){
        return villageDao.getById(id);
+    }
+
+    @Override
+    public Village getByCoordinates(short xCoord, short yCoord) {
+        return villageDao.getByCoordinates(xCoord,yCoord);
+    }
+
+    @Override
+    public boolean isUnique(Village village) {
+        boolean[] nameAndCoordUnique=new boolean[2];
+        Village comparingVillageByCoord = getByCoordinates(village.getxCoord(),village.getyCoord());
+        Village comparingVillageByName = getByName(village.getName());
+        nameAndCoordUnique[0] = comparingVillageByCoord == null || comparingVillageByCoord.getUuid().equals(village.getUuid());
+        nameAndCoordUnique[1] =comparingVillageByName == null || comparingVillageByName.getUuid().equals(village.getUuid());
+
+        String errorMessage = createErrorMessage(nameAndCoordUnique);
+        if (errorMessage != null) {
+            throw new IllegalArgumentException(errorMessage);
+        }
+        return true;
+    }
+
+    private String createErrorMessage(boolean[] nameAndCoordinatesUnique) {
+        String errorMessage = null;
+        if (!nameAndCoordinatesUnique[0] && !nameAndCoordinatesUnique[1]) {
+            errorMessage = "Village with the same name and coordinates already exists!";
+        } else if (!nameAndCoordinatesUnique[1]) {
+            errorMessage = "Village with the same name  already exists!";
+        }
+        else if (!nameAndCoordinatesUnique[0]){
+            errorMessage="Village with the same coordinates already exists!";
+        }
+        log.error(errorMessage);
+        return errorMessage;
+    }
+
+    @Override
+    public Village getByName(String name) {
+        return villageDao.getByName(name);
     }
 }

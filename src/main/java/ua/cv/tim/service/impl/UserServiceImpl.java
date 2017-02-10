@@ -214,4 +214,10 @@ public class UserServiceImpl implements UserService {
 	public User getFullUserByUsername(String username) {
 		return userDao.getFullUserByUsername(username);
 	}
+
+
+	@Override
+	public User getByMail(String email) {
+		return userDao.getByMail(email);
+	}
 }

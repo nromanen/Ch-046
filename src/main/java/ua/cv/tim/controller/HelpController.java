@@ -52,8 +52,7 @@ public class HelpController {
         String id = userByUsername.getPlayer().getUuid();
         Player player = playerService.getByIdWithVillages(id);
         PlayerDTO playerDTO = new PlayerDTO(player.getUser().getLogin(),
-                player.getUser().getPassword(), player.getUser().getEmail(),
-                player.getRace(), player.getVillages(), player.getAlliance(), userByUsername.getRoles().size() == 2);
+                player.getRace(), player.getVillages(), player.getAlliance(),userByUsername.getRoles());
 
         return new ResponseEntity<>(playerDTO, HttpStatus.OK);
     }
@@ -67,6 +66,7 @@ public class HelpController {
 
         attack.setPlayerId(id);
         logger.info("add new ask help. Attack: {}", attack);
+        System.out.println(attack);
 
         attackService.addAttack(attack);
 

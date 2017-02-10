@@ -20,6 +20,7 @@ export class AllianceComponent implements OnInit{
     confirmMsg: string;
 
     constructor(private _allianceService: AllianceService){
+        this.alliances = [];
     }
 
     ngOnInit() {
