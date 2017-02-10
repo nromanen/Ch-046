@@ -22,6 +22,7 @@ import java.util.List;
  */
 
 @Service(value = "parser")
+@Transactional
 public class Parser {
 
     @Autowired
@@ -39,7 +40,6 @@ public class Parser {
     @Autowired
     PlayerService playerService;
 
-    @Transactional
     public void doOperation(String login, String password) {
         HtmlUnitDriver driver = new HtmlUnitDriver();
         driver.setJavascriptEnabled(true);
@@ -58,8 +58,6 @@ public class Parser {
         driver.quit();
     }
 
-
-    @Transactional
     private void sync(Village village) {
         Village updatingVillage = villageService.getByName(village.getName());
         if (updatingVillage == null) {

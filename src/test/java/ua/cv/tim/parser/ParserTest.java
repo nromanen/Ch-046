@@ -23,8 +23,6 @@ public class ParserTest extends AbstractTestNGSpringContextTests {
     @Autowired
     Parser parser;
 
-//   "roma_ariezz@ukr.net","1123581321"
-
     @Test
     public void testDoOperation() {
         parser.doOperation("Star","321654aaa");
