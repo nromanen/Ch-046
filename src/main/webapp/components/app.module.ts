@@ -43,6 +43,7 @@ import {CalendarModule} from 'primeng/primeng';
 import {AllHelps} from "./help/all-helps.component";
 import {HelpComponent} from "./help/ask-help.component";
 import {TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-translate";
+import {CookieService} from "angular2-cookie/services/cookies.service";
 
 
 

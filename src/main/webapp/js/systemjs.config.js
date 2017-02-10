@@ -30,6 +30,7 @@
             'ng2-bootstrap':              'npm:ng2-bootstrap',
             'primeng':                   'npm:primeng',
             'ng2-translate': 'npm:ng2-translate/bundles/ng2-translate.umd.js',
+            'angular2-cookie':            'npm:angular2-cookie'
 
         },
         // packages tells the System loader how to load when no filename and/or no extension
@@ -46,7 +47,11 @@
             // ng2-bootstrap
             'ng2-bootstrap':              { format: 'cjs', main: 'bundles/ng2-bootstrap.umd.js', defaultExtension: 'js' },
             'moment':                     { main: 'moment.js', defaultExtension: 'js' },
-            'primeng':                      { defaultExtension: 'js'}
+            'primeng':                      { defaultExtension: 'js'},
+            'angular2-cookie': {
+                main: './core.js',
+                defaultExtension: 'js'
+            }
         }
     });
 })(this);
