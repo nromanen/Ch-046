@@ -76,14 +76,16 @@ public class PlayerController {
     public ResponseEntity<Player> updatePlayer(@PathVariable(name = "id") String id, @RequestBody Player player) {
         Player current_player = playerService.getById(id);
         if (current_player != null) {
+            System.out.println("here is");
             current_player.setRace(player.getRace());
             current_player.setUser(player.getUser());
             current_player.setVillages(player.getVillages());
             current_player.setAlliance(player.getAlliance());
             playerService.add(current_player);
+
             return new ResponseEntity<>(current_player, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        throw new IllegalArgumentException("Player doesn't exist");
     }
 
     @RequestMapping(value = "/player/{id}", method = RequestMethod.DELETE)
@@ -93,7 +95,7 @@ public class PlayerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         playerService.delete(player);
-        return new ResponseEntity<>(player, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(player, HttpStatus.OK);
     }
 
 	@RequestMapping(value = "/player/alliance", method = RequestMethod.GET)

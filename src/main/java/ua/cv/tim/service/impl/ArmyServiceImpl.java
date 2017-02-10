@@ -41,8 +41,4 @@ public class ArmyServiceImpl implements ArmyService {
     public Army getById(String uuid)  {
         return armyDao.getById(uuid);
     }
-
-    public void setArmyDao(ArmyDao armyDao) {
-        this.armyDao = armyDao;
-    }
 }

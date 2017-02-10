@@ -36,10 +36,6 @@ public class PlayerServiceImpl implements PlayerService {
 
     public Player getByIdWithVillages(String id){
         Player byIdWithVillages = playerDao.getByIdWithVillages(id);
-        List<Village> villages = byIdWithVillages.getVillages();
-        Hibernate.initialize(byIdWithVillages.getUser().getRoles());
-        for(Village village:villages)
-            Hibernate.initialize(village.getArmies());
         return byIdWithVillages;
     }
 
