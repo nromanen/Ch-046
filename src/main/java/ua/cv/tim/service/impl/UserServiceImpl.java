@@ -23,8 +23,10 @@ import java.util.Random;
 
 
 /**
- * Created by Oleg on 04.01.2017.
+ * @author Oleg on 04.01.2017.
+ *
  */
+
 
 @Service(value = "userService")
 @Transactional
@@ -48,26 +50,40 @@ public class UserServiceImpl implements UserService {
 
 	public void add(User user) {
 		userDao.add(user);
+		logger.info("User with login {} and id {} was added ",user.getLogin(),user.getUuid());
 	}
 
 	@Override
 	public List<User> getAll() {
 		return userDao.getAll();
 	}
+
+	/**
+	 * Updates user and sends email with updated info
+	 * @param user
+	 * @throws MessagingException if there is no internet connection
+	 */
 	@Override
 	public void update(User user) throws MessagingException {
 		userDao.update(user);
 		String message ="Player updated successfully, your login is \"" + user.getLogin() + "\", and password: \""
 				+ user.getPassword() + "\",  Role: " + user.getRoles();
 		sendEmail(user,message);
+		logger.info("User with login {} and id {} was updated, message sent on his email {} ",user.getLogin(),user.getUuid(),user.getEmail());
 	}
-
 
 	@Override
 	public void delete(User user) {
 	    userDao.delete(user);
+		logger.info("User with login {} and id {} was deleted ",user.getLogin(),user.getUuid());
 	}
 
+	/**
+	 * Checks if user already exists in repository.
+	 * @param user
+	 * @return true if user is unique
+	 * @throws IllegalArgumentException if user is not unique
+	 */
 	@Override
 	public boolean isUnique(User user) {
 		boolean[] isLoginEmailUnique = new boolean[2];
@@ -96,11 +112,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public long getCount() {
-		return userDao.getCount();
-	}
-
-	@Override
 	public User getWithRolesById(String id) {
 		return userDao.getWithRolesById(id);
 	}
@@ -119,10 +130,10 @@ public class UserServiceImpl implements UserService {
 	public void deleteById(String id) {
 		User byId = userDao.getById(id);
 		userDao.delete(byId);
+		logger.info("User with login {} and id {} was deleted ",byId.getLogin(),byId.getUuid());
 	}
 
 	public List<UserDTO> getUsersByAlliance(String allianceName) {
-		logger.info("alliance name is {} ", allianceName);
 		List<User> users = userDao.getUsersByAlliance(allianceName);
 		List<UserDTO> allianceUsers = new ArrayList<>();
 		for (User user : users) {
@@ -132,13 +143,17 @@ public class UserServiceImpl implements UserService {
 		return allianceUsers;
 	}
 
+	/**
+	 * Converts userDTO into user and adds into repository
+	 * @param member
+	 * @throws MessagingException if there is no internet connection
+	 */
 	public void addUser(UserDTO member) throws MessagingException {
 		User user = new User();
 		user.setLogin(member.getLogin());
 		user.setEmail(member.getEmail());
 		String password = generatePassword(10);
 		user.setPassword(encodePassword(password));
-		logger.info("Password is {} ", user.getPassword());
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.USER);
 		if (member.getRole() != null) {
@@ -151,14 +166,22 @@ public class UserServiceImpl implements UserService {
 		player.setAlliance(allianceDao.getAllianceByName(member.getAlliance()));
 		user.setPlayer(player);
 		playerDao.add(player);
+		logger.info("User with login {} and id {} was added",user.getLogin(),user.getUuid());
 		String message = "Your login is \"" + user.getLogin() + "\", and password: \""
 				+ user.getPassword() + "\",  Role: " + user.getRoles();
 		sendEmail(user,message);
 	}
+
+	/**
+	 *Sends message on users email
+	 * @param user
+	 * @param message
+	 * @throws MessagingException if there is no internet connection
+	 */
 	@Override
 	public void sendEmail(User user, String message) throws MessagingException {
 			sendMail.send(user.getEmail(), "Travian user's info",message );
-
+		logger.info("Info message sent successfully on email {}",user.getEmail());
 	}
 
 	private String generatePassword(int length) {
@@ -197,6 +220,11 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserWithAlliance(username);
 	}
 
+	/**
+	 * Returns eager user with  player, race, alliance, villages and armies
+	 * @param username
+	 * @return user
+	 */
 	@Override
 	public User getFullUserByUsername(String username) {
 		return userDao.getFullUserByUsername(username);

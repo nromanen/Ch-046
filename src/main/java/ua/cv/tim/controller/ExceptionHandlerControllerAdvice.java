@@ -18,25 +18,25 @@ import javax.mail.MessagingException;
 @RestControllerAdvice
 public class ExceptionHandlerControllerAdvice {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerControllerAdvice.class);
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = EntityNotUniqueException.class)
     public String entityNotUniqueHandler(Exception e) {
-        logger.error("ExceptionHandlerClass.EntityNotUniqueException: {}", e);
+        logger.error("EntityNotUniqueException: {}", e.getMessage());
         return e.getMessage();
     }
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = MessagingException.class)
     public String messageExceptionHandler(MessagingException e) {
-        logger.error("Exception: {}", e);
+        logger.error("Exception: {}", e.getMessage());
         return e.getMessage();
     }
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = IllegalArgumentException.class)
     public String illegalArgumentException(IllegalArgumentException e) {
-        logger.error("IllegalArgumentException: {}", e);
+        logger.error("IllegalArgumentException: {}", e.getMessage());
         e.printStackTrace();
         return e.getMessage();
     }

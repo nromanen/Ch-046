@@ -3,35 +3,24 @@ package ua.cv.tim.controller;
 import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpSession;
-import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import ua.cv.tim.configuration.WebConfiguration;
+import ua.cv.tim.configuration.WebSecurityConfiguration;
 import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.model.AuthorizedUser;
 import ua.cv.tim.model.Role;
@@ -39,6 +28,7 @@ import ua.cv.tim.model.User;
 import ua.cv.tim.service.UserService;
 import ua.cv.tim.utils.TestUtil;
 
+import javax.servlet.ServletContext;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -49,56 +39,26 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
-import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-
-
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.xpath;
-
-import javax.servlet.Filter;
-import javax.servlet.ServletContext;
-
-import org.junit.Before;
-
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.test.context.support.WithMockUser;
-
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.test.context.web.ServletTestExecutionListener;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 /**
  * Created by mmaksymtc on 03.02.2017.
  */
+
+
+@ContextConfiguration(classes = {WebSecurityConfiguration.class,/*WebSecurityInitializer.class,*/ WebConfiguration.class})
 @WebAppConfiguration
 public class UserControllerTest  {
     @Autowired
     private ServletContext servletContext;
     @Autowired
     private WebApplicationContext context;
-    @Mock
-    private Filter springSecurityFilterChain;
+    @Autowired
+    private FilterChainProxy springSecurityFilterChain;
     @Mock
     UserService userService;
     @InjectMocks
@@ -117,14 +77,15 @@ public class UserControllerTest  {
 
     @AfterMethod
     public void resetAllMocks() {
-        Mockito.reset(userService,springSecurityFilterChain);
+        Mockito.reset(userService);
     }
 
     @Test
    // @WithUserDetails
     public void testGetUserWithAlliance() throws Exception {
         this.mockMvc = MockMvcBuilders.standaloneSetup(userController)
-                .apply(springSecurity(springSecurityFilterChain))
+                .addFilter(springSecurityFilterChain)
+//                .apply(springSecurity(springSecurityFilterChain))
                 .build();
         MockHttpServletRequestBuilder builder =
                 MockMvcRequestBuilders.get("/user");
@@ -318,9 +279,11 @@ public class UserControllerTest  {
     @Test
     public void testGetUsersByAlliance() throws Exception {
 
-        mockMvc = MockMvcBuilders  //.standaloneSetup(userController)
-               .webAppContextSetup(context)
-                .apply(springSecurity(springSecurityFilterChain))
+        mockMvc = MockMvcBuilders
+                //.standaloneSetup(userController)
+             .webAppContextSetup(context)
+               .apply(springSecurity())
+                .addFilter(springSecurityFilterChain)
                 .build();
 
         Set<GrantedAuthority> authorities = new HashSet<>();
@@ -334,13 +297,14 @@ public class UserControllerTest  {
         userDTO0.setUuid("123-321");
         userDTO0.setEmail("mail@ll.ll");
         userDTOsList.add(userDTO0);
-        when(userService.getUsersByAlliance(anyString())).thenReturn(userDTOsList);
+        //when(userService.getUsersByAlliance(anyString())).thenReturn(userDTOsList);
         MockHttpServletRequestBuilder builder =
                 MockMvcRequestBuilders.get("/alliance-users").with(user(authorizedUser))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtil.convertObjectToJsonBytes(userDTOsList));
 
         mockMvc.perform(builder)
+                .andExpect(authenticated())
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
         verify(userService, times(1)).getUsersByAlliance(anyString());

@@ -29,11 +29,6 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Override
-    public long getCount() {
-        return (long) getCurrentSession().createCriteria(User.class).setProjection(Projections.rowCount()).uniqueResult();
-    }
-
-    @Override
     public User getUserByUsername(String username) {
         logger.info("Username is {} ", username);
         String request = "select u from User u where u.login = :login";
