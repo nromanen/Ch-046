@@ -19,9 +19,9 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
     village: Village;
     submitted = false;
     addVillageForm: FormGroup;
-    COORD_REGEXP=/^(-)?[0-9]*$/;
-    POPULATION_REGEXP=/^\d*$/;
-    static VILLAGE_REGEXP=/^\w*$/;
+    COORD_REGEXP=/^(-)?[0-9]+$/;
+    POPULATION_REGEXP=/^\d+$/;
+    static VILLAGE_REGEXP=/^\w+$/;
     @Output() successMessage:EventEmitter<string>;
     @Output() errorMessage:EventEmitter<string>;
     private unitTypeStrings: Array<string>;

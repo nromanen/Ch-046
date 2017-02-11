@@ -23,6 +23,7 @@ export class PlayerList implements OnInit, OnChanges,DoCheck {
     private cdRef: ChangeDetectorRef;
     editError:string;
     successMessage:string;
+    @Input() isPlayerPage;
     ngDoCheck(): void {
 
     }

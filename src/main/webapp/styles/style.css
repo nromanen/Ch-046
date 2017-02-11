@@ -24,6 +24,11 @@ height: 50px;
      text-align: center;
  }
 
+ td input{
+    text-align: center;
+     height: 29px;
+ }
+
  .error{
      color: red;
  }

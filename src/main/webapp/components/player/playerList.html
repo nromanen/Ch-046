@@ -36,7 +36,7 @@
                 <th><img src="images/Rome/Taran-rim.gif"></th>
                 <th><img src="images/Rome/Ognennaya-katapulta.gif"></th>
                 <th><img src="images/Rome/Senator.gif"></th>
-                <th></th>
+                <th *ngIf="isPlayerPage"></th>
             </tr>
             </thead>
 
@@ -44,7 +44,8 @@
 
             <tr player-ro [v]="v"  [isForm]="v==selectedVillage" (errorMessage)="showEditError($event)"
                 (successMessage)="showSuccessMessage($event)" (editedVillage)="this.editedVillage=$event"
-                (selectedVillageChanged)="changeSelectedVillage($event)" [editVillageForm]="editVillageForm" (keyup)="cancelEditing($event.keyCode)">
+                (selectedVillageChanged)="changeSelectedVillage($event)" [editVillageForm]="editVillageForm"
+                (keyup)="cancelEditing($event.keyCode)" [isPlayerPage]="isPlayerPage">
             </tr>
             <tr>
                 <td *ngIf="(editError!=undefined && v==selectedVillage)|| (successMessage!=undefined && editedVillage==v)" colspan="33">

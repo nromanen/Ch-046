@@ -92,14 +92,14 @@ public class PlayerController {
      */
     @RequestMapping(value = "/player/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Player> updatePlayer(@PathVariable(name = "id") String id, @RequestBody Player player) {
-        Player current_player = playerService.getById(id);
-        if (current_player != null) {
-            current_player.setRace(player.getRace());
-            current_player.setUser(player.getUser());
-            current_player.setVillages(player.getVillages());
-            current_player.setAlliance(player.getAlliance());
-            playerService.add(current_player);
-            return new ResponseEntity<>(current_player, HttpStatus.CREATED);
+        Player currentPlayer = playerService.getById(id);
+        if (currentPlayer != null) {
+            currentPlayer.setRace(player.getRace());
+            currentPlayer.setUser(player.getUser());
+            currentPlayer.setVillages(player.getVillages());
+            currentPlayer.setAlliance(player.getAlliance());
+            playerService.add(currentPlayer);
+            return new ResponseEntity<>(currentPlayer, HttpStatus.CREATED);
         }
         throw new IllegalArgumentException("Player doesn't exist");
     }

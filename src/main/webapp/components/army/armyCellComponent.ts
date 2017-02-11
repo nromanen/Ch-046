@@ -17,7 +17,7 @@ import {Validators, FormBuilder, FormGroup, FormArray} from "@angular/forms";
     template: `
           <div class="cell" title="{{this.type}}" (dblclick)="hide()" *ngIf="!isInput" (click)="becomeDiv()">{{this.army.count==0?" ":this.army.count}}</div>
      <div class="input-field"  *ngIf="isInput" [formGroup]="group">
-     <input class="validate"  type="text"  style=" width: 20px;height: 22px" [ngModel]="this.army.count!=0?this.army.count:''" (keyup)="cancelEditing($event.keyCode)"
+     <input class="validate"  type="text"  style=" width: 20px;" [ngModel]="this.army.count!=0?this.army.count:''" (keyup)="cancelEditing($event.keyCode)"
      formControlName="count" (ngModelChange)="addOrEdit($event)">
      </div>
 `

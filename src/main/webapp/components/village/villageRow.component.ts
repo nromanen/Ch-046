@@ -53,7 +53,7 @@ import {TranslateService} from "ng2-translate";
     (cancelEdit)="cancelEditing($event)" [armiesArrayControl]="armiesArrayControl" [index]="i"
     (cellClicked)="cellClick($event)" [isInput]="isForm" [ifSave]="ifSaveChanges"></army-cell>
 </td>
-<td>
+<td *ngIf="isPlayerPage">
     <button (click)="!isForm?showEdit():changeVillage()" type="button"
     class="btn waves-effect waves-light col offset-s3"  name="action" 
     [disabled]="!editVillageForm.valid && isForm" style="margin-top: 5px;" >
@@ -74,6 +74,7 @@ export class VillageRow implements OnInit,AfterViewInit{
     @Output() errorMessage:EventEmitter<{}>;
     @Output() successMessage:EventEmitter<string>;
     @Output() editedVillage;
+    @Input() isPlayerPage;
     unitValues:Array<string>;
     selectedVillageChanged:EventEmitter<Village>;
     ifSaveChanges:boolean;

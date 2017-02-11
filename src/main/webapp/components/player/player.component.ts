@@ -32,7 +32,7 @@ import {TranslateService} from "ng2-translate";
     </div>
 </div>
 </div>
-        <player-list *ngIf="player" [player]="player"></player-list>
+        <player-list *ngIf="player" [player]="player" [isPlayerPage]="true"></player-list>
         <div class="row">
             <div class="col s4 offset-s6" >
                 <button (click)="showAddForm()" class="btn waves-effect waves-light">Add</button>
@@ -40,9 +40,6 @@ import {TranslateService} from "ng2-translate";
          
             <add-vill-form [player]="player" *ngIf="showAddVillageForm" (wasSubmitted)="hideAddForm($event)"
             (successMessage)="showSuccessMessage($event)" (errorMessage)="showErrorMessage($event)"></add-vill-form>
-      
-
-
 `
 })
 export class PlayerComponent implements OnInit {
