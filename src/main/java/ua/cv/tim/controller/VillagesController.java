@@ -106,5 +106,4 @@ public class VillagesController {
         villageService.delete(Village);
         return new ResponseEntity<>(Village, HttpStatus.NO_CONTENT);
     }
-
 }

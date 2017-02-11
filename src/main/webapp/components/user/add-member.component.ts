@@ -5,6 +5,7 @@ import {User} from "./user";
 @Component({
     selector: 'add-member',
     templateUrl: 'components/user/add-member-form.html',
+    styleUrls: ['components/user/add-member-form.css']
 })
 
 export class MemberForm {

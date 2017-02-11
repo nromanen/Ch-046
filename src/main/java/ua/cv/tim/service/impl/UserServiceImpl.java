@@ -26,7 +26,8 @@ import java.util.Random;
 
 
 /**
- * Created by Oleg on 04.01.2017.
+ * @author Oleg on 04.01.2017.
+ *
  */
 
 @Service(value = "userService")
@@ -37,8 +38,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
-	@Autowired
-	private AllianceDao allianceDao;
+    @Autowired
+    private AllianceDao allianceDao;
 	@Autowired
 	private PlayerDao playerDao;
 	@Autowired
@@ -53,6 +54,7 @@ public class UserServiceImpl implements UserService {
 
 	public void add(User user) {
 		userDao.add(user);
+		logger.info("User with login {} and id {} was added ",user.getLogin(),user.getUuid());
 	}
 
 	@Override
@@ -60,19 +62,32 @@ public class UserServiceImpl implements UserService {
 		return userDao.getAll();
 	}
 
+	/**
+	 * Updates user and sends email with updated info
+	 * @param user
+	 * @throws MessagingException if there is no internet connection
+	 */
 	@Override
 	public void update(User user) throws MessagingException {
 		userDao.update(user);
 		String message = "Player updated successfully, your login is \"" + user.getLogin() + "\", role: " + user.getRoles();
 		sendEmail(user, message);
+		logger.info("User with login {} and id {} was updated, message sent on his email {} ",user.getLogin(),user.getUuid(),user.getEmail());
 	}
 
 
 	@Override
 	public void delete(User user) {
-		userDao.delete(user);
+	    userDao.delete(user);
+		logger.info("User with login {} and id {} was deleted ",user.getLogin(),user.getUuid());
 	}
 
+	/**
+	 * Checks if user already exists in repository.
+	 * @param user
+	 * @return true if user is unique
+	 * @throws IllegalArgumentException if user is not unique
+	 */
 	@Override
 	public boolean isUnique(User user) {
 		boolean[] isLoginEmailUnique = new boolean[2];
@@ -92,18 +107,14 @@ public class UserServiceImpl implements UserService {
 		Locale locale = LocaleContextHolder.getLocale();
 		String errorMessage = null;
 		if (!isLoginEmailUnique[0] && !isLoginEmailUnique[1]) {
-//			errorMessage = "User with the same login and email exists!"; // todo delete comments
 			errorMessage = messageSource.getMessage("userService.errorMessage.loginAndEmail", null, locale);
 		} else if (!isLoginEmailUnique[0]) {
-//			errorMessage = "User with the same login exists!";
 			errorMessage = messageSource.getMessage("userService.errorMessage.login", null, locale);
 		} else if (!isLoginEmailUnique[1]) {
-//			errorMessage = "User with the same email exists!";
 			errorMessage = messageSource.getMessage("userService.errorMessage.email", null, locale);
 		}
 		return errorMessage;
 	}
-
 
 	@Override
 	public User getWithRolesById(String id) {
@@ -124,10 +135,10 @@ public class UserServiceImpl implements UserService {
 	public void deleteById(String id) {
 		User byId = userDao.getById(id);
 		userDao.delete(byId);
+		logger.info("User with login {} and id {} was deleted ",byId.getLogin(),byId.getUuid());
 	}
 
 	public List<UserDTO> getUsersByAlliance(String allianceName) {
-		logger.info("alliance name is {} ", allianceName);
 		List<User> users = userDao.getUsersByAlliance(allianceName);
 		List<UserDTO> allianceUsers = new ArrayList<>();
 		for (User user : users) {
@@ -137,6 +148,11 @@ public class UserServiceImpl implements UserService {
 		return allianceUsers;
 	}
 
+	/**
+	 * Converts userDTO into user and adds into repository
+	 * @param member
+	 * @throws MessagingException if there is no internet connection
+	 */
 	public void addUser(UserDTO member) throws MessagingException {
 		User user = new User();
 		user.setLogin(member.getLogin());
@@ -156,18 +172,22 @@ public class UserServiceImpl implements UserService {
 		player.setAlliance(allianceDao.getAllianceByName(member.getAlliance()));
 		user.setPlayer(player);
 		playerDao.add(player);
+		logger.info("User with login {} and id {} was added",user.getLogin(),user.getUuid());
 		String message = "Your login is \"" + user.getLogin() + "\", and password: \""
-				+ password + "\",  role: " + user.getRoles();
-		sendEmail(user, message);
+				+ user.getPassword() + "\",  Role: " + user.getRoles();
+		sendEmail(user,message);
 	}
 
+	/**
+	 *Sends message on users email
+	 * @param user
+	 * @param message
+	 * @throws MessagingException if there is no internet connection
+	 */
+	@Override
 	public void sendEmail(User user, String message) throws MessagingException {
-		try {
-			sendMail.send(user.getEmail(), "Travian user's info", message);
-			logger.info("Email: {}, message: {}", user.getEmail(), message);
-		} catch (MessagingException e) {
-			logger.error("The e-mail {} hasn't been sent {}", user.getEmail(), e);
-		}
+			sendMail.send(user.getEmail(), "Travian user's info",message );
+		logger.info("Info message sent successfully on email {}",user.getEmail());
 	}
 
 	private String generatePassword(int length) {
@@ -206,6 +226,11 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserWithAlliance(username);
 	}
 
+	/**
+	 * Returns eager user with  player, race, alliance, villages and armies
+	 * @param username
+	 * @return user
+	 */
 	@Override
 	public User getFullUserByUsername(String username) {
 		return userDao.getFullUserByUsername(username);

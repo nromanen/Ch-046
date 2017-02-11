@@ -57,7 +57,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void getUserByUsernameTest() {
+    public void testGetUserByUsername() {
        User user = users.get(0);
         when(userDao.getUserByUsername("neo")).thenReturn(user);
         assertEquals(userService.getUserByUsername("neo"), user);
@@ -65,7 +65,7 @@ public class UserServiceImplTest {
         assertNotNull(userService.getUserByUsername("neo"));
     }
     @Test
-    public void addUserTest(){
+    public void testAddUser(){
         User user = users.get(0);
         doNothing().when(userDao).add(any(User.class));
         userService.add(user);
@@ -73,20 +73,20 @@ public class UserServiceImplTest {
         Assert.assertEquals(captor.getValue().getLogin(), "neo");
     }
     @Test
-    public void deleteTest(){
+    public void testDelete(){
         doNothing().when(userDao).delete(any(User.class));
         userService.delete(users.get(0));
         verify(userDao, times(1)).delete(any(User.class));
     }
     @Test
-    public void getAllTest()
+    public void testGetAll()
     {
         when(userDao.getAll()).thenReturn(users);
         Assert.assertEquals(userService.getAll(), users);
         verify(userDao, times(1)).getAll();
     }
     @Test
-    public void updateTest() throws MessagingException {
+    public void testUpdate() throws MessagingException {
         User testUser = users.get(0);
         testUser.setLogin("updatedNeo");
         doNothing().when(userDao).update(any(User.class));
@@ -97,7 +97,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void isUniqueTest(){
+    public void testIsUnique(){
         User user = users.get(0);
         User newUser = users.get(1);
         when(userDao.getUserByUsername("neo")).thenReturn(user);
@@ -108,27 +108,27 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void getWithRolesByIdTest(){
+    public void testGetWithRolesById(){
         User user = users.get(0);
         when(userDao.getWithRolesById(anyString())).thenReturn(user);
         assertEquals(userService.getWithRolesById("3455-ede34-de4dee-de34d"),user);
         verify(userDao, times(1)).getWithRolesById(anyString());
     }
     @Test
-    public void getAllWithRolesTest(){
+    public void testGetAllWithRoles(){
         when(userDao.getAllWithRoles()).thenReturn(users);
         assertEquals(userService.getAllWithRoles(),users);
         verify(userDao, times(1)).getAllWithRoles();
     }
     @Test
-    public void getByIdTest(){
+    public void testGetById(){
         User user = users.get(0);
         when(userDao.getById(anyString())).thenReturn(user);
         assertEquals(userService.getById("3455-ede34-de4dee-de34d"),user);
         verify(userDao, times(1)).getById(anyString());
     }
     @Test
-    public void addUserDTOTest() throws MessagingException {
+    public void testAddUserDTO() throws MessagingException {
         UserDTO member = new UserDTO(null, "Jonathan", "jonatahan@ukr.net","valhala");
         Alliance alliance = new Alliance();
         alliance.setName("valhala");
@@ -142,21 +142,21 @@ public class UserServiceImplTest {
 
     }
     @Test
-    public void getUserWithAllianceTest(){
+    public void tetsGetUserWithAlliance(){
         User user = users.get(0);
         when(userDao.getUserWithAlliance(anyString())).thenReturn(user);
         assertEquals(userService.getUserWithAlliance("valhala"),user);
         verify(userDao, times(1)).getUserWithAlliance(anyString());
     }
     @Test
-    public void getUsersByAllianceTest(){
+    public void testGetUsersByAlliance(){
 
         when(userDao.getUsersByAlliance(anyString())).thenReturn(users);
         assertNotNull(userService.getUsersByAlliance("valhala"));
         verify(userDao, times(1)).getUsersByAlliance(anyString());
     }
     @Test
-    public void getFullUserByUsernameTest() {
+    public void testGetFullUserByUsername() {
         List<Village> villages=new ArrayList<>();
         Village village0 = new Village();
         village0.setName("Transilvania");

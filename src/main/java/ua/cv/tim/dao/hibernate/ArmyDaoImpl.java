@@ -25,9 +25,4 @@ public class ArmyDaoImpl extends AbstractCrudDao<Army> implements ArmyDao {
     }
 
 
-
-
-
-
-
 }
