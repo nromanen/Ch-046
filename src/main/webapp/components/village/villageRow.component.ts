@@ -58,8 +58,7 @@ import {TranslateService} from "ng2-translate";
     class="btn waves-effect waves-light col offset-s3"  name="action" 
     [disabled]="!editVillageForm.valid && isForm" style="margin-top: 5px;" >
            <i class="material-icons">play_arrow</i>
-    </button>
-   
+    </button>  
 </td>
 
 `

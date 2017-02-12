@@ -52,3 +52,16 @@ height: 50px;
      margin-top: 3px;
      margin-left:68px ;
  }
+
+ @media screen and (max-width: 960px) {
+    td input {
+         background: red;
+        height: 25px;
+     }
+     td{
+         height: 50px;
+     }
+     td:nth-of-type(1){
+         width:160px;
+     }
+ }

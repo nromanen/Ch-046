@@ -40,8 +40,8 @@
             </tr>
             </thead>
 
-            <tbody *ngFor="let v of player.villages">
-
+            <tbody >
+            <ng-container *ngFor="let v of player.villages">
             <tr player-ro [v]="v"  [isForm]="v==selectedVillage" (errorMessage)="showEditError($event)"
                 (successMessage)="showSuccessMessage($event)" (editedVillage)="this.editedVillage=$event"
                 (selectedVillageChanged)="changeSelectedVillage($event)" [editVillageForm]="editVillageForm"
@@ -58,7 +58,7 @@
                     </div>
                 </td>
             </tr>
-
+            </ng-container>
             </tbody>
         </table>
     </form>
