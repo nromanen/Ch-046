@@ -12,6 +12,10 @@ table.fi thead th:nth-child(4) {
     height: 63px;
 }
 
+th{
+    text-align: center;
+}
+
 table.fi thead th {
     height: 50px;
 
