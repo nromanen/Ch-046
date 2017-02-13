@@ -1,76 +1,85 @@
- td:nth-child(1){
+td:nth-child(1) {
     word-wrap: break-word;
-      width: 130px;
+    width: 130px;
 }
 
-td:nth-child(5){
+td:nth-child(5) {
+    height: 63px;
+    text-align: center;
+}
+
+table.fi thead th:nth-child(4) {
     height: 63px;
 }
 
-table.fi thead th:nth-child(4){
-    height: 63px;
-}
-
- table.fi thead th {
-height: 50px;
+table.fi thead th {
+    height: 50px;
 
 }
 
- table.fi thead th{
-     text-align: center;
- }
 
- td div{
-     text-align: center;
- }
 
- td input{
+table.fi thead th {
+    text-align: center;
+}
+
+td div {
+    text-align: center;
+}
+
+td input {
     text-align: center;
 
- }
+}
 
- .error{
-     color: red;
- }
+.error {
+    color: red;
+}
 
- .centerCard{
-     text-align: center;
- }
+.centerCard {
+    text-align: center;
+}
 
- .c_switch{
-     margin-top: 10px;
- }
- .x{
-     cursor: pointer;
- }
+.c_switch {
+    margin-top: 10px;
+}
 
- .army_block{
-     margin-top: 10px;
- }
+.x {
+    cursor: pointer;
+}
 
- .cap_Switch{
-     margin-top: 3px;
-     margin-left:68px ;
- }
+.army_block {
+    margin-top: 10px;
+}
 
- td button.btn.edit {
-     background-color: #9cd1af;
- }
+.cap_Switch {
+    margin-top: 3px;
+    margin-left: 68px;
+}
 
- td button {
-     width: 90px;
-     padding: 0px 10px;
- }
+td button.btn.edit {
+    background-color: #9cd1af;
+}
 
- @media screen and (max-width: 960px) {
+td button {
+    width: 90px;
+    padding: 0 10px;
+}
+
+@media screen and (max-width: 1000px)  {
     td input {
-         background: red;
         height: 25px;
-     }
-     td{
-         height: 50px;
-     }
-     td:nth-of-type(1){
-         width:160px;
-     }
- }
+    }
+
+    td {
+        height: 50px;
+    }
+
+    td:nth-of-type(1) {
+        width: 160px;
+    }
+
+    th img{
+        margin-top: 5px;
+    }
+}

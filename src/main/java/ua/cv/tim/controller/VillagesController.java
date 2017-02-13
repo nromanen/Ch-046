@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,9 +56,9 @@ public class VillagesController {
      * @throws EntityNotUniqueException
      */
     @RequestMapping(value = "/village/", method = RequestMethod.POST)
+    @PreAuthorize("authenticated")
     public ResponseEntity<Village> addVillage(@RequestBody Village village) throws JsonProcessingException, EntityNotUniqueException {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-       log.info("I'm here");
         User userByUsername = userService.getUserByUsername(principal.getUsername());
         village.setPlayer(userByUsername.getPlayer());
 

@@ -14,26 +14,20 @@ import {NgForm, FormGroup, FormArray} from "@angular/forms";
     templateUrl: "components/army/addArmyForm.html",
     styleUrls: ['styles/style.css']
 })
-export class AddArmyForm implements AfterViewChecked,OnInit,OnChanges {
-
-
-    ngOnInit(): void {
-        // this.initUnitTypeStringsCopy();
-    }
-
+export class AddArmyForm implements AfterViewChecked,OnChanges {
     @Input() group: FormGroup;
     @Input() army: Army;
     @Input() village: Village;
-    @Output() armyIsValid: EventEmitter<boolean>;
-    unitTypes: Array<string>;
     @Input() index: number;
     @Input() unitTypeStrings: Array<string>;
     @Input() armiesControl: FormArray;
-    @Output() newUnitTypeStrings: EventEmitter<Array<string>>;
-    allUnitTypes;
-    @ViewChild('selectedType') selectedType;
     unitTypeStringsCopy;
     prevType: string;
+    allUnitTypes;
+    unitTypes: Array<string>;
+    @Output() newUnitTypeStrings: EventEmitter<Array<string>>;
+    @Output() armyIsValid: EventEmitter<boolean>;
+    @ViewChild('selectedType') selectedType;
 
     constructor() {
         this.unitTypes = [];
@@ -41,20 +35,18 @@ export class AddArmyForm implements AfterViewChecked,OnInit,OnChanges {
         this.unitTypeStrings = [];
         this.unitTypeStringsCopy = [];
         this.newUnitTypeStrings = new EventEmitter<string[]>();
-        // this.initAllUnitTypes();
-        this.allUnitTypes=[];
+        this.allUnitTypes = [];
         this.initAllUnitTypes();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        let newUnittypesstr=[];
-        if (changes['unitTypeStrings']){
-            this.unitTypeStringsCopy=[];
+        if (changes['unitTypeStrings']) {
+            this.unitTypeStringsCopy = [];
             this.initUnitTypeStringsCopy();
-            if (this.prevType!=null) {
-                this.unitTypeStringsCopy.splice(this.getIndexOfType(this.prevType),0,this.prevType);
+            if (this.prevType != null) {
+                this.unitTypeStringsCopy.splice(this.getIndexOfType(this.prevType), 0, this.prevType);
             }
-            this.selectedType.value=this.prevType;
+            this.selectedType.value = this.prevType;
         }
 
     }
@@ -77,37 +69,36 @@ export class AddArmyForm implements AfterViewChecked,OnInit,OnChanges {
     }
 
     removeType(value) {
-        let newUnittypesstr = [];
+        let newUnitTypesStrings = [];
         this.unitTypeStrings.forEach(type => {
-            newUnittypesstr.push(type);
+            newUnitTypesStrings.push(type);
         });
-        if (this.prevType!=null){
-            newUnittypesstr.push(this.prevType);
+        if (this.prevType != null) {
+            newUnitTypesStrings.push(this.prevType);
         }
         for (let i = 0; i < this.unitTypeStrings.length; i++) {
             let type: string = this.unitTypeStrings[i];
             if (type === value) {
-                newUnittypesstr.splice(i, 1);
+                newUnitTypesStrings.splice(i, 1);
                 this.prevType = value;
                 break;
             }
         }
+        this.prevType = value;
+        this.newUnitTypeStrings.emit(newUnitTypesStrings);
 
-       this.prevType=value;
-        this.newUnitTypeStrings.emit(newUnittypesstr);
-        console.log(this.unitTypeStrings);
     }
 
-    initAllUnitTypes(){
-        for(let type in UnitType){
+    initAllUnitTypes() {
+        for (let type in UnitType) {
             this.allUnitTypes.push(type);
         }
     }
 
-    getIndexOfType(type:string){
-        for (let i=0;i<this.allUnitTypes.length;i++){
-            let typeI=this.allUnitTypes[i];
-            if (typeI==type){
+    getIndexOfType(type: string) {
+        for (let i = 0; i < this.allUnitTypes.length; i++) {
+            let typeI = this.allUnitTypes[i];
+            if (typeI == type) {
                 return i;
             }
         }
