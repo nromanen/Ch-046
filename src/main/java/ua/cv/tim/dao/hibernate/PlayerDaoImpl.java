@@ -29,7 +29,6 @@ public class PlayerDaoImpl extends AbstractCrudDao<Player> implements PlayerDao 
 		Query query = getCurrentSession().createQuery("FROM Player WHERE id=:id");
 		query.setParameter("id", id);
 		Player player = (Player) query.uniqueResult();
-		System.out.println("DAO: " + player);
 		return player;
 	}
 
@@ -50,7 +49,6 @@ public class PlayerDaoImpl extends AbstractCrudDao<Player> implements PlayerDao 
 		Query<Player> query = getCurrentSession().createQuery(request);
 		query.setParameter("name", allianceName);
 		List<Player> players = query.list();
-		log.info("Players: {}", players);
 		for (Player player : players) {
 			initializePlayerVillages(player);
 		}

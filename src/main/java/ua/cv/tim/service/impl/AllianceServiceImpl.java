@@ -83,8 +83,9 @@ public class AllianceServiceImpl implements AllianceService {
         leader.setLogin(allianceDTO.getLeaderLogin());
         leader.setEmail(allianceDTO.getLeaderEmail());
         allianceDao.update(alliance);
-        userService.sendEmail(leader,"Alliance " + allianceDTO.getName() + " updated successfully. Your are leader of alliance, your login is "
-                + leader.getLogin() + ".");
+        String successMail = "Alliance " + allianceDTO.getName() + " updated successfully. Your are leader of alliance, your login is "
+                + leader.getLogin() + ".";
+        userService.sendEmail(leader,successMail);
         logger.info("Alliance updated successfully: {}", allianceDTO);
     }
 
@@ -111,7 +112,7 @@ public class AllianceServiceImpl implements AllianceService {
     }
 
     public boolean isUniqueAlliance(String name, String uuid){
-
+        logger.info("Alliance isUniqueAlliance");
         if(allianceDao.getByName(name, uuid)!=null ) {
             throw new IllegalArgumentException("Alliance with entered name already exists.");
         }

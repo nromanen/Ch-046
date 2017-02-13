@@ -69,8 +69,9 @@ public class AllianceServiceImplTest {
             allianceDTOsList.add(convertAllianceToDTO(alliance));
         }
         when(allianceDao.getAll()).thenReturn(alliancesList);
-        assertEquals(allianceService.getAll(),allianceDTOsList);
+        allianceService.getAll();
         verify(allianceDao, times(1)).getAll();
+        assertEquals(allianceService.getAll(),allianceDTOsList);
     }
 
     @Test
@@ -81,8 +82,8 @@ public class AllianceServiceImplTest {
         AllianceDTO allianceDTO = new AllianceDTO("9876d81e-b4c7-440f-8f55-ea8938ewdf54", "1234d81e-b4c7-440f-8f55-ea8938ec0f37", "alalala", "newLeader", "newLeader@ukr.net");
         allianceService.addAlliance(allianceDTO);
         verify(allianceDao, times(1)).add(captor.capture());
-        Assert.assertEquals(captor.getValue().getName(), "alalala");
         verify(userService, times(1)).addUser(any(UserDTO.class));
+        assertEquals(captor.getValue().getName(), allianceDTO.getName());
     }
 
     @Test
@@ -96,7 +97,7 @@ public class AllianceServiceImplTest {
         doNothing().when(sendMail).send(anyString(),anyString(),anyString());
         allianceService.updateAlliance(allianceDTO);
         verify(allianceDao, times(1)).update(captor.capture());
-        Assert.assertEquals(captor.getValue().getName(), "TRATATAalalala");
+        assertEquals(captor.getValue().getName(), allianceDTO.getName());
 
     }
 
@@ -108,32 +109,34 @@ public class AllianceServiceImplTest {
         doNothing().when(allianceDao).delete(any(Alliance.class));
         allianceService.deleteAlliance(anyString());
         verify(allianceDao, atLeastOnce()).delete(captor.capture());
-        Assert.assertEquals(captor.getValue().getName(), "valhala");
+        assertEquals(captor.getValue().getName(), alliance.getName());
     }
     @Test
     public void testGetById(){
         Alliance alliance = alliancesList.get(0);
         when(allianceDao.getById(anyString())).thenReturn(alliance);
-        assertEquals(allianceService.getById(anyString()),alliance);
+        allianceService.getById(alliance.getUuid());
         verify(allianceDao, times(1)).getById(anyString());
+        assertEquals(allianceService.getById(anyString()),alliance);
 
     }
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testIsUniqueAllianceExpectException(){
         Alliance alliance = alliancesList.get(0);
         when(allianceDao.getByName(anyString(),anyString())).thenReturn(alliance);
-        assertTrue(allianceService.isUniqueAlliance("valhala","9999d81e-b4c7-440f-8f55-ea8938ewdf54"));
+        allianceService.isUniqueAlliance(alliance.getName(), alliance.getUuid());
         verify(allianceDao, times(1)).getByName(captor.capture().getName(),captor.capture().getUuid());
-        assertEquals(captor.getValue().getName(), "valhala");
-        assertEquals(captor.getValue().getUuid(), "9999d81e-b4c7-440f-8f55-ea8938ewdf54");
+        assertEquals(captor.getValue().getName(), alliance.getName());
+        assertEquals(captor.getValue().getUuid(), alliance.getUuid());
     }
     @Test
     public void testIsUniqueAlliance(){
+        Alliance alliance = alliancesList.get(0);
         when(allianceDao.getByName(anyString(),anyString())).thenReturn(null);
-        assertTrue(allianceService.isUniqueAlliance("valhala","9999d81e-b4c7-440f-8f55-ea8938ewdf54"));
-        verify(allianceDao, times(1)).getByName(anyString(),anyString());
+        allianceService.isUniqueAlliance(alliance.getName(),alliance.getUuid());
+        verify(allianceDao, times(1)).getByName(alliance.getName(),alliance.getUuid());
+        assertTrue(allianceService.isUniqueAlliance(alliance.getName(),alliance.getUuid()));
     }
-
 
 
     private List<Alliance> getAlliancesList(){
