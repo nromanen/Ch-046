@@ -21,6 +21,10 @@ table.fi thead th {
 
 }
 
+th{
+    text-align: center;
+}
+
 
 
 table.fi thead th {
