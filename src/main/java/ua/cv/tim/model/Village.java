@@ -7,12 +7,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+/**Represents Village class*/
 @Entity
 @Table(name = "Village", uniqueConstraints = @UniqueConstraint(columnNames = { "xCoord", "yCoord" }))
 public class Village extends UuidEntity implements Comparable<Village>, Serializable {
+	/**Empty constructor needed to instantiate beans properly*/
     public Village(){
 	}
+
+	//*Village name value*/
 	private String name;
 	@Column(nullable = false)
 	private Short xCoord;
@@ -26,7 +29,6 @@ public class Village extends UuidEntity implements Comparable<Village>, Serializ
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owningVillage",cascade = CascadeType.ALL)
 	private List<Army> armies = new ArrayList<>();
 
-//	@JsonBackReference
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "armyRequestVillage")
 	private List<Army> armyRequests;
@@ -36,10 +38,18 @@ public class Village extends UuidEntity implements Comparable<Village>, Serializ
 	@JoinColumn(name = "player_uuid", nullable = false)
 	private Player player;
 
+    /**Returns the name of village
+     *
+     * @return Returns the name of village
+     */
 	public String getName() {
 		return name;
 	}
 
+    /** Sets village's name
+     *
+     * @param name This is the name of village
+     */
 	public void setName(String name) {
 		this.name = name;
 	}

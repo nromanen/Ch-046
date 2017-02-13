@@ -45,4 +45,6 @@ public class ExceptionHandlerControllerAdvice {
         logger.error("Exception: {}", e.getMessage());
         return e.getMessage();
     }
+
+
 }

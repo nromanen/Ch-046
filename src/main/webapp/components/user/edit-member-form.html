@@ -1,9 +1,8 @@
-<div (keyup.escape)="cancelEditing()" style="height: 70px">
-    <form [formGroup]="memberForm" (ngSubmit)="updateMember(memberForm.value)" class="valign-wrapper"
-          style="height: 55px">
+<div (keyup.escape)="cancelEditing()" class="record">
+    <form [formGroup]="memberForm" (ngSubmit)="updateMember(memberForm.value)" class="valign-wrapper">
         <td class="col s3">
             <div>
-                <input type="text" name="login" id="editLogin" class="validate" style="margin-bottom: 5px"
+                <input type="text" name="login" id="editLogin" class="validate"
                        [formControl]="memberForm.controls['login']" autofocus/>
                 <div class="red lighten-3"
                      *ngIf="!memberForm.controls['login'].valid && memberForm.controls['login'].touched">{{LOGIN_ERROR}}
@@ -12,7 +11,7 @@
         </td>
         <td class="col s3">
             <div>
-                <input type="text" name="email" id="editEmail" class="validate" style="margin-bottom: 5px"
+                <input type="text" name="email" id="editEmail" class="validate"
                        [formControl]="memberForm.controls['email']"/>
                 <div class="red lighten-3"
                      *ngIf="!memberForm.controls['email'].valid && memberForm.controls['email'].touched">
@@ -22,20 +21,18 @@
         </td>
         <td class="col s3">
             <div>
-                <input type="checkbox" class="messageCheckbox" id="editIsLeader"
+                <input *ngIf="!isCurrentPlayer" type="checkbox" class="messageCheckbox" id="editIsLeader"
                        [formControl]="memberForm.controls['isLeader']"
                        name="isLeader"/>
-                <label for="editIsLeader">Leader</label>
+                <label *ngIf="!isCurrentPlayer" for="editIsLeader">Leader</label>
+                <i *ngIf="isCurrentPlayer" class="material-icons">done</i>
             </div>
         </td>
         <td class="col s3">
-            <button class="waves-effect waves-light  btn" [disabled]="!memberForm.valid"
-                    style="background-color: #9cd1af; width: 90px; padding: 0px 10px" type="submit">
+            <button class="waves-effect waves-light btn edit" [disabled]="!memberForm.valid" type="submit">
                 <i class="material-icons">play_arrow</i>
             </button>
-            <button class="waves-effect waves-light  btn" type="button"
-                    style="background-color: #f21036; padding: 0px 10px; width: 90px"
-                    (click)="cancelEditing()">
+            <button class="waves-effect waves-light btn delete" type="button" (click)="cancelEditing()">
                 <i class="material-icons">stop</i>
             </button>
         </td>

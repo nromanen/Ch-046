@@ -9,13 +9,14 @@ import {User} from "./user";
 @Component({
     selector: 'edit-member',
     templateUrl: 'components/user/edit-member-form.html',
-    
+    styleUrls: ['components/user/edit-member-form.css']
 })
 
 export class EditMemberComponent {
 
     memberForm: FormGroup;
     @Input() editedMember: User;
+    @Input() isCurrentPlayer: boolean;
     @Output() editMemberForm:EventEmitter<User> = new EventEmitter<User>();
 
     USER_LOGIN = /^[a-z1-9]{3,9}$/;

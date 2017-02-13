@@ -1,6 +1,6 @@
 ﻿import {NgModule}      from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpModule} from '@angular/http';
+import {HttpModule, Http} from '@angular/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RoutesModule} from "./app.routers";
 
@@ -37,10 +37,13 @@ import {CurrVillageArmiesService} from "./services/newVillageArmiesService";
 import {VillageService} from "./services/villageService";
 import {HelpService} from "./services/helpNotification/help.service";
 import {StompService} from "./services/helpNotification/stomp.service";
+
 import {EditAllianceComponent} from "./alliance/edit-alliance.component";
 import {CalendarModule} from 'primeng/primeng';
 import {AllHelps} from "./help/all-helps.component";
 import {HelpComponent} from "./help/ask-help.component";
+import {TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-translate";
+import {CookieService} from "angular2-cookie/services/cookies.service";
 
 
 
@@ -50,6 +53,12 @@ import {HelpComponent} from "./help/ask-help.component";
         HttpModule,
         FormsModule,
         ReactiveFormsModule,
+        RoutesModule,
+        TranslateModule.forRoot({
+            provide: TranslateLoader,
+            useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18/', '.json'),
+            deps: [Http]
+        }),
         // DatepickerModule.forRoot(),
         // TimepickerModule.forRoot(),
         RoutesModule,
@@ -88,7 +97,7 @@ import {HelpComponent} from "./help/ask-help.component";
         PlayerService,
         CurrVillageArmiesService,
         VillageService,
-
+        CookieService,
         HelpService,
         StompService
     ],
