@@ -14,7 +14,7 @@ import {AddVillageForm} from "./addVillageForm";
 import {el} from "@angular/platform-browser/testing/browser_util";
 import {TranslateService} from "ng2-translate";
 @Component({
-    selector: '[player-ro]',
+    selector: '[village-row]',
     outputs:['selectedVillageChanged'],
     styleUrls:['styles/style.css'],
     template:`
@@ -101,7 +101,6 @@ export class VillageRow implements OnInit,AfterViewInit{
 
     ngOnInit(): void {
         this.getStringUnitTypeValues();
-        // this.buildForm();
     }
 
     ngAfterViewInit(): void {
@@ -123,8 +122,6 @@ export class VillageRow implements OnInit,AfterViewInit{
         this.ifSaveChanges=true;
         let index:number=this.villageService.villages.indexOf(this.v);
         let newVillage=this.editVillageForm.value;
-        // this.villageService.villages[index]=newVillage;
-        console.log(newVillage);
         this.villageService.update(newVillage).subscribe(
             response=>{
                  this.villageService.villages[index]=response;
@@ -135,7 +132,6 @@ export class VillageRow implements OnInit,AfterViewInit{
                 this.errorMessage.emit({error:error._body});
             }
         );
-        // this.selectedVillageChanged.emit(new Village);
         this.ifSaveChanges=false;
 
     }
@@ -144,11 +140,9 @@ export class VillageRow implements OnInit,AfterViewInit{
         this.selectedVillageChanged.emit(this.v);
         this.errorMessage.emit(null);
         this.buildForm();
-        // this.cdr.detectChanges();
     }
 
     cancelEditing(){
-        // this.isForm=false;
         this.selectedVillageChanged.emit(new Village);
         this.cdr.detectChanges();
 

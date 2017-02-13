@@ -7,6 +7,8 @@ input{
  td{
      text-align: center
  }
- div.input-field {
-    margin-top: -15px;
+@media screen and (max-width: 1000px) {
+    div.input-field {
+        margin-top: -15px;
+    }
 }

@@ -80,6 +80,9 @@ td button {
     }
 
     th img{
-        margin-top: 5px;
+        margin-bottom: -2px;
+    }
+    th:nth-of-type(5){
+        height: 63px;
     }
 }
