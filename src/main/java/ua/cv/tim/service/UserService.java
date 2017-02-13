@@ -30,4 +30,8 @@ public interface UserService {
 
 	User getByMail(String email);
 	void sendEmail(User user, String message) throws MessagingException;
+	void createPasswordResetTokenForUser(User user, String token);
+	boolean isToken(User user, String token);
+	void updateUserPassword(User user) throws MessagingException;
+	void deleteOldToken();
 }

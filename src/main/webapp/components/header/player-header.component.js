@@ -1,4 +1,4 @@
-System.register(["@angular/core", "../services/helpNotification/stomp.service"], function (exports_1, context_1) {
+System.register(["@angular/core", "../services/helpNotification/stomp.service", "../services/helpNotification/help.service"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,7 +10,7 @@ System.register(["@angular/core", "../services/helpNotification/stomp.service"],
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, stomp_service_1, PlayerHeader;
+    var core_1, stomp_service_1, help_service_1, PlayerHeader;
     return {
         setters: [
             function (core_1_1) {
@@ -18,17 +18,31 @@ System.register(["@angular/core", "../services/helpNotification/stomp.service"],
             },
             function (stomp_service_1_1) {
                 stomp_service_1 = stomp_service_1_1;
+            },
+            function (help_service_1_1) {
+                help_service_1 = help_service_1_1;
             }
         ],
         execute: function () {
             PlayerHeader = (function () {
-                function PlayerHeader(stompService) {
+                function PlayerHeader(stompService, helpService) {
                     this.stompService = stompService;
+                    this.helpService = helpService;
                     this.isLeader = false;
                     this.showNotif = false;
                 }
                 PlayerHeader.prototype.ngOnInit = function () {
                     this.websocketConnect();
+                    this.getActiveHelp();
+                };
+                PlayerHeader.prototype.getActiveHelp = function () {
+                    var _this = this;
+                    this.helpService.getActiveHelp()
+                        .subscribe(function (resp) {
+                        _this.attacks = resp;
+                        console.log(_this.attacks);
+                        _this.numOfAttacks = _this.attacks != null ? _this.attacks.length : null;
+                    });
                 };
                 // getAlliance(){
                 //
@@ -52,6 +66,7 @@ System.register(["@angular/core", "../services/helpNotification/stomp.service"],
                         console.log("Show notification");
                         _this.serverResponse = payload.outputField;
                         _this.showNotification();
+                        _this.getActiveHelp();
                     });
                 };
                 PlayerHeader.prototype.showNotification = function () {
@@ -72,7 +87,7 @@ System.register(["@angular/core", "../services/helpNotification/stomp.service"],
                     templateUrl: 'components/header/playerHeader.html',
                     styleUrls: ['components/header/playerHeader.css']
                 }),
-                __metadata("design:paramtypes", [stomp_service_1.StompService])
+                __metadata("design:paramtypes", [stomp_service_1.StompService, help_service_1.HelpService])
             ], PlayerHeader);
             exports_1("PlayerHeader", PlayerHeader);
         }

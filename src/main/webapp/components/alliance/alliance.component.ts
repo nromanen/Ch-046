@@ -11,7 +11,7 @@ import {AllianceService} from "../services/alliance/alliance-service";
 
 export class AllianceComponent implements OnInit{
 
-    alliances: Array<Alliance> ;
+    alliances: Array<Alliance> = [];
     errorMessage: string = null;
     successMessage: string = null;
     addNewAlliance: boolean = false;
@@ -20,7 +20,6 @@ export class AllianceComponent implements OnInit{
     confirmMsg: string;
 
     constructor(private _allianceService: AllianceService){
-        this.alliances = [];
     }
 
     ngOnInit() {
@@ -30,7 +29,11 @@ export class AllianceComponent implements OnInit{
     getAlliances() {
         this._allianceService.getAlliances()
             .subscribe(
-                alliances => this.alliances = alliances,
+                alliances => {
+                    if(alliances != null) {
+                        this.alliances = alliances
+                    }
+                },
                 error =>  this.errorMessage = <any>error
             );
     }

@@ -24,12 +24,12 @@ System.register(["@angular/core", "../services/alliance/alliance-service"], func
             AllianceComponent = (function () {
                 function AllianceComponent(_allianceService) {
                     this._allianceService = _allianceService;
+                    this.alliances = [];
                     this.errorMessage = null;
                     this.successMessage = null;
                     this.addNewAlliance = false;
                     this.selectedAlliance = null;
                     this.deletedAlliance = null;
-                    this.alliances = [];
                 }
                 AllianceComponent.prototype.ngOnInit = function () {
                     this.getAlliances();
@@ -37,7 +37,11 @@ System.register(["@angular/core", "../services/alliance/alliance-service"], func
                 AllianceComponent.prototype.getAlliances = function () {
                     var _this = this;
                     this._allianceService.getAlliances()
-                        .subscribe(function (alliances) { return _this.alliances = alliances; }, function (error) { return _this.errorMessage = error; });
+                        .subscribe(function (alliances) {
+                        if (alliances != null) {
+                            _this.alliances = alliances;
+                        }
+                    }, function (error) { return _this.errorMessage = error; });
                 };
                 AllianceComponent.prototype.onNotifyUpdate = function (alliance) {
                     var _this = this;

@@ -7,9 +7,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.AllianceDao;
+import ua.cv.tim.dao.PasswordResetDao;
 import ua.cv.tim.dao.PlayerDao;
 import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.dto.UserDTO;
+import ua.cv.tim.model.PasswordResetToken;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
@@ -40,6 +42,9 @@ public class UserServiceImpl implements UserService {
 	private PlayerDao playerDao;
 	@Autowired
 	private SendMail sendMail;
+
+	@Autowired
+	private PasswordResetDao passwordResetDao;
 
 	@Override
 	public User getUserByUsername(String username) {
@@ -210,5 +215,38 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getByMail(String email) {
 		return userDao.getByMail(email);
+	}
+
+	@Override
+	public void createPasswordResetTokenForUser(User user, String token) {
+		final PasswordResetToken myToken = new PasswordResetToken(token, user);
+		PasswordResetToken passwordResetToken = passwordResetDao.getByUser(user);
+		if(passwordResetToken != null){
+			passwordResetToken.setToken(token);
+			passwordResetDao.update(passwordResetToken);
+		} else {
+			passwordResetDao.add(myToken);
+		}
+	}
+
+	@Override
+	public boolean isToken(User user, String token) {
+		return passwordResetDao.isToken(user, token);
+	}
+
+	@Override
+	public void updateUserPassword(User user) throws MessagingException {
+		System.out.println(user.getPassword());
+		String password  = user.getPassword();
+		password = encodePassword(password);
+		user.setPassword(password);
+		System.out.println(user.getPassword());
+		update(user);
+		passwordResetDao.deleteByUser(user);
+	}
+
+	@Override
+	public void deleteOldToken() {
+		passwordResetDao.deleteOldToken();
 	}
 }

@@ -1,6 +1,5 @@
 package ua.cv.tim.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.NotEmpty;
 import ua.cv.tim.model.Alliance;
@@ -8,8 +7,8 @@ import ua.cv.tim.model.Race;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.Village;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.List;
 
 /**
@@ -24,7 +23,6 @@ public class PlayerDTO {
 
     @Enumerated(EnumType.STRING)
     private Race race;
-
 
     private List<Village> villages;
 
@@ -68,6 +66,14 @@ public class PlayerDTO {
     public String getLogin() {
 
         return login;
+    }
+
+    public boolean getIsLeader() {
+        return isLeader;
+    }
+
+    public void setIsLeader(boolean leader) {
+        isLeader = leader;
     }
 
     public void setLogin(String login) {

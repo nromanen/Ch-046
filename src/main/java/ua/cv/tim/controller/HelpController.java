@@ -21,6 +21,7 @@ import ua.cv.tim.service.AttackService;
 import ua.cv.tim.service.PlayerService;
 import ua.cv.tim.service.UserService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,6 +64,11 @@ public class HelpController {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User userByUsername = userService.getUserByUsername(principal.getUsername());
         String id = userByUsername.getPlayer().getUuid();
+
+        if(new Date().after(new Date(attack.getAttackTime()))){
+            logger.info("Date of attack can't be in the past: {}", attack.getAttackTime());
+            throw new IllegalArgumentException("Date of attack can't be in the past!");
+        }
 
         attack.setPlayerId(id);
         logger.info("add new ask help. Attack: {}", attack);

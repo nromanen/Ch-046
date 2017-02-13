@@ -11,7 +11,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Login</title>
+    <title>restore password</title>
 
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -28,7 +28,6 @@
             $(".button-collapse").sideNav();
         });
     </script>
-
 </head>
 
 <body>
@@ -45,52 +44,38 @@
 <div class="container">
     <div class="row col s12" style="margin-top: 50px">
         <div class="col s3 offset-s4 center-align">
-            <spring:url value="/login" var="loginUrl"/>
-            <form action="${loginUrl}" method="post">
+            <h4>Restoring password form</h4>
+            <form action="savePassword" method="post">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <c:if test="${param.error != null}">
+                <c:if test="${error != null}">
                     <div class="card red lighten-4">
                         <div class="card-content red-text">
-                            <p class="center-align">Invalid username or password</p>
-                        </div>
-                    </div>
-                </c:if>
-                <c:if test="${param.logout != null}">
-                    <div class="card green lighten-4">
-                        <div class="card-content green-text">
-                            <p class="center-align">You have been logged out</p>
-                        </div>
-                    </div>
-                </c:if>
-                <c:if test="${email_send != null}">
-                    <div class="card green lighten-4">
-                        <div class="card-content green-text">
-                            <p class="center-align">${email_send}</p>
+                            <p class="center-align">${error}</p>
                         </div>
                     </div>
                 </c:if>
                 <div class="row">
                     <div class="input-field">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" class="validate" required/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field">
-                        <label for="password">Password</label>
+                        <label for="password">Password *</label>
                         <input type="password" id="password" name="password" class="validate" required/>
                     </div>
-                    <div class="card red lighten-4">
-                        <div class="card-content red-text" id="passError" hidden></div>
-                    </div>
-
                 </div>
                 <div class="row">
-                    <button type="submit" class="btn waves-effect waves-teal">Login</button>
+                    <div class="input-field">
+                        <label for="password1">Confirm password *</label>
+                        <input type="password" id="password1" name="password1" class="validate" required/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <input type="text" id="id" name="id" class="validate" hidden value="${id}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <button type="submit" class="btn waves-effect waves-teal" disabled>Change password</button>
                 </div>
             </form>
-            <br>
-            <p style="color: red;"><a href="forgotPassword"> Forgot password?</a></p>
+            <p style="color: red; font-size: 12px;">* Password should contains at least one uppercase and one lowercase letters, one digit and one special symbol and contains from 8 to 32 characters.</p>
 
         </div>
     </div>
@@ -98,17 +83,24 @@
 
 <script>
     $(document).ready(function () {
-        $(":password").keyup(function(){
-            if($("#password").val().length > 320){
-                $("#passError").show().html("Length of password can't be more than 32 character");
-                $(':input[type="submit"]').prop('disabled', true);
-            }else{
-                $("#passError").html("").hide();
+        $(document).on('input', function(){
+            if(validatePassword($("#password").val()) && $("#password").val()==$("#password1").val()) {
                 $(':input[type="submit"]').prop('disabled', false);
+            } else{
+                $(':input[type="submit"]').prop('disabled', true);
             }
         });
     });
+
+    function validatePassword(pass) {
+
+        var re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@!%_*#?&])[A-Za-z\d$@_!%*#?&]{8,32}$/;
+        return re.test(pass);
+    }
 </script>
 
 </body>
 </html>
+
+
+

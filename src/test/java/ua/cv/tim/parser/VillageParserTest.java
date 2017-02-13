@@ -25,7 +25,7 @@ public class VillageParserTest  extends AbstractTestNGSpringContextTests {
     @Autowired
     VillageService villageService;
 
-//    @Test
+//    @test.Test
 //    public void testPars() throws Exception {
 //        HtmlUnitDriver driver = new HtmlUnitDriver();
 //        driver.setJavascriptEnabled(true);
@@ -47,7 +47,7 @@ public class VillageParserTest  extends AbstractTestNGSpringContextTests {
 //        driver.quit();
 //    }
 //
-//    @Test
+//    @test.Test
 //    public void testSync() throws Exception {
 //        Village village = villageService.getById("1");
 //        village.setName("1s222i");

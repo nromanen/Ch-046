@@ -45,7 +45,7 @@ System.register(["@angular/core", "rxjs/Subject", "node_modules/stompjs/lib/stom
                         StompService_1.stompClient = Stomp.over(webSocket);
                         console.log("Use static! Connecting to websocket server");
                         StompService_1.stompClient.connect({}, function (frame) {
-                            StompService_1.stompClient.subscribe('/topic/greetings/' + resp.allianceUuid, function (stompResponse) {
+                            StompService_1.stompClient.subscribe('/topic/notification/' + resp.allianceUuid, function (stompResponse) {
                                 self.stompSubject.next(JSON.parse(stompResponse.body));
                             });
                         });
@@ -57,7 +57,7 @@ System.register(["@angular/core", "rxjs/Subject", "node_modules/stompjs/lib/stom
                     }
                 };
                 StompService.prototype.send = function () {
-                    StompService_1.stompClient.send("/app/hello/" + this.alliance.allianceUuid, {}, JSON.stringify({ 'message': 'askHelp' }));
+                    StompService_1.stompClient.send("/app/help/" + this.alliance.allianceUuid, {}, JSON.stringify({ 'message': 'askHelp' }));
                 };
                 StompService.prototype.getObservable = function () {
                     return this.stompSubject.asObservable();

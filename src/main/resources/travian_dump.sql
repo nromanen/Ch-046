@@ -166,7 +166,7 @@ INSERT INTO player (uuid, lastmodified, race, alliance_id, user_uuid) VALUES ('m
 
 
 --  Admin
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('9b0c9b2a-0371-480a-916a-7bf40990cdda', '2017-01-06 18:52:08.947', 'morpheus@ukr.net', 'morpheus', '333', null);
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('9b0c9b2a-0371-480a-916a-7bf40990cdda', '2017-01-06 18:52:08.947', 'roma_ariezz@ukr.net', 'morpheus', '333', null);
 
 -- Leaders
 
@@ -1373,3 +1373,40 @@ CREATE TABLE attack
 );
 
 ALTER TABLE public.attack  OWNER to postgres;
+
+
+-- Table: public.passwordresettoken
+
+-- DROP TABLE public.passwordresettoken;
+
+CREATE TABLE passwordresettoken
+(
+    uuid character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    lastmodified timestamp without time zone,
+    expirydate timestamp without time zone,
+    token character varying(255) COLLATE pg_catalog."default",
+    user_id character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT passwordresettoken_pkey PRIMARY KEY (uuid),
+    CONSTRAINT fkg3fbfo1tc9louotgq5r940avr FOREIGN KEY (user_id)
+        REFERENCES public.users (uuid) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE public.passwordresettoken
+    OWNER to postgres;
+
+
+-- Table: public.attackarchive
+
+-- DROP TABLE public.attackarchive;
+
+CREATE TABLE attackarchive
+(
+    uuid character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    lastmodified timestamp without time zone,
+    archivedata text COLLATE pg_catalog."default",
+    CONSTRAINT attackarchive_pkey PRIMARY KEY (uuid)
+);
+
+ALTER TABLE public.attackarchive   OWNER to postgres;
