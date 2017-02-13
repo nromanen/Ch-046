@@ -24,7 +24,7 @@ import java.util.List;
 @Transactional
 @WebAppConfiguration
 @ContextConfiguration(classes = {HibernateConfiguration.class, WebSocketConfiguration.class})
-public class ArmyParserTest  extends AbstractTestNGSpringContextTests {
+public class ArmyParserTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     ArmyParser armyParser;
@@ -44,7 +44,7 @@ public class ArmyParserTest  extends AbstractTestNGSpringContextTests {
         driver.findElements(By.name("password")).get(0).sendKeys("321654aaa");
         driver.findElement(By.cssSelector("div.button-content")).click();
         Village village = villageService.getById("1");
-        List<Army> armies = armyParser.pars(driver, village) ;
+        List<Army> armies = armyParser.pars(driver, village);
         System.out.println(armies);
     }
 }
