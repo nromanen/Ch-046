@@ -63,7 +63,7 @@ public class AllianceServiceImplTest {
         Mockito.reset(allianceDao,userService,userDao,sendMail);
     }
     @Test
-    public void getAllTest(){
+    public void testGetAll(){
         List<AllianceDTO> allianceDTOsList = new ArrayList<>();
         for(Alliance alliance:alliancesList){
             allianceDTOsList.add(convertAllianceToDTO(alliance));
@@ -74,7 +74,7 @@ public class AllianceServiceImplTest {
     }
 
     @Test
-    public void addAllianceTest() throws MessagingException {
+    public void testAddAlliance() throws MessagingException {
         doNothing().when(allianceDao).add(any(Alliance.class));
         doNothing().when(userService).addUser(any(UserDTO.class));
         when(userService.getUserByUsername(anyString())).thenReturn(new User());
@@ -86,7 +86,7 @@ public class AllianceServiceImplTest {
     }
 
     @Test
-    public void updateAllianceTest() throws MessagingException {
+    public void testUpdateAlliance() throws MessagingException {
         AllianceDTO allianceDTO = new AllianceDTO("7564d81e-b4c7-440f-8f55-ea8938ewdf54",
                 "6666d81e-b4c7-440f-8f55-ea8938ewdf54", "TRATATAalalala",
                 "allianceLeader", "newLeader@ukr.net");
@@ -101,7 +101,7 @@ public class AllianceServiceImplTest {
     }
 
     @Test
-    public void deleteAllianceTest(){
+    public void testDeleteAlliance(){
         Alliance alliance = alliancesList.get(0);
         when(allianceDao.getById(anyString())).thenReturn(alliance);
         doNothing().when(userDao).delete(any(User.class));
@@ -111,7 +111,7 @@ public class AllianceServiceImplTest {
         Assert.assertEquals(captor.getValue().getName(), "valhala");
     }
     @Test
-    public void getByIdTest(){
+    public void testGetById(){
         Alliance alliance = alliancesList.get(0);
         when(allianceDao.getById(anyString())).thenReturn(alliance);
         assertEquals(allianceService.getById(anyString()),alliance);
@@ -119,7 +119,7 @@ public class AllianceServiceImplTest {
 
     }
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void isUniqueAllianceExpectExceptionTest(){
+    public void testIsUniqueAllianceExpectException(){
         Alliance alliance = alliancesList.get(0);
         when(allianceDao.getByName(anyString(),anyString())).thenReturn(alliance);
         assertTrue(allianceService.isUniqueAlliance("valhala","9999d81e-b4c7-440f-8f55-ea8938ewdf54"));
@@ -128,7 +128,7 @@ public class AllianceServiceImplTest {
         assertEquals(captor.getValue().getUuid(), "9999d81e-b4c7-440f-8f55-ea8938ewdf54");
     }
     @Test
-    public void isUniqueAllianceTest(){
+    public void testIsUniqueAlliance(){
         when(allianceDao.getByName(anyString(),anyString())).thenReturn(null);
         assertTrue(allianceService.isUniqueAlliance("valhala","9999d81e-b4c7-440f-8f55-ea8938ewdf54"));
         verify(allianceDao, times(1)).getByName(anyString(),anyString());

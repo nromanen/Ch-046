@@ -9,8 +9,6 @@ import java.util.List;
  */
 public interface UserDao extends CrudDao<User> {
 
-	long getCount();
-
 	User getWithRolesById(String id);
 
 	List<User> getAll();

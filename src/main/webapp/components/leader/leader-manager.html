@@ -6,12 +6,12 @@
     <div class="col s12">
         <div *ngIf="successMessage != null" class="card green lighten-5">
             <div class="card-content green-text">
-                <p>{{successMessage}} <span (click)="closeSuccess()" class="right" style="cursor: pointer;">x</span></p>
+                <p>{{successMessage}} <span (click)="closeSuccess()" class="right close-ico">x</span></p>
             </div>
         </div>
         <div class="card red lighten-4">
             <div *ngIf="errorMessage != null" class="card-content red-text">
-                <p>{{errorMessage}} <span (click)="closeError()" class="right" style="cursor: pointer;">x</span></p>
+                <p>{{errorMessage}} <span (click)="closeError()" class="right close-ico">x</span></p>
             </div>
         </div>
     </div>
@@ -30,35 +30,35 @@
         <table class="bordered striped centered">
             <thead>
             <tr>
-                <div class="valign-wrapper" style="height: 50px">
+                <div class="valign-wrapper">
                     <th class="col s3">Login</th>
                     <th class="col s3">E-mail</th>
-                    <th class="col s3">Alliance</th>
+                    <th class="col s3">Leader</th>
                     <th class="col s3">Action</th>
                 </div>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let member of users">
-                <div *ngIf="member !== selectedMember" class="valign-wrapper" style="height: 55px"
+                <div *ngIf="member !== selectedMember" class="valign-wrapper"
                      (dblclick)="selectMember(member)">
                     <td class="col s3">{{ member.login }}</td>
                     <td class="col s3">{{ member.email }}</td>
-                    <td class="col s3">{{ member.alliance }}</td>
                     <td class="col s3">
-                        <button (click)="selectMember(member)" class="waves-effect waves-light  btn"
-                                style="background-color: #9cd1af; width: 90px; padding: 0px 10px">
+                        <i *ngIf="member.isLeader" class="material-icons">done</i>
+                        <span *ngIf="!member.isLeader">-</span>
+                    </td>
+                    <td class="col s3">
+                        <button (click)="selectMember(member)" class="waves-effect waves-light btn edit">
                             <i class="material-icons">mode_edit</i>
                         </button>
 
-                        <button class="waves-effect waves-light  btn"
-                                style="background-color: #f21036; padding: 0px 10px; width: 90px"
-                                (click)="deleteMember(member)">
+                        <button class="waves-effect waves-light btn delete" (click)="deleteMember(member)">
                             <i class="material-icons">delete</i>
                         </button>
                     </td>
                 </div>
-                <edit-member *ngIf="member === selectedMember" [editedMember]="selectedMember"
+                <edit-member *ngIf="member === selectedMember" [editedMember]="selectedMember" [isCurrentPlayer]="selectedMember.login === leader.login"
                              (editMemberForm)="updateMember($event)"></edit-member>
             </tr>
             </tbody>

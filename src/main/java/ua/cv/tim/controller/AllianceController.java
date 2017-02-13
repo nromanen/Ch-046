@@ -44,13 +44,11 @@ public class AllianceController {
         User user = new User();
         user.setLogin(allianceDTO.getLeaderLogin());
         user.setEmail(allianceDTO.getLeaderEmail());
-
         if (userService.isUnique(user) && allianceService.isUniqueAlliance(allianceDTO.getName(), null)) {
 
             allianceService.addAlliance(allianceDTO);
             allianceDTO.setAllianceUuid(allianceService.getByName(allianceDTO.getName()).getUuid());
         }
-
         return new ResponseEntity<>(allianceDTO, HttpStatus.OK);
     }
 
@@ -61,16 +59,11 @@ public class AllianceController {
         if (updatedAlliance == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         User user = new User();
         user.setLogin(allianceDTO.getLeaderLogin());
         user.setEmail(allianceDTO.getLeaderEmail());
         user.setUuid(allianceDTO.getLeaderUuid());
-        if (userService.isUnique(user)) {
-
-            if (!allianceService.isUniqueAlliance(allianceDTO.getName(), uuid)) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
+        if (userService.isUnique(user) && allianceService.isUniqueAlliance(allianceDTO.getName(), uuid)) {
             allianceDTO.setAllianceUuid(uuid);
             allianceService.updateAlliance(allianceDTO);
         }
