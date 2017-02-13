@@ -20,7 +20,7 @@ import {Validators, FormBuilder, FormGroup, FormArray} from "@angular/forms";
           {{this.army.count==0||army.count==null?"m":this.army.count}}</div>
      <div class="input-field"  *ngIf="isInput" [formGroup]="group">
      <input class="validate"  type="text" [ngModel]="this.army.count!=0?this.army.count:''" (keyup)="cancelEditing($event.keyCode)"
-     formControlName="count" (ngModelChange)="addOrEdit($event)">
+     formControlName="count" >
      </div>
   
 `
@@ -38,7 +38,7 @@ export class ArmyCellComponent implements OnInit,OnChanges {
     cellClicked: EventEmitter<Village>;
     @Output() cancelEdit: EventEmitter<Village>;
 
-    constructor(private currVillageArmiesService: CurrVillageArmiesService, private _fBuilder: FormBuilder) {
+    constructor( private _fBuilder: FormBuilder) {
         this.isInput = true;
         this.cellClicked = new EventEmitter<Village>();
         this.cancelEdit = new EventEmitter<Village>();
@@ -78,7 +78,7 @@ export class ArmyCellComponent implements OnInit,OnChanges {
         }
         if (changes['isInput'] != null)
             if (changes['isInput'].currentValue === true && this.army.count != -1) {
-                this.currVillageArmiesService.armies.push(this.newArmy);
+
             }
     }
 
@@ -92,14 +92,7 @@ export class ArmyCellComponent implements OnInit,OnChanges {
         this.cellClicked.emit(null);
     }
 
-    addOrEdit(event: any) {
-        this.newArmy.count = event;
-        if (this.army.count == -1) {
-            if (this.currVillageArmiesService.armies.indexOf(this.newArmy) == -1 && this.newArmy.count > 0)
-                this.currVillageArmiesService.armies.push(this.newArmy);
-        } else
-            this.newArmy.count = event;
-    }
+
 
     cancelEditing(event) {
         if (event === 27)
