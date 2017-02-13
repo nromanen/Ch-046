@@ -13,8 +13,15 @@ import java.util.Collections;
 /**
  * Created by Oleg on 05.01.2017.
  */
+
+
 @Repository
 public class VillageDaoImpl extends AbstractCrudDao<Village> implements VillageDao {
+    /**
+     *
+     * @param id if of the village
+     * @return Village with it's armies
+     */
     @Override
     public Village getById(String id) {
         Village village = getCurrentSession().get(Village.class, id);
@@ -23,6 +30,12 @@ public class VillageDaoImpl extends AbstractCrudDao<Village> implements VillageD
         return village;
     }
 
+    /**
+     *
+     * @param xCoord
+     * @param yCoord
+     * @return village with the coordinates in params.
+     */
     @Override
     public Village getByCoordinates(short xCoord, short yCoord) {
         Query query=getCurrentSession().createQuery("FROM Village Where xCoord=:x AND yCoord=:y");
@@ -33,6 +46,11 @@ public class VillageDaoImpl extends AbstractCrudDao<Village> implements VillageD
         return village;
     }
 
+    /**
+     *
+     * @param name
+     * @return village with the name in params.
+     */
     @Override
     public Village getByName(String name) {
         Query<Village> query=getCurrentSession().createQuery("From Village WHERE name=:name");

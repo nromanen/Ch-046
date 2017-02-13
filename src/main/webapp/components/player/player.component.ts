@@ -6,6 +6,7 @@
 import {Player} from "./player";
 import {Component, OnInit} from "@angular/core";
 import {PlayerService} from "../services/player.service";
+import {TranslateService} from "ng2-translate";
 
 @Component({
     selector: 'player',
@@ -26,12 +27,12 @@ import {PlayerService} from "../services/player.service";
 <div *ngIf="successMessage!=null||errorMessage!=null" class="col s4 offset-s4 ">
     <div  [ngClass]="{'card':true, 'green':successMessage!=null, 'red':errorMessage!=null, 'lighten-5':true}">
         <div [ngClass]="{'card-content':true , 'green-text':successMessage!=null,'red-text':errorMessage!=null }">
-            <p>{{successMessage!=null?successMessage:errorMessage}} <span (click)="closeDialog()" class="right">x</span></p>
+            <p>{{successMessage!=null?successMessage:errorMessage}} <span (click)="closeDialog()" class="right x">x</span></p>
         </div>
     </div>
 </div>
 </div>
-        <player-list *ngIf="player" [player]="player"></player-list>
+        <player-list *ngIf="player" [player]="player" [isPlayerPage]="true"></player-list>
         <div class="row">
             <div class="col s4 offset-s6" >
                 <button (click)="showAddForm()" class="btn waves-effect waves-light">Add</button>
@@ -39,9 +40,6 @@ import {PlayerService} from "../services/player.service";
          
             <add-vill-form [player]="player" *ngIf="showAddVillageForm" (wasSubmitted)="hideAddForm($event)"
             (successMessage)="showSuccessMessage($event)" (errorMessage)="showErrorMessage($event)"></add-vill-form>
-      
-
-
 `
 })
 export class PlayerComponent implements OnInit {
@@ -50,7 +48,7 @@ export class PlayerComponent implements OnInit {
     successMessage;
     errorMessage;
 
-    constructor(private playerService: PlayerService) {
+    constructor(private playerService: PlayerService,translate: TranslateService) {
 
     }
 

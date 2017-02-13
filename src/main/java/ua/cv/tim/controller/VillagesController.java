@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import ua.cv.tim.exception.EntityNotUniqueException;
+import ua.cv.tim.model.AuthorizedUser;
 import ua.cv.tim.model.UnitType;
 import ua.cv.tim.model.User;
 import ua.cv.tim.model.Village;
@@ -19,6 +22,7 @@ import ua.cv.tim.service.VillageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.Filter;
 import java.util.Collections;
 
 /**
@@ -26,12 +30,14 @@ import java.util.Collections;
  */
 
 @RestController
+
 public class VillagesController {
     private static final Logger log = LoggerFactory.getLogger(VillagesController.class);
     @Autowired
     VillageService villageService;
     @Autowired
     UserService userService;
+
 
     @RequestMapping(value = "/village/{id}", method = RequestMethod.GET)
     public ResponseEntity<Village> getVillageById(@PathVariable(name = "id") String id) {
@@ -41,11 +47,20 @@ public class VillagesController {
         return new ResponseEntity<>(village, HttpStatus.OK);
     }
 
+    /**
+     * Adds new village in a database.
+     * @param village
+     * @return added village.
+     * @throws JsonProcessingException
+     * @throws EntityNotUniqueException
+     */
     @RequestMapping(value = "/village/", method = RequestMethod.POST)
-    public ResponseEntity<Village> addVillage(@RequestBody Village village, UriComponentsBuilder builder) throws JsonProcessingException, EntityNotUniqueException {
+    public ResponseEntity<Village> addVillage(@RequestBody Village village) throws JsonProcessingException, EntityNotUniqueException {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+       log.info("I'm here");
         User userByUsername = userService.getUserByUsername(principal.getUsername());
         village.setPlayer(userByUsername.getPlayer());
+
         if (villageService.isUnique(village)) {
             villageService.add(village);
             log.info("Village added : {}",village);
@@ -53,6 +68,12 @@ public class VillagesController {
         return new ResponseEntity<>(village, HttpStatus.CREATED);
     }
 
+    /**
+     * Updates village.
+     * @param id
+     * @param village
+     * @return updated village.
+     */
     @RequestMapping(value = "/village/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Village> updateVillage(@PathVariable(name = "id") String id, @RequestBody Village village) {
         Village current_village = villageService.getById(id);

@@ -1,7 +1,7 @@
 
 import {Component} from "@angular/core";
-import {HelpService} from "./services/helpNotification/help.service";
-import {Alliance} from "./alliance/alliance";
+import {TranslateService} from "ng2-translate";
+import {CookieService} from "angular2-cookie/services/cookies.service";
 
 @Component({
     selector: 'my-app',
@@ -11,7 +11,13 @@ import {Alliance} from "./alliance/alliance";
 })
 
 export class AppComponent {
+constructor(private translate: TranslateService,cookieService:CookieService){
+    if (cookieService.get('locale-cookie')!=null) {
+        translate.use(cookieService.get('locale-cookie'));
 
+    }else{
+        translate.use(window.navigator.language);
+    }
 
-
+}
 }
