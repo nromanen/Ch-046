@@ -19,7 +19,5 @@ public interface PlayerService {
 
 	void delete(Player player);
 
-	void deleteVillageOfPlayer(Village village);
-
 	List<Player> getPlayersByAllianceWithVillages(String allianceName);
 }

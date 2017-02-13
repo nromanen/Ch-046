@@ -67,26 +67,48 @@ public class PlayerServiceImplTest {
 
     @Test
     public void testGetByIdWithVillages() throws Exception {
+        ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
+        String id = "111-222";
         when(playerDao.getByIdWithVillages(anyString())).thenReturn(testPlayer);
+        playerServiceImpl.getByIdWithVillages(id);
+        verify(playerDao,times(1)).getByIdWithVillages(stringCaptor.capture());
+        assertEquals(stringCaptor.getValue(),id);
+        assertTrue(playerDao.getByIdWithVillages(id).getVillages().equals(testPlayer.getVillages()));
     }
 
     @Test
     public void testUpdate() throws Exception {
-
+        Player player = testPlayer;
+        player.setUuid("1111-4321");
+        doNothing().when(playerDao).update(any(Player.class));
+        playerServiceImpl.update(player);
+        verify(playerDao, times(1)).update(playerCaptor.capture());
+        assertEquals(playerCaptor.getValue().getUuid(), player.getUuid());
     }
 
     @Test
     public void testDelete() throws Exception {
-
+        doNothing().when(playerDao).delete(any(Player.class));
+        playerServiceImpl.delete(testPlayer);
+        verify(playerDao, times(1)).delete(playerCaptor.capture());
+        assertEquals(playerCaptor.getValue().getUuid(), testPlayer.getUuid());
     }
 
-    @Test
+    /*@Test
     public void testDeleteVillageOfPlayer() throws Exception {
 
-    }
+    }*/
 
     @Test
     public void testGetPlayersByAllianceWithVillages() throws Exception {
+        ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
+        String allianceName = "alala";
+        List<Player> players = new ArrayList<>();
+        players.add(testPlayer);
+        when(playerDao.getPlayersByAllianceWithVillages(anyString())).thenReturn(players);
+        playerServiceImpl.getPlayersByAllianceWithVillages(allianceName);
+        verify(playerDao, times(1)).getPlayersByAllianceWithVillages(stringCaptor.capture());
+        assertEquals(stringCaptor.getValue(),allianceName);
 
     }
 

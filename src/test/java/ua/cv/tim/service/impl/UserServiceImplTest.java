@@ -2,6 +2,7 @@ package ua.cv.tim.service.impl;
 
 
 import org.mockito.*;
+import org.springframework.context.MessageSource;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -17,6 +18,7 @@ import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -39,6 +41,8 @@ public class UserServiceImplTest {
     PlayerDao playerDao;
     @Mock
     SendMail sendMail;
+    @Mock
+    private MessageSource messageSource;
     @InjectMocks
     UserServiceImpl userService;
     @Captor
@@ -58,11 +62,13 @@ public class UserServiceImplTest {
 
     @Test
     public void testGetUserByUsername() {
-       User user = users.get(0);
-        when(userDao.getUserByUsername("neo")).thenReturn(user);
-        assertEquals(userService.getUserByUsername("neo"), user);
-        verify(userDao, times(1)).getUserByUsername("neo");
-        assertNotNull(userService.getUserByUsername("neo"));
+        ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
+        User user = users.get(0);
+        when(userDao.getUserByUsername(anyString())).thenReturn(user);
+        userService.getUserByUsername(user.getLogin());
+        verify(userDao, times(1)).getUserByUsername(stringCaptor.capture());
+        assertEquals(stringCaptor.getValue(),user.getLogin());
+
     }
     @Test
     public void testAddUser(){
@@ -70,20 +76,22 @@ public class UserServiceImplTest {
         doNothing().when(userDao).add(any(User.class));
         userService.add(user);
         verify(userDao, times(1)).add(captor.capture());
-        Assert.assertEquals(captor.getValue().getLogin(), "neo");
+        Assert.assertEquals(captor.getValue().getLogin(), user.getLogin());
     }
     @Test
     public void testDelete(){
         doNothing().when(userDao).delete(any(User.class));
         userService.delete(users.get(0));
-        verify(userDao, times(1)).delete(any(User.class));
+        verify(userDao, times(1)).delete(captor.capture());
+        assertEquals(captor.getValue(),users.get(0));
     }
     @Test
     public void testGetAll()
     {
         when(userDao.getAll()).thenReturn(users);
-        Assert.assertEquals(userService.getAll(), users);
+        userService.getAll();
         verify(userDao, times(1)).getAll();
+        Assert.assertEquals(userService.getAll(), users);
     }
     @Test
     public void testUpdate() throws MessagingException {
@@ -93,39 +101,63 @@ public class UserServiceImplTest {
         doNothing().when(sendMail).send(anyString(),anyString(),anyString());
         userService.update(testUser);
         verify(userDao, times(1)).update(captor.capture());
-        Assert.assertEquals(captor.getValue().getLogin(), "updatedNeo");
+        Assert.assertEquals(captor.getValue().getLogin(), testUser.getLogin());
     }
 
     @Test
     public void testIsUnique(){
+        ArgumentCaptor<String> userNameCaptor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<String> userMailCaptor = ArgumentCaptor.forClass(String.class);
         User user = users.get(0);
-        User newUser = users.get(1);
-        when(userDao.getUserByUsername("neo")).thenReturn(user);
-        when(userDao.getByMail("neo@ukr.net")).thenReturn(user);
-        assertTrue(userService.isUnique(newUser));
-        verify(userDao, times(1)).getUserByUsername(anyString());
-        verify(userDao, times(1)).getByMail(anyString());
+        when(userDao.getUserByUsername(anyString())).thenReturn(user);
+        when(userDao.getByMail(anyString())).thenReturn(user);
+        userService.isUnique(user);
+        verify(userDao, times(1)).getUserByUsername(userNameCaptor.capture());
+        verify(userDao, times(1)).getByMail(userMailCaptor.capture());
+        assertEquals(userNameCaptor.getValue(),user.getLogin());
+        assertEquals(userMailCaptor.getValue(),user.getEmail());
+    }
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testIsUniqueUserExpectException(){
+        ArgumentCaptor<String> userNameCaptor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<String> userMailCaptor = ArgumentCaptor.forClass(String.class);
+        User notUniqueUser = users.get(1);
+        User user = new User();
+        user.setUuid("222");
+        user.setLogin(notUniqueUser.getLogin());
+        when(userDao.getUserByUsername(anyString())).thenReturn(notUniqueUser);
+        when(userDao.getByMail(anyString())).thenReturn(notUniqueUser);
+        when(messageSource.getMessage(anyString(),isNull(), any(Locale.class))).thenReturn("Message");
+        userService.isUnique(user);
+        verify(userDao, times(1)).getUserByUsername(userNameCaptor.capture());
+        verify(userDao, times(1)).getByMail(userMailCaptor.capture());
+        assertEquals(userNameCaptor.getValue(),user.getLogin());
+        assertEquals(userMailCaptor.getValue(),user.getEmail());
     }
 
     @Test
     public void testGetWithRolesById(){
+        String id = "232323";
         User user = users.get(0);
         when(userDao.getWithRolesById(anyString())).thenReturn(user);
-        assertEquals(userService.getWithRolesById("3455-ede34-de4dee-de34d"),user);
+        userService.getWithRolesById(id);
         verify(userDao, times(1)).getWithRolesById(anyString());
+        assertEquals(userService.getWithRolesById(id),user);
     }
     @Test
     public void testGetAllWithRoles(){
         when(userDao.getAllWithRoles()).thenReturn(users);
-        assertEquals(userService.getAllWithRoles(),users);
+        userService.getAllWithRoles();
         verify(userDao, times(1)).getAllWithRoles();
+        assertEquals(userService.getAllWithRoles(),users);
     }
     @Test
     public void testGetById(){
         User user = users.get(0);
         when(userDao.getById(anyString())).thenReturn(user);
-        assertEquals(userService.getById("3455-ede34-de4dee-de34d"),user);
+        userService.getById(user.getUuid());
         verify(userDao, times(1)).getById(anyString());
+        assertEquals(userService.getById(user.getUuid()),user);
     }
     @Test
     public void testAddUserDTO() throws MessagingException {
@@ -138,22 +170,25 @@ public class UserServiceImplTest {
         doNothing().when(sendMail).send(anyString(),anyString(),anyString());
         userService.addUser(member);
         verify(userDao, times(1)).add(captor.capture());
-        Assert.assertEquals(captor.getValue().getLogin(), "Jonathan");
+        Assert.assertEquals(captor.getValue().getLogin(), member.getLogin());
 
     }
     @Test
     public void tetsGetUserWithAlliance(){
         User user = users.get(0);
         when(userDao.getUserWithAlliance(anyString())).thenReturn(user);
-        assertEquals(userService.getUserWithAlliance("valhala"),user);
+        userService.getUserWithAlliance(user.getLogin());
         verify(userDao, times(1)).getUserWithAlliance(anyString());
+        assertEquals(userService.getUserWithAlliance(user.getLogin()),user);
     }
     @Test
     public void testGetUsersByAlliance(){
-
+        ArgumentCaptor<String> allianceNameCaptor = ArgumentCaptor.forClass(String.class);
+        String allianceName = "valhala";
         when(userDao.getUsersByAlliance(anyString())).thenReturn(users);
-        assertNotNull(userService.getUsersByAlliance("valhala"));
-        verify(userDao, times(1)).getUsersByAlliance(anyString());
+        userService.getUsersByAlliance(allianceName);
+        verify(userDao, times(1)).getUsersByAlliance(allianceNameCaptor.capture());
+        assertEquals(allianceNameCaptor.getValue(),allianceName);
     }
     @Test
     public void testGetFullUserByUsername() {
@@ -175,8 +210,9 @@ public class UserServiceImplTest {
         User user = users.get(0);
         user.getPlayer().setVillages(villages);
         when(userDao.getFullUserByUsername(anyString())).thenReturn(user);
-        assertEquals(userService.getFullUserByUsername("neo").toString(),user.toString());
+        userService.getFullUserByUsername(user.getLogin());
         verify(userDao, times(1)).getFullUserByUsername(anyString());
+        assertEquals(userService.getFullUserByUsername(user.getLogin()).toString(),user.toString());
     }
 
     private List<User> getUserList(){
