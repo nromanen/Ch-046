@@ -8,16 +8,17 @@ import ua.cv.tim.helpNotification.model.InputObject;
 import ua.cv.tim.helpNotification.model.OutputObject;
 
 /**
+ * Created by rmochetc on 08.01.2017.
  */
+
 @RestController
 public class HelpWebsocketController {
 		
-    @MessageMapping("/hello/{id}")
-    @SendTo("/topic/greetings/{id}")
+    @MessageMapping("/help/{id}")
+    @SendTo("/topic/notification/{id}")
     public OutputObject greeting(@DestinationVariable String id, InputObject input) throws Exception {
 
         System.out.println("@DestinationVariable String id = " + id);
-        Thread.sleep(1000); // simulated delay
         final OutputObject output = new OutputObject();
         output.setOutputField("Help notification send!");
         return output;

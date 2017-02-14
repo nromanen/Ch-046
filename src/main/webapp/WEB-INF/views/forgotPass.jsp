@@ -11,7 +11,7 @@ To change this template use File | Settings | File Templates.
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Login</title>
+    <title>Forgot password</title>
 
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -34,7 +34,12 @@ To change this template use File | Settings | File Templates.
 <body>
 
 <nav>
-    <div class="nav-wrapper"></div>
+    <div class="nav-wrapper">
+        <a class="brand-logo">Travian</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="login">Login</a></li>
+        </ul>
+    </div>
 </nav>
 
 <div class="container">
@@ -56,12 +61,33 @@ To change this template use File | Settings | File Templates.
                     <label for="email">Email</label>
                     <input type="text" id="email" name="email" class="validate" required/>
                 </div>
-                <button type="submit" class="btn waves-effect waves-teal">SEND</button>
+                <button type="submit" class="btn waves-effect waves-teal" disabled>SEND</button>
         </div>
         </form>
     </div>
 </div>
 </div>
 </body>
+
+
+<script>
+
+    $(document).ready(function () {
+        $(document).on('input', function () {
+            if(!validateEmail($("#email").val())){
+                $(':input[type="submit"]').prop('disabled', true);
+            }else{
+                $(':input[type="submit"]').prop('disabled', false);
+            }
+        });
+    });
+
+    function validateEmail(email) {
+        var re = /\S+@\S+\.\S{2,}/;
+        return re.test(email);
+    }
+
+</script>
+
 
 </html>

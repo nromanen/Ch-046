@@ -6,7 +6,7 @@
             <li ><a routerLink="/user" routerLinkActive="active" >{{'Player' |translate}}</a></li>
             <li><a routerLink="/leader" routerLinkActive="active">{{'Alliance' |translate}}</a></li>
             <li><a routerLink="/help" routerLinkActive="active">{{'Ask help'|translate}}</a></li>
-            <li><a routerLink="/allHelps" routerLinkActive="active">{{'Attacks'|translate}}</a></li>
+            <li><a routerLink="/allHelps" routerLinkActive="active">{{'Attacks'|translate}} <span *ngIf="numOfAttacks != 0"> ({{numOfAttacks}})</span></a></li>
             <li><a href="/travian/parser/">{{'Parse'|translate}}</a></li>
             <li *ngIf="isLeader"><a routerLink="/leader/manager" routerLinkActive="active">{{'Manage'|translate}}</a></li>
             <li><a href="logout" >{{'Log out'|translate}}</a></li>

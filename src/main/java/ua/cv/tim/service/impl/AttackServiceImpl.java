@@ -42,8 +42,8 @@ public class AttackServiceImpl implements AttackService {
     UserService userService;
 
     @Override
-    public List<Attack> getAll() {
-        return attackDao.getAll();
+    public List<Attack> getNotActive() {
+        return attackDao.getNotActive();
     }
 
     @Override
@@ -62,19 +62,8 @@ public class AttackServiceImpl implements AttackService {
     }
 
     @Override
-    public void deleteAAttack(String id) {
-
-    }
-
-    @Override
-    public Attack getById(String uuid) {
-
-        return null;
-    }
-
-    @Override
-    public void updateAAttack(Attack attack) {
-
+    public void deleteAttack(Attack attack) {
+        attackDao.delete(attack);
     }
 
     @Override
@@ -102,5 +91,10 @@ public class AttackServiceImpl implements AttackService {
 
         System.out.println("GET ALL: " + activeAttacks);
         return activeAttacks;
+    }
+
+    @Override
+    public void deleteOldAttack() {
+        attackDao.deleteOldAttack();
     }
 }

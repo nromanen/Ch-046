@@ -44,6 +44,8 @@ import {AllHelps} from "./help/all-helps.component";
 import {HelpComponent} from "./help/ask-help.component";
 import {TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-translate";
 import {CookieService} from "angular2-cookie/services/cookies.service";
+import {AttackArchiveComponent} from "./help/attack-archive.component";
+import {AttackArchiveService} from "./services/helpNotification/attack-archive.service";
 
 
 
@@ -59,8 +61,6 @@ import {CookieService} from "angular2-cookie/services/cookies.service";
             useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18/', '.json'),
             deps: [Http]
         }),
-        // DatepickerModule.forRoot(),
-        // TimepickerModule.forRoot(),
         RoutesModule,
         CalendarModule
     ],
@@ -89,6 +89,7 @@ import {CookieService} from "angular2-cookie/services/cookies.service";
         AddArmyForm,
         HelpComponent,
         AllHelps,
+        AttackArchiveComponent
 
     ],
     providers: [
@@ -97,6 +98,7 @@ import {CookieService} from "angular2-cookie/services/cookies.service";
         PlayerService,
         CurrVillageArmiesService,
         VillageService,
+        AttackArchiveService,
         CookieService,
         HelpService,
         StompService

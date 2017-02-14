@@ -24,7 +24,6 @@ public class PlayerDTO {
     @Enumerated(EnumType.STRING)
     private Race race;
 
-
     private List<Village> villages;
 
     @JsonIgnoreProperties("players")
@@ -69,16 +68,16 @@ public class PlayerDTO {
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public boolean getIsLeader() {
         return isLeader;
     }
 
     public void setIsLeader(boolean leader) {
         isLeader = leader;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     @Override
