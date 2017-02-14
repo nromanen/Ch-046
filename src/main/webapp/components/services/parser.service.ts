@@ -1,5 +1,5 @@
 /**
- * Created by vyach on 13.01.2017.
+ * Created by Serhii Starovoit on 2/14/2017 in 3:05 PM.
  */
 
 import {Injectable} from '@angular/core';
@@ -20,7 +20,8 @@ export class ParserService {
 
         const body = JSON.stringify({
             login: creds.login,
-            password: creds.password
+            password: creds.password,
+            letPasrs: creds.letPasrs
         });
         console.log(`Creds value is: ${body}`);
 

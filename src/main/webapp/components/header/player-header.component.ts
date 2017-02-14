@@ -79,7 +79,6 @@ export class PlayerHeader {
                     status => {
                         if (status) {
 
-
                             console.log(status);
                         }
                     },
