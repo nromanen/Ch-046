@@ -76,7 +76,7 @@ public class UserServiceImplTest {
         doNothing().when(userDao).add(any(User.class));
         userService.add(user);
         verify(userDao, times(1)).add(captor.capture());
-        Assert.assertEquals(captor.getValue().getLogin(), user.getLogin());
+        assertEquals(captor.getValue().getLogin(), user.getLogin());
     }
     @Test
     public void testDelete(){
@@ -91,7 +91,7 @@ public class UserServiceImplTest {
         when(userDao.getAll()).thenReturn(users);
         userService.getAll();
         verify(userDao, times(1)).getAll();
-        Assert.assertEquals(userService.getAll(), users);
+        assertEquals(userService.getAll(), users);
     }
     @Test
     public void testUpdate() throws MessagingException {
@@ -101,7 +101,7 @@ public class UserServiceImplTest {
         doNothing().when(sendMail).send(anyString(),anyString(),anyString());
         userService.update(testUser);
         verify(userDao, times(1)).update(captor.capture());
-        Assert.assertEquals(captor.getValue().getLogin(), testUser.getLogin());
+        assertEquals(captor.getValue().getLogin(), testUser.getLogin());
     }
 
     @Test
@@ -171,7 +171,7 @@ public class UserServiceImplTest {
         doNothing().when(sendMail).send(anyString(),anyString(),anyString());
         userService.addUser(member);
         verify(userDao, times(1)).add(captor.capture());
-        Assert.assertEquals(captor.getValue().getLogin(), member.getLogin());
+        assertEquals(captor.getValue().getLogin(), member.getLogin());
 
     }
     @Test

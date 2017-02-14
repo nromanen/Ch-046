@@ -90,7 +90,6 @@ public class AllianceServiceImpl implements AllianceService {
     }
     @Override
     public void deleteAlliance(String  id){
-
         logger.info("Deleting alliance id = {}", id);
         Alliance alliance = allianceDao.getById(id);
         if (alliance != null){
@@ -112,7 +111,6 @@ public class AllianceServiceImpl implements AllianceService {
     }
     @Override
     public boolean isUniqueAlliance(String name, String uuid){
-        logger.info("Alliance isUniqueAlliance");
         if(allianceDao.getByName(name, uuid)!=null ) {
             throw new IllegalArgumentException("Alliance with entered name already exists.");
         }
