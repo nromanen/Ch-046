@@ -29,6 +29,33 @@ public class Army extends UuidEntity implements Comparable<Army>, Serializable {
     public Army() {
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Army army = (Army) o;
+
+        if (ownUnit != army.ownUnit) return false;
+        if (type != army.type) return false;
+        if (count != null ? !count.equals(army.count) : army.count != null) return false;
+        if (owningVillage != null ? !owningVillage.equals(army.owningVillage) : army.owningVillage != null)
+            return false;
+        return armyRequestVillage != null ? armyRequestVillage.equals(army.armyRequestVillage) : army.armyRequestVillage == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (count != null ? count.hashCode() : 0);
+        result = 31 * result + (ownUnit ? 1 : 0);
+        result = 31 * result + (owningVillage != null ? owningVillage.hashCode() : 0);
+        result = 31 * result + (armyRequestVillage != null ? armyRequestVillage.hashCode() : 0);
+        return result;
+    }
+
     public Army(Village village, boolean isArmyAequest) {
         super();
         if (isArmyAequest) {
@@ -36,6 +63,7 @@ public class Army extends UuidEntity implements Comparable<Army>, Serializable {
         } else {
             owningVillage = village;
         }
+
     }
 
     @Transient

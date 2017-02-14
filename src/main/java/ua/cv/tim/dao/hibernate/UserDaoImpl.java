@@ -41,6 +41,7 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     public User getWithRolesById(String id) {
         User user = getCurrentSession().get(User.class, id);
         List<Role> roles = user.getRoles();
+        Hibernate.initialize(roles);
         return user;
 
     }
@@ -56,7 +57,7 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     public User getByMail(String mail, String uuid) {
         logger.info("Mail is {} uuid is {} ", mail,uuid);
         Session session = getCurrentSession();
-        Query query = null;
+        Query query ;
         if (uuid != null) {
             logger.info("User with mail {} has uuid {} ",mail, uuid);
             query = session.createQuery("select u FROM User u WHERE u.email=:mail and u.uuid != :uuid");
@@ -108,7 +109,7 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
 
     public boolean isUserUnique(String username, String uuid) {
         Session session = getCurrentSession();
-        Query query = null;
+        Query query ;
         if (uuid != null) {
             logger.info("Username is {} ", username);
             System.out.println("uuid no = null : " + uuid);
