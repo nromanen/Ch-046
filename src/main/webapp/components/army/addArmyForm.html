@@ -1,5 +1,4 @@
 <div [formGroup]="group" >
-
     <div class="row">
     <div class="input-field col s2 offset-s3">
         <select class="browser-default" name="type" (change)="removeType(selectedType.value)" formControlName="type" #selectedType>
@@ -7,7 +6,6 @@
             <option *ngFor="let type of unitTypeStringsCopy" >{{type}}</option>
         </select>
     </div>
-
     <div class="input-field col s2">
         <input id="count" type="text" class="validate" formControlName="count" required>
         <label for="count">Count</label>
@@ -19,7 +17,6 @@
                 Count can contain numbers only!
             </div>
         </div>
-
     </div>
     <div class="input-field col s2">
         <span  (click)="removeArmy()" class="right x">x</span>
@@ -33,6 +30,5 @@
         </label>
     </div>
 </div>
-        <p style="clear: both"></p>
 </div>
 </div>

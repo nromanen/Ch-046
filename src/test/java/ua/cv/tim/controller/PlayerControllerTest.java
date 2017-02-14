@@ -87,20 +87,20 @@ public class PlayerControllerTest {
         assertEquals(playerCaptor.getValue(),player.getUuid());
     }
 
-    @Test
-    public void testDeletePlayer() throws Exception {
-        Player player = getPlayer();
-        when(playerService.getById(anyString())).thenReturn(player);
-        doNothing().when(playerService).delete(any(Player.class));
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete( "/player/{id}",player.getUuid())
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(player));
-        this.mockMvc.perform(builder)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.uuid").value(player.getUuid()))
-                .andDo(MockMvcResultHandlers.print());
-        verify(playerService, times(1)).delete(any(Player.class));
-    }
+//    @Test
+//    public void testDeletePlayer() throws Exception {
+//        Player player = getPlayer();
+//        when(playerService.getById(anyString())).thenReturn(player);
+//        doNothing().when(playerService).delete(any(Player.class));
+//        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete( "/player/{id}",player.getUuid())
+//                .contentType(MediaType.APPLICATION_JSON_UTF8)
+//                .content(TestUtil.convertObjectToJsonBytes(player));
+//        this.mockMvc.perform(builder)
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.uuid").value(player.getUuid()))
+//                .andDo(MockMvcResultHandlers.print());
+//        verify(playerService, times(1)).delete(any(Player.class));
+//    }
     @Test
     public void testAddPlayer() throws Exception {
     doNothing().when(playerService).add(any(Player.class));

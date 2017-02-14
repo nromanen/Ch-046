@@ -1,9 +1,17 @@
 .cell {
     text-align: center;
 }
- input{
-    height: 30px;
+input{
+    text-align: center;
 }
  td{
      text-align: center
  }
+ th{
+     text-align: center;
+ }
+@media screen and (max-width: 1000px) {
+    div.input-field {
+        margin-top: -15px;
+    }
+}

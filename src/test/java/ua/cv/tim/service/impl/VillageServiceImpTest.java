@@ -74,8 +74,9 @@ public class VillageServiceImpTest {
     public void testGetById() throws Exception {
         Village village=villages.get(0);
        when(villageDao.getById(anyString())).thenReturn(village);
-       assertEquals(villageServiceImp.getById("hjjkjkj"),village);
+       villageServiceImp.getById("village1");
         verify(villageDao,times(1)).getById(anyString());
+        assertEquals(villageServiceImp.getById("village1"),village);
     }
 
     @Test

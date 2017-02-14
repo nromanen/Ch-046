@@ -131,4 +131,38 @@ public class Village extends UuidEntity implements Comparable<Village>, Serializ
 		return this.name.compareTo(other.name);
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
+
+		Village village = (Village) o;
+
+		if (name != null ? !name.equals(village.name) : village.name != null) return false;
+		if (xCoord != null ? !xCoord.equals(village.xCoord) : village.xCoord != null) return false;
+		if (yCoord != null ? !yCoord.equals(village.yCoord) : village.yCoord != null) return false;
+		if (population != null ? !population.equals(village.population) : village.population != null) return false;
+		if (isCapital != null ? !isCapital.equals(village.isCapital) : village.isCapital != null) return false;
+		if (wall != null ? !wall.equals(village.wall) : village.wall != null) return false;
+		if (armies != null ? !armies.equals(village.armies) : village.armies != null) return false;
+		if (armyRequests != null ? !armyRequests.equals(village.armyRequests) : village.armyRequests != null)
+			return false;
+		return player != null ? player.equals(village.player) : village.player == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = super.hashCode();
+		result = 31 * result + (name != null ? name.hashCode() : 0);
+		result = 31 * result + (xCoord != null ? xCoord.hashCode() : 0);
+		result = 31 * result + (yCoord != null ? yCoord.hashCode() : 0);
+		result = 31 * result + (population != null ? population.hashCode() : 0);
+		result = 31 * result + (isCapital != null ? isCapital.hashCode() : 0);
+		result = 31 * result + (wall != null ? wall.hashCode() : 0);
+		result = 31 * result + (armies != null ? armies.hashCode() : 0);
+		result = 31 * result + (armyRequests != null ? armyRequests.hashCode() : 0);
+		result = 31 * result + (player != null ? player.hashCode() : 0);
+		return result;
+	}
 }
