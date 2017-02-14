@@ -17,6 +17,7 @@ constructor(private translate: TranslateService,cookieService:CookieService){
 
     }else{
         translate.use(window.navigator.language);
+        console.log(window.navigator.language);
     }
 
 }

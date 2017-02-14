@@ -7,9 +7,8 @@ import {
 } from "@angular/core";
 import {Village} from "../village/village";
 import {Army} from "./army";
-import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 import {UnitType} from "../UnitType/unitType";
-import {Validators, FormBuilder, FormGroup, FormArray} from "@angular/forms";
+import {FormBuilder, FormGroup, FormArray} from "@angular/forms";
 @Component({
     selector: 'army-cell',
     outputs: ['cellClicked'],
