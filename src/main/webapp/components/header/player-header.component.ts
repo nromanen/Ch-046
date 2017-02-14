@@ -21,13 +21,29 @@ export class PlayerHeader {
     public serverResponse: string;
     @Input() isLeader: boolean=false;
     showNotif: boolean = false;
+    attacks: any[];
+    numOfAttacks: number;
 
 
-    constructor(private stompService: StompService,){
+    constructor(private stompService: StompService, private helpService:HelpService){
     }
 
     public ngOnInit(): void {
         this.websocketConnect();
+        this.getActiveHelp();
+    }
+
+    getActiveHelp(){
+        this.helpService.getActiveHelp()
+            .subscribe(
+                resp=>{
+                    this.attacks = resp;
+                    console.log(this.attacks);
+                    this.numOfAttacks = this.attacks !=null? this.attacks.length : null;
+                }
+            );
+
+
     }
 
     // getAlliance(){
@@ -52,6 +68,7 @@ export class PlayerHeader {
             console.log("Show notification");
             this.serverResponse = payload.outputField;
             this.showNotification();
+            this.getActiveHelp();
         });
 
 
