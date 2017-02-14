@@ -15,7 +15,6 @@ import {ConfirmComponent} from "./modal_window/modal";
 import {PlayerComponent} from "./player/player.component";
 import {PlayerList} from "./player/villages-list.component";
 import {PlayerHeader} from "./header/player-header.component";
-import {PlayerListComponent} from "./player/player-list.component";
 import {VillageInfoComponent} from "./village/village-info.component";
 import {ArmyCellInfoComponent} from "./army/army-cell-info.component";
 
@@ -86,7 +85,6 @@ import {ParserService} from "./services/parser.service";
         VillageRow,
         AddVillageForm,
         VillageInfoComponent,
-        PlayerListComponent,
         ArmyCellInfoComponent,
         LeaderHeaderComponent,
         AddArmyForm,
