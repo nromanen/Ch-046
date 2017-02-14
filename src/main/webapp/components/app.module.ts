@@ -41,6 +41,8 @@ import {EditAllianceComponent} from "./alliance/edit-alliance.component";
 import {CalendarModule} from 'primeng/primeng';
 import {AllHelps} from "./help/all-helps.component";
 import {HelpComponent} from "./help/ask-help.component";
+import {ConfirmParsingComponent} from "./modal_parsing_window/modal";
+import {ParserService} from "./services/parser.service";
 
 
 
@@ -80,6 +82,7 @@ import {HelpComponent} from "./help/ask-help.component";
         AddArmyForm,
         HelpComponent,
         AllHelps,
+        ConfirmParsingComponent
 
     ],
     providers: [
@@ -90,7 +93,8 @@ import {HelpComponent} from "./help/ask-help.component";
         VillageService,
 
         HelpService,
-        StompService
+        StompService,
+        ParserService
     ],
     bootstrap: [AppComponent]
 })

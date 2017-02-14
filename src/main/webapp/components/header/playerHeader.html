@@ -1,3 +1,5 @@
+<app-modal-pars *ngIf="confirmParsing" [confirmMsg]="confirmMsg" (notify)='onConfirmPars($event)'></app-modal-pars>
+
 <nav>
     <div class="nav-wrapper">
         <a href="#"  class="brand-logo">Logo</a>
@@ -6,7 +8,7 @@
             <li><a routerLink="/leader" routerLinkActive="active">Alliance</a></li>
             <li><a routerLink="/help" routerLinkActive="active">Ask help</a></li>
             <li><a routerLink="/allHelps" routerLinkActive="active">Attacks</a></li>
-            <li><a href="/travian/parser/">Parse</a></li>
+            <li><a (click) = "confirmPars()" >Parse</a></li>
             <li *ngIf="isLeader"><a routerLink="/leader/manager" routerLinkActive="active">Manage</a></li>
             <li><a href="logout" >Log out</a></li>
         </ul>
