@@ -1,6 +1,6 @@
 <div class="row ">
     <form  (ngSubmit)="onSubmit()">
-        <table class="fi responsive-table">
+        <table class="fixed responsive-table bordered">
             <thead>
             <tr>
                 <th>{{'Village'|translate}}</th>
@@ -42,7 +42,7 @@
 
             <tbody >
             <ng-container *ngFor="let v of player.villages">
-            <tr player-ro [v]="v"  [isForm]="v==selectedVillage" (errorMessage)="showEditError($event)"
+            <tr village-row [v]="v"  [isForm]="v==selectedVillage" (errorMessage)="showEditError($event)"
                 (successMessage)="showSuccessMessage($event)" (editedVillage)="this.editedVillage=$event"
                 (selectedVillageChanged)="changeSelectedVillage($event)" [editVillageForm]="editVillageForm"
                 (keyup)="cancelEditing($event.keyCode)" [isPlayerPage]="isPlayerPage">

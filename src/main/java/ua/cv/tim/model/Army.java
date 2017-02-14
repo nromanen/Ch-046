@@ -36,6 +36,7 @@ public class Army extends UuidEntity implements Comparable<Army>, Serializable {
         } else {
             owningVillage = village;
         }
+
     }
 
     @Transient

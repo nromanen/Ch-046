@@ -94,11 +94,6 @@ public class PlayerServiceImplTest {
         assertEquals(playerCaptor.getValue().getUuid(), testPlayer.getUuid());
     }
 
-    /*@Test
-    public void testDeleteVillageOfPlayer() throws Exception {
-
-    }*/
-
     @Test
     public void testGetPlayersByAllianceWithVillages() throws Exception {
         ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);

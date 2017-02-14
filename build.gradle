@@ -16,16 +16,15 @@ apply plugin: 'org.akhikhl.gretty'
 apply plugin: "org.sonarqube"
 
 buildscript {
-        repositories {
-               maven {
-                        url "https://plugins.gradle.org/m2/"
-                    }
-            }
-        dependencies {
-                classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2.1"
-            }
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
-
+    dependencies {
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2.1"
+    }
+}
 gretty {
     port = 8070
     contextPath = 'travian'
@@ -77,7 +76,7 @@ dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-web', version: vers.spring_security
     compile group: 'org.springframework.security', name: 'spring-security-config', version: vers.spring_security
     compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: vers.spring_security
-    compile group: 'org.springframework.security', name: 'spring-security-test', version: '4.2.1.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-test', version: '4.0.0.RELEASE'
 
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: vers.servlet
     compile group: 'javax.servlet', name: 'jstl', version: vers.jstl

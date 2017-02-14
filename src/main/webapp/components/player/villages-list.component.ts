@@ -15,22 +15,16 @@ import {TranslateService} from "ng2-translate";
 ({
     selector: 'player-list',
     styleUrls:['styles/style.css'],
-    templateUrl:"components/player/playerList.html"
+    templateUrl:"components/player/villagesList.html"
 
 })
-export class PlayerList implements OnInit, OnChanges,DoCheck {
-    editVillageForm: FormGroup;
+export class PlayerList implements OnInit {
+    @Input() isPlayerPage;
+    @Input('player') player: Player;
     private cdRef: ChangeDetectorRef;
+    editVillageForm: FormGroup;
     editError:string;
     successMessage:string;
-    @Input() isPlayerPage;
-    ngDoCheck(): void {
-
-    }
-    ngOnChanges(changes: SimpleChanges,): void {
-
-    }
-    @Input('player') player: Player;
     unitValues: Array<string>;
     selectedVillage: Village;
 

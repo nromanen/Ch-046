@@ -117,6 +117,7 @@ public class UserServiceImplTest {
         assertEquals(userNameCaptor.getValue(),user.getLogin());
         assertEquals(userMailCaptor.getValue(),user.getEmail());
     }
+
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testIsUniqueUserExpectException(){
         ArgumentCaptor<String> userNameCaptor = ArgumentCaptor.forClass(String.class);
