@@ -90,9 +90,14 @@ dependencies {
 
     testCompile group: 'org.testng', name: 'testng', version: vers.testng
     testCompile group: 'org.mockito', name: 'mockito-core', version: vers.mockito
+    testCompile 'com.jayway.jsonpath:json-path:2.2.0'
 
     compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.23.2'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.0.1'
+
+    compile group: 'org.springframework.security', name: 'spring-security-test', version: '4.2.1.RELEASE'
+
+
 }
 
 configurations.all {

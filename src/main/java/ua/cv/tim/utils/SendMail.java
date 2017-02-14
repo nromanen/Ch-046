@@ -23,7 +23,7 @@ public class SendMail {
 	@Autowired
 	private EmailConfiguration emailConfig;
 
-    public void send(String recipientEmail, String title, String message) throws  MessagingException {
+    public void send(String recipientEmail, String title, String message) throws MessagingException {
 
     	Properties properties = emailConfig.getEmailProperties();
 

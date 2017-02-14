@@ -1,14 +1,10 @@
 /**
  * Created by vyach on 26.01.2017.
  */
-
 import {Component} from "@angular/core";
 import {StompService} from "../services/helpNotification/stomp.service";
-import {PlayerHeader} from "./player-header.component";
 import {HelpService} from "../services/helpNotification/help.service";
 import {Alliance} from "../alliance/alliance";
-
-
 @Component({
     selector: 'leader-header',
     template: `

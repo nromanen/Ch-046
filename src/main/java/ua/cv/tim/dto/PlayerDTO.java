@@ -84,6 +84,7 @@ public class PlayerDTO {
     public String toString() {
         return "PlayerDTO{" +
                 "login='" + login + '\'' +
+                ", isLeader=" + isLeader +
                 ", race=" + race +
                 ", villages=" + villages +
                 ", alliance=" + alliance +

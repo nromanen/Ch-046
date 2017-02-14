@@ -91,4 +91,30 @@ public class User extends UuidEntity implements Serializable {
 		}
 		return sb.toString();
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
+
+		User user = (User) o;
+
+		if (login != null ? !login.equals(user.login) : user.login != null) return false;
+		if (password != null ? !password.equals(user.password) : user.password != null) return false;
+		if (email != null ? !email.equals(user.email) : user.email != null) return false;
+		if (roles != null ? !roles.equals(user.roles) : user.roles != null) return false;
+		return player != null ? player.equals(user.player) : user.player == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = super.hashCode();
+		result = 31 * result + (login != null ? login.hashCode() : 0);
+		result = 31 * result + (password != null ? password.hashCode() : 0);
+		result = 31 * result + (email != null ? email.hashCode() : 0);
+		result = 31 * result + (roles != null ? roles.hashCode() : 0);
+		result = 31 * result + (player != null ? player.hashCode() : 0);
+		return result;
+	}
 }

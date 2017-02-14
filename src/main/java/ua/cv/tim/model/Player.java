@@ -80,4 +80,28 @@ import java.util.List;
                 .append("villages: ").append((villages != null) ? villages : null).append(" }");
         return sb.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Player player = (Player) o;
+
+        if (user != null ? !user.equals(player.user) : player.user != null) return false;
+        if (race != player.race) return false;
+        if (villages != null ? !villages.equals(player.villages) : player.villages != null) return false;
+        return alliance != null ? alliance.equals(player.alliance) : player.alliance == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (race != null ? race.hashCode() : 0);
+        result = 31 * result + (villages != null ? villages.hashCode() : 0);
+        result = 31 * result + (alliance != null ? alliance.hashCode() : 0);
+        return result;
+    }
 }

@@ -42,36 +42,35 @@
         </div>
 
         <div class="input-field col s6 offset-s3">
-            Is capital?
-        </div>
+            <p> Is capital?</p>
         <div class="switch ">
-            <label class="col offset-s3">
+            <label class="col cap_Switch">
                 No
                 <input type="checkbox"  formControlName="isCapital">
                 <span class="lever"></span>
                 Yes
             </label>
         </div>
-
-
-
-        <div  class="input-field col s6 offset-s3">
-            <button  (click)="addArmies()" class="btn-floating btn-large waves-effect waves-light red">
-                <i class="material-icons">add</i>
-            </button> Add army
         </div>
             <div formArrayName="armies">
                 <div *ngFor="let p of addVillageForm.controls.armies.controls; let i=index" >
-                    <div add-army [army]="village.armies[i]" [group]="addVillageForm.controls.armies.controls[i]"></div>
+                    <div add-army [army]="village.armies[i]" [group]="addVillageForm.controls.armies.controls[i]" [unitTypeStrings]="this.unitTypeStrings"
+                    [armiesControl]="addVillageForm.controls.armies" [index]="i" (newUnitTypeStrings)="updateTypes($event)"></div>
                 </div>
             </div>
 
 
-        <div class="input-field col s6 offset-s3">
+        <div  class="input-field col s6 offset-s3">
+            <button  (click)="addArmies()" class="btn-floating btn-large waves-effect waves-light red" [disabled]="!addVillageForm.controls.armies.valid">
+                <i class="material-icons">add</i>
+            </button> Add army
+        </div>
+
+<div class="row">
+        <div class="input-field col s6 offset-s5">
             <button type="submit" class="btn btn-default"
             [disabled]="!addVillageForm.valid">Submit</button>
         </div>
     </div>
+    </div>
 </form>
-
-<!--//0987687543-->

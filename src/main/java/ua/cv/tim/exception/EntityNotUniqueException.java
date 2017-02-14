@@ -9,7 +9,6 @@ public class EntityNotUniqueException extends Exception {
     public EntityNotUniqueException() {
     }
 
-    //Constructor that accepts a message
     public EntityNotUniqueException(String message) {
         super(message);
     }

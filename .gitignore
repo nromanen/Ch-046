@@ -27,3 +27,5 @@ web/*
 /.gradle/
 .idea/
 org/
+
+npm-debug.log

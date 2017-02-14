@@ -37,6 +37,10 @@ public class PlayerDaoImpl extends AbstractCrudDao<Player> implements PlayerDao 
 	public Player getByIdWithVillages(String id) {
 		Player player = getById(id);
 		Hibernate.initialize(player.getVillages());
+		List<Village> villages = player.getVillages();
+		Hibernate.initialize(player.getUser().getRoles());
+		for(Village village:villages)
+			Hibernate.initialize(village.getArmies());
 		return player;
 	}
 
@@ -50,7 +54,6 @@ public class PlayerDaoImpl extends AbstractCrudDao<Player> implements PlayerDao 
 		for (Player player : players) {
 			initializePlayerVillages(player);
 		}
-
 		return players;
 	}
 

@@ -2,6 +2,7 @@ package ua.cv.tim.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
 	private Race race;
 	private List<Village> villages;
 	private Alliance alliance;
+
 
 	public AuthorizedUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities);
