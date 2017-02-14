@@ -26,12 +26,12 @@ public class HibernateConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(HibernateConfiguration.class);
 
+    @Autowired
+    private Environment environment;
+
     public HibernateConfiguration() {
         logger.info("HibernateConfiguration  constructor working  ");
     }
-
-    @Autowired
-    private Environment environment;
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() {

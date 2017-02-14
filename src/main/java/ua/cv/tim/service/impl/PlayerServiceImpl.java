@@ -1,6 +1,8 @@
 package ua.cv.tim.service.impl;
 
 import org.hibernate.Hibernate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +12,7 @@ import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Village;
 import ua.cv.tim.service.PlayerService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +21,7 @@ import java.util.List;
 @Service(value = "playerService")
 @Transactional
 public class PlayerServiceImpl implements PlayerService {
+    private static final Logger logger = LoggerFactory.getLogger(PlayerServiceImpl.class);
     @Autowired
     PlayerDao playerDao;
     @Autowired
@@ -26,6 +30,7 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public void add(Player player){
         playerDao.add(player);
+        logger.info("Player with login {} and id {} was added successfully.",player.getUser().getLogin(), player.getUuid());
     }
 
     @Override
@@ -39,20 +44,20 @@ public class PlayerServiceImpl implements PlayerService {
         return byIdWithVillages;
     }
 
-    public void update(Player player){
+    public void update(Player player)    {
         playerDao.update(player);
+        logger.info("Player with login {} and id {} was updated successfully.",player.getUser().getLogin(),player.getUuid());
     }
 
-    public void delete(Player player){
+    public void delete(Player player)    {
         playerDao.delete(player);
-    }
-
-    public void deleteVillageOfPlayer(Village village) {
-        villageDao.delete(village);
+        logger.info("Player with login {} and id {} was deleted successfully.",player.getUser().getLogin(),player.getUuid());
     }
 
     @Override
     public List<Player> getPlayersByAllianceWithVillages(String allianceName) {
-        return playerDao.getPlayersByAllianceWithVillages(allianceName);
+        List<Player> players = playerDao.getPlayersByAllianceWithVillages(allianceName);
+        logger.info("Alliance {} has players {}",allianceName,players);
+        return players;
     }
 }

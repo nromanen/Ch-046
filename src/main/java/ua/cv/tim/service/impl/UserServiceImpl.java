@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
 		userDao.update(user);
 		String message = "Player updated successfully, your login is \"" + user.getLogin() + "\", role: " + user.getRoles();
 		sendEmail(user, message);
-		logger.info("User with login {} and id {} was updated, message sent on his email {} ",user.getLogin(),user.getUuid(),user.getEmail());
+		logger.info("User with login {} and id {} was updated ",user.getLogin(),user.getUuid());
 	}
 
 
@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService {
 		playerDao.add(player);
 		logger.info("User with login {} and id {} was added",user.getLogin(),user.getUuid());
 		String message = "Your login is \"" + user.getLogin() + "\", and password: \""
-				+ user.getPassword() + "\",  Role: " + user.getRoles();
+				+ password + "\",  Role: " + user.getRoles();
 		sendEmail(user,message);
 	}
 
