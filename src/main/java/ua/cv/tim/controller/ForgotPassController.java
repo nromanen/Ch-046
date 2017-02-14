@@ -12,6 +12,8 @@ import ua.cv.tim.service.UserService;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by rmochetc on 01.02.2017.
@@ -75,6 +77,9 @@ public class ForgotPassController {
     }
 
     private boolean checkPassword(String password){
-        return false;
+            String ePattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@!%_*#?&])[A-Za-z\\d$@_!%*#?&]{8,32}$";
+            Pattern p = java.util.regex.Pattern.compile(ePattern);
+            Matcher m = p.matcher(password);
+            return m.matches();
     }
 }

@@ -13,19 +13,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import ua.cv.tim.dto.AllianceDTO;
 import ua.cv.tim.dto.AttackDTO;
 import ua.cv.tim.dto.PlayerDTO;
+import ua.cv.tim.model.Alliance;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.AttackService;
 import ua.cv.tim.service.PlayerService;
 import ua.cv.tim.service.UserService;
+import ua.cv.tim.service.VillageService;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Oleg on 08.01.2017.
+ * Created by rmochetc on 08.01.2017.
  */
 
 @RestController
@@ -44,6 +47,29 @@ public class HelpController {
 
     @Autowired
     AttackService attackService;
+
+    @Autowired
+    VillageService villageService;
+
+    @RequestMapping(value = "/user/helpInit", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<AllianceDTO> getAllianceByPlayer() {
+        logger.info("path: /user/helpInit/ is Starting");
+
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userByUsername = userService.getUserByUsername(principal.getUsername());
+        String id = userByUsername.getPlayer().getUuid();
+
+        Player player = playerService.getByIdWithVillages(id);
+        AllianceDTO allianceDto = new AllianceDTO();
+        allianceDto.setName(player.getAlliance().getName());
+        allianceDto.setAllianceUuid(player.getAlliance().getUuid());
+        Alliance alliance = player.getAlliance();
+
+        logger.info("path: /user/helpInit/ return AllianceDTO: name: {}, id: {}", allianceDto.getName(), allianceDto.getAllianceUuid());
+
+        return new ResponseEntity<>(allianceDto, HttpStatus.OK);
+    }
+
 
     @RequestMapping(value = "/askhelp", method = RequestMethod.GET)
     public ResponseEntity<PlayerDTO> getPlayerById() {

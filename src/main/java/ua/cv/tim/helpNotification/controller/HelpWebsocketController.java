@@ -8,7 +8,9 @@ import ua.cv.tim.helpNotification.model.InputObject;
 import ua.cv.tim.helpNotification.model.OutputObject;
 
 /**
+ * Created by rmochetc on 08.01.2017.
  */
+
 @RestController
 public class HelpWebsocketController {
 		

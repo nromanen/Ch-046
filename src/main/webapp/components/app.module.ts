@@ -41,6 +41,8 @@ import {EditAllianceComponent} from "./alliance/edit-alliance.component";
 import {CalendarModule} from 'primeng/primeng';
 import {AllHelps} from "./help/all-helps.component";
 import {HelpComponent} from "./help/ask-help.component";
+import {AttackArchiveComponent} from "./help/attack-archive.component";
+import {AttackArchiveService} from "./services/helpNotification/attack-archive.service";
 
 
 
@@ -80,6 +82,7 @@ import {HelpComponent} from "./help/ask-help.component";
         AddArmyForm,
         HelpComponent,
         AllHelps,
+        AttackArchiveComponent
 
     ],
     providers: [
@@ -88,7 +91,7 @@ import {HelpComponent} from "./help/ask-help.component";
         PlayerService,
         CurrVillageArmiesService,
         VillageService,
-
+        AttackArchiveService,
         HelpService,
         StompService
     ],

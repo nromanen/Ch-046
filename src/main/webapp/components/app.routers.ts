@@ -10,6 +10,7 @@ import {LeaderManagerComponent} from "./leader/leader-manager.component";
 import {PlayerComponent} from "./player/player.component";
 import {HelpComponent} from "./help/ask-help.component";
 import {AllHelps} from "./help/all-helps.component";
+import {AttackArchiveComponent} from "./help/attack-archive.component";
 
 
 
@@ -55,12 +56,11 @@ export const routes:Routes = ([
     {
         path:'user/init',
         component:PlayerComponent
+    },
+    {
+        path:'allHelps/archive',
+        component: AttackArchiveComponent
     }
-
-
-
-
-
 
 ]);
 

@@ -1,11 +1,21 @@
 package ua.cv.tim.service.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.AttackArchiveDao;
+import ua.cv.tim.dto.AttackDTO;
+import ua.cv.tim.dto.AttackJson;
 import ua.cv.tim.model.AttackArchive;
+import ua.cv.tim.model.AuthorizedUser;
 import ua.cv.tim.service.AttackArchiveService;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by rmochetc on 13.02.2017.
@@ -16,11 +26,41 @@ import ua.cv.tim.service.AttackArchiveService;
 public class AttackArchiveServiceImpl implements AttackArchiveService {
 
     @Autowired
-    AttackArchiveDao attackArchiveDao;
+    private AttackArchiveDao attackArchiveDao;
 
     @Override
     public void add(AttackArchive attackArchive) {
         attackArchiveDao.add(attackArchive);
-        System.out.println("AttackArchiveService work" + attackArchive);
+    }
+
+    @Override
+    public List<AttackArchive> getAll() {
+        return attackArchiveDao.getAll();
+    }
+
+    @Override
+    public List<AttackDTO> getById(String id) throws IOException {
+
+        List<AttackDTO> archiveAttacks = new ArrayList<>();
+        AuthorizedUser principal = (AuthorizedUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<AttackJson> attackJsons = objectMapper.readValue(attackArchiveDao.getById(id).getArchiveData(), new TypeReference<List<AttackJson>>() {});
+
+
+        for (AttackJson attack : attackJsons) {
+            if (attack.getAllianceName().equals(principal.getAlliance().getName())) {
+                AttackDTO attackDTO = new AttackDTO();
+                attackDTO.setEnemy(attack.getEnemy());
+                attackDTO.setAttackTime("" + attack.getAttackTime());
+                attackDTO.setPlayerName(attack.getPlayerName());
+                attackDTO.setVillageName(attack.getVillageName());
+                archiveAttacks.add(attackDTO);
+            }
+        }
+
+        System.out.println(archiveAttacks);
+
+        return archiveAttacks;
     }
 }

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import ua.cv.tim.dto.AttackJson;
 import ua.cv.tim.model.Attack;
 import ua.cv.tim.model.AttackArchive;
 import ua.cv.tim.service.AttackArchiveService;
@@ -36,91 +37,30 @@ public class Scheduler {
 
     @Scheduled(cron = "0 * * * * *")
     public void clearTempFolder() throws ParseException, JsonProcessingException {
-        saveAttacks(attackService.getNotActive());
-        attackService.deleteOldAttack();
+        List<Attack> attacks = attackService.getNotActive();
+        if (attacks.size() != 0) {
+            saveAttacks(attacks);
+            attackService.deleteOldAttack();
+        }
         userService.deleteOldToken();
     }
 
     private void saveAttacks(List<Attack> attacks) throws JsonProcessingException {
 
-        if (attacks.size() != 0) {
-
-            List<AttackJson> result = new ArrayList<>();
-
-            for (Attack attack : attacks) {
-                AttackJson attackDto = new AttackJson();
-                attackDto.setAllianceUuid(attack.getOwner().getAlliance().getUuid());
-                attackDto.setAttackTime(attack.getAttackTime().toString());
-                attackDto.setEnemy(attack.getEnemy());
-                attackDto.setPlayerUuid(attack.getOwner().getUuid());
-                attackDto.setVillageUuid(attack.getVillage().getUuid());
-                result.add(attackDto);
-            }
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            String resultString = objectMapper.writeValueAsString(result);
-            attackArchiveService.add(new AttackArchive(resultString));
-            logger.info("Old attacks for save to Data Base archive in JSON: {}", resultString);
-        }
-    }
-
-    private static class AttackJson{
-        private String allianceUuid;
-        private String attackTime;
-        private String enemy;
-        private String playerUuid;
-        private String villageUuid;
-
-        public String getAllianceUuid() {
-            return allianceUuid;
+        List<AttackJson> result = new ArrayList<>();
+        for (Attack attack : attacks) {
+            AttackJson attackDto = new AttackJson();
+            attackDto.setAllianceName(attack.getOwner().getAlliance().getName());
+            attackDto.setAttackTime(attack.getAttackTime().toString());
+            attackDto.setEnemy(attack.getEnemy());
+            attackDto.setPlayerName(attack.getOwner().getUser().getLogin());
+            attackDto.setVillageName(attack.getVillage().getName()+" [" + attack.getVillage().getxCoord() + "," + attack.getVillage().getyCoord() +" ]");
+            result.add(attackDto);
         }
 
-        public void setAllianceUuid(String allianceUuid) {
-            this.allianceUuid = allianceUuid;
-        }
-
-        public String getAttackTime() {
-            return attackTime;
-        }
-
-        public void setAttackTime(String attackTime) {
-            this.attackTime = attackTime;
-        }
-
-        public String getEnemy() {
-            return enemy;
-        }
-
-        public void setEnemy(String enemy) {
-            this.enemy = enemy;
-        }
-
-        public String getPlayerUuid() {
-            return playerUuid;
-        }
-
-        public void setPlayerUuid(String playerUuid) {
-            this.playerUuid = playerUuid;
-        }
-
-        public String getVillageUuid() {
-            return villageUuid;
-        }
-
-        public void setVillageUuid(String villageUuid) {
-            this.villageUuid = villageUuid;
-        }
-
-        @Override
-        public String toString() {
-            final StringBuilder sb = new StringBuilder("AttackDto{");
-            sb.append("allianceUuid='").append(allianceUuid).append('\'');
-            sb.append(", attackTime='").append(attackTime).append('\'');
-            sb.append(", enemy='").append(enemy).append('\'');
-            sb.append(", playerUuid='").append(playerUuid).append('\'');
-            sb.append(", villageUuid='").append(villageUuid).append('\'');
-            sb.append('}');
-            return sb.toString();
-        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        String resultString = objectMapper.writeValueAsString(result);
+        attackArchiveService.add(new AttackArchive(resultString));
+        logger.info("Old attacks for save to Data Base archive in JSON: {}", resultString);
     }
 }
