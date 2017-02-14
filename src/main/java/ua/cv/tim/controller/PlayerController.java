@@ -108,10 +108,10 @@ public class PlayerController {
     public ResponseEntity<Player> deletePlayer(@PathVariable(name = "id") String id) {
         Player player = playerService.getById(id);
         if (player == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // todo throw IllegalArgumentException
+             throw new IllegalArgumentException("Player with entered id does not exist!");
         }
         playerService.delete(player);
-        return new ResponseEntity<>(player, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(player, HttpStatus.OK);
     }
 
 	@RequestMapping(value = "/player/alliance", method = RequestMethod.GET)

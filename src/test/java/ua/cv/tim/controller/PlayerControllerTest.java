@@ -71,16 +71,12 @@ public class PlayerControllerTest {
         assertEquals(playerCaptor.getValue(),player.getUuid());
     }
 
-    @Test
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testDeleteNullPlayer() throws Exception {
         ArgumentCaptor<String> playerCaptor = ArgumentCaptor.forClass(String.class);
         Player player = getPlayer();
         when(playerService.getById(anyString())).thenReturn(null);
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete( "/player/{id}",player.getUuid());
-
-        this.mockMvc.perform(builder)
-                .andExpect(status().isNotFound())
-                .andDo(MockMvcResultHandlers.print());
+        playerController.deletePlayer(player.getUuid());
         verify(playerService, times(1)).getById(playerCaptor.capture());
         assertEquals(playerCaptor.getValue(),player.getUuid());
     }

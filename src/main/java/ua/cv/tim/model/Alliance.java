@@ -48,4 +48,24 @@ public class Alliance extends UuidEntity implements Serializable {
         sb.append('}' );
         return sb.toString();
     }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (players != null ? players.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Alliance)) return false;
+        if (!super.equals(o)) return false;
+
+        Alliance alliance = (Alliance) o;
+
+        if (name != null ? !name.equals(alliance.name) : alliance.name != null) return false;
+        return players != null ? players.equals(alliance.players) : alliance.players == null;
+    }
 }
