@@ -48,8 +48,12 @@ public class PlayerController {
 		return new ResponseEntity<>(villages, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/player", method = RequestMethod.GET)
-	public ResponseEntity<PlayerDTO> getPlayerById() {
+    /**
+     *
+     * @return player with villages in JSON-format.
+     */
+    @RequestMapping(value = "/player", method = RequestMethod.GET)
+    public ResponseEntity<PlayerDTO> getPlayerById() {
 
 		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User userByUsername = userService.getUserByUsername(principal.getUsername());
@@ -65,26 +69,36 @@ public class PlayerController {
 		return new ResponseEntity<>(playerDTO, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/player/", method = RequestMethod.POST)
-	public ResponseEntity<Player> addPlayer(@RequestBody Player player, UriComponentsBuilder builder) {
-		playerService.add(player);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/player/{id}").buildAndExpand(player.getUser().getUuid()).toUri());
-		log.info(player.toString());
-		return new ResponseEntity<>(headers, HttpStatus.CREATED);
-	}
+    /**
+     * Adds new player in a database
+     * @param player player in JSON-format
+     * @param builder
+     * @return created player.
+     */
+    @RequestMapping(value = "/player/", method = RequestMethod.POST)
+    public ResponseEntity<Player> addPlayer(@RequestBody Player player, UriComponentsBuilder builder) {
+        playerService.add(player);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(builder.path("/player/{id}").buildAndExpand(player.getUser().getUuid()).toUri());
+        log.info(player.toString());
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
 
+    /**
+     *
+     * @param id
+     * @param player
+     * @return updated player.
+     */
     @RequestMapping(value = "/player/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Player> updatePlayer(@PathVariable(name = "id") String id, @RequestBody Player player) {
         Player currentPlayer = playerService.getById(id);
         if (currentPlayer != null) {
-            System.out.println("here is");
             currentPlayer.setRace(player.getRace());
             currentPlayer.setUser(player.getUser());
             currentPlayer.setVillages(player.getVillages());
             currentPlayer.setAlliance(player.getAlliance());
             playerService.add(currentPlayer);
-
             return new ResponseEntity<>(currentPlayer, HttpStatus.CREATED);
         }
         throw new IllegalArgumentException("Player doesn't exist");
@@ -94,7 +108,7 @@ public class PlayerController {
     public ResponseEntity<Player> deletePlayer(@PathVariable(name = "id") String id) {
         Player player = playerService.getById(id);
         if (player == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // todo throw IllegalArgumentException
+             throw new IllegalArgumentException("Player with entered id does not exist!");
         }
         playerService.delete(player);
         return new ResponseEntity<>(player, HttpStatus.OK);

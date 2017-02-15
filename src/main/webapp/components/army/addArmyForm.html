@@ -1,33 +1,34 @@
-<div [formGroup]="group">
-    <div class="input-field col s6 offset-s3" >
-        <select class="browser-default" name="type" formControlName="type">
+<div [formGroup]="group" >
+    <div class="row">
+    <div class="input-field col s2 offset-s3">
+        <select class="browser-default" name="type" (change)="removeType(selectedType.value)" formControlName="type" #selectedType>
             <option value="" disabled selected>Choose type of army</option>
-            <option *ngFor="let type of unitTypeStrings" [ngValue]="type">{{type}}</option>
+            <option *ngFor="let type of unitTypeStringsCopy" >{{type}}</option>
         </select>
     </div>
-
-    <div class="input-field col s6 offset-s3">
+    <div class="input-field col s2">
         <input id="count" type="text" class="validate" formControlName="count" required>
         <label for="count">Count</label>
         <div *ngIf="!group.controls.count.valid && (group.controls.count.touched || group.controls.count.dirty)">
-            <div [hidden]="!group.controls['count'].errors.required">
+            <div [hidden]="!group.controls['count'].errors.required" class="error">
                 Count is required!
             </div>
-            <div [hidden]="!group.controls['count'].errors.pattern">
+            <div [hidden]="!group.controls['count'].errors.pattern" class="error">
                 Count can contain numbers only!
             </div>
         </div>
-
     </div>
-    <div class="input-field col s6 offset-s3">
+    <div class="input-field col s2">
+        <span  (click)="removeArmy()" class="right x">x</span>
         Is own unit?
-    </div>
     <div class="switch ">
-        <label class="col offset-s3">
+        <label class="c_switch" >
             No
             <input type="checkbox"  formControlName="ownUnit">
             <span class="lever"></span>
             Yes
         </label>
     </div>
+</div>
+</div>
 </div>

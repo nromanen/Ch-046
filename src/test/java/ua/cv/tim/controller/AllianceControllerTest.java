@@ -56,6 +56,7 @@ public class AllianceControllerTest {
         this.mockMvc = MockMvcBuilders.standaloneSetup(allianceController).build();
         allianceDTOS =getAllianceDTOsList();
     }
+
     @AfterMethod
     public void resetAllMocks(){
         Mockito.reset(allianceService,userService);

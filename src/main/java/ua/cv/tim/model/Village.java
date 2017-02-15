@@ -7,12 +7,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+/**Represents Village class*/
 @Entity
 @Table(name = "Village", uniqueConstraints = @UniqueConstraint(columnNames = { "xCoord", "yCoord" }))
 public class Village extends UuidEntity implements Comparable<Village>, Serializable {
+	/**Empty constructor needed to instantiate beans properly*/
     public Village(){
 	}
+
+	//*Village name value*/
 	private String name;
 	@Column(nullable = false)
 	private Short xCoord;
@@ -26,7 +29,6 @@ public class Village extends UuidEntity implements Comparable<Village>, Serializ
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owningVillage",cascade = CascadeType.ALL)
 	private List<Army> armies = new ArrayList<>();
 
-//	@JsonBackReference
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "armyRequestVillage")
 	private List<Army> armyRequests;
@@ -36,10 +38,18 @@ public class Village extends UuidEntity implements Comparable<Village>, Serializ
 	@JoinColumn(name = "player_uuid", nullable = false)
 	private Player player;
 
+    /**Returns the name of village
+     *
+     * @return Returns the name of village
+     */
 	public String getName() {
 		return name;
 	}
 
+    /** Sets village's name
+     *
+     * @param name This is the name of village
+     */
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -121,4 +131,38 @@ public class Village extends UuidEntity implements Comparable<Village>, Serializ
 		return this.name.compareTo(other.name);
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
+
+		Village village = (Village) o;
+
+		if (name != null ? !name.equals(village.name) : village.name != null) return false;
+		if (xCoord != null ? !xCoord.equals(village.xCoord) : village.xCoord != null) return false;
+		if (yCoord != null ? !yCoord.equals(village.yCoord) : village.yCoord != null) return false;
+		if (population != null ? !population.equals(village.population) : village.population != null) return false;
+		if (isCapital != null ? !isCapital.equals(village.isCapital) : village.isCapital != null) return false;
+		if (wall != null ? !wall.equals(village.wall) : village.wall != null) return false;
+		if (armies != null ? !armies.equals(village.armies) : village.armies != null) return false;
+		if (armyRequests != null ? !armyRequests.equals(village.armyRequests) : village.armyRequests != null)
+			return false;
+		return player != null ? player.equals(village.player) : village.player == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = super.hashCode();
+		result = 31 * result + (name != null ? name.hashCode() : 0);
+		result = 31 * result + (xCoord != null ? xCoord.hashCode() : 0);
+		result = 31 * result + (yCoord != null ? yCoord.hashCode() : 0);
+		result = 31 * result + (population != null ? population.hashCode() : 0);
+		result = 31 * result + (isCapital != null ? isCapital.hashCode() : 0);
+		result = 31 * result + (wall != null ? wall.hashCode() : 0);
+		result = 31 * result + (armies != null ? armies.hashCode() : 0);
+		result = 31 * result + (armyRequests != null ? armyRequests.hashCode() : 0);
+		result = 31 * result + (player != null ? player.hashCode() : 0);
+		return result;
+	}
 }

@@ -12,8 +12,9 @@ import {Army} from "../army/army";
 import {FormControl, Validators, FormArray, FormBuilder, AbstractControl} from "@angular/forms";
 import {AddVillageForm} from "./addVillageForm";
 import {el} from "@angular/platform-browser/testing/browser_util";
+import {TranslateService} from "ng2-translate";
 @Component({
-    selector: '[player-ro]',
+    selector: '[village-row]',
     outputs:['selectedVillageChanged'],
     styleUrls:['styles/style.css'],
     template:`
@@ -52,12 +53,13 @@ import {el} from "@angular/platform-browser/testing/browser_util";
     (cancelEdit)="cancelEditing($event)" [armiesArrayControl]="armiesArrayControl" [index]="i"
     (cellClicked)="cellClick($event)" [isInput]="isForm" [ifSave]="ifSaveChanges"></army-cell>
 </td>
-<td>
+<td *ngIf="isPlayerPage">
     <button (click)="!isForm?showEdit():changeVillage()" type="button"
-    class="btn waves-effect waves-light col offset-s3"  name="action" 
+    class="btn edit waves-effect waves-light col offset-s3"  name="action" 
     [disabled]="!editVillageForm.valid && isForm" style="margin-top: 5px;" >
-            {{!isForm?"Edit":"Save"}}      
-    </button>
+           <i  class="material-icons">{{!isForm?'mode_edit':'play_arrow'}}</i>
+           
+    </button>  
 </td>
 
 `
@@ -72,14 +74,16 @@ export class VillageRow implements OnInit,AfterViewInit{
     @Output() errorMessage:EventEmitter<{}>;
     @Output() successMessage:EventEmitter<string>;
     @Output() editedVillage;
+    @Input() isPlayerPage;
     unitValues:Array<string>;
     selectedVillageChanged:EventEmitter<Village>;
     ifSaveChanges:boolean;
     private cdr: ChangeDetectorRef;
     private armiesArrayControl: FormArray;
-
+    private stringSuccessMessage:string;
+    private stringErrorMessage:string;
     constructor( private villageService:VillageService,cdr: ChangeDetectorRef,
-                 private _fBuilder:FormBuilder){
+                 private _fBuilder:FormBuilder,private translate: TranslateService){
         this.selectedVillageChanged=new EventEmitter<Village>(false);
         this.unitValues=[];
         this.ifSaveChanges=false;
@@ -88,11 +92,15 @@ export class VillageRow implements OnInit,AfterViewInit{
         this.errorMessage=new EventEmitter<{}>();
         this.successMessage=new EventEmitter<string>();
         this.editedVillage=new EventEmitter<Village>();
+        translate.get('Village was updated successfully.').subscribe(message=>{
+            this.stringSuccessMessage=message;
+        });
+
+        this.stringErrorMessage="Error message";
     }
 
     ngOnInit(): void {
         this.getStringUnitTypeValues();
-        // this.buildForm();
     }
 
     ngAfterViewInit(): void {
@@ -114,19 +122,16 @@ export class VillageRow implements OnInit,AfterViewInit{
         this.ifSaveChanges=true;
         let index:number=this.villageService.villages.indexOf(this.v);
         let newVillage=this.editVillageForm.value;
-        // this.villageService.villages[index]=newVillage;
-        console.log(newVillage);
         this.villageService.update(newVillage).subscribe(
             response=>{
                  this.villageService.villages[index]=response;
-                this.successMessage.emit("Village has successfully been updated ");
+                this.successMessage.emit(this.stringSuccessMessage);
                 this.editedVillage.emit(response);
             },
             error=>{
                 this.errorMessage.emit({error:error._body});
             }
         );
-        // this.selectedVillageChanged.emit(new Village);
         this.ifSaveChanges=false;
 
     }
@@ -135,11 +140,9 @@ export class VillageRow implements OnInit,AfterViewInit{
         this.selectedVillageChanged.emit(this.v);
         this.errorMessage.emit(null);
         this.buildForm();
-        // this.cdr.detectChanges();
     }
 
     cancelEditing(){
-        // this.isForm=false;
         this.selectedVillageChanged.emit(new Village);
         this.cdr.detectChanges();
 
@@ -164,9 +167,7 @@ export class VillageRow implements OnInit,AfterViewInit{
             'armies':this._fBuilder.array([]),
         });
         this.armiesArrayControl = <FormArray>this.editVillageForm.controls['armies'];
-        // for (let i=0; i<this.v.armies.length; i++) {
-        //     this.armiesArrayControl.push(this.initArmies(this.v.armies[i]));
-        // }
+
 
         for (let i=0; i<27; i++) {
             this.armiesArrayControl.push(this.initArmies(this.v.armies[i]));

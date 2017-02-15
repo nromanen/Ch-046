@@ -10,16 +10,13 @@ import java.util.List;
  */
 public interface AttackService {
 
-    List<Attack> getAll();
+    List<Attack> getNotActive();
 
     void addAttack(AttackDTO attack);
 
-
-    void deleteAAttack(String  id);
-
-    Attack getById(String  uuid);
-
-    void updateAAttack(Attack attack);
+    void deleteAttack(Attack attack);
 
     List<AttackDTO> getActive();
+
+    void deleteOldAttack();
 }

@@ -1,18 +1,11 @@
 package ua.cv.tim.dao.hibernate;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
 import ua.cv.tim.dao.AbstractCrudDao;
 import ua.cv.tim.model.*;
@@ -28,12 +21,18 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
+    private static final String GET_USER_BY_LOGIN = "select u from User u where u.login = :login";
+    private static final String GET_USER_BY_MAIL_AND_UUID = "select u FROM User u WHERE u.email=:mail and u.uuid != :uuid";
+    private static final String GET_USER_BY_MAIL ="select u FROM User u WHERE u.email=:mail";
+    private static final String GET_USER_BY_ALLIANCENAME = "select u from User u where u.player.alliance.name = :name";
+    private static final String GET_USER_BY_ID = "select u FROM User u WHERE u.id=:id";
+    private static final String GET_USER_BY_LOGIN_AND_UUID = "select u from User u where u.login = :login and u.uuid != :uuid";
+    private static final String LOGIN = "login";
+
     @Override
     public User getUserByUsername(String username) {
-        logger.info("Username is {} ", username);
-        String request = "select u from User u where u.login = :login";
-        Query<User> query = getCurrentSession().createQuery(request);
-        query.setParameter("login", username);
+        Query<User> query = getCurrentSession().createQuery(GET_USER_BY_LOGIN);
+        query.setParameter(LOGIN, username);
         return query.uniqueResult();
     }
 
@@ -41,47 +40,40 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     public User getWithRolesById(String id) {
         User user = getCurrentSession().get(User.class, id);
         List<Role> roles = user.getRoles();
-        return user;
+        Hibernate.initialize(roles);
+        return getCurrentSession().get(User.class, id);
 
     }
 
     @Override
     public List<User> getAll() {
-        Session session = getCurrentSession();
-        Query query = session.createQuery("FROM User ");
-        List<User> users = (List<User>) query.getResultList();
+        List<User> users = (List<User>) getCurrentSession().createQuery("FROM User ").getResultList();
         return users;
     }
-
-    public User getByMail(String mail, String uuid) {
-        logger.info("Mail is {} uuid is {} ", mail,uuid);
-        Session session = getCurrentSession();
+    @Override
+        public User getByMail(String mail, String uuid) {
         Query query = null;
         if (uuid != null) {
-            logger.info("User with mail {} has uuid {} ",mail, uuid);
-            query = session.createQuery("select u FROM User u WHERE u.email=:mail and u.uuid != :uuid");
+            query = getCurrentSession().createQuery(GET_USER_BY_MAIL_AND_UUID);
             query.setParameter("mail", mail);
             query.setParameter("uuid", uuid);
         } else {
-            query = session.createQuery("select u FROM User u WHERE u.email=:mail");
+            query = getCurrentSession().createQuery(GET_USER_BY_MAIL);
             query.setParameter("mail", mail);
         }
-        User user = (User) query.uniqueResult();
-        return user;
+        return (User) query.uniqueResult();
     }
 
     @Override
     public List<User> getUsersByAlliance(String allianceName) {
-        String request = "select u from User u where u.player.alliance.name = :name";
-        Query<User> query = getCurrentSession().createQuery(request);
+        Query<User> query = getCurrentSession().createQuery(GET_USER_BY_ALLIANCENAME);
         query.setParameter("name", allianceName);
         return query.list();
     }
 
     @Override
     public User getById(String uuid) {
-        Session session = getCurrentSession();
-        Query query = session.createQuery("select u FROM User u WHERE u.id=:id");
+        Query query = getCurrentSession().createQuery(GET_USER_BY_ID);
         query.setParameter("id", uuid);
         User user = (User) query.uniqueResult();
         return user;
@@ -89,36 +81,30 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
 
     @Override
     public List<User> getAllWithRoles() {
-
-        Query query = getCurrentSession().createQuery("FROM User ");
-        List<User> allWithRoles = (List<User>) query.getResultList();
+        List<User> allWithRoles = (List<User>) getCurrentSession().createQuery("FROM User ").getResultList();
         for (User user : allWithRoles)
             Hibernate.initialize(user.getRoles());
         return allWithRoles;
     }
 
-
+    @Override
     public User getByMail(String mail){
-        String request = "select u FROM User u WHERE u.email=:mail";
-        Query<User> query = getCurrentSession().createQuery(request);
+        Query<User> query = getCurrentSession().createQuery(GET_USER_BY_MAIL);
         query.setParameter("mail", mail);
         return query.uniqueResult();
 
     }
-
+    @Override
     public boolean isUserUnique(String username, String uuid) {
-        Session session = getCurrentSession();
         Query query = null;
         if (uuid != null) {
-            logger.info("Username is {} ", username);
-            System.out.println("uuid no = null : " + uuid);
-            query = session.createQuery("select u from User u where u.login = :login and u.uuid != :uuid");
-            query.setParameter("login", username);
+            query = getCurrentSession().createQuery(GET_USER_BY_LOGIN_AND_UUID);
+            query.setParameter(LOGIN, username);
             query.setParameter("uuid", uuid);
         } else {
-            query = session.createQuery("select u from User u where u.login = :login");
+            query = getCurrentSession().createQuery(GET_USER_BY_LOGIN);
             logger.info("Id is null and username is {} ", username);
-            query.setParameter("login", username);
+            query.setParameter(LOGIN, username);
         }
         User user = (User) query.uniqueResult();
             return user == null ? true : false;
@@ -126,9 +112,8 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
 
     @Override
     public User getUserWithAlliance(String username) {
-        String request = "select u from User u where u.login = :login";
-        Query<User> query = getCurrentSession().createQuery(request);
-        query.setParameter("login", username);
+        Query<User> query = getCurrentSession().createQuery(GET_USER_BY_LOGIN);
+        query.setParameter(LOGIN, username);
         User user = query.getSingleResult();
         Hibernate.initialize(user.getPlayer().getAlliance());
         return user;
@@ -136,9 +121,8 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
 
     @Override
     public User getFullUserByUsername(String username) {
-        String request = "select u from User u where u.login = :login";
-        Query<User> query = getCurrentSession().createQuery(request);
-        query.setParameter("login", username);
+        Query<User> query = getCurrentSession().createQuery(GET_USER_BY_LOGIN);
+        query.setParameter(LOGIN, username);
         User user = query.getSingleResult();
         if (user.getPlayer() != null) {
             initializePlayerVillages(user.getPlayer());

@@ -3,6 +3,11 @@
  */
 import {Component, Input} from "@angular/core";
 import {StompService} from "../services/helpNotification/stomp.service";
+import {Alliance} from "../alliance/alliance";
+import {HelpService} from "../services/helpNotification/help.service";
+import {Observable} from "rxjs";
+import {isUndefined} from "util";
+import {error} from "util";
 import {ParserService} from "../services/parser.service";
 import {Credentials} from "../modal_parsing_window/Credentials";
 
@@ -18,15 +23,31 @@ export class PlayerHeader {
     public serverResponse: string;
     @Input() isLeader: boolean = false;
     showNotif: boolean = false;
+    attacks: any[];
+    numOfAttacks: number;
     confirmMsg: string;
     confirmParsing: boolean = false;
 
 
-    constructor(private stompService: StompService, private parserService: ParserService) {
+    constructor(private stompService: StompService, private parserService: ParserService rivate helpService:HelpService) {
     }
 
     public ngOnInit(): void {
         this.websocketConnect();
+        this.getActiveHelp();
+    }
+
+    getActiveHelp(){
+        this.helpService.getActiveHelp()
+            .subscribe(
+                resp=>{
+                    this.attacks = resp;
+                    console.log(this.attacks);
+                    this.numOfAttacks = this.attacks !=null? this.attacks.length : null;
+                }
+            );
+
+
     }
 
     // getAlliance(){
@@ -51,6 +72,7 @@ export class PlayerHeader {
             console.log("Show notification");
             this.serverResponse = payload.outputField;
             this.showNotification();
+            this.getActiveHelp();
         });
 
 

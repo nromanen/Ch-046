@@ -81,9 +81,4 @@ public class ArmyServiceImplTest {
         assertEquals(armyUUIDCaptor.getValue(),armyUUID);
     }
 
-    /*@Test
-    public void testSetArmyDao() throws Exception {
-
-    }*/
-
 }

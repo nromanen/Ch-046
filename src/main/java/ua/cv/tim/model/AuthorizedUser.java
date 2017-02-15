@@ -18,6 +18,7 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
 	private List<Village> villages;
 	private Alliance alliance;
 
+
 	public AuthorizedUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities);
 	}

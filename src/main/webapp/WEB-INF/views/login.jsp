@@ -51,50 +51,78 @@
 
 <div class="container">
     <div class="row col s12" style="margin-top: 50px">
-        <form action="${loginUrl}" method="post" class="col s3 offset-s4 center-align">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <c:if test="${param.error != null}">
-                <div class="card red lighten-4">
-                    <div class="card-content red-text">
-                        <p class="center-align">
-                            <spring:message code="login.errorMessage"/>
-                        </p>
+        <div class="col s3 offset-s4 center-align">
+            <form action="${loginUrl}" method="post">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <c:if test="${param.error != null}">
+                    <div class="card red lighten-4">
+                        <div class="card-content red-text">
+                            <p class="center-align">
+                                <spring:message code="login.errorMessage"/>
+                            </p>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${param.logout != null}">
+                    <div class="card green lighten-4">
+                        <div class="card-content green-text">
+                            <p class="center-align">
+                                <spring:message code="logout.successMessage"/>
+                            </p>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${email_send != null}">
+                    <div class="card green lighten-4">
+                        <div class="card-content green-text">
+                            <p class="center-align">${email_send}</p>
+                        </div>
+                    </div>
+                </c:if>
+                <div class="row">
+                    <div class="input-field">
+                        <label for="username">
+                            <spring:message code="userName.loginForm"/>
+                        </label>
+                        <input type="text" id="username" name="username" class="validate" required/>
                     </div>
                 </div>
-            </c:if>
-            <c:if test="${param.logout != null}">
-                <div class="card green lighten-4">
-                    <div class="card-content green-text">
-                        <p class="center-align">
-                            <spring:message code="logout.successMessage"/>
-                        </p>
+                <div class="row">
+                    <div class="input-field">
+                        <label for="password">
+                            <spring:message code="password.loginForm"/>
+                        </label>
+                        <input type="password" id="password" name="password" class="validate" required/>
+                    </div>
+                    <div class="card red lighten-4">
+                        <div class="card-content red-text" id="passError" hidden></div>
                     </div>
                 </div>
-            </c:if>
-            <div class="row">
-                <div class="input-field">
-                    <label for="username">
-                        <spring:message code="userName.loginForm"/>
-                    </label>
-                    <input type="text" id="username" name="username" class="validate" required/>
+                <div class="row">
+                    <button type="submit" class="btn waves-effect waves-teal">
+                        <spring:message code="submitButton.loginForm"/>
+                    </button>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field">
-                    <label for="password">
-                        <spring:message code="password.loginForm"/>
-                    </label>
-                    <input type="password" id="password" name="password" class="validate" required/>
-                </div>
-            </div>
-            <div class="row">
-                <button type="submit" class="btn waves-effect waves-teal">
-                    <spring:message code="submitButton.loginForm"/>
-                </button>
-            </div>
-        </form>
+            </form>
+            <br>
+            <p style="color: red;"><a href="forgotPassword"> Forgot password?</a></p>
+        </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $(":password").keyup(function(){
+            if($("#password").val().length > 32){
+                $("#passError").show().html("Length of password can't be more than 32 characters");
+                $(':input[type="submit"]').prop('disabled', true);
+            }else{
+                $("#passError").html("").hide();
+                $(':input[type="submit"]').prop('disabled', false);
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html>

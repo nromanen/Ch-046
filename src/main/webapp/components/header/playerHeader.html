@@ -1,8 +1,9 @@
 <app-modal-pars *ngIf="confirmParsing" [confirmMsg]="confirmMsg" (notify)='onConfirmPars($event)'></app-modal-pars>
 
 <nav>
+
     <div class="nav-wrapper">
-        <a href="#"  class="brand-logo">Logo</a>
+        <a href="#" class="brand-logo">Logo</a>
         <ul class="right hide-on-med-and-down">
             <li><a routerLink="/user" routerLinkActive="active">Player</a></li>
             <li><a routerLink="/leader" routerLinkActive="active">Alliance</a></li>
@@ -15,6 +16,6 @@
     </div>
 </nav>
 <div id="note" *ngIf="showNotif" routerLink="/allHelps" routerLinkActive="active">
-    One of alliance member needs help!
+    {{'One of alliance members needs help!'|translate}}
     <div  class="right" style="cursor: pointer;" (click) = "close()"> x </div>
 </div>

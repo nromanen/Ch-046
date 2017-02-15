@@ -29,11 +29,27 @@ public class AttackDaoImpl extends AbstractCrudDao<Attack> implements AttackDao 
         Session session = getCurrentSession();
         Query query = session.createQuery("select a FROM Attack a where a.attackTime>:attackTime");
         Date date = new Date();
-        System.out.println(date);
         query.setParameter("attackTime", date);
         List<Attack> attacks = (List<Attack>) query.list();
-        System.out.println(attacks);
         return attacks;
     }
 
+    @Override
+    public List<Attack> getNotActive(){
+        Session session = getCurrentSession();
+        Query query = session.createQuery("select a FROM Attack a where a.attackTime<:attackTime");
+        Date date = new Date();
+        query.setParameter("attackTime", date);
+        List<Attack> attacks = (List<Attack>) query.list();
+        return attacks;
+    }
+
+    @Override
+    public void deleteOldAttack() {
+
+        Session session = getCurrentSession();
+        Query query = session.createQuery("delete Attack where attackTime < :thisTime");
+        query.setParameter("thisTime", new Date());
+        int result = query.executeUpdate();
+    }
 }

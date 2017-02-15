@@ -7,51 +7,48 @@ import {
 } from "@angular/core";
 import {Village} from "../village/village";
 import {Army} from "./army";
-import {CurrVillageArmiesService} from "../services/newVillageArmiesService";
 import {UnitType} from "../UnitType/unitType";
-import {Validators, FormBuilder, FormGroup, FormArray} from "@angular/forms";
+import {FormBuilder, FormGroup, FormArray} from "@angular/forms";
 @Component({
     selector: 'army-cell',
     outputs: ['cellClicked'],
-    styleUrls:['components/army/army.css'],
+    styleUrls: ['components/army/army.css'],
     template: `
-          <div class="cell" title="{{this.type}}" (dblclick)="hide()" *ngIf="!isInput" (click)="becomeDiv()">{{this.army.count==0?" ":this.army.count}}</div>
+          <div class="cell" title="{{this.type}}" (dblclick)="hide()" *ngIf="!isInput" (click)="becomeDiv()"
+          [ngStyle]="this.army.count==0||army.count==null?{'visibility':'hidden'}:{'visibility':'visible'}">
+          {{this.army.count==0||army.count==null?"m":this.army.count}}</div>
      <div class="input-field"  *ngIf="isInput" [formGroup]="group">
-     <input class="validate"  type="text"  style=" width: 20px;height: 22px" [ngModel]="this.army.count!=0?this.army.count:''" (keyup)="cancelEditing($event.keyCode)"
-     formControlName="count" (ngModelChange)="addOrEdit($event)">
+     <input class="validate"  type="text" [ngModel]="this.army.count!=0?this.army.count:''" (keyup)="cancelEditing($event.keyCode)"
+     formControlName="count" >
      </div>
+  
 `
 })
-export class ArmyCellComponent implements OnInit,OnChanges,DoCheck {
-    ngDoCheck(): void {
-    }
+export class ArmyCellComponent implements OnInit,OnChanges {
     @Input() type: string;
     @Input() village: Village;
-    @Input() group:FormGroup;
+    @Input() group: FormGroup;
     @Input() isInput: boolean;
     @Input() ifSave: boolean;
-    @Input() armiesArrayControl:FormArray;
+    @Input() armiesArrayControl: FormArray;
     @Input() index;
     army: Army;
     newArmy: Army;
     cellClicked: EventEmitter<Village>;
-    @Output() cancelEdit:EventEmitter<Village>;
+    @Output() cancelEdit: EventEmitter<Village>;
 
-    constructor(private currVillageArmiesService: CurrVillageArmiesService, private _fBuilder:FormBuilder) {
+    constructor( private _fBuilder: FormBuilder) {
         this.isInput = true;
         this.cellClicked = new EventEmitter<Village>();
-        this.cancelEdit=new EventEmitter<Village>();
+        this.cancelEdit = new EventEmitter<Village>();
 
     }
 
     ngOnInit(): void {
-        // this.armiesArrayControl[this.index]=this.initArmies(this.type);
-
-        this.army=new Army(-1,UnitType[this.type],true);
-        this.army.type=UnitType[this.type];
-
+        this.army = new Army(-1, UnitType[this.type], true);
+        this.army.type = UnitType[this.type];
         this.newArmy = new Army(this.army.count, this.army.type, this.army.ownUnit);
-        this.newArmy.type=this.army.type;
+        this.newArmy.type = this.army.type;
         this.newArmy.uuid = this.army.uuid;
         this.village.armies.forEach((army) => {
             if (this.type == army.type.toString() || UnitType[army.type] == this.type) {
@@ -64,14 +61,11 @@ export class ArmyCellComponent implements OnInit,OnChanges,DoCheck {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-
-
-        if (changes['village']){
-            this.army=new Army(-1,UnitType[this.type],true);
-            this.army.type=UnitType[this.type];
-
+        if (changes['village']) {
+            this.army = new Army(-1, UnitType[this.type], true);
+            this.army.type = UnitType[this.type];
             this.newArmy = new Army(this.army.count, this.army.type, this.army.ownUnit);
-            this.newArmy.type=this.army.type;
+            this.newArmy.type = this.army.type;
             this.newArmy.uuid = this.army.uuid;
             this.village.armies.forEach((army) => {
                 if (this.type == army.type.toString() || UnitType[army.type] == this.type) {
@@ -80,19 +74,12 @@ export class ArmyCellComponent implements OnInit,OnChanges,DoCheck {
                     this.newArmy.uuid = this.army.uuid;
                 }
             });
-
         }
-
         if (changes['isInput'] != null)
-            // console.log(changes['armiesArrayControl']);
-            // this.armiesArrayControl[this.index] = this.initArmies(this.type);
             if (changes['isInput'].currentValue === true && this.army.count != -1) {
-                this.currVillageArmiesService.armies.push(this.newArmy);
 
             }
-
     }
-
 
 
     hide() {
@@ -104,18 +91,11 @@ export class ArmyCellComponent implements OnInit,OnChanges,DoCheck {
         this.cellClicked.emit(null);
     }
 
-    addOrEdit(event:any){
-        this.newArmy.count=event;
-        if (this.army.count==-1){
-            if (this.currVillageArmiesService.armies.indexOf(this.newArmy)==-1 && this.newArmy.count>0)
-                this.currVillageArmiesService.armies.push(this.newArmy);
-        } else
-            this.newArmy.count=event;
-    }
 
-    cancelEditing(event){
-        if (event===27)
-        this.cancelEdit.emit(null);
+
+    cancelEditing(event) {
+        if (event === 27)
+            this.cancelEdit.emit(null);
 
     }
 

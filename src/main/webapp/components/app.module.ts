@@ -1,6 +1,6 @@
 ﻿import {NgModule}      from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpModule} from '@angular/http';
+import {HttpModule, Http} from '@angular/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RoutesModule} from "./app.routers";
 
@@ -13,7 +13,7 @@ import {LeaderHeaderComponent} from "./header/leader-header.component";
 import {ConfirmComponent} from "./modal_window/modal";
 
 import {PlayerComponent} from "./player/player.component";
-import {PlayerList} from "./player/playerList.component";
+import {PlayerList} from "./player/villages-list.component";
 import {PlayerHeader} from "./header/player-header.component";
 import {PlayerListComponent} from "./player/player-list.component";
 import {VillageInfoComponent} from "./village/village-info.component";
@@ -37,10 +37,16 @@ import {CurrVillageArmiesService} from "./services/newVillageArmiesService";
 import {VillageService} from "./services/villageService";
 import {HelpService} from "./services/helpNotification/help.service";
 import {StompService} from "./services/helpNotification/stomp.service";
+
 import {EditAllianceComponent} from "./alliance/edit-alliance.component";
 import {CalendarModule} from 'primeng/primeng';
 import {AllHelps} from "./help/all-helps.component";
 import {HelpComponent} from "./help/ask-help.component";
+import {TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-translate";
+import {CookieService} from "angular2-cookie/services/cookies.service";
+import {AttackArchiveComponent} from "./help/attack-archive.component";
+import {AttackArchiveService} from "./services/helpNotification/attack-archive.service";
+
 import {ConfirmParsingComponent} from "./modal_parsing_window/modal";
 import {ParserService} from "./services/parser.service";
 
@@ -52,8 +58,12 @@ import {ParserService} from "./services/parser.service";
         HttpModule,
         FormsModule,
         ReactiveFormsModule,
-        // DatepickerModule.forRoot(),
-        // TimepickerModule.forRoot(),
+        RoutesModule,
+        TranslateModule.forRoot({
+            provide: TranslateLoader,
+            useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18/', '.json'),
+            deps: [Http]
+        }),
         RoutesModule,
         CalendarModule
     ],
@@ -82,6 +92,7 @@ import {ParserService} from "./services/parser.service";
         AddArmyForm,
         HelpComponent,
         AllHelps,
+        AttackArchiveComponent,
         ConfirmParsingComponent
 
     ],
@@ -91,7 +102,8 @@ import {ParserService} from "./services/parser.service";
         PlayerService,
         CurrVillageArmiesService,
         VillageService,
-
+        AttackArchiveService,
+        CookieService,
         HelpService,
         StompService,
         ParserService
