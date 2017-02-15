@@ -3,7 +3,6 @@ import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 
 import 'node_modules/stompjs/lib/stomp.min.js';
-import {AppComponent} from "../../app.component";
 import {HelpService} from "./help.service";
 import {Alliance} from "../../alliance/alliance";
 
@@ -23,7 +22,6 @@ export class StompService {
 
     private connectInit(){
         let self = this;
-
         this.helpService.getAlliance()
                 .subscribe(
                     resp => {
@@ -35,9 +33,7 @@ export class StompService {
                         StompService.stompClient = Stomp.over(webSocket);
                         console.log("Use static! Connecting to websocket server");
                         StompService.stompClient.connect({}, function (frame) {
-
-
-                            StompService.stompClient.subscribe('/topic/greetings/' + resp.allianceUuid, function (stompResponse) {
+                            StompService.stompClient.subscribe('/topic/notification/' + resp.allianceUuid, function (stompResponse) {
                                 self.stompSubject.next(JSON.parse(stompResponse.body));
                             });
                         });
@@ -53,7 +49,7 @@ export class StompService {
     }
 
     public send() {
-        StompService.stompClient.send("/app/hello/" + this.alliance.allianceUuid, {}, JSON.stringify({'message': 'askHelp'}));
+        StompService.stompClient.send("/app/help/" + this.alliance.allianceUuid, {}, JSON.stringify({'message': 'askHelp'}));
     }
 
     public getObservable(): Observable<any> {

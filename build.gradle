@@ -1,15 +1,6 @@
 group 'ua.cv.tim'
 version '1.0-SNAPSHOT'
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'org.akhikhl.gretty:gretty:1.4.0'
-    }
-}
-
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'org.akhikhl.gretty'
@@ -25,8 +16,18 @@ buildscript {
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2.1"
     }
 }
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:1.4.0'
+    }
+}
+
 gretty {
-    port = 8070
+    port = 8080
     contextPath = 'travian'
     servletContainer = 'jetty9'
 }
@@ -65,10 +66,7 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-webmvc', version: vers.spring
     compile group: 'org.springframework', name: 'spring-tx', version: vers.spring
     compile group: 'org.springframework', name: 'spring-orm', version: vers.spring
-// https://mvnrepository.com/artifact/org.springframework/spring-test
     compile group: 'org.springframework', name: 'spring-test', version: vers.spring
-
-
 
     compile group: 'org.springframework', name: 'spring-messaging', version: vers.spring
     compile group: 'org.springframework', name: 'spring-websocket', version: vers.spring
@@ -76,7 +74,6 @@ dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-web', version: vers.spring_security
     compile group: 'org.springframework.security', name: 'spring-security-config', version: vers.spring_security
     compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: vers.spring_security
-    compile group: 'org.springframework.security', name: 'spring-security-test', version: '4.0.0.RELEASE'
 
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: vers.servlet
     compile group: 'javax.servlet', name: 'jstl', version: vers.jstl
@@ -98,7 +95,6 @@ dependencies {
     compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.23.2'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.0.1'
 
-    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
     compile group: 'org.springframework.security', name: 'spring-security-test', version: '4.2.1.RELEASE'
 
 
@@ -138,28 +134,17 @@ task runApp(type:Exec) {
 }
 
 test {
-    // enable TestNG support (default is JUnit)
     useTestNG()
-
-    // set a system property for the test JVM(s)
     systemProperty 'some.prop', 'value'
-
-    // show standard out and standard error of the test JVM(s) on the console
     testLogging.showStandardStreams = true
-
-    // set heap size for the test JVM(s)
     minHeapSize = "128m"
     maxHeapSize = "512m"
-
-    // set JVM arguments for the test JVM(s)
     jvmArgs '-XX:MaxPermSize=256m'
 
-    // listen to events in the test execution lifecycle
     beforeTest { descriptor ->
         logger.lifecycle("Running test: " + descriptor)
     }
 
-    // listen to standard out and standard error of the test JVM(s)
     onOutput { descriptor, event ->
         logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)
     }

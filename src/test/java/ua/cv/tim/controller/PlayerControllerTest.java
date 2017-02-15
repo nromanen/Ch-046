@@ -31,9 +31,7 @@ import static org.testng.Assert.assertEquals;
  * Created by mmaksymtc on 06.02.2017.
  */
 public class PlayerControllerTest {
-/*
-    @Autowired
-    FilterChainProxy springSecurityFilterChain;*/
+
     @Mock
     UserService userService;
     @Mock
@@ -73,16 +71,12 @@ public class PlayerControllerTest {
         assertEquals(playerCaptor.getValue(),player.getUuid());
     }
 
-    @Test
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testDeleteNullPlayer() throws Exception {
         ArgumentCaptor<String> playerCaptor = ArgumentCaptor.forClass(String.class);
         Player player = getPlayer();
         when(playerService.getById(anyString())).thenReturn(null);
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete( "/player/{id}",player.getUuid());
-
-        this.mockMvc.perform(builder)
-                .andExpect(status().isNotFound())
-                .andDo(MockMvcResultHandlers.print());
+        playerController.deletePlayer(player.getUuid());
         verify(playerService, times(1)).getById(playerCaptor.capture());
         assertEquals(playerCaptor.getValue(),player.getUuid());
     }
@@ -114,28 +108,6 @@ public class PlayerControllerTest {
         playerController.updatePlayer(player.getUuid(), player);
         verify(playerService, times(1)).getById(playerCaptor.capture());
         assertEquals(playerCaptor.getValue(),player.getUuid());
-
-    }
-    /*@Test
-    public void testUpdatePlayer() throws Exception {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(playerController).build();
-        String id = "123-321";
-        Player player = getPlayer();
-        when(playerService.getById(anyString())).thenReturn(player);
-        doNothing().when(playerService).add(any(Player.class));
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.put("/player/{id}", id, player)
-               .contentType(MediaType.APPLICATION_JSON_UTF8)
-               .content(TestUtil.convertObjectToJsonBytes(player));
-        this.mockMvc.perform(builder)
-                .andExpect(status().isUnsupportedMediaType())
-            *//*   .andExpect(jsonPath("$.login", is(testUserDTO.getLogin())))
-               .andExpect(jsonPath("$.email", is(testUserDTO.getEmail())))*//*
-                .andDo(MockMvcResultHandlers.print());
-    }
-*/
-
-    @Test
-    public void testGetPlayersByAlliance() throws Exception {
 
     }
 

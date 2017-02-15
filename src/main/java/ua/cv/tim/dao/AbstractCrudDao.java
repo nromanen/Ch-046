@@ -33,4 +33,4 @@ public abstract class AbstractCrudDao<E> implements CrudDao<E> {
         return sessionFactory.getCurrentSession();
     }
 
-    }
+}

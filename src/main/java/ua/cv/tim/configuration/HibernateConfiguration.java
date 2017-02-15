@@ -26,12 +26,12 @@ public class HibernateConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(HibernateConfiguration.class);
 
+    @Autowired
+    private Environment environment;
+
     public HibernateConfiguration() {
         logger.info("HibernateConfiguration  constructor working  ");
     }
-
-    @Autowired
-    private Environment environment;
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
@@ -55,6 +55,9 @@ public class HibernateConfiguration {
     private Properties getHibernateProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
+//        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
+//        properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
+//        properties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
         return properties;
     }
 

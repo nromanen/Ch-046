@@ -1,0 +1,22 @@
+<div id="dialogoverlay"></div>
+<div id="dialogbox">
+    <div>
+        <div id="dialogboxhead">Attention!!! Data about your village will be changed</div>
+        <div id="dialogboxbody">{{confirmMsg}}</div>
+        <div class="credentials-input-wrapper">
+            <div class="input-field col s3 offset-s1">
+                <label for="login">Login</label>
+                <input id="login" type="text" class="validate" required [(ngModel)]="login">
+            </div>
+            <div class="input-field col s3 offset-s1">
+                <label for="password">Password</label>
+                <input id="password" type="password" class="validate" required [(ngModel)]="pass">
+                <br> <br> <br>
+            </div>
+        </div>
+                <div id="dialogboxfoot">
+                    <button class='btn btn-success' (click)="onConfirm()">Confirm parsing</button>
+                    <button class='btn btn-danger' (click)="onDecline()">Cancel parsing</button>
+                </div>
+    </div>
+</div>

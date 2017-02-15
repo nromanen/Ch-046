@@ -9,9 +9,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.AllianceDao;
+import ua.cv.tim.dao.PasswordResetDao;
 import ua.cv.tim.dao.PlayerDao;
 import ua.cv.tim.dao.UserDao;
 import ua.cv.tim.dto.UserDTO;
+import ua.cv.tim.model.PasswordResetToken;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
@@ -47,6 +49,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private MessageSource messageSource;
 
+	@Autowired
+	private PasswordResetDao passwordResetDao;
+
 	@Override
 	public User getUserByUsername(String username) {
 		return userDao.getUserByUsername(username);
@@ -72,7 +77,7 @@ public class UserServiceImpl implements UserService {
 		userDao.update(user);
 		String message = "Player updated successfully, your login is \"" + user.getLogin() + "\", role: " + user.getRoles();
 		sendEmail(user, message);
-		logger.info("User with login {} and id {} was updated, message sent on his email {} ",user.getLogin(),user.getUuid(),user.getEmail());
+		logger.info("User with login {} and id {} was updated ",user.getLogin(),user.getUuid());
 	}
 
 
@@ -174,7 +179,7 @@ public class UserServiceImpl implements UserService {
 		playerDao.add(player);
 		logger.info("User with login {} and id {} was added",user.getLogin(),user.getUuid());
 		String message = "Your login is \"" + user.getLogin() + "\", and password: \""
-				+ user.getPassword() + "\",  Role: " + user.getRoles();
+				+ password + "\",  Role: " + user.getRoles();
 		sendEmail(user,message);
 	}
 
@@ -240,5 +245,38 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getByMail(String email) {
 		return userDao.getByMail(email);
+	}
+
+	@Override
+	public void createPasswordResetTokenForUser(User user, String token) {
+		final PasswordResetToken myToken = new PasswordResetToken(token, user);
+		PasswordResetToken passwordResetToken = passwordResetDao.getByUser(user);
+		if(passwordResetToken != null){
+			passwordResetToken.setToken(token);
+			passwordResetDao.update(passwordResetToken);
+		} else {
+			passwordResetDao.add(myToken);
+		}
+	}
+
+	@Override
+	public boolean isToken(User user, String token) {
+		return passwordResetDao.isToken(user, token);
+	}
+
+	@Override
+	public void updateUserPassword(User user) throws MessagingException {
+		System.out.println(user.getPassword());
+		String password  = user.getPassword();
+		password = encodePassword(password);
+		user.setPassword(password);
+		System.out.println(user.getPassword());
+		update(user);
+		passwordResetDao.deleteByUser(user);
+	}
+
+	@Override
+	public void deleteOldToken() {
+		passwordResetDao.deleteOldToken();
 	}
 }

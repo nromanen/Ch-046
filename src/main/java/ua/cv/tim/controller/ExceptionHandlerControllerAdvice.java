@@ -36,7 +36,6 @@ public class ExceptionHandlerControllerAdvice {
     @ExceptionHandler(value = IllegalArgumentException.class)
     public String illegalArgumentException(IllegalArgumentException e) {
         logger.error("IllegalArgumentException: {}", e.getMessage());
-        e.printStackTrace();
         return e.getMessage();
     }
 
@@ -44,7 +43,6 @@ public class ExceptionHandlerControllerAdvice {
     @ExceptionHandler(value = Exception.class)
     public String generalExceptionHandler(Exception e) {
         logger.error("Exception: {}", e.getMessage());
-        e.printStackTrace();
         return e.getMessage();
     }
 

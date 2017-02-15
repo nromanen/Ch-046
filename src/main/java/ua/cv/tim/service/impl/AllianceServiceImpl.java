@@ -38,7 +38,7 @@ public class AllianceServiceImpl implements AllianceService {
     @Autowired
     private UserService userService;
 
-
+    @Override
     public List<AllianceDTO> getAll(){
         List<Alliance> alliances = allianceDao.getAll();
         List<AllianceDTO> allianceDTOS = new ArrayList<>();
@@ -55,7 +55,7 @@ public class AllianceServiceImpl implements AllianceService {
         logger.info("Alliances: {}", allianceDTOS);
         return allianceDTOS;
     }
-
+    @Override
     public void addAlliance(AllianceDTO allianceDTO) throws MessagingException {
 
         logger.info("Adding new alliance: {}", allianceDTO);
@@ -67,7 +67,7 @@ public class AllianceServiceImpl implements AllianceService {
         allianceDTO.setLeaderUuid(userService.getUserByUsername(allianceDTO.getLeaderLogin()).getUuid());
         logger.info("New alliance added successfully: {}", allianceDTO);
     }
-
+    @Override
     public void updateAlliance(AllianceDTO allianceDTO) throws MessagingException {
 
         logger.info("Updating alliance: {}", allianceDTO);
@@ -83,13 +83,13 @@ public class AllianceServiceImpl implements AllianceService {
         leader.setLogin(allianceDTO.getLeaderLogin());
         leader.setEmail(allianceDTO.getLeaderEmail());
         allianceDao.update(alliance);
-        userService.sendEmail(leader,"Alliance " + allianceDTO.getName() + " updated successfully. Your are leader of alliance, your login is "
-                + leader.getLogin() + ".");
+        String successMail = "Alliance " + allianceDTO.getName() + " updated successfully. Your are leader of alliance, your login is "
+                + leader.getLogin() + ".";
+        userService.sendEmail(leader,successMail);
         logger.info("Alliance updated successfully: {}", allianceDTO);
     }
-
+    @Override
     public void deleteAlliance(String  id){
-
         logger.info("Deleting alliance id = {}", id);
         Alliance alliance = allianceDao.getById(id);
         if (alliance != null){
@@ -100,7 +100,7 @@ public class AllianceServiceImpl implements AllianceService {
             logger.info("Alliance deleted successfully: {}", alliance);
         }
     }
-
+    @Override
     public Alliance getById(String  uuid){
         return allianceDao.getById(uuid);
     }
@@ -109,9 +109,8 @@ public class AllianceServiceImpl implements AllianceService {
     public Alliance getByName(String name) {
         return allianceDao.getByName(name, null);
     }
-
+    @Override
     public boolean isUniqueAlliance(String name, String uuid){
-
         if(allianceDao.getByName(name, uuid)!=null ) {
             throw new IllegalArgumentException("Alliance with entered name already exists.");
         }

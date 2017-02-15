@@ -12,4 +12,9 @@ public interface AttackDao extends CrudDao<Attack>{
     List<Attack> getAll();
 
     List<Attack> getActive();
+
+    List<Attack> getNotActive();
+
+    void deleteOldAttack();
+
 }

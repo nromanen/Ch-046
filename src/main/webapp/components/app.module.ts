@@ -44,6 +44,11 @@ import {AllHelps} from "./help/all-helps.component";
 import {HelpComponent} from "./help/ask-help.component";
 import {TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-translate";
 import {CookieService} from "angular2-cookie/services/cookies.service";
+import {AttackArchiveComponent} from "./help/attack-archive.component";
+import {AttackArchiveService} from "./services/helpNotification/attack-archive.service";
+
+import {ConfirmParsingComponent} from "./modal_parsing_window/modal";
+import {ParserService} from "./services/parser.service";
 
 
 
@@ -87,6 +92,8 @@ import {CookieService} from "angular2-cookie/services/cookies.service";
         AddArmyForm,
         HelpComponent,
         AllHelps,
+        AttackArchiveComponent,
+        ConfirmParsingComponent
 
     ],
     providers: [
@@ -95,9 +102,11 @@ import {CookieService} from "angular2-cookie/services/cookies.service";
         PlayerService,
         CurrVillageArmiesService,
         VillageService,
+        AttackArchiveService,
         CookieService,
         HelpService,
-        StompService
+        StompService,
+        ParserService
     ],
     bootstrap: [AppComponent]
 })

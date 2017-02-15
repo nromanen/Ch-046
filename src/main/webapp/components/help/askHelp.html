@@ -1,13 +1,14 @@
-<player-head *ngIf="player" [isLeader]="player.isLeader"></player-head>
-<div *ngIf="successMessage != null" class="card green lighten-5">
-    <div class="card-content green-text">
-        <p>{{successMessage}} <span (click)="closeSuccess()" class="right" style="cursor: pointer;">x</span></p>
-    </div>
-</div>
-<div class="card red lighten-4">
-    <div *ngIf="errorMessage != null" class="card-content red-text">
-        <p>{{errorMessage}} <span (click)="closeError()" class="right" style="cursor: pointer;">x</span></p>
+<player-head [isLeader]="leader.isLeader"></player-head>
 
+<div class="row container">
+    <div class="row col s12">
+        <div class="col s4 offset-s4 center-align">
+            <div class="card red lighten-4">
+                <div *ngIf="errorMessage != null" class="card-content red-text">
+                    <p>{{errorMessage}} <span (click)="closeError()" class="right" style="cursor: pointer;">x</span></p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="row container">
