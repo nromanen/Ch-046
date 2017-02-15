@@ -5,13 +5,13 @@
     <div class="nav-wrapper">
         <a href="#" class="brand-logo">Logo</a>
         <ul class="right hide-on-med-and-down">
-            <li><a routerLink="/user" routerLinkActive="active">Player</a></li>
-            <li><a routerLink="/leader" routerLinkActive="active">Alliance</a></li>
-            <li><a routerLink="/help" routerLinkActive="active">Ask help</a></li>
-            <li><a routerLink="/allHelps" routerLinkActive="active">Attacks</a></li>
-            <li><a (click) = "confirmPars()" >Parse</a></li>
-            <li *ngIf="isLeader"><a routerLink="/leader/manager" routerLinkActive="active">Manage</a></li>
-            <li><a href="logout" >Log out</a></li>
+            <li ><a routerLink="/user" routerLinkActive="active" >{{'Player' |translate}}</a></li>
+            <li><a routerLink="/leader" routerLinkActive="active">{{'Alliance' |translate}}</a></li>
+            <li><a routerLink="/help" routerLinkActive="active">{{'Ask help'|translate}}</a></li>
+            <li><a routerLink="/allHelps" routerLinkActive="active">{{'Attacks'|translate}} <span *ngIf="numOfAttacks != 0"> ({{numOfAttacks}})</span></a></li>
+            <li><a (click) = "confirmPars()" >{{'Parse' |translate}}</a></li>
+            <li *ngIf="isLeader"><a routerLink="/leader/manager" routerLinkActive="active">{{'Manage'|translate}}</a></li>
+            <li><a href="logout" >{{'Log out'|translate}}</a></li>
         </ul>
     </div>
 </nav>

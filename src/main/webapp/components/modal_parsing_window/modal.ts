@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter, HostListener} from "@angular/core";
-import {Credentials} from "./Credentials";
+import {Credentials} from "./credentials";
 
 @Component({
     selector: 'app-modal-pars',

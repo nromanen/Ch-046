@@ -6,7 +6,7 @@ import {Injectable} from '@angular/core';
 import {Http, Headers, RequestOptions} from '@angular/http';
 import {User} from "../user/user";
 import {Observable} from "rxjs/Observable";
-import {Credentials} from "../modal_parsing_window/Credentials";
+import {Credentials} from "../modal_parsing_window/credentials";
 
 @Injectable()
 export class ParserService {

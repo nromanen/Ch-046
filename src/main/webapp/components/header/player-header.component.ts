@@ -9,7 +9,7 @@ import {Observable} from "rxjs";
 import {isUndefined} from "util";
 import {error} from "util";
 import {ParserService} from "../services/parser.service";
-import {Credentials} from "../modal_parsing_window/Credentials";
+import {Credentials} from "../modal_parsing_window/credentials";
 
 @Component(
     {
