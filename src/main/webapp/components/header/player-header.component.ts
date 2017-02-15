@@ -29,7 +29,7 @@ export class PlayerHeader {
     confirmParsing: boolean = false;
 
 
-    constructor(private stompService: StompService, private parserService: ParserService rivate helpService:HelpService) {
+    constructor(private stompService: StompService, private parserService: ParserService, private helpService:HelpService) {
     }
 
     public ngOnInit(): void {
