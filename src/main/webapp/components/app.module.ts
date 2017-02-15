@@ -47,6 +47,9 @@ import {CookieService} from "angular2-cookie/services/cookies.service";
 import {AttackArchiveComponent} from "./help/attack-archive.component";
 import {AttackArchiveService} from "./services/helpNotification/attack-archive.service";
 
+import {ConfirmParsingComponent} from "./modal_parsing_window/modal";
+import {ParserService} from "./services/parser.service";
+
 
 
 @NgModule({
@@ -89,7 +92,8 @@ import {AttackArchiveService} from "./services/helpNotification/attack-archive.s
         AddArmyForm,
         HelpComponent,
         AllHelps,
-        AttackArchiveComponent
+        AttackArchiveComponent,
+        ConfirmParsingComponent
 
     ],
     providers: [
@@ -101,7 +105,8 @@ import {AttackArchiveService} from "./services/helpNotification/attack-archive.s
         AttackArchiveService,
         CookieService,
         HelpService,
-        StompService
+        StompService,
+        ParserService
     ],
     bootstrap: [AppComponent]
 })

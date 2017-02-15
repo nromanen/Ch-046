@@ -15,6 +15,8 @@ import ua.cv.tim.service.PlayerService;
 import ua.cv.tim.service.UserService;
 import ua.cv.tim.service.VillageService;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,6 +42,7 @@ public class Parser {
     @Autowired
     PlayerService playerService;
 
+    @Transactional
     public void doOperation(String login, String password) {
         HtmlUnitDriver driver = new HtmlUnitDriver();
         driver.setJavascriptEnabled(true);
@@ -53,18 +56,17 @@ public class Parser {
 
         Village village = villageParser.pars(driver);
         village.setArmies(armyParser.pars(driver, village));
-        System.out.println(village.getArmies());
         sync(village);
         driver.quit();
     }
 
+
+    @Transactional
     private void sync(Village village) {
         Village updatingVillage = villageService.getByName(village.getName());
         if (updatingVillage == null) {
-
-            UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User userByUsername = userService.getUserByUsername(principal.getUsername());
-//            User userByUsername = userService.getFullUserByUsername("neo");
+          UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+          User userByUsername = userService.getUserByUsername(principal.getUsername());
             Village addVillage = village;
             Player player = userByUsername.getPlayer();
             addVillage.setPlayer(player);
