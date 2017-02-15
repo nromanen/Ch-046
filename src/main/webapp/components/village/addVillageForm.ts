@@ -21,7 +21,6 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
     addVillageForm: FormGroup;
     COORD_REGEXP=/^(-)?[0-9]+$/;
     POPULATION_REGEXP=/^\d+$/;
-    static VILLAGE_REGEXP=/^\w+$/;
     @Output() successMessage:EventEmitter<string>;
     @Output() errorMessage:EventEmitter<string>;
     private unitTypeStrings: Array<string>;
@@ -38,7 +37,6 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         this.successMessage=new EventEmitter<string>();
         this.unitTypeStrings=[];
         this.initUnitTypes();
-        console.log(this.unitTypeStrings);
     }
 
     ngAfterViewChecked() {
@@ -48,11 +46,12 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         this.addVillageForm = this._fBuilder.group({
             'name': [
                 this.village.name,
-                [Validators.required, Validators.minLength(5),Validators.maxLength(14),Validators.pattern(AddVillageForm.VILLAGE_REGEXP)
+                [Validators.required, Validators.minLength(4),Validators.maxLength(14)
                 ]
             ],
             'xCoord': [this.village.xCoord,
-                [Validators.required, this.forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
+                [Validators.required, this.forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP),
+               ]
             ],
             'yCoord':[this.village.yCoord,
                 [Validators.required,this.forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
@@ -60,7 +59,7 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
             'population':[this.village.population,[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
             ],
             'wall':[this.village.wall,
-                [Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
+                [Validators.required,Validators.pattern(this.COORD_REGEXP),AddVillageForm.forbiddenWallValidator()]
             ],
             'isCapital':[this.village.isCapital],
             'armies':this._fBuilder.array([this.initArmies()])
@@ -80,17 +79,12 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         });
     }
 
-    f(){
-        this.unitTypeStrings.push('klkl');
-        this.unitTypeStrings=[];
-    }
 
 
     addArmies() {
         this.village.armies.push(new Army);
         const control = <FormArray>this.addVillageForm.controls['armies'];
         control.push(this.initArmies());
-        console.log(this.village);
     }
 
     onSubmit(village: Village) {
@@ -102,11 +96,9 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         }
         this.submitted = true;
         this.village = this.addVillageForm.value;
-        console.log(this.village);
         this.village.armies.forEach(army=>{
             allArmies.forEach(armyInAll=>{
                 if (army.type==armyInAll.type){
-                    console.log(army.type);
                     armyInAll.count=army.count;
                     armyInAll.ownUnit=army.ownUnit;
                 }
@@ -118,7 +110,6 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
             response=>{
                 this.player.villages.push(response);
                 this.successMessage.emit('The village has successfully been created!');
-                console.log(JSON.stringify(response));
                 this.wasSubmitted.emit(false);
             },
                     error=>{
@@ -164,21 +155,30 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         'xCoord': {
             'required': 'X  is required.',
             'forbiddenCoordinate': 'X can only range between -400 and 400.',
-            'pattern':"X  can contain numbers only"
+            'pattern':"X  can contain numbers only",
         },
         'yCoord': {
             'required': 'Y  is required!\n',
             'forbiddenCoordinate': 'Y can only range between -400 and 400.\n',
-            'pattern':"Y can contain numbers only"
+            'pattern':"Y can contain numbers only",
+
         },
         'population':{
             'required': 'Population is required.',
-            'pattern':"Population can contain numbers only"
+            'pattern':"Population can contain numbers only",
+            'moreThanZero':"Population must be more than zero!"
         },
         'wall':{
             'required': 'Wall is required.',
-            'pattern':"Wall level can contain numbers only"
-        }
+            'pattern':"Wall level can contain numbers only",
+            'forbiddenWall':"Wall can only range in 0 and 127!",
+
+        },
+        'armies':{
+            'pattern':'Count can contain numbers only!',
+            'cannotStartWithZero':"Count can't start with zero!",
+            'moreThanZero':"Count must be more than zero!"
+        },
     };
 
      forbiddenXValidator() {
@@ -189,6 +189,24 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
              return null;
          };
      }
+
+     static forbiddenWallValidator(){
+         return (control: AbstractControl): {[key: string]: any} => {
+             const wall = control.value;
+             if (wall < 0 || wall > 127)
+                 return {'forbiddenWall': {wall}};
+             return null;
+         };
+     }
+
+    cannotStartWithZeroValidator(){
+        return (control: AbstractControl): {[key: string]: any} => {
+            const coord = control.value;
+            if (coord&&coord[0]=='0')
+                return {'cannotStartWithZero': {coord}};
+            return null;
+        };
+    }
 
     initUnitTypes(){
         for(let type in UnitType){

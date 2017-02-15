@@ -30,6 +30,12 @@
   "X  is required! ":"Введіть Х!",
   "Name cannot be more than 24 characters long! ":"Назва може містити не більше 24 символів!",
   "Name must be at least 4 characters long! ":"Ім'я повинне містити не менше 5 символів!",
-  "Name is required! ":"Введіть назву!"
-
+  "Name is required! ":"Введіть назву!",
+  "Population can't start with zero! ":"Кількість населення не можу починатись з нуля!",
+  "X can't start with zero! ":"Х не може містити першу цифру нуль!",
+  "Y can't start with zero! ":"У не може містити першу цифру нуль!",
+  "Wall can't start with zero! ":"Рівень стіни не може містити першу цифру нуль!",
+  "Count can't start with zero! ":"Кількість не може містити першу цифру нуль!",
+  "Wall can only range in 0 and 127! ":"Рівень може знаходитись лише в межах від 0 до 127",
+  "Count must be more than zero! ":"Кількість повинна бути більшою за нуль!"
 }

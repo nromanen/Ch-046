@@ -1,14 +1,14 @@
 /**
  * Created by okunetc on 16.01.2017.
  */
-import {Component, Input} from "@angular/core";
+import {Component, Input, OnInit, AfterViewInit, AfterViewChecked} from "@angular/core";
 import {StompService} from "../services/helpNotification/stomp.service";
 import {Alliance} from "../alliance/alliance";
 import {HelpService} from "../services/helpNotification/help.service";
 import {Observable} from "rxjs";
 import {isUndefined} from "util";
 import {error} from "util";
-
+declare let jQuery:any;
 @Component(
     {
         selector:'player-head',
@@ -16,8 +16,13 @@ import {error} from "util";
         styleUrls: ['components/header/playerHeader.css']
     }
 )
-export class PlayerHeader {
+export class PlayerHeader implements OnInit,AfterViewInit{
+    ngAfterViewInit(): void {
+        jQuery(".dropdown-button").dropdown();
+    }
 
+
+    @Input() playerLogin;
     public serverResponse: string;
     @Input() isLeader: boolean=false;
     showNotif: boolean = false;
@@ -28,22 +33,9 @@ export class PlayerHeader {
 
     public ngOnInit(): void {
         this.websocketConnect();
+        jQuery(".button-collapse").sideNav();
     }
 
-    // getAlliance(){
-    //
-    //
-    //     this.helpService.getAlliance()
-    //         .subscribe(
-    //             resp => {
-    //                 console.log("APP_COMPONENT_SUBSCRIBE");
-    //                 PlayerHeader.alliance = resp;
-    //                 console.log(PlayerHeader.alliance);
-    //             }
-    //
-    //         )
-    //
-    // }
 
     websocketConnect(){
         console.log("Connection start");

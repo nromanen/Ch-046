@@ -1,3 +1,10 @@
+<div *ngIf="successMessage!=null||editError!=null" class="col s4 offset-s4 ">
+    <div  [ngClass]="{'card':true, 'green':successMessage!=null, 'red':editError!=null, 'lighten-5':true}">
+        <div [ngClass]="{'card-content':true , 'green-text':successMessage!=null,'red-text':editError!=null }">
+            <p class="centerCard">{{editError!=null?editError:successMessage}} <span  (click)="closeDialog()" class="right x">x</span></p>
+        </div>
+    </div>
+</div>
 <div class="row ">
     <form  (ngSubmit)="onSubmit()">
         <table class="fixed responsive-table bordered">
@@ -46,17 +53,6 @@
                 (successMessage)="showSuccessMessage($event)" (editedVillage)="this.editedVillage=$event"
                 (selectedVillageChanged)="changeSelectedVillage($event)" [editVillageForm]="editVillageForm"
                 (keyup)="cancelEditing($event.keyCode)" [isPlayerPage]="isPlayerPage">
-            </tr>
-            <tr>
-                <td *ngIf="(editError!=undefined && v==selectedVillage)|| (successMessage!=undefined && editedVillage==v)" colspan="33">
-                    <div *ngIf="successMessage!=null||editError!=null" class="col s4 offset-s4 ">
-                        <div  [ngClass]="{'card':true, 'green':successMessage!=null, 'red':editError!=null, 'lighten-5':true}">
-                            <div [ngClass]="{'card-content':true , 'green-text':successMessage!=null,'red-text':editError!=null }">
-                                <p class="centerCard">{{editError!=null?editError:successMessage}} <span  (click)="closeDialog()" class="right x">x</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </td>
             </tr>
             </ng-container>
             </tbody>

@@ -1,7 +1,13 @@
+<ul id="dropdown1" class="dropdown-content">
+    <li><a onclick="return false" href="#">{{playerLogin}}</a></li>
+    <li class="divider"></li>
+    <li><a href="logout">Logout</a></li>
+</ul>
 <nav>
 
     <div class="nav-wrapper">
-        <a href="#" class="brand-logo">Logo</a>
+        <a href="#" class="brand-logo" onclick="return false">Travian</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <li ><a routerLink="/user" routerLinkActive="active" >{{'Player' |translate}}</a></li>
             <li><a routerLink="/leader" routerLinkActive="active">{{'Alliance' |translate}}</a></li>
@@ -9,7 +15,16 @@
             <li><a routerLink="/allHelps" routerLinkActive="active">{{'Attacks'|translate}}</a></li>
             <li><a href="/travian/parser/">{{'Parse'|translate}}</a></li>
             <li *ngIf="isLeader"><a routerLink="/leader/manager" routerLinkActive="active">{{'Manage'|translate}}</a></li>
-            <li><a href="logout" >{{'Log out'|translate}}</a></li>
+            <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{playerLogin}}<i class="material-icons right">arrow_drop_down</i></a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+            <li style="border-bottom: solid 1px #b7b8b4"><a routerLink="/user" routerLinkActive="active" >{{'Player' |translate}}</a></li>
+            <li><a routerLink="/leader" routerLinkActive="active">{{'Alliance' |translate}}</a></li>
+            <li><a routerLink="/help" routerLinkActive="active">{{'Ask help'|translate}}</a></li>
+            <li><a routerLink="/allHelps" routerLinkActive="active">{{'Attacks'|translate}}</a></li>
+            <li><a href="/travian/parser/">{{'Parse'|translate}}</a></li>
+            <li *ngIf="isLeader"><a routerLink="/leader/manager" routerLinkActive="active">{{'Manage'|translate}}</a></li>
+            <li><a href="logout">Logout</a></li>
         </ul>
     </div>
 </nav>

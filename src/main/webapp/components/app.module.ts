@@ -56,11 +56,9 @@ import {CookieService} from "angular2-cookie/services/cookies.service";
         RoutesModule,
         TranslateModule.forRoot({
             provide: TranslateLoader,
-            useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18/', '.json'),
+            useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18', '.json'),
             deps: [Http]
         }),
-        // DatepickerModule.forRoot(),
-        // TimepickerModule.forRoot(),
         RoutesModule,
         CalendarModule
     ],

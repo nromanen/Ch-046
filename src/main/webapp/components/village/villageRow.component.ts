@@ -9,10 +9,13 @@ import {UnitType} from "../UnitType/unitType";
 import {Village} from "./village";
 import {VillageService} from "../services/villageService";
 import {Army} from "../army/army";
-import {FormControl, Validators, FormArray, FormBuilder, AbstractControl} from "@angular/forms";
+import {FormControl, Validators, FormArray, FormBuilder, AbstractControl, FormGroup} from "@angular/forms";
 import {AddVillageForm} from "./addVillageForm";
-import {el} from "@angular/platform-browser/testing/browser_util";
 import {TranslateService} from "ng2-translate";
+import {moreThanZeroValidator} from "../validators/Validators";
+
+
+
 @Component({
     selector: '[village-row]',
     outputs:['selectedVillageChanged'],
@@ -65,8 +68,8 @@ import {TranslateService} from "ng2-translate";
 `
 })
 export class VillageRow implements OnInit,AfterViewInit{
-    POPULATION_REGEXP=/^\d*$/;
-    COORD_REGEXP=/^(-)?[0-9]*$/;
+    POPULATION_REGEXP=/^(-)?[0-9]+$/;
+    COORD_REGEXP=/^(-)?[0-9]+$/;
     @Input() v:Village;
     @Input() isForm:boolean;
     @Input() editVillageForm;
@@ -151,17 +154,20 @@ export class VillageRow implements OnInit,AfterViewInit{
     buildForm(){
         this.editVillageForm=this._fBuilder.group({
             'uuid':[this.v.uuid,[]],
-            'name':new FormControl(this.v.name,[Validators.required,Validators.pattern(AddVillageForm.VILLAGE_REGEXP)]),
-            'population':[this.v.population,[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
+            'name':new FormControl(this.v.name,[Validators.required, Validators.minLength(4),Validators.maxLength(14)]),
+            'population':[this.v.population,
+                [Validators.required,Validators.pattern(this.POPULATION_REGEXP),moreThanZeroValidator()]
             ],
             'xCoord': [this.v.xCoord,
-                [Validators.required, this.forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
+                [Validators.required, this.forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP),
+                    ]
             ],
             'yCoord':[this.v.yCoord,
-                [Validators.required,this.forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
+                [Validators.required,this.forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP),
+                    ]
             ],
             'wall':[this.v.wall,
-                [Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
+                [Validators.required,Validators.pattern(this.COORD_REGEXP),this.cannotStartWithZeroValidator(),AddVillageForm.forbiddenWallValidator()]
             ],
             'isCapital':[this.v.isCapital],
             'armies':this._fBuilder.array([]),
@@ -180,7 +186,7 @@ export class VillageRow implements OnInit,AfterViewInit{
 
     initArmies(army:Army) {
         return this._fBuilder.group({
-            count:['',[Validators.pattern(this.POPULATION_REGEXP)]],
+            count:['',[Validators.pattern(this.POPULATION_REGEXP),this.cannotStartWithZeroValidator(),moreThanZeroValidator()]],
             type:[army.type,[] ],
             ownUnit:[army.ownUnit,[]],
             uuid:[army.uuid,[]]
@@ -198,6 +204,15 @@ export class VillageRow implements OnInit,AfterViewInit{
             const coord = control.value;
             if (coord < -400 || coord > 400)
                 return {'forbiddenCoordinate': {coord}};
+            return null;
+        };
+    }
+
+    cannotStartWithZeroValidator(){
+        return (control: AbstractControl): {[key: string]: any} => {
+            const coord = control.value;
+            if (coord&&coord[0]=='0')
+                return {'cannotStartWithZero': {coord}};
             return null;
         };
     }
@@ -220,9 +235,18 @@ export class VillageRow implements OnInit,AfterViewInit{
         }
 
 
-        // console.log(this.editVillageForm);
+
         let armiesControl:FormArray=form.get('armies');
-        if (!armiesControl.valid) {
+        armiesControl.controls.forEach((control:FormGroup)=>{
+
+            if (!armiesControl.valid)
+                if (control.controls['count'].errors) {
+                    for (const key in control.controls['count'].errors) {
+                        this.formErrors['armies'] += this.validationMessages['armies'][key] + ' ';
+                    }
+                }
+        });
+        if (!armiesControl.controls) {
             this.formErrors['armies']='Count can contain numbers only!';
         }
         if (!this.editVillageForm.valid) {
@@ -244,29 +268,39 @@ export class VillageRow implements OnInit,AfterViewInit{
             'required': 'Name is required!',
             'minlength': 'Name must be at least 4 characters long!',
             'maxlength': 'Name cannot be more than 24 characters long!',
-            'pattern':'Pattern!'
+            'pattern':'Pattern!',
+
         },
         'xCoord': {
             'required': 'X  is required!',
             'forbiddenCoordinate': 'X can only range between -400 and 400!',
-            'pattern':"X  can contain numbers only!"
+            'pattern':"X  can contain numbers only!",
+
         },
         'yCoord': {
             'required': 'Y coordinate is required.',
             'forbiddenCoordinate': 'Y can only range between -400 and 400!',
-            'pattern':"Y  can contain numbers only!"
+            'pattern':"Y  can contain numbers only!",
+
         },
         'population':{
             'required': 'Population is required.',
-            'pattern':"Population can contain numbers only!"
+            'pattern':"Population can contain numbers only!",
+            'cannotStartWithZero':"Population can't start with zero!",
+            'moreThanZero':"Population must be more than zero!"
         },
         'wall':{
             'required': 'Wall is required.',
-            'pattern':"Wall level can contain numbers only!"
+            'pattern':"Wall level can contain numbers only!",
+            'cannotStartWithZero':"Wall can't start with zero!",
+            'forbiddenWall':"Wall can only range in 0 and 127!"
         },
         'armies':{
-            'pattern':'Count can contain numbers only!'
-        }
+            'pattern':'Count can contain numbers only!',
+            'cannotStartWithZero':"Count can't start with zero!",
+            'moreThanZero':"Count must be more than zero!"
+        },
+
     };
 
 }

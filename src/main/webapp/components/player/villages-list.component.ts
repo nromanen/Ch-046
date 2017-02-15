@@ -66,18 +66,13 @@ export class PlayerList implements OnInit {
         if (event!=null) {
             this.editError = '';
             for (let field in event) {
-                // this.editError += event[field] + " ";
                 if(event[field]!='') {
-                    console.log(event[field]);
-                    console.log(event[field]=="Population can contain numbers only!");
                     this.translate.get(event[field])
                         .subscribe(msg=>{
-                            console.log(msg);
                             this.editError += msg + " ";
                         });
                 }
             }
-
         }
     }
 
