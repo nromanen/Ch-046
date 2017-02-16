@@ -30,6 +30,6 @@
   "X  is required! ":"Введіть Х!",
   "Name cannot be more than 24 characters long! ":"Назва може містити не більше 24 символів!",
   "Name must be at least 4 characters long! ":"Ім'я повинне містити не менше 5 символів!",
-  "Name is required! ":"Введіть назву!"
-
+  "Name is required! ":"Введіть назву!",
+  "User added successfully":"Користувача додано успішно"
 }
