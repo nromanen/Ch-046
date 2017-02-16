@@ -3,24 +3,28 @@
         <td class="col s3">
             <div>
                 <input type="text" name="alliance" id="editName" class="validate" [formControl]="editForm.controls['allianceName']"/>
-                <div class="error-input" *ngIf="!editForm.controls['allianceName'].valid && editForm.controls['allianceName'].touched">{{NAME_ERROR}}</div>
+                <div class="error-input" *ngIf="!editForm.controls['allianceName'].valid && editForm.controls['allianceName'].touched">{{'NAME_ERROR'|translate}}</div>
             </div>
         </td>
         <td class="col s3">
             <div>
                 <input type="text" name="leaderLogin" id="editLeaderLogin" class="validate"  [formControl]="editForm.controls['leaderLogin']"/>
-                <div class="error-input" *ngIf="!editForm.controls['leaderLogin'].valid && editForm.controls['leaderLogin'].touched">{{LOGIN_ERROR}}</div>
+                <div class="error-input" *ngIf="!editForm.controls['leaderLogin'].valid && editForm.controls['leaderLogin'].touched">{{'LOGIN_ERROR'|translate}}</div>
             </div>
         </td>
         <td class="col s3">
             <div >
                 <input type="text" id="editLeaderEmail" class="validate"  [formControl]="editForm.controls['leaderEmail']"/>
-                <div class="error-input" *ngIf="!editForm.controls['leaderEmail'].valid && editForm.controls['leaderEmail'].touched">{{EMAIL_ERROR}}</div>
+                <div class="error-input" *ngIf="!editForm.controls['leaderEmail'].valid && editForm.controls['leaderEmail'].touched">{{'EMAIL_ERROR'|translate}}</div>
             </div>
         </td>
         <td class="col s3" style="text-align: center">
-            <button *ngIf="al === selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action"   style="margin-top: 5px" [disabled]="!editForm.valid">Save</button>
-            <button *ngIf="al === selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="button" name="action" (click)="cancelEditing()"  style="margin-top: 5px">Cancel</button>
+            <button *ngIf="al === selectedAlliance" class="waves-effect waves-light btn edit" type="submit" name="action"   style="margin-top: 5px" [disabled]="!editForm.valid">
+                <i class="material-icons">play_arrow</i>
+            </button>
+            <button *ngIf="al === selectedAlliance" class="waves-effect waves-light btn grey" type="button" name="action" (click)="cancelEditing()"  style="margin-top: 5px">
+                <i class="material-icons">stop</i>
+            </button>
         </td>
     </form>
 </div>

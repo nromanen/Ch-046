@@ -44,7 +44,9 @@
 <div class="container">
     <div class="row col s12" style="margin-top: 50px">
         <div class="col s3 offset-s4 center-align">
-            <h4>Restoring password form</h4>
+            <h4>
+                <spring:message code="passSave.form"/>
+            </h4>
             <form action="savePassword" method="post">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <c:if test="${error != null}">
@@ -62,8 +64,8 @@
                 </div>
                 <div class="row">
                     <div class="input-field">
-                        <label for="password1">Confirm password *</label>
-                        <input type="password" id="password1" name="password1" class="validate" required/>
+                        <label for="confirmPassword">Confirm password *</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="validate" required/>
                     </div>
                 </div>
                 <div class="row">
@@ -72,10 +74,14 @@
                     </div>
                 </div>
                 <div class="row">
-                    <button type="submit" class="btn waves-effect waves-teal" disabled>Change password</button>
+                    <button type="submit" class="btn waves-effect waves-teal" disabled>
+                        <spring:message code="passSave.change"/>
+                    </button>
                 </div>
             </form>
-            <p style="color: red; font-size: 12px;">* Password should contains at least one uppercase and one lowercase letters, one digit and one special symbol and contains from 8 to 32 characters.</p>
+            <p style="color: red; font-size: 12px;">*
+                <spring:message code="passRestor.passFormRequired"/>
+            </p>
 
         </div>
     </div>
@@ -84,7 +90,7 @@
 <script>
     $(document).ready(function () {
         $(document).on('input', function(){
-            if(validatePassword($("#password").val()) && $("#password").val()==$("#password1").val()) {
+            if(validatePassword($("#password").val()) && $("#password").val()==$("#confirmPassword").val()) {
                 $(':input[type="submit"]').prop('disabled', false);
             } else{
                 $(':input[type="submit"]').prop('disabled', true);

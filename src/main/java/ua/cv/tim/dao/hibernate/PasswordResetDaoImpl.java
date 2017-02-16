@@ -15,17 +15,13 @@ import java.util.Date;
  */
 @Repository("passwordResetDao")
 public class PasswordResetDaoImpl extends AbstractCrudDao<PasswordResetToken> implements PasswordResetDao {
+
     @Override
     public boolean isToken(User user, String token) {
-        Session session = getCurrentSession();
-        Query query = null;
-
-        query = session.createQuery("select t from PasswordResetToken t where t.user = :user and t.token = :token");
+        Query query = getCurrentSession().createQuery("select t from PasswordResetToken t where t.user = :user and t.token = :token");
         query.setParameter("user", user);
         query.setParameter("token", token);
-
         PasswordResetToken passwordResetToken = (PasswordResetToken) query.uniqueResult();
-        System.out.println(passwordResetToken);
 
         if (passwordResetToken == null){
             return false;
@@ -38,40 +34,24 @@ public class PasswordResetDaoImpl extends AbstractCrudDao<PasswordResetToken> im
 
     @Override
     public PasswordResetToken getByUser(User user) {
-        Session session = getCurrentSession();
-        Query query = null;
 
-        query = session.createQuery("select t from PasswordResetToken t where t.user = :user");
+        Query query =  getCurrentSession().createQuery("select t from PasswordResetToken t where t.user = :user");
         query.setParameter("user", user);
-
         PasswordResetToken passwordResetToken = (PasswordResetToken) query.uniqueResult();
-
         return passwordResetToken;
     }
 
     @Override
     public void deleteByUser(User user) {
-        Session session = getCurrentSession();
-        Query query = session.createQuery("delete PasswordResetToken where user =:user");
+        Query query = getCurrentSession().createQuery("delete FROM PasswordResetToken where user =:user");
         query.setParameter("user", user);
-
-        int result = query.executeUpdate();
-
-        if (result > 0) {
-            System.out.println("Expensive products was removed");
-        }
+        query.executeUpdate();
     }
 
     @Override
     public void deleteOldToken() {
-        Session session = getCurrentSession();
-        Query query = session.createQuery("delete PasswordResetToken where expiryDate <:date");
+        Query query = getCurrentSession().createQuery("delete FROM PasswordResetToken where expiryDate <:date");
         query.setParameter("date", new Date());
-
-        int result = query.executeUpdate();
-
-        if (result > 0) {
-            System.out.println("Expensive products was removed");
-        }
+        query.executeUpdate();
     }
 }

@@ -166,39 +166,39 @@ INSERT INTO player (uuid, lastmodified, race, alliance_id, user_uuid) VALUES ('m
 
 
 --  Admin
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('9b0c9b2a-0371-480a-916a-7bf40990cdda', '2017-01-06 18:52:08.947', 'roma_ariezz@ukr.net', 'morpheus', '333', null);
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('9b0c9b2a-0371-480a-916a-7bf40990cdda', '2017-01-06 18:52:08.947', 'roma_ariezz@ukr.net', 'morpheus', '$2a$10$ecFaBc.bwGgcNJSCND5BIeA9jsiC7qv29DuFpUhj6dFXmav7nMNUC', null);
 
 -- Leaders
 
 --Alliance Valhala
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('valhala-user-1', '2017-01-06 18:52:08.947', 'neo@ukr.net', 'neo', '111', 'valhala-player-1');
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('valhala-user-1', '2017-01-06 18:52:08.947', 'neo@ukr.net', 'neo', '$2a$10$1WVJQJ2BVyxYblj.bOKNHOgcPtO19hAm1rOjw5Lel7XCs9NB8A2Sa', 'valhala-player-1');
 
 --Alliance Matrix
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('matrix-user-1', '2017-01-06 18:52:08.947', 'borg@ukr.net', 'borg', '111', 'matrix-player-1');
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('matrix-user-1', '2017-01-06 18:52:08.947', 'borg@ukr.net', 'borg', '$2a$10$1WVJQJ2BVyxYblj.bOKNHOgcPtO19hAm1rOjw5Lel7XCs9NB8A2Sa', 'matrix-player-1');
 
 -- Alliance MidleErth
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('midle-user-1', '2017-01-06 18:52:08.947', 'smith@ukr.net', 'smith', '111', 'midle-player-1');
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('midle-user-1', '2017-01-06 18:52:08.947', 'smith@ukr.net', 'smith', '1$2a$10$1WVJQJ2BVyxYblj.bOKNHOgcPtO19hAm1rOjw5Lel7XCs9NB8A2Sa11', 'midle-player-1');
 
 --Players
 --Alliance Valhala
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('valhala-user-2', '2017-01-06 18:52:08.947', 'golf@ukr.net', 'golf', '222', 'valhala-player-2');
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('valhala-user-3', '2017-01-06 18:52:08.947', 'emmi@ukr.net', 'emmi', '222', 'valhala-player-3');
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('valhala-user-4', '2017-01-06 18:52:08.947', 'alan@ukr.net', 'alan', '222', 'valhala-player-4');
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('valhala-user-5', '2017-01-06 18:52:08.947', 'cole@ukr.net', 'cole', '222', 'valhala-player-5');
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('valhala-user-2', '2017-01-06 18:52:08.947', 'golf@ukr.net', 'golf', '$2a$10$wRr1OQmoFR7woELkbTtMtujbYLcYDrXoJRv6y9YFvP1rW1peg/R1O', 'valhala-player-2');
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('valhala-user-3', '2017-01-06 18:52:08.947', 'emmi@ukr.net', 'emmi', '$2a$10$wRr1OQmoFR7woELkbTtMtujbYLcYDrXoJRv6y9YFvP1rW1peg/R1O', 'valhala-player-3');
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('valhala-user-4', '2017-01-06 18:52:08.947', 'alan@ukr.net', 'alan', '$2a$10$wRr1OQmoFR7woELkbTtMtujbYLcYDrXoJRv6y9YFvP1rW1peg/R1O', 'valhala-player-4');
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('valhala-user-5', '2017-01-06 18:52:08.947', 'cole@ukr.net', 'cole', '$2a$10$wRr1OQmoFR7woELkbTtMtujbYLcYDrXoJRv6y9YFvP1rW1peg/R1O', 'valhala-player-5');
 
 --Players
 --Alliance Matrix
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('matrix-user-2', '2017-01-06 18:52:08.947', 'trinity@ukr.net', 'trinity', '222', 'matrix-player-2');
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('matrix-user-3', '2017-01-06 18:52:08.947', 'zig@ukr.net', 'zig', '222', 'matrix-player-3');
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('matrix-user-4', '2017-01-06 18:52:08.947', 'amdrea@ukr.net', 'andrea', '222', 'matrix-player-4');
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('matrix-user-5', '2017-01-06 18:52:08.947', 'rick@ukr.net', 'rick', '222', 'matrix-player-5');
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('matrix-user-6', '2017-01-06 18:52:08.947', 'deril@ukr.net', 'deril', '222', 'matrix-player-6');
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('matrix-user-2', '2017-01-06 18:52:08.947', 'trinity@ukr.net', 'trinity', '$2a$10$wRr1OQmoFR7woELkbTtMtujbYLcYDrXoJRv6y9YFvP1rW1peg/R1O', 'matrix-player-2');
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('matrix-user-3', '2017-01-06 18:52:08.947', 'zig@ukr.net', 'zig', '$2a$10$wRr1OQmoFR7woELkbTtMtujbYLcYDrXoJRv6y9YFvP1rW1peg/R1O', 'matrix-player-3');
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('matrix-user-4', '2017-01-06 18:52:08.947', 'amdrea@ukr.net', 'andrea', '$2a$10$wRr1OQmoFR7woELkbTtMtujbYLcYDrXoJRv6y9YFvP1rW1peg/R1O', 'matrix-player-4');
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('matrix-user-5', '2017-01-06 18:52:08.947', 'rick@ukr.net', 'rick', '$2a$10$wRr1OQmoFR7woELkbTtMtujbYLcYDrXoJRv6y9YFvP1rW1peg/R1O', 'matrix-player-5');
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('matrix-user-6', '2017-01-06 18:52:08.947', 'deril@ukr.net', 'deril', '$2a$10$wRr1OQmoFR7woELkbTtMtujbYLcYDrXoJRv6y9YFvP1rW1peg/R1O', 'matrix-player-6');
 
 --Players
 --Alliance MidleEarth
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('midle-user-2', '2017-01-06 18:52:08.947', 'frodo@ukr.net', 'frodo', '222', 'midle-player-2');
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('midle-user-3', '2017-01-06 18:52:08.947', 'legolas@ukr.net', 'legolas', '222', 'midle-player-3');
-INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('midle-user-4', '2017-01-06 18:52:08.947', 'aragorn@ukr.net', 'aragorn', '222', 'midle-player-4');
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('midle-user-2', '2017-01-06 18:52:08.947', 'frodo@ukr.net', 'frodo', '$2a$10$wRr1OQmoFR7woELkbTtMtujbYLcYDrXoJRv6y9YFvP1rW1peg/R1O', 'midle-player-2');
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('midle-user-3', '2017-01-06 18:52:08.947', 'legolas@ukr.net', 'legolas', '$2a$10$wRr1OQmoFR7woELkbTtMtujbYLcYDrXoJRv6y9YFvP1rW1peg/R1O', 'midle-player-3');
+INSERT INTO users (uuid, lastmodified, email, login, password, player_uuid) VALUES ('midle-user-4', '2017-01-06 18:52:08.947', 'aragorn@ukr.net', 'aragorn', '$2a$10$wRr1OQmoFR7woELkbTtMtujbYLcYDrXoJRv6y9YFvP1rW1peg/R1O', 'midle-player-4');
 
 
 

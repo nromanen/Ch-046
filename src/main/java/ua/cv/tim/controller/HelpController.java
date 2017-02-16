@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ua.cv.tim.dto.AllianceDTO;
 import ua.cv.tim.dto.AttackDTO;
 import ua.cv.tim.dto.PlayerDTO;
-import ua.cv.tim.model.Alliance;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.AttackService;
@@ -63,10 +62,8 @@ public class HelpController {
         AllianceDTO allianceDto = new AllianceDTO();
         allianceDto.setName(player.getAlliance().getName());
         allianceDto.setAllianceUuid(player.getAlliance().getUuid());
-        Alliance alliance = player.getAlliance();
 
         logger.info("path: /user/helpInit/ return AllianceDTO: name: {}, id: {}", allianceDto.getName(), allianceDto.getAllianceUuid());
-
         return new ResponseEntity<>(allianceDto, HttpStatus.OK);
     }
 
@@ -95,19 +92,17 @@ public class HelpController {
             logger.info("Date of attack can't be in the past: {}", attack.getAttackTime());
             throw new IllegalArgumentException("Date of attack can't be in the past!");
         }
-
         attack.setPlayerId(id);
         logger.info("add new ask help. Attack: {}", attack);
-        System.out.println(attack);
-
         attackService.addAttack(attack);
-
         return new ResponseEntity<>(attack, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/allAttack", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     public ResponseEntity<List<AttackDTO>> allActiveAttack() {
-        logger.info("All active attack RequestMethod.GET");
-        return new ResponseEntity<>(attackService.getActive(), HttpStatus.OK);
+        List<AttackDTO> activeAttack = attackService.getActive();
+
+        logger.info("All active attack {}", activeAttack);
+        return new ResponseEntity<>(activeAttack, HttpStatus.OK);
     }
 }

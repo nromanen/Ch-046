@@ -46,6 +46,6 @@
     </div>
 
     <a class="btn-floating btn-large waves-effect waves-light cyan darken-1 center" *ngIf ="!addNewAlliance" (click)="newAlliance()"><i class="material-icons">add</i></a>
-    <add-alliance *ngIf="addNewAlliance" (notify)='onNotifyCreate($event)'></add-alliance>
 </div>
+<add-alliance *ngIf="addNewAlliance" (notify)='onNotifyCreate($event)'></add-alliance>
 

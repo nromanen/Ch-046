@@ -58,7 +58,7 @@ import {AttackArchiveService} from "./services/helpNotification/attack-archive.s
         RoutesModule,
         TranslateModule.forRoot({
             provide: TranslateLoader,
-            useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18/', '.json'),
+            useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18', '.json'),
             deps: [Http]
         }),
         RoutesModule,

@@ -3,6 +3,7 @@ package ua.cv.tim.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.AllianceDao;
@@ -15,7 +16,6 @@ import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.AllianceService;
 import ua.cv.tim.service.UserService;
-import ua.cv.tim.utils.SendMail;
 
 import javax.mail.MessagingException;
 import java.util.ArrayList;
@@ -37,6 +37,10 @@ public class AllianceServiceImpl implements AllianceService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MessageSource messageSource;
+
 
     @Override
     public List<AllianceDTO> getAll(){

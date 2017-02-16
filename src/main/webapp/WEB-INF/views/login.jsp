@@ -36,7 +36,12 @@
 <body>
 
 <nav>
-    <div class="nav-wrapper"></div>
+    <div class="nav-wrapper">
+        <a class="brand-logo" a href="login">Travian</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="login">Login</a></li>
+        </ul>
+    </div>
 </nav>
 
 <div class="container row">
@@ -75,7 +80,18 @@
                 <c:if test="${email_send != null}">
                     <div class="card green lighten-4">
                         <div class="card-content green-text">
-                            <p class="center-align">${email_send}</p>
+                            <p class="center-align">
+                                <spring:message code="passRestor.emailSend"/>
+                            </p>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${pass_change != null}">
+                    <div class="card green lighten-4">
+                        <div class="card-content green-text">
+                            <p class="center-align">
+                                <spring:message code="passRestor.passChange"/>
+                            </p>
                         </div>
                     </div>
                 </c:if>
@@ -95,7 +111,9 @@
                         <input type="password" id="password" name="password" class="validate" required/>
                     </div>
                     <div class="card red lighten-4">
-                        <div class="card-content red-text" id="passError" hidden></div>
+                        <div class="card-content red-text" id="passError" hidden>
+                            <spring:message code="passValidation.loginForm"/>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -105,7 +123,9 @@
                 </div>
             </form>
             <br>
-            <p style="color: red;"><a href="forgotPassword"> Forgot password?</a></p>
+            <p style="color: red;"><a href="forgotPassword">
+                <spring:message code="forgotPassword.loginForm"/>
+            </a></p>
         </div>
     </div>
 </div>
@@ -113,10 +133,10 @@
     $(document).ready(function () {
         $(":password").keyup(function(){
             if($("#password").val().length > 32){
-                $("#passError").show().html("Length of password can't be more than 32 characters");
+                $("#passError").prop('hidden', false);
                 $(':input[type="submit"]').prop('disabled', true);
             }else{
-                $("#passError").html("").hide();
+                $("#passError").prop('hidden', true);
                 $(':input[type="submit"]').prop('disabled', false);
             }
         });

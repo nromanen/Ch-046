@@ -41,15 +41,17 @@ public class AttackArchiveServiceImpl implements AttackArchiveService {
     @Override
     public List<AttackDTO> getById(String id) throws IOException {
 
-        List<AttackDTO> archiveAttacks = new ArrayList<>();
         AuthorizedUser principal = (AuthorizedUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         ObjectMapper objectMapper = new ObjectMapper();
         List<AttackJson> attackJsons = objectMapper.readValue(attackArchiveDao.getById(id).getArchiveData(), new TypeReference<List<AttackJson>>() {});
+        List<AttackDTO> archiveAttacks = getAttackArchive(attackJsons, principal.getAlliance().getName());
+        return archiveAttacks;
+    }
 
-
+    private List<AttackDTO> getAttackArchive(List<AttackJson> attackJsons, String allianceName){
+        List<AttackDTO> archiveAttacks = new ArrayList<>();
         for (AttackJson attack : attackJsons) {
-            if (attack.getAllianceName().equals(principal.getAlliance().getName())) {
+            if (attack.getAllianceName().equals(allianceName)) {
                 AttackDTO attackDTO = new AttackDTO();
                 attackDTO.setEnemy(attack.getEnemy());
                 attackDTO.setAttackTime("" + attack.getAttackTime());
@@ -58,9 +60,6 @@ public class AttackArchiveServiceImpl implements AttackArchiveService {
                 archiveAttacks.add(attackDTO);
             }
         }
-
-        System.out.println(archiveAttacks);
-
         return archiveAttacks;
     }
 }

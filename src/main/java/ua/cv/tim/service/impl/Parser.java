@@ -53,7 +53,6 @@ public class Parser {
 
         Village village = villageParser.pars(driver);
         village.setArmies(armyParser.pars(driver, village));
-        System.out.println(village.getArmies());
         sync(village);
         driver.quit();
     }

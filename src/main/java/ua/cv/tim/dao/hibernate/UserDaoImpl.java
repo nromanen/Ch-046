@@ -52,7 +52,7 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     }
     @Override
         public User getByMail(String mail, String uuid) {
-        Query query = null;
+        Query query;
         if (uuid != null) {
             query = getCurrentSession().createQuery(GET_USER_BY_MAIL_AND_UUID);
             query.setParameter("mail", mail);
@@ -96,7 +96,7 @@ public class UserDaoImpl extends AbstractCrudDao<User> implements UserDao {
     }
     @Override
     public boolean isUserUnique(String username, String uuid) {
-        Query query = null;
+        Query query;
         if (uuid != null) {
             query = getCurrentSession().createQuery(GET_USER_BY_LOGIN_AND_UUID);
             query.setParameter(LOGIN, username);

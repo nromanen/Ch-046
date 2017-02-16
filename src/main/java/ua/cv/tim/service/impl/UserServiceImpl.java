@@ -251,6 +251,7 @@ public class UserServiceImpl implements UserService {
 	public void createPasswordResetTokenForUser(User user, String token) {
 		final PasswordResetToken myToken = new PasswordResetToken(token, user);
 		PasswordResetToken passwordResetToken = passwordResetDao.getByUser(user);
+		logger.info("Token generated : {}", token);
 		if(passwordResetToken != null){
 			passwordResetToken.setToken(token);
 			passwordResetDao.update(passwordResetToken);
@@ -261,17 +262,18 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean isToken(User user, String token) {
+
 		return passwordResetDao.isToken(user, token);
 	}
 
 	@Override
 	public void updateUserPassword(User user) throws MessagingException {
-		System.out.println(user.getPassword());
+
 		String password  = user.getPassword();
 		password = encodePassword(password);
 		user.setPassword(password);
-		System.out.println(user.getPassword());
 		update(user);
+		logger.info("User password reset for user with id = {}", user.getUuid());
 		passwordResetDao.deleteByUser(user);
 	}
 

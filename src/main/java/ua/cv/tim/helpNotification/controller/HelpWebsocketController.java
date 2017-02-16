@@ -16,9 +16,7 @@ public class HelpWebsocketController {
 		
     @MessageMapping("/help/{id}")
     @SendTo("/topic/notification/{id}")
-    public OutputObject greeting(@DestinationVariable String id, InputObject input) throws Exception {
-
-        System.out.println("@DestinationVariable String id = " + id);
+    public OutputObject greeting(@DestinationVariable String id, InputObject input){
         final OutputObject output = new OutputObject();
         output.setOutputField("Help notification send!");
         return output;

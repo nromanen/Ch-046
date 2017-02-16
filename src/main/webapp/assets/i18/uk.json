@@ -30,6 +30,10 @@
   "X  is required! ":"Введіть Х!",
   "Name cannot be more than 24 characters long! ":"Назва може містити не більше 24 символів!",
   "Name must be at least 4 characters long! ":"Ім'я повинне містити не менше 5 символів!",
-  "Name is required! ":"Введіть назву!"
+  "Name is required! ":"Введіть назву!",
+
+  "EMAIL_ERROR":"Введено некоректний e-mail",
+  "NAME_ERROR":"Ім'я може містини від 3 до 10 літер",
+  "LOGIN_ERROR":"Логін може містини від 3 до 10 літер"
 
 }
