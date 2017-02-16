@@ -15,7 +15,6 @@ import {ConfirmComponent} from "./modal_window/modal";
 import {PlayerComponent} from "./player/player.component";
 import {PlayerList} from "./player/villages-list.component";
 import {PlayerHeader} from "./header/player-header.component";
-import {PlayerListComponent} from "./player/player-list.component";
 import {VillageInfoComponent} from "./village/village-info.component";
 import {ArmyCellInfoComponent} from "./army/army-cell-info.component";
 
@@ -46,6 +45,9 @@ import {TranslateModule, TranslateLoader, TranslateStaticLoader} from "ng2-trans
 import {CookieService} from "angular2-cookie/services/cookies.service";
 import {AttackArchiveComponent} from "./help/attack-archive.component";
 import {AttackArchiveService} from "./services/helpNotification/attack-archive.service";
+
+import {ConfirmParsingComponent} from "./modal_parsing_window/modal";
+import {ParserService} from "./services/parser.service";
 
 
 
@@ -83,13 +85,13 @@ import {AttackArchiveService} from "./services/helpNotification/attack-archive.s
         VillageRow,
         AddVillageForm,
         VillageInfoComponent,
-        PlayerListComponent,
         ArmyCellInfoComponent,
         LeaderHeaderComponent,
         AddArmyForm,
         HelpComponent,
         AllHelps,
-        AttackArchiveComponent
+        AttackArchiveComponent,
+        ConfirmParsingComponent
 
     ],
     providers: [
@@ -101,7 +103,8 @@ import {AttackArchiveService} from "./services/helpNotification/attack-archive.s
         AttackArchiveService,
         CookieService,
         HelpService,
-        StompService
+        StompService,
+        ParserService
     ],
     bootstrap: [AppComponent]
 })
