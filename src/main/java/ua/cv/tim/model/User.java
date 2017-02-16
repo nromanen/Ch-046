@@ -9,7 +9,36 @@ import java.util.List;
 /**
  * Created by vyach on 28.12.2016.
  */
-
+@NamedQueries({
+		@NamedQuery(
+				name = "GET_USER_BY_LOGIN",
+				query = "from User u where u.login = :login"
+		),
+		@NamedQuery(
+				name = "GET_USER_BY_MAIL_AND_UUID",
+				query = " FROM User u WHERE u.email=:mail and u.uuid != :uuid"
+		),
+		@NamedQuery(
+				name = "GET_USER_BY_MAIL",
+				query = " FROM User u WHERE u.email=:mail"
+		),
+		@NamedQuery(
+				name = "GET_USER_BY_ALLIANCENAME",
+				query = "select u from User u where u.player.alliance.name = :name"
+		),
+		@NamedQuery(
+				name = "GET_USER_BY_ID",
+				query = "select u FROM User u WHERE u.id=:id"
+		),
+		@NamedQuery(
+				name = "GET_USER_BY_LOGIN_AND_UUID",
+				query = "select u from User u where u.login = :login and u.uuid != :uuid"
+		),
+		@NamedQuery(
+				name = "GET_ALL_FROM_USER",
+				query = "FROM User"
+		)
+})
 @Entity
 @Table(name = "users")
 public class User extends UuidEntity implements Serializable {

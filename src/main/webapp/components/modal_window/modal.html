@@ -1,11 +1,11 @@
 <div id="dialogoverlay"></div>
 <div id="dialogbox">
     <div>
-        <div id="dialogboxhead">Confirm</div>
-        <div id="dialogboxbody">{{confirmMsg}}</div>
+        <div id="dialogboxhead">{{'Confirmation'|translate}}</div>
+        <div id="dialogboxbody">{{confirmMsg|translate}}</div>
         <div id="dialogboxfoot">
-            <button class='btn btn-success' (click)="onConfirm()">Confirm</button>
-            <button class='btn btn-danger' (click)="onDecline()">Cancel</button>
+            <button class='btn btn-success' (click)="onConfirm()">{{'Confirm'|translate}}</button>
+            <button class='btn btn-danger' (click)="onDecline()">{{'Cancel'|translate}}</button>
         </div>
     </div>
 </div>

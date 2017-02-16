@@ -29,7 +29,6 @@ public class SendMail {
 
     	 String sender = properties.getProperty("senderEmail");
     	 String password = properties.getProperty("EmailPassword");
-        final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 
         Session session = Session.getInstance(properties, null);
 
