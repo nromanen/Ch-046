@@ -8,6 +8,7 @@ import {VillageService} from "../services/villageService";
 import {FormGroup, FormBuilder, Validators, FormArray, AbstractControl} from "@angular/forms";
 
 import {UnitType} from "../UnitType/unitType";
+import {moreThanZeroValidator} from "../validators/Validators";
 @Component({
     selector: "add-vill-form",
     templateUrl: "components/village/addVillageForm.html",
@@ -18,9 +19,9 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
     @Output() wasSubmitted: EventEmitter<any>;
     village: Village;
     submitted = false;
-    addVillageForm: FormGroup;
+    addVillageForm;
     COORD_REGEXP=/^(-)?[0-9]+$/;
-    POPULATION_REGEXP=/^\d+$/;
+    POPULATION_REGEXP=/^(-)?\d+$/;
     @Output() successMessage:EventEmitter<string>;
     @Output() errorMessage:EventEmitter<string>;
     private unitTypeStrings: Array<string>;
@@ -46,7 +47,7 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
         this.addVillageForm = this._fBuilder.group({
             'name': [
                 this.village.name,
-                [Validators.required, Validators.minLength(4),Validators.maxLength(14)
+                [Validators.required,
                 ]
             ],
             'xCoord': [this.village.xCoord,
@@ -56,7 +57,7 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
             'yCoord':[this.village.yCoord,
                 [Validators.required,this.forbiddenXValidator(),Validators.pattern(this.COORD_REGEXP)]
             ],
-            'population':[this.village.population,[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]
+            'population':[this.village.population,[Validators.required,Validators.pattern(this.POPULATION_REGEXP),moreThanZeroValidator()]
             ],
             'wall':[this.village.wall,
                 [Validators.required,Validators.pattern(this.COORD_REGEXP),AddVillageForm.forbiddenWallValidator()]
@@ -74,7 +75,7 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
     initArmies() {
         return this._fBuilder.group({
             type: ['', Validators.required],
-            count: ['',[Validators.required,Validators.pattern(this.POPULATION_REGEXP)]],
+            count: ['',[Validators.required,Validators.pattern(this.POPULATION_REGEXP),moreThanZeroValidator()]],
             ownUnit:[false,[]]
         });
     }
@@ -135,6 +136,19 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
                 }
             }
         }
+
+        let armiesControl:FormArray=form.get('armies');
+        armiesControl.controls.forEach((control:FormGroup)=>{
+
+            if (!armiesControl.valid)
+                if (control.controls['count'].errors) {
+                    for (const key in control.controls['count'].errors) {
+                        this.formErrors['armies'] += this.validationMessages['armies'][key] + ' ';
+                    }
+                }
+        });
+
+
     }
 
     formErrors = {
@@ -147,30 +161,29 @@ export class AddVillageForm implements OnInit,AfterViewChecked {
 
     validationMessages = {
         'name': {
-            'required': 'Name is required.',
-            'minlength': 'Name must be at least 4 characters long.',
-            'maxlength': 'Name cannot be more than 24 characters long.',
-            'pattern':'Name can contain chars only'
+            'required': 'Name is required!',
+            'minlength': 'Name must be at least 4 characters long!',
+            'maxlength': 'Name cannot be more than 24 characters long!',
         },
         'xCoord': {
-            'required': 'X  is required.',
-            'forbiddenCoordinate': 'X can only range between -400 and 400.',
-            'pattern':"X  can contain numbers only",
+            'required': 'X  is required!',
+            'forbiddenCoordinate': 'X can only range between -400 and 400!',
+            'pattern':"X  can contain numbers only!",
         },
         'yCoord': {
-            'required': 'Y  is required!\n',
-            'forbiddenCoordinate': 'Y can only range between -400 and 400.\n',
-            'pattern':"Y can contain numbers only",
+            'required': 'Y is required!',
+            'forbiddenCoordinate': 'Y can only range between -400 and 400!',
+            'pattern':"Y can contain numbers only!",
 
         },
         'population':{
-            'required': 'Population is required.',
-            'pattern':"Population can contain numbers only",
+            'required': 'Population is required!',
+            'pattern':"Population can contain numbers only!",
             'moreThanZero':"Population must be more than zero!"
         },
         'wall':{
-            'required': 'Wall is required.',
-            'pattern':"Wall level can contain numbers only",
+            'required': 'Wall is required!',
+            'pattern':"Wall level can contain numbers only!",
             'forbiddenWall':"Wall can only range in 0 and 127!",
 
         },

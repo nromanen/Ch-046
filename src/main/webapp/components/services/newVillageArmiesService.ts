@@ -11,7 +11,6 @@ export class CurrVillageArmiesService{
     public village:Village;
     public armies:Array<Army>;
     constructor(){
-        console.log(this.village);
         this.armies=[];
     }
 }

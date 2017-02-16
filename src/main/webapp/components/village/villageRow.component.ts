@@ -154,7 +154,7 @@ export class VillageRow implements OnInit,AfterViewInit{
     buildForm(){
         this.editVillageForm=this._fBuilder.group({
             'uuid':[this.v.uuid,[]],
-            'name':new FormControl(this.v.name,[Validators.required, Validators.minLength(4),Validators.maxLength(14)]),
+            'name':new FormControl(this.v.name,[Validators.required]),
             'population':[this.v.population,
                 [Validators.required,Validators.pattern(this.POPULATION_REGEXP),moreThanZeroValidator()]
             ],
@@ -167,7 +167,7 @@ export class VillageRow implements OnInit,AfterViewInit{
                     ]
             ],
             'wall':[this.v.wall,
-                [Validators.required,Validators.pattern(this.COORD_REGEXP),this.cannotStartWithZeroValidator(),AddVillageForm.forbiddenWallValidator()]
+                [Validators.required,Validators.pattern(this.COORD_REGEXP),AddVillageForm.forbiddenWallValidator()]
             ],
             'isCapital':[this.v.isCapital],
             'armies':this._fBuilder.array([]),
@@ -186,7 +186,7 @@ export class VillageRow implements OnInit,AfterViewInit{
 
     initArmies(army:Army) {
         return this._fBuilder.group({
-            count:['',[Validators.pattern(this.POPULATION_REGEXP),this.cannotStartWithZeroValidator(),moreThanZeroValidator()]],
+            count:['',[Validators.pattern(this.POPULATION_REGEXP),moreThanZeroValidator()]],
             type:[army.type,[] ],
             ownUnit:[army.ownUnit,[]],
             uuid:[army.uuid,[]]
@@ -208,14 +208,7 @@ export class VillageRow implements OnInit,AfterViewInit{
         };
     }
 
-    cannotStartWithZeroValidator(){
-        return (control: AbstractControl): {[key: string]: any} => {
-            const coord = control.value;
-            if (coord&&coord[0]=='0')
-                return {'cannotStartWithZero': {coord}};
-            return null;
-        };
-    }
+
 
     onValueChanged(data?: any) {
         if (!this.editVillageForm) {
@@ -278,19 +271,19 @@ export class VillageRow implements OnInit,AfterViewInit{
 
         },
         'yCoord': {
-            'required': 'Y coordinate is required.',
+            'required': 'Y coordinate is required!',
             'forbiddenCoordinate': 'Y can only range between -400 and 400!',
             'pattern':"Y  can contain numbers only!",
 
         },
         'population':{
-            'required': 'Population is required.',
+            'required': 'Population is required!',
             'pattern':"Population can contain numbers only!",
             'cannotStartWithZero':"Population can't start with zero!",
             'moreThanZero':"Population must be more than zero!"
         },
         'wall':{
-            'required': 'Wall is required.',
+            'required': 'Wall is required!',
             'pattern':"Wall level can contain numbers only!",
             'cannotStartWithZero':"Wall can't start with zero!",
             'forbiddenWall':"Wall can only range in 0 and 127!"

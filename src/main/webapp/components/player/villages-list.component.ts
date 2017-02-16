@@ -42,7 +42,7 @@ export class PlayerList implements OnInit {
 
     changeSelectedVillage(village: Village) {
         this.selectedVillage = village;
-        console.log("v changed");
+
         this.editVillageForm.valueChanges
             .subscribe(data =>
             {
@@ -53,7 +53,7 @@ export class PlayerList implements OnInit {
     onSubmit(){
         let v:Village=this.editVillageForm.value;
         v.armies=this.currVillageService.armies;
-        console.log(this.editVillageForm.value);
+
     }
 
     cancelEditing(event){

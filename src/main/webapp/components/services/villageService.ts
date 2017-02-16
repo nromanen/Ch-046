@@ -24,15 +24,7 @@ export class VillageService{
         const body = JSON.stringify(village);
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        // this.http.post(this.villageURL, body, {
-        //     headers: headers
-        // }).map(res => res.json())
-        //     .subscribe(
-        //         response => {
-        //             this.villages.push(response);
-        //         },
-        //         error => console.log(error)
-        //     );
+
 
        return this.http.post(this.villageURL, body, {
             headers: headers
