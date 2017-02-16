@@ -64,5 +64,24 @@
   "Count is required! ":"Введіть кількість!",
   "login:":"Логін:",
   "alliance:":"Альянс:",
-  "Add":"Додати"
+  "Add":"Додати",
+
+  "added successfully":"доданий успішно",
+  "updated successfully":"оновлений успішно",
+  "deleted successfully":"видалений успішно",
+  "Add New Member":"Додати нового учасника",
+  "Members of":"Учасники",
+  "Login should be from 3 to 10 letters":"Логін має містити від 3 до 10 символів",
+  "Enter correct email, please!":"Введіть коректну електронну пошту",
+  "Login":"Логін",
+  "Leader":"Лідер",
+  "Action":"Дія",
+  "Edit":"Редагувати",
+  "Delete":"Видалити",
+  "Save":"Зберегти",
+  "Abort":"Скасувати",
+  "Are you going to delete alliance member: ":"Ви збираєтесь видалити учасника альянсу: ",
+  "Confirm":"Підтвердити",
+  "Cancel":"Скасувати",
+  "Confirmation":"Підтвердження"
 }

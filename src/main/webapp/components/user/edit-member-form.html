@@ -29,10 +29,10 @@
             </div>
         </td>
         <td class="col s3">
-            <button class="waves-effect waves-light btn edit" [disabled]="!memberForm.valid" type="submit">
+            <button class="waves-effect waves-light btn edit" [disabled]="!memberForm.valid" type="submit" title="{{'Save'|translate}}">
                 <i class="material-icons">play_arrow</i>
             </button>
-            <button class="waves-effect waves-light btn delete" type="button" (click)="cancelEditing()">
+            <button class="waves-effect waves-light btn delete" type="button" (click)="cancelEditing()" title="{{'Abort'|translate}}">
                 <i class="material-icons">stop</i>
             </button>
         </td>
