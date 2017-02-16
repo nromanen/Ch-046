@@ -65,5 +65,8 @@
   "Wall can only range in 0 and 127!":"Рівень може знаходитись лише в межах від 0 до 127",
   "Count must be more than zero!":"Кількість повинна бути більшою за нуль!",
   "Population must be more than zero!":"Кількість населення повинна бути більшою за нуль!",
-  "Count is required! ":"Введіть кількість!"
+  "Count is required! ":"Введіть кількість!",
+  "login:":"Логін:",
+  "alliance:":"Альянс:",
+  "Add":"Додати"
 }
