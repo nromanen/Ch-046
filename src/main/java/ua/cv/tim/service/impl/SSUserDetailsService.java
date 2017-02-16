@@ -43,8 +43,7 @@ public class SSUserDetailsService implements UserDetailsService {
 				log.info(authorizedUser.toString());
 				return authorizedUser;
 			} else {
-				return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(),
-						getAuthorities(user));
+				return new AuthorizedUser(user.getLogin(), user.getPassword(), getAuthorities(user));
 			}
 		} catch (NoResultException ex) {
 			throw new UsernameNotFoundException("User not found");
