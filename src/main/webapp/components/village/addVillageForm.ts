@@ -8,7 +8,7 @@ import {VillageService} from "../services/villageService";
 import {FormGroup, FormBuilder, Validators, FormArray, AbstractControl} from "@angular/forms";
 
 import {UnitType} from "../UnitType/unitType";
-import {moreThanZeroValidator} from "../validators/Validators";
+import {moreThanZeroValidator} from "../validators/validators";
 @Component({
     selector: "add-vill-form",
     templateUrl: "components/village/addVillageForm.html",

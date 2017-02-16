@@ -12,7 +12,7 @@ import {Army} from "../army/army";
 import {FormControl, Validators, FormArray, FormBuilder, AbstractControl, FormGroup} from "@angular/forms";
 import {AddVillageForm} from "./addVillageForm";
 import {TranslateService} from "ng2-translate";
-import {moreThanZeroValidator} from "../validators/Validators";
+import {moreThanZeroValidator} from "../validators/validators";
 
 
 
@@ -28,15 +28,15 @@ import {moreThanZeroValidator} from "../validators/Validators";
   
 <td [formGroup]="editVillageForm">
     <div *ngIf="!isForm">{{v.population}}</div>
-    <input *ngIf="isForm"  type="text"  formControlName="population">
+    <input *ngIf="isForm"  type="text"  formControlName="population" (keyup)="cancelEditingInRow($event.keyCode)">
 </td>
 <td [formGroup]="editVillageForm">
     <div *ngIf="!isForm" >{{this.v.xCoord}}</div>
-    <input  *ngIf="isForm" type="text"  formControlName="xCoord">
+    <input  *ngIf="isForm" type="text"  formControlName="xCoord" (keyup)="cancelEditingInRow($event.keyCode)">
 </td>
 <td [formGroup]="editVillageForm">
     <div *ngIf="!isForm">{{v.yCoord}}</div>
-    <input *ngIf="isForm" type="text"  formControlName="yCoord" >
+    <input *ngIf="isForm" type="text"  formControlName="yCoord" (keyup)="cancelEditingInRow($event.keyCode)">
 </td>
 <td [formGroup]="editVillageForm">
     <div *ngIf="!isForm">
@@ -48,7 +48,7 @@ import {moreThanZeroValidator} from "../validators/Validators";
 
 <td [formGroup]="editVillageForm">
 <div *ngIf="!isForm">{{v.wall}}</div>
-<input *ngIf="isForm" type="text" formControlName="wall">
+<input *ngIf="isForm" type="text" formControlName="wall" (keyup)="cancelEditingInRow($event.keyCode)">
 </td>
 
 <td *ngFor="let tp of unitValues; let i=index;" >
