@@ -23,8 +23,8 @@
             <tr>
                 <th class="col s3"><div>Alliance name</div></th>
                 <th class="col s3"><div>Leader's login</div></th>
-                <th class="col s3"><div>Leader's email</div></th>
-                <th class="col s3"><div>Action</div></th>
+                <th class="col s2"><div>Leader's email</div></th>
+                <th class="col s4"><div>Action</div></th>
             </tr>
             </thead>
             <tbody>
@@ -32,10 +32,14 @@
                 <div *ngIf="al !== selectedAlliance">
                     <td class="col s3"><div>{{al.name}}</div></td>
                     <td class="col s3"><div *ngIf="al !== selectedAlliance">{{al.leaderLogin}}</div></td>
-                    <td class="col s3"><div *ngIf="al !== selectedAlliance">{{al.leaderEmail}}</div></td>
-                    <td class="col s3 text-center">
-                        <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 " type="submit" name="action" (click)="editAlliance(al)">Edit</button>
-                        <button *ngIf="al !== selectedAlliance" class="btn waves-effect waves-light col offset-s1 red" type="submit" name="action" (click)="deleteAlliance(al)">Delete</button>
+                    <td class="col s2"><div *ngIf="al !== selectedAlliance">{{al.leaderEmail}}</div></td>
+                    <td class="col s4 text-center">
+                        <button *ngIf="al !== selectedAlliance" class="waves-effect waves-light btn edit" type="submit" name="action" (click)="editAlliance(al)">
+                            <i class="material-icons">mode_edit</i>
+                        </button>
+                        <button *ngIf="al !== selectedAlliance" class="waves-effect waves-light btn delete" type="submit" name="action" (click)="deleteAlliance(al)">
+                            <i class="material-icons">delete</i>
+                        </button>
                     </td>
                 </div>
                 <edit-alliance *ngIf="al === selectedAlliance" [editedAlliance] = "selectedAlliance" (notify)='onNotifyUpdate($event)'></edit-alliance>

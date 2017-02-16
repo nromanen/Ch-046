@@ -48,7 +48,9 @@ import {AttackArchiveService} from "./services/helpNotification/attack-archive.s
 import {ConfirmParsingComponent} from "./modal_parsing_window/modal";
 import {ParserService} from "./services/parser.service";
 
-
+export function HttpLoaderFactory(http: Http) {
+    return new TranslateStaticLoader(http, 'assets/i18', '.json');
+}
 
 @NgModule({
     imports: [
@@ -59,10 +61,9 @@ import {ParserService} from "./services/parser.service";
         RoutesModule,
         TranslateModule.forRoot({
             provide: TranslateLoader,
-            useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18', '.json'),
+            useFactory: HttpLoaderFactory,
             deps: [Http]
         }),
-        RoutesModule,
         CalendarModule
     ],
     declarations: [
