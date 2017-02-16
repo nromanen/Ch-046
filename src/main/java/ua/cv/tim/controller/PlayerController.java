@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,7 +42,7 @@ public class PlayerController {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = "/player/{id}/village", method = RequestMethod.GET)
+	@RequestMapping(value = "/player/{id}/village", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<Village>> getUsersVillages(@PathVariable(name = "id") String id) {
 		Player byIdWithVillages = playerService.getByIdWithVillages(id);
 		List<Village> villages = byIdWithVillages.getVillages();
@@ -52,7 +53,7 @@ public class PlayerController {
      *
      * @return player with villages in JSON-format.
      */
-    @RequestMapping(value = "/player", method = RequestMethod.GET)
+    @RequestMapping(value = "/player", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<PlayerDTO> getPlayerById() {
 
 		UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -75,7 +76,7 @@ public class PlayerController {
      * @param builder
      * @return created player.
      */
-    @RequestMapping(value = "/player/", method = RequestMethod.POST)
+    @RequestMapping(value = "/player/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Player> addPlayer(@RequestBody Player player, UriComponentsBuilder builder) {
         playerService.add(player);
         HttpHeaders headers = new HttpHeaders();
@@ -90,7 +91,7 @@ public class PlayerController {
      * @param player
      * @return updated player.
      */
-    @RequestMapping(value = "/player/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/player/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Player> updatePlayer(@PathVariable(name = "id") String id, @RequestBody Player player) {
         Player currentPlayer = playerService.getById(id);
         if (currentPlayer != null) {
@@ -104,7 +105,7 @@ public class PlayerController {
         throw new IllegalArgumentException("Player doesn't exist");
     }
 
-    @RequestMapping(value = "/player/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/player/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Player> deletePlayer(@PathVariable(name = "id") String id) {
         Player player = playerService.getById(id);
         if (player == null) {
@@ -114,7 +115,7 @@ public class PlayerController {
         return new ResponseEntity<>(player, HttpStatus.OK);
     }
 
-	@RequestMapping(value = "/player/alliance", method = RequestMethod.GET)
+	@RequestMapping(value = "/player/alliance", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<PlayerDTO>> getPlayersByAlliance() {
 		AuthorizedUser principal = (AuthorizedUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<Player> players = playerService.getPlayersByAllianceWithVillages(principal.getAlliance().getName());

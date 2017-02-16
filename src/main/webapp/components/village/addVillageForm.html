@@ -4,7 +4,7 @@
             <input id="name" type="text" class="validate" required formControlName="name">
             <label for="name">Name</label>
             <div *ngIf="formErrors.name" class="error">
-                {{ formErrors.name }}
+                {{formErrors.name|translate }}
             </div>
         </div>
 
@@ -12,7 +12,7 @@
             <input id="x" type="text" class="validate" required formControlName="xCoord">
             <label for="x">X</label>
             <div *ngIf="formErrors.xCoord" class="error">
-                {{formErrors.xCoord}}
+                {{formErrors.xCoord|translate}}
             </div>
         </div>
 
@@ -20,7 +20,8 @@
             <input id="y" type="text" class="validate" formControlName="yCoord" required >
             <label for="y">Y</label>
             <div *ngIf="formErrors.yCoord" class="error">
-              {{formErrors.yCoord}}
+              {{formErrors.yCoord|translate}}
+
             </div>
         </div>
 
@@ -29,7 +30,7 @@
                    formControlName="population" >
             <label for="population">Population</label>
             <div *ngIf="formErrors.population" class="error">
-                {{formErrors.population}}
+                {{formErrors.population|translate}}
             </div>
         </div>
 
@@ -37,7 +38,7 @@
             <input id="wall" type="text" class="validate" formControlName="wall" required >
             <label for="wall">Wall</label>
             <div *ngIf="formErrors.wall" class="error">
-               {{formErrors.wall}}
+               {{formErrors.wall|translate}}
         </div>
         </div>
 
@@ -61,11 +62,10 @@
 
 
         <div  class="input-field col s6 offset-s3">
-            <button  (click)="addArmies()" class="btn-floating btn-large waves-effect waves-light red" [disabled]="!addVillageForm.controls.armies.valid">
+            <button  (click)="addArmies()" class="btn-floating btn-large waves-effect waves-light red" [disabled]="!addVillageForm.controls.armies.valid||addVillageForm.controls.armies.controls.length==0">
                 <i class="material-icons">add</i>
             </button> Add army
         </div>
-
 <div class="row">
         <div class="input-field col s6 offset-s5">
             <button type="submit" class="btn btn-default"

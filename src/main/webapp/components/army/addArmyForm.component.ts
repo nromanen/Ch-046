@@ -57,7 +57,6 @@ export class AddArmyForm implements AfterViewChecked,OnChanges {
 
 
     removeArmy() {
-
         this.newUnitTypeStrings.emit(this.unitTypeStringsCopy);
         this.armiesControl.controls.splice(this.index, 1);
     }

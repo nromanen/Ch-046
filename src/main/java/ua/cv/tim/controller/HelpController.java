@@ -51,7 +51,7 @@ public class HelpController {
     @Autowired
     VillageService villageService;
 
-    @RequestMapping(value = "/user/helpInit", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/user/helpInit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AllianceDTO> getAllianceByPlayer() {
         logger.info("path: /user/helpInit/ is Starting");
 
@@ -71,7 +71,7 @@ public class HelpController {
     }
 
 
-    @RequestMapping(value = "/askhelp", method = RequestMethod.GET)
+    @RequestMapping(value = "/askhelp", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<PlayerDTO> getPlayerById() {
 
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -1,4 +1,4 @@
-<player-head [isLeader]="leader.isLeader"></player-head>
+<player-head [isLeader]="leader.isLeader" [playerLogin]="leader.login"></player-head>
 
 <app-modal *ngIf="deletedMember !== null" [confirmMsg]="confirmMsg" (notify)='onConfirmDelete($event)'></app-modal>
 
@@ -21,7 +21,7 @@
 
 <div class="row container">
     <div class="col s12 center-align">
-        <h3>{{ leader.alliance }} Members</h3>
+        <h3>{{'Members of'|translate}} {{ leader.alliance }}</h3>
     </div>
 </div>
 <div class="row container">
@@ -31,10 +31,10 @@
             <thead>
             <tr>
                 <div class="valign-wrapper">
-                    <th class="col s3">Login</th>
+                    <th class="col s3">{{'Login'|translate}}</th>
                     <th class="col s3">E-mail</th>
-                    <th class="col s3">Leader</th>
-                    <th class="col s3">Action</th>
+                    <th class="col s3">{{'Leader'|translate}}</th>
+                    <th class="col s3">{{'Action'|translate}}</th>
                 </div>
             </tr>
             </thead>
@@ -49,11 +49,11 @@
                         <span *ngIf="!member.isLeader">-</span>
                     </td>
                     <td class="col s3">
-                        <button (click)="selectMember(member)" class="waves-effect waves-light btn edit">
+                        <button (click)="selectMember(member)" class="waves-effect waves-light btn edit" title="{{'Edit'|translate}}">
                             <i class="material-icons">mode_edit</i>
                         </button>
 
-                        <button class="waves-effect waves-light btn delete" (click)="deleteMember(member)">
+                        <button class="waves-effect waves-light btn delete" (click)="deleteMember(member)" title="{{'Delete'|translate}}">
                             <i class="material-icons">delete</i>
                         </button>
                     </td>
