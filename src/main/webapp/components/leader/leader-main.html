@@ -1,4 +1,4 @@
-<player-head [isLeader]="leader.isLeader"></player-head>
+<player-head [isLeader]="leader.isLeader" [playerLogin]="leader.login" ></player-head>
 
 <div class="row container">
     <div class="col s12 center-align">
@@ -11,4 +11,4 @@
     </div>
 </div>
 
-<player-leader *ngFor="let player of players" [player]="player"></player-leader>
+<player-list *ngFor="let player of players" [player]="player" [isPlayerPage]="false"></player-list>

@@ -42,7 +42,7 @@ export class PlayerList implements OnInit {
 
     changeSelectedVillage(village: Village) {
         this.selectedVillage = village;
-        console.log("v changed");
+
         this.editVillageForm.valueChanges
             .subscribe(data =>
             {
@@ -53,7 +53,7 @@ export class PlayerList implements OnInit {
     onSubmit(){
         let v:Village=this.editVillageForm.value;
         v.armies=this.currVillageService.armies;
-        console.log(this.editVillageForm.value);
+
     }
 
     cancelEditing(event){
@@ -66,18 +66,13 @@ export class PlayerList implements OnInit {
         if (event!=null) {
             this.editError = '';
             for (let field in event) {
-                // this.editError += event[field] + " ";
                 if(event[field]!='') {
-                    console.log(event[field]);
-                    console.log(event[field]=="Population can contain numbers only!");
                     this.translate.get(event[field])
                         .subscribe(msg=>{
-                            console.log(msg);
                             this.editError += msg + " ";
                         });
                 }
             }
-
         }
     }
 

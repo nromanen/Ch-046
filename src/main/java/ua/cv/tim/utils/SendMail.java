@@ -1,20 +1,17 @@
 package ua.cv.tim.utils;
 
 import com.sun.mail.smtp.SMTPTransport;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.cv.tim.configuration.EmailConfiguration;
 
-import java.util.Date;
-import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.Date;
+import java.util.Properties;
 
 @Service("sendMail")
 public class SendMail {
@@ -29,7 +26,6 @@ public class SendMail {
 
     	 String sender = properties.getProperty("senderEmail");
     	 String password = properties.getProperty("EmailPassword");
-        final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 
         Session session = Session.getInstance(properties, null);
 

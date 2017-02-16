@@ -21,7 +21,6 @@ export class PlayerService {
     }
     
     getById():Observable<Player> {
-        console.log(this.url);
         return this.http.get(this.url)
             .map(res => res.json());
     }

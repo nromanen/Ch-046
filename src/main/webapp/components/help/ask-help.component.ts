@@ -63,7 +63,7 @@ export class HelpComponent implements OnInit{
     }
 
     submitForm(value: any){
-        console.log(value);
+
         let newAttack = new Attack(value.villageName, value.enemy, value.date);
         this.send(newAttack);
         this.helpForm.controls['villageName'].setValue("");

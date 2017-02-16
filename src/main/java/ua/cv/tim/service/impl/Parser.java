@@ -60,10 +60,8 @@ public class Parser {
     private void sync(Village village) {
         Village updatingVillage = villageService.getByName(village.getName());
         if (updatingVillage == null) {
-
-            UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User userByUsername = userService.getUserByUsername(principal.getUsername());
-//            User userByUsername = userService.getFullUserByUsername("neo");
+          UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+          User userByUsername = userService.getUserByUsername(principal.getUsername());
             Village addVillage = village;
             Player player = userByUsername.getPlayer();
             addVillage.setPlayer(player);
