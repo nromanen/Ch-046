@@ -25,7 +25,7 @@ public class AttackArchiveController {
     @Autowired
     private AttackArchiveService attackArchiveService;
 
-    @RequestMapping(value = "/user/attackArchive", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/user/attackArchive", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<AttackArchiveDTO>> listAllAttackArchive() {
         List<AttackArchive> archive = attackArchiveService.getAll();
         if (archive.isEmpty()) {
@@ -45,7 +45,7 @@ public class AttackArchiveController {
         return  result;
     }
 
-    @RequestMapping(value = "/user/attack/{id}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/user/attack/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<AttackDTO>> listAttackArchive(@PathVariable String id) throws IOException {
         System.out.println("id = " + id);
         List<AttackDTO> attack = attackArchiveService.getById(id);
