@@ -1,4 +1,4 @@
-<player-head [isLeader]="leader.isLeader"></player-head>
+<player-head [isLeader]="leader.isLeader" [playerLogin]="leader.login"></player-head>
 
 <app-modal *ngIf="deletedMember !== null" [confirmMsg]="confirmMsg" (notify)='onConfirmDelete($event)'></app-modal>
 
