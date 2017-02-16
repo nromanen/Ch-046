@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 import {User} from '../user/user';
 import {UserService} from "../services/user.service";
+import {TranslateService} from "ng2-translate";
 
 
 @Component({
@@ -21,7 +22,7 @@ export class LeaderManagerComponent implements OnInit {
     confirmMsg:string;
 
 
-    constructor(private userService:UserService) {
+    constructor(private userService:UserService, private translate:TranslateService) {
         console.log(`LeaderManagerComponent constructor is working`);
 
         this.leader = new User();
@@ -66,7 +67,7 @@ export class LeaderManagerComponent implements OnInit {
 
     selectMember(member:User) {
         console.log(`usersComponent.selectMember() method is working.`);
-
+        this.dropMessages();
         this.selectedMember = member;
     }
 
@@ -80,12 +81,14 @@ export class LeaderManagerComponent implements OnInit {
 
     addMember(member:User) {
         console.log(`LeaderManagerComponent.addMember() method is working`);
+        this.dropMessages();
         member.alliance = this.leader.alliance;
         this.userService.addMember(member)
             .subscribe(
                 user => {this.users.push(user);
                     this.errorMessage = null;
-                    this.successMessage = "User added successfully";
+                    this.successMessage = this.translate.instant("Player") + " " + user.login + " "
+                        + this.translate.instant("added successfully");
                 },
                 error => {console.log(error);
                     this.successMessage = null;
@@ -94,8 +97,14 @@ export class LeaderManagerComponent implements OnInit {
             );
     }
 
+    private dropMessages() {
+        this.errorMessage = null;
+        this.successMessage = null;
+    }
+
     updateMember(member:User) {
         console.info(`LeaderManagerComponent.updateMember() method is working. Member value: ${JSON.stringify(member)}`);
+        this.dropMessages();
         if (member !== null) {
             this.userService.updateMember(member)
                 .subscribe(
@@ -105,7 +114,8 @@ export class LeaderManagerComponent implements OnInit {
                         this.users[this.users.indexOf(this.selectedMember)] = user;
                         this.selectedMember = null;
                         this.errorMessage = null;
-                        this.successMessage = `User updated successfully`;
+                        this.successMessage = this.translate.instant("Player") + " " + user.login + " "
+                            + this.translate.instant("updated successfully");
                     },
                     error => {
                         console.log(error);
@@ -120,8 +130,9 @@ export class LeaderManagerComponent implements OnInit {
     }
 
     deleteMember(member: User) {
+        this.dropMessages();
         this.deletedMember = member;
-        this.confirmMsg = `Are you going to delete alliance member: ${member.login}?`
+        this.confirmMsg = this.translate.instant("Are you going to delete alliance member: ") + member.login + "?";
     }
     
     onConfirmDelete(confirmation:boolean) {
@@ -133,7 +144,8 @@ export class LeaderManagerComponent implements OnInit {
                         if (status) {
                             this.users.splice(this.users.indexOf(this.deletedMember), 1);
                             this.errorMessage = null;
-                            this.successMessage = `User ${this.deletedMember.login} deleted successfully`;
+                            this.successMessage = this.translate.instant("Player") + " " + this.deletedMember.login + " "
+                                + this.translate.instant("deleted successfully");
                             this.deletedMember = null;
                         }
                     },
