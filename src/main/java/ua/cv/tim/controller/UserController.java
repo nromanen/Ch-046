@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ua.cv.tim.dto.UserDTO;
 import ua.cv.tim.model.AuthorizedUser;
@@ -35,14 +33,14 @@ public class UserController {
     private UserService userService;
 
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<UserDTO> getUserWithAlliance(@AuthenticationPrincipal AuthorizedUser authorizedUser) {
 		UserDTO userDTO = new UserDTO(authorizedUser.getUuid(), authorizedUser.getUsername(), authorizedUser.getEmail(), authorizedUser.getAlliance().getName(),authorizedUser.getRoles().size()==2);
 		logger.info(userDTO.toString());
 		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 
-    @RequestMapping(value = "/userList", method = RequestMethod.GET)
+    @RequestMapping(value = "/userList", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> allWithRoles = userService.getAllWithRoles();
         if (allWithRoles.isEmpty()) {
@@ -51,7 +49,7 @@ public class UserController {
         return new ResponseEntity<>(allWithRoles, HttpStatus.OK);
     }
 
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<User> getById(@PathVariable("id") String id) {
 		User user = userService.getWithRolesById(id);
 		if (user == null) {
@@ -82,7 +80,7 @@ public class UserController {
 		return true;
 	}
 
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity deleteUser(@PathVariable(name = "id") String id) {
 		if (isUserExists(id)) {
 			userService.deleteById(id);
@@ -98,7 +96,7 @@ public class UserController {
 		return userService.getById(id) != null;
 	}
 
-	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<UserDTO> updateUser(@PathVariable("id") String id, @RequestBody UserDTO user) throws MessagingException {
 		logger.info("User id: {}, user body: {}", id, user);
 		User currentUser = userService.getById(id);
@@ -123,7 +121,7 @@ public class UserController {
         }
     }
 
-	@RequestMapping(value = "/alliance-users", method = RequestMethod.GET)
+	@RequestMapping(value = "/alliance-users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<UserDTO>> getUsersByAlliance(@AuthenticationPrincipal AuthorizedUser authorizedUser) {
 		List<UserDTO> allianceUsers = userService.getUsersByAlliance(authorizedUser.getAlliance().getName());
 		logger.info("Users from DB: {}", allianceUsers);
