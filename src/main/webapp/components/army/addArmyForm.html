@@ -11,10 +11,13 @@
         <label for="count">Count</label>
         <div *ngIf="!group.controls.count.valid && (group.controls.count.touched || group.controls.count.dirty)">
             <div [hidden]="!group.controls['count'].errors.required" class="error">
-                Count is required!
+                {{'Count is required! '|translate}}
             </div>
             <div [hidden]="!group.controls['count'].errors.pattern" class="error">
-                Count can contain numbers only!
+                {{'Count can contain numbers only!'|translate}}
+            </div>
+            <div [hidden]="!group.controls['count'].errors.moreThanZero" class="error">
+                {{'Count must be more than zero!'|translate}}
             </div>
         </div>
     </div>

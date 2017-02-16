@@ -73,6 +73,13 @@ td button {
     width: 90px;
     padding: 0 10px;
 }
+.card{
+    position: fixed;
+    top: -5px;
+    width: 42%;
+    left: 57%;
+    z-index: 1;
+}
 
 @media screen and (max-width: 1000px)  {
     td input {

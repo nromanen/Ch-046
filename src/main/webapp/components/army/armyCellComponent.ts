@@ -14,7 +14,7 @@ import {FormBuilder, FormGroup, FormArray} from "@angular/forms";
     outputs: ['cellClicked'],
     styleUrls: ['components/army/army.css'],
     template: `
-          <div class="cell" title="{{this.type}}" (dblclick)="hide()" *ngIf="!isInput" (click)="becomeDiv()"
+          <div class="cell" title="{{this.type}}" *ngIf="!isInput" 
           [ngStyle]="this.army.count==0||army.count==null?{'visibility':'hidden'}:{'visibility':'visible'}">
           {{this.army.count==0||army.count==null?"m":this.army.count}}</div>
      <div class="input-field"  *ngIf="isInput" [formGroup]="group">
@@ -80,18 +80,6 @@ export class ArmyCellComponent implements OnInit,OnChanges {
 
             }
     }
-
-
-    hide() {
-        this.isInput = true;
-        this.cellClicked.emit(this.village);
-    }
-
-    becomeDiv() {
-        this.cellClicked.emit(null);
-    }
-
-
 
     cancelEditing(event) {
         if (event === 27)
