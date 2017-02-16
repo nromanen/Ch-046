@@ -29,6 +29,7 @@ public class VillageServiceImp implements VillageService {
     @Override
     public void add(Village village){
         villageDao.add(village);
+
     }
 
     @Override

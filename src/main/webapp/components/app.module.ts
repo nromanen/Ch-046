@@ -7,7 +7,6 @@ import {RoutesModule} from "./app.routers";
 import {AppComponent}  from './app.component';
 import {AllianceComponent} from "./alliance/alliance.component";
 import {HeaderComponent} from "./header/header.component";
-import {LeaderHeaderComponent} from "./header/leader-header.component";
 
 
 import {ConfirmComponent} from "./modal_window/modal";
@@ -86,7 +85,6 @@ import {ParserService} from "./services/parser.service";
         AddVillageForm,
         VillageInfoComponent,
         ArmyCellInfoComponent,
-        LeaderHeaderComponent,
         AddArmyForm,
         HelpComponent,
         AllHelps,
