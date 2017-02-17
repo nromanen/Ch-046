@@ -17,14 +17,14 @@
             </div>
         </div>
 
-        <h3>Alliances</h3>
+        <h3>{{'Alliances'|translate}}</h3>
         <table class="highlight">
             <thead>
             <tr>
-                <th class="col s3"><div>Alliance name</div></th>
-                <th class="col s3"><div>Leader's login</div></th>
-                <th class="col s2"><div>Leader's email</div></th>
-                <th class="col s4"><div>Action</div></th>
+                <th class="col s3"><div>{{'AllianceName'|translate}}</div></th>
+                <th class="col s3"><div>{{'LeaderLogin'|translate}}</div></th>
+                <th class="col s3"><div>{{'LeaderEmail'|translate}}</div></th>
+                <th class="col s3"><div class="text-center">{{'Action'|translate}}</div></th>
             </tr>
             </thead>
             <tbody>
@@ -32,8 +32,8 @@
                 <div *ngIf="al !== selectedAlliance">
                     <td class="col s3"><div>{{al.name}}</div></td>
                     <td class="col s3"><div *ngIf="al !== selectedAlliance">{{al.leaderLogin}}</div></td>
-                    <td class="col s2"><div *ngIf="al !== selectedAlliance">{{al.leaderEmail}}</div></td>
-                    <td class="col s4 text-center">
+                    <td class="col s3"><div *ngIf="al !== selectedAlliance">{{al.leaderEmail}}</div></td>
+                    <td class="col s3 text-center">
                         <button *ngIf="al !== selectedAlliance" class="waves-effect waves-light btn edit" type="submit" name="action" (click)="editAlliance(al)">
                             <i class="material-icons">mode_edit</i>
                         </button>

@@ -13,22 +13,12 @@ To change this template use File | Settings | File Templates.
 <head>
     <title>Forgot password</title>
 
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.css">
-    <!-- Compiled and minified JavaScript -->
-    <!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.js"></script>
+
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.min.js"></script>
     <script src="js/emailValidation.js"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".button-collapse").sideNav();
-        });
-    </script>
 
 </head>
 
@@ -38,7 +28,7 @@ To change this template use File | Settings | File Templates.
     <div class="nav-wrapper">
         <a class="brand-logo" a href="login">Travian</a>
         <ul class="right hide-on-med-and-down">
-            <li><a href="login">Login</a></li>
+            <li><a href="login"><spring:message code="submitButton.loginForm"/></a></li>
         </ul>
     </div>
 </nav>
@@ -80,6 +70,8 @@ To change this template use File | Settings | File Templates.
     </div>
 </div>
 </div>
+
+
 </body>
 
 

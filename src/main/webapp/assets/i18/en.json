@@ -1,1 +1,26 @@
-{}
+{
+  "Player":"Player",
+  "EMAIL_ERROR":"Enter correct email, please!",
+  "NAME_ERROR":"Enter from 3 to 10 letters",
+  "LOGIN_ERROR":"Enter from 3 to 10 letters",
+  "Alliances":"Alliances",
+  "AllianceName":"Alliance name",
+  "LeaderLogin":"Leader's login",
+  "LeaderEmail":"Leader's email",
+  "Action":"Action",
+  "NewAlliance":"Add new Alliance",
+  "Ask help":"Ask help",
+  "Village":"Village",
+  "Enemy":"Enemy",
+  "Time of attack":"Time of attack",
+  "ChooseVillage":"Choose your village",
+  "HelpNotification":"One of alliance members needs help!",
+  "PlayerName":"Player name",
+  "VillageCoord":"Village [Coordinates]",
+  "AllHelps":"All ask of help",
+  "Date":"Date",
+  "No attacks":"No attacks in archive for this date",
+  "DeleteAlliance":"Are you sure you want to delete alliance "
+
+
+}

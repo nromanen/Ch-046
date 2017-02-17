@@ -10,7 +10,7 @@ import {User} from "../user/user";
 @Component({
     selector: 'ask-help',
     templateUrl: 'components/help/allHelps.html',
-    providers: [UserService]
+    styleUrls: ['components/help/help.css']
 })
 
 export  class AllHelps{

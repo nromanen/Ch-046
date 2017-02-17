@@ -1,3 +1,4 @@
+
 <%--
   Created by IntelliJ IDEA.
   User: vyach
@@ -13,23 +14,13 @@
 <head>
     <title>Login</title>
 
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <spring:url value="/css" var="cssUrl"/>
     <link href="${cssUrl}/flag-icon.min.css" rel="stylesheet"/>
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.css">
-    <!-- Compiled and minified JavaScript -->
-    <!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.js"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".button-collapse").sideNav();
-        });
-    </script>
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/loginPasswordValidation.js"></script>
 
 </head>
 
@@ -39,7 +30,7 @@
     <div class="nav-wrapper">
         <a class="brand-logo" a href="login">Travian</a>
         <ul class="right hide-on-med-and-down">
-            <li><a href="login">Login</a></li>
+            <li><a href="login"><spring:message code="submitButton.loginForm"/></a></li>
         </ul>
     </div>
 </nav>
@@ -129,20 +120,6 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $(":password").keyup(function(){
-            if($("#password").val().length > 32){
-                $("#passError").prop('hidden', false);
-                $(':input[type="submit"]').prop('disabled', true);
-            }else{
-                $("#passError").prop('hidden', true);
-                $(':input[type="submit"]').prop('disabled', false);
-            }
-        });
-    });
-</script>
-
 </body>
 
 </html>

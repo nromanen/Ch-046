@@ -1,6 +1,7 @@
 import {Alliance} from "./alliance";
 import {Component, OnInit} from "@angular/core";
 import {AllianceService} from "../services/alliance/alliance-service";
+import {TranslateService} from "ng2-translate";
 
 
 @Component({
@@ -19,7 +20,7 @@ export class AllianceComponent implements OnInit{
     deletedAlliance: Alliance = null;
     confirmMsg: string;
 
-    constructor(private _allianceService: AllianceService){
+    constructor(private _allianceService: AllianceService, private translate:TranslateService){
     }
 
     ngOnInit() {
@@ -95,7 +96,7 @@ export class AllianceComponent implements OnInit{
     }
 
     deleteAlliance(alliance: Alliance){
-        this.confirmMsg = "Are you sure you want to delete alliance " + alliance.name + "?";
+        this.confirmMsg = this.translate.instant("DeleteAlliance") + alliance.name + "?";
         this.deletedAlliance = alliance;
     }
 

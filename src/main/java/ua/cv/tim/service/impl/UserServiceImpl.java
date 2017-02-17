@@ -97,9 +97,12 @@ public class UserServiceImpl implements UserService {
 	public boolean isUnique(User user) {
 		boolean[] isLoginEmailUnique = new boolean[2];
 		User compareUser = userDao.getUserByUsername(user.getLogin());
-		isLoginEmailUnique[0] = compareUser == null || compareUser.getUuid().equals(user.getUuid());
-		compareUser = userDao.getByMail(user.getEmail());
-		isLoginEmailUnique[1] = compareUser == null || compareUser.getUuid().equals(user.getUuid());
+
+			isLoginEmailUnique[0] = compareUser == null || compareUser.getUuid().equals(user.getUuid());
+
+			compareUser = userDao.getByMail(user.getEmail());
+
+			isLoginEmailUnique[1] = compareUser == null || compareUser.getUuid().equals(user.getUuid());
 
 		String errorMessage = createErrorMessage(isLoginEmailUnique);
 		if (errorMessage != null) {

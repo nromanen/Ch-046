@@ -5,28 +5,28 @@
         <br>
 
         <p class="right" routerLink="/allHelps/archive" routerLinkActive="active">
-            <button class="waves-effect waves-light  btn green" title="Attacks Archive">
+            <button class="waves-effect waves-light  btn green" title="{{'Attacks Archive'|translate}}">
                 <i class="material-icons">library_books</i></button>
         </p>
         <br>
 
-        <h3>All Helps</h3>
+        <h3>{{'AllHelps'|translate}}</h3>
         <table class="highlight">
 
             <thead>
             <tr>
-                <th class="col s3"><div style="margin: 15px 0;">Player name</div></th>
-                <th class="col s3"><div style="margin: 15px 0;">Village name / coordinates</div></th>
-                <th class="col s3"><div style="margin: 15px 0;">Enemy</div></th>
-                <th class="col s3"><div style="margin: 15px 0;">Time to attack</div></th>
+                <th class="col s3"><div>{{'PlayerName'|translate}}</div></th>
+                <th class="col s3"><div>{{'VillageCoord'|translate}}</div></th>
+                <th class="col s3"><div>{{'Enemy'|translate}}</div></th>
+                <th class="col s3"><div>{{'Time of attack'|translate}}</div></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let at of attacks">
-                <td class="col s3"><div  style="margin: 15px 0;">{{at.playerName}}</div></td>
-                <td class="col s3"><div  style="margin: 15px 0;">{{at.villageName}}</div></td>
-                <td class="col s3"><div style="margin: 15px 0;">{{at.enemy}}</div></td>
-                <td class="col s3"><div style="margin: 15px 0; color: red;">
+                <td class="col s3"><div>{{at.playerName}}</div></td>
+                <td class="col s3"><div>{{at.villageName}}</div></td>
+                <td class="col s3"><div>{{at.enemy}}</div></td>
+                <td class="col s3"><div class="timer">
                     <my-timer [futureString] = "at.attackTime"></my-timer>
                 </div></td>
             </tr>

@@ -18,10 +18,10 @@ public class PasswordResetDaoImpl extends AbstractCrudDao<PasswordResetToken> im
 
     @Override
     public boolean isToken(User user, String token) {
-        Query query = getCurrentSession().createQuery("select t from PasswordResetToken t where t.user = :user and t.token = :token");
+        Query<PasswordResetToken> query = getCurrentSession().createQuery("select t from PasswordResetToken t where t.user = :user and t.token = :token");
         query.setParameter("user", user);
         query.setParameter("token", token);
-        PasswordResetToken passwordResetToken = (PasswordResetToken) query.uniqueResult();
+        PasswordResetToken passwordResetToken = query.uniqueResult();
 
         if (passwordResetToken == null){
             return false;
@@ -35,9 +35,9 @@ public class PasswordResetDaoImpl extends AbstractCrudDao<PasswordResetToken> im
     @Override
     public PasswordResetToken getByUser(User user) {
 
-        Query query =  getCurrentSession().createQuery("select t from PasswordResetToken t where t.user = :user");
+        Query<PasswordResetToken> query =  getCurrentSession().createQuery("select t from PasswordResetToken t where t.user = :user");
         query.setParameter("user", user);
-        PasswordResetToken passwordResetToken = (PasswordResetToken) query.uniqueResult();
+        PasswordResetToken passwordResetToken = query.uniqueResult();
         return passwordResetToken;
     }
 

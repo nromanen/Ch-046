@@ -13,6 +13,7 @@ import ua.cv.tim.service.UserService;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 
@@ -39,7 +40,7 @@ public class AllianceController {
     }
 
     @RequestMapping(value = "/admin/allianceDTO", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ResponseEntity<AllianceDTO> createAlliance(@RequestBody @Valid AllianceDTO allianceDTO) throws MessagingException {
+    public ResponseEntity<AllianceDTO> createAlliance(@RequestBody @Valid AllianceDTO allianceDTO) throws MessagingException, InvocationTargetException {
 
         User user = new User();
         user.setLogin(allianceDTO.getLeaderLogin());
@@ -53,7 +54,7 @@ public class AllianceController {
     }
 
     @RequestMapping(value = "/admin/allianceDTO/{id}", method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ResponseEntity<AllianceDTO> updateAlliance(@PathVariable("id") String uuid, @RequestBody @Valid AllianceDTO allianceDTO) throws MessagingException {
+    public ResponseEntity<AllianceDTO> updateAlliance(@PathVariable("id") String uuid, @RequestBody @Valid AllianceDTO allianceDTO) throws MessagingException, InvocationTargetException {
 
         Alliance updatedAlliance = allianceService.getById(uuid);
         if (updatedAlliance == null) {

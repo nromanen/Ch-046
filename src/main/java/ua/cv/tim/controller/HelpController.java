@@ -3,6 +3,8 @@ package ua.cv.tim.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,7 @@ import ua.cv.tim.service.VillageService;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by rmochetc on 08.01.2017.
@@ -42,15 +45,18 @@ public class HelpController {
     private UserService userService;
 
     @Autowired
-    PlayerService playerService;
+    private PlayerService playerService;
 
     @Autowired
-    AttackService attackService;
+    private AttackService attackService;
 
     @Autowired
-    VillageService villageService;
+    private VillageService villageService;
 
-    @RequestMapping(value = "/user/helpInit", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @Autowired
+    private MessageSource messageSource;
+
+    @RequestMapping(value = "/user/helpInit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AllianceDTO> getAllianceByPlayer() {
         logger.info("path: /user/helpInit/ is Starting");
 
@@ -68,7 +74,7 @@ public class HelpController {
     }
 
 
-    @RequestMapping(value = "/askhelp", method = RequestMethod.GET)
+    @RequestMapping(value = "/askhelp", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<PlayerDTO> getPlayerById() {
 
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -90,7 +96,9 @@ public class HelpController {
 
         if(new Date().after(new Date(attack.getAttackTime()))){
             logger.info("Date of attack can't be in the past: {}", attack.getAttackTime());
-            throw new IllegalArgumentException("Date of attack can't be in the past!");
+            Locale locale = LocaleContextHolder.getLocale();
+            String errorMessage =  messageSource.getMessage("helpController.attackTime", null, locale);
+            throw new IllegalArgumentException(errorMessage);
         }
         attack.setPlayerId(id);
         logger.info("add new ask help. Attack: {}", attack);

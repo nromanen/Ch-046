@@ -1,29 +1,22 @@
 package ua.cv.tim.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 import ua.cv.tim.exception.EntityNotUniqueException;
-import ua.cv.tim.model.AuthorizedUser;
-import ua.cv.tim.model.UnitType;
 import ua.cv.tim.model.User;
 import ua.cv.tim.model.Village;
 import ua.cv.tim.service.UserService;
 import ua.cv.tim.service.VillageService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.servlet.Filter;
 import java.util.Collections;
 
 /**
@@ -40,7 +33,7 @@ public class VillagesController {
     UserService userService;
 
 
-    @RequestMapping(value = "/village/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/village/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Village> getVillageById(@PathVariable(name = "id") String id) {
         Village village = villageService.getById(id);
         if (village == null)
@@ -55,7 +48,7 @@ public class VillagesController {
      * @throws JsonProcessingException
      * @throws EntityNotUniqueException
      */
-    @RequestMapping(value = "/village/", method = RequestMethod.POST)
+    @RequestMapping(value = "/village/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @PreAuthorize("authenticated")
     public ResponseEntity<Village> addVillage(@RequestBody Village village) throws JsonProcessingException, EntityNotUniqueException {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -75,7 +68,7 @@ public class VillagesController {
      * @param village
      * @return updated village.
      */
-    @RequestMapping(value = "/village/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/village/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Village> updateVillage(@PathVariable(name = "id") String id, @RequestBody Village village) {
         Village current_village = villageService.getById(id);
         if (current_village != null) {
@@ -98,7 +91,7 @@ public class VillagesController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = "/village/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/village/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Village> deleteVillage(@PathVariable(name = "id") String id) {
         Village Village = villageService.getById(id);
         if (Village == null) {

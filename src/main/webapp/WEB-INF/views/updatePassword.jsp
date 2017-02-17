@@ -13,21 +13,11 @@
 <head>
     <title>restore password</title>
 
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/checkPassword.js"></script>
 
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.css">
-    <!-- Compiled and minified JavaScript -->
-    <!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.js"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".button-collapse").sideNav();
-        });
-    </script>
 </head>
 
 <body>
@@ -36,7 +26,7 @@
     <div class="nav-wrapper">
         <a class="brand-logo">Travian</a>
         <ul class="right hide-on-med-and-down">
-            <li><a href="login">Login</a></li>
+            <li><a href="login"><spring:message code="submitButton.loginForm"/></a></li>
         </ul>
     </div>
 </nav>
@@ -58,13 +48,17 @@
                 </c:if>
                 <div class="row">
                     <div class="input-field">
-                        <label for="password">Password *</label>
+                        <label for="password">
+                            <spring:message code="password.loginForm"/> *
+                        </label>
                         <input type="password" id="password" name="password" class="validate" required/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field">
-                        <label for="confirmPassword">Confirm password *</label>
+                        <label for="confirmPassword">
+                            <spring:message code="confirmPassword.resetForm"/> *
+                        </label>
                         <input type="password" id="confirmPassword" name="confirmPassword" class="validate" required/>
                     </div>
                 </div>
@@ -86,24 +80,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function () {
-        $(document).on('input', function(){
-            if(validatePassword($("#password").val()) && $("#password").val()==$("#confirmPassword").val()) {
-                $(':input[type="submit"]').prop('disabled', false);
-            } else{
-                $(':input[type="submit"]').prop('disabled', true);
-            }
-        });
-    });
-
-    function validatePassword(pass) {
-
-        var re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@!%_*#?&])[A-Za-z\d$@_!%*#?&]{8,32}$/;
-        return re.test(pass);
-    }
-</script>
 
 </body>
 </html>
