@@ -1,5 +1,7 @@
 package ua.cv.tim.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +24,8 @@ import java.util.List;
  */
 @RestController
 public class AttackArchiveController {
+
+    private static final Logger logger = LoggerFactory.getLogger(AttackArchiveController.class);
     @Autowired
     private AttackArchiveService attackArchiveService;
 
@@ -32,6 +36,8 @@ public class AttackArchiveController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         List<AttackArchiveDTO> archiveDTOS = getAttackArchiveDTO(archive);
+
+        logger.info("Attack archives:  {}", archiveDTOS);
         return new ResponseEntity<>(archiveDTOS, HttpStatus.OK);
     }
 
@@ -47,13 +53,13 @@ public class AttackArchiveController {
 
     @RequestMapping(value = "/user/attack/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<AttackDTO>> listAttackArchive(@PathVariable String id) throws IOException {
-        System.out.println("id = " + id);
+
         List<AttackDTO> attack = attackArchiveService.getById(id);
 
         if (attack.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
+        logger.info("Attack archives:  {}", attack);
         return new ResponseEntity<>(attack, HttpStatus.OK);
     }
 

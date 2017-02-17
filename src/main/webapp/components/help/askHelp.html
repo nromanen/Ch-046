@@ -13,22 +13,22 @@
 </div>
 <div class="row container">
     <div class="col s12">
-        <h3>Ask help</h3>
+        <h3>{{'Ask help'|translate}}</h3>
     </div>
 </div>
 
 <div class="row container">
     <div class="col s12">
-        <div class="col s3">Village</div>
-        <div class="col s3">Enemy</div>
-        <div class="col s3">Time of attack</div>
+        <div class="col s3">{{'Village'|translate}}</div>
+        <div class="col s3">{{'Enemy'|translate}}</div>
+        <div class="col s3">{{'Time of attack'|translate}}</div>
         <div class="col s3"></div>
     </div>
 
     <form [formGroup]="helpForm" (ngSubmit)="submitForm(helpForm.value)">
         <div class="col s3">
             <select class="browser-default" [formControl]="helpForm.controls['villageName']">
-                <option value="" disabled selected>Choose your village</option>
+                <option value="" disabled selected>{{'ChooseVillage'|translate}}</option>
                 <option *ngFor="let village of villages" value="{{village.uuid}}">{{village.name}}</option>
             </select>
         </div>
@@ -42,7 +42,9 @@
         </div>
 
         <div class="input-field col s3">
-            <button class="btn waves-effect waves-light col offset-s5 " name="action" type="submit" [disabled]="!helpForm.valid">Ask help</button>
+            <button class="btn waves-effect waves-light col offset-s5 " name="action" type="submit" [disabled]="!helpForm.valid">
+                <i class="material-icons">add</i>
+            </button>
         </div>
     </form>
 </div>

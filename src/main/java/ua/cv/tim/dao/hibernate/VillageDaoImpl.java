@@ -42,7 +42,6 @@ public class VillageDaoImpl extends AbstractCrudDao<Village> implements VillageD
         query.setParameter("x",xCoord);
         query.setParameter("y",yCoord);
         Village village = (Village) query.uniqueResult();
-        System.out.println();
         return village;
     }
 

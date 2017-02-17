@@ -3,6 +3,8 @@ package ua.cv.tim.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cv.tim.dao.AllianceDao;
@@ -15,11 +17,11 @@ import ua.cv.tim.model.Role;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.AllianceService;
 import ua.cv.tim.service.UserService;
-import ua.cv.tim.utils.SendMail;
 
 import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by rmochetc on 17.01.2017.
@@ -38,13 +40,17 @@ public class AllianceServiceImpl implements AllianceService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MessageSource messageSource;
+
+
     @Override
     public List<AllianceDTO> getAll(){
         List<Alliance> alliances = allianceDao.getAll();
         List<AllianceDTO> allianceDTOS = new ArrayList<>();
 
         for (Alliance alliance: alliances){
-            User leader = null;
+            User leader = new User();
             for(Player player : alliance.getPlayers()){
                 if (player.getUser().getRoles().contains(Role.LEADER)){
                     leader = player.getUser();
@@ -74,7 +80,7 @@ public class AllianceServiceImpl implements AllianceService {
         Alliance alliance = allianceDao.getById(allianceDTO.getAllianceUuid());
         alliance.setName(allianceDTO.getName());
 
-        User leader = null;
+        User leader = new User();
         for(Player player : alliance.getPlayers()){
             if (player.getUser().getRoles().contains(Role.LEADER)){
                 leader = player.getUser();
@@ -112,7 +118,10 @@ public class AllianceServiceImpl implements AllianceService {
     @Override
     public boolean isUniqueAlliance(String name, String uuid){
         if(allianceDao.getByName(name, uuid)!=null ) {
-            throw new IllegalArgumentException("Alliance with entered name already exists.");
+            Locale locale = LocaleContextHolder.getLocale();
+            String errorMessage =  messageSource.getMessage("allianceService.errorMessage.allianceName", null, locale);
+            logger.info("Alliance with the sane name {} already exists", name);
+            throw new IllegalArgumentException(errorMessage);
         }
         return true;
 

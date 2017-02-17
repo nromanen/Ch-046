@@ -5,7 +5,7 @@ package ua.cv.tim.service.impl;
 import org.mockito.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.Assert;
+import org.springframework.context.MessageSource;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -29,7 +29,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Created by mmaksymtc on 26.01.2017.
@@ -47,6 +48,8 @@ public class AllianceServiceImplTest {
     UserDao userDao;
     @Mock
     SendMail sendMail;
+    @Mock
+    MessageSource messageSource;
     @InjectMocks
     AllianceServiceImpl allianceService;
     @Spy
@@ -124,6 +127,7 @@ public class AllianceServiceImplTest {
     public void testIsUniqueAllianceExpectException(){
         Alliance alliance = alliancesList.get(0);
         when(allianceDao.getByName(anyString(),anyString())).thenReturn(alliance);
+        when(messageSource.getMessage(any(),any(),any())).thenReturn("Error message");
         allianceService.isUniqueAlliance(alliance.getName(), alliance.getUuid());
         verify(allianceDao, times(1)).getByName(captor.capture().getName(),captor.capture().getUuid());
         assertEquals(captor.getValue().getName(), alliance.getName());

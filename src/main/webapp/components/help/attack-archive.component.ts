@@ -15,7 +15,8 @@ import {AttackArchiveService} from "../services/helpNotification/attack-archive.
 
 @Component({
     selector: 'attack-archive',
-    templateUrl: 'components/help/attackArchive.html'
+    templateUrl: 'components/help/attackArchive.html',
+    styleUrls: ['components/alliance/alliance.css']
 })
 
 export class AttackArchiveComponent implements OnInit{

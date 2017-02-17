@@ -52,9 +52,9 @@ public class TravianAuthenticationSuccessHandler implements AuthenticationSucces
 
 		Collection<? extends GrantedAuthority> grantedAuthorities = authentication.getAuthorities();
 		for (GrantedAuthority grantedAuthority : grantedAuthorities) {
-			if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
+			if ("ROLE_USER".equals(grantedAuthority.getAuthority())) {
 				isUser = true;
-			} else if (grantedAuthority.getAuthority().equals("ROLE_LEADER")) {
+			} else if ("ROLE_LEADER".equals(grantedAuthority.getAuthority())) {
 				isLeader = true;
 				break;
 			}

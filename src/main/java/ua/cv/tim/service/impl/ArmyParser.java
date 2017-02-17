@@ -30,12 +30,11 @@ public class ArmyParser {
         String unitT = driver.findElement(By.cssSelector("#unitRowAtTown > td.uniticon.t1 > img")).getAttribute("class");
 
         int n = 0;
-        if (unitT == "unit u21") {
-            n = n;
-        } else if (unitT == "unit u11") {
-            n = n + 9;
-        } else if (unitT == "unit u1") {
-            n = n + 18;
+        if (unitT == "unit u11") {
+            n = 9;
+        }
+        if (unitT == "unit u1") {
+            n = 18;
         }
         List<Integer> parslist = new ArrayList<>();
         for (int i = 1; i <= 9; i++) {

@@ -1,3 +1,4 @@
+
 <%--
   Created by IntelliJ IDEA.
   User: vyach
@@ -13,30 +14,25 @@
 <head>
     <title>Login</title>
 
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <spring:url value="/css" var="cssUrl"/>
     <link href="${cssUrl}/flag-icon.min.css" rel="stylesheet"/>
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.css">
-    <!-- Compiled and minified JavaScript -->
-    <!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.js"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".button-collapse").sideNav();
-        });
-    </script>
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/loginPasswordValidation.js"></script>
 
 </head>
 
 <body>
 
 <nav>
-    <div class="nav-wrapper"></div>
+    <div class="nav-wrapper">
+        <a class="brand-logo" a href="login">Travian</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="login"><spring:message code="submitButton.loginForm"/></a></li>
+        </ul>
+    </div>
 </nav>
 
 <div class="container row">
@@ -75,7 +71,18 @@
                 <c:if test="${email_send != null}">
                     <div class="card green lighten-4">
                         <div class="card-content green-text">
-                            <p class="center-align">${email_send}</p>
+                            <p class="center-align">
+                                <spring:message code="passRestor.emailSend"/>
+                            </p>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${pass_change != null}">
+                    <div class="card green lighten-4">
+                        <div class="card-content green-text">
+                            <p class="center-align">
+                                <spring:message code="passRestor.passChange"/>
+                            </p>
                         </div>
                     </div>
                 </c:if>
@@ -95,7 +102,9 @@
                         <input type="password" id="password" name="password" class="validate" required/>
                     </div>
                     <div class="card red lighten-4">
-                        <div class="card-content red-text" id="passError" hidden></div>
+                        <div class="card-content red-text" id="passError" hidden>
+                            <spring:message code="passValidation.loginForm"/>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -105,24 +114,12 @@
                 </div>
             </form>
             <br>
-            <p style="color: red;"><a href="forgotPassword"> Forgot password?</a></p>
+            <p style="color: red;"><a href="forgotPassword">
+                <spring:message code="forgotPassword.loginForm"/>
+            </a></p>
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $(":password").keyup(function(){
-            if($("#password").val().length > 32){
-                $("#passError").show().html("Length of password can't be more than 32 characters");
-                $(':input[type="submit"]').prop('disabled', true);
-            }else{
-                $("#passError").html("").hide();
-                $(':input[type="submit"]').prop('disabled', false);
-            }
-        });
-    });
-</script>
-
 </body>
 
 </html>

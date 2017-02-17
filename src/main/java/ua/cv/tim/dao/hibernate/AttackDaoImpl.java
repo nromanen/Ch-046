@@ -48,8 +48,8 @@ public class AttackDaoImpl extends AbstractCrudDao<Attack> implements AttackDao 
     public void deleteOldAttack() {
 
         Session session = getCurrentSession();
-        Query query = session.createQuery("delete Attack where attackTime < :thisTime");
+        Query query = session.createQuery("delete FROM Attack where attackTime < :thisTime");
         query.setParameter("thisTime", new Date());
-        int result = query.executeUpdate();
+        query.executeUpdate();
     }
 }

@@ -3,13 +3,33 @@ a, p span {
 }
 
 td div, th div{
-    margin: 15px 0;
+    margin-top: 15px;
 }
 
 button{
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 .text-center{
     text-align: center;
+}
+
+p span.close-ico {
+    cursor: pointer;
+}
+
+table tr div {
+    height: 55px;
+}
+
+table tr td button {
+    width: 90px;
+}
+
+table tr td button.btn.edit {
+    background-color: #9cd1af;
+}
+
+table tr td button.btn.delete {
+    background-color: #f21036;
 }

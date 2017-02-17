@@ -133,6 +133,15 @@ task runApp(type:Exec) {
     }
 }
 
+task buildApp(type:Exec) {
+    workingDir './'
+    commandLine 'cmd', '/c', 'gradle', 'npm_install', 'npmRunTsc', 'build'
+    standardOutput = new ByteArrayOutputStream()
+    ext.output = {
+        return standardOutput.toString()
+    }
+}
+
 test {
     useTestNG()
     systemProperty 'some.prop', 'value'

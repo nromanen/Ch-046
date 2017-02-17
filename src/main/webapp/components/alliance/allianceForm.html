@@ -1,6 +1,6 @@
 <div class="row container">
     <div class="col s12">
-        <h3>Add new Alliance</h3>
+        <h3>{{'NewAlliance'|translate}}</h3>
     </div>
 </div>
 <form [formGroup]="complexForm" (ngSubmit)="submitForm(complexForm.value)">
@@ -8,24 +8,25 @@
         <div class="col s12">
             <div class="input-field col s3">
 
-                <label for="name">Alliance</label>
+                <label for="name">{{'AllianceName'|translate}}</label>
                 <input type="text" id="name" class="validate"  [formControl]="complexForm.controls['allianceName']"/>
-                <div class="error-input" *ngIf="!complexForm.controls['allianceName'].valid && complexForm.controls['allianceName'].touched">{{NAME_ERROR}}</div>
+                <div class="error-input" *ngIf="!complexForm.controls['allianceName'].valid && complexForm.controls['allianceName'].touched">{{'NAME_ERROR'|translate}}</div>
             </div>
 
             <div class="input-field col s3">
-                <label for="leaderLogin">Leader's login</label>
+                <label for="leaderLogin">{{'LeaderLogin'|translate}}</label>
                 <input type="text" id="leaderLogin" class="validate"  [formControl]="complexForm.controls['leaderLogin']"/>
-                <div class="error-input" *ngIf="!complexForm.controls['leaderLogin'].valid && complexForm.controls['leaderLogin'].touched">{{LOGIN_ERROR}}</div>
+                <div class="error-input" *ngIf="!complexForm.controls['leaderLogin'].valid && complexForm.controls['leaderLogin'].touched">{{'LOGIN_ERROR'|translate}}</div>
             </div>
 
             <div class="input-field col s3">
-                <label for="leaderEmail">Leader's e-mail</label>
+                <label for="leaderEmail">{{'LeaderEmail'|translate}}</label>
                 <input type="text" id="leaderEmail" class="validate"  [formControl]="complexForm.controls['leaderEmail']"/>
-                <div class="error-input" *ngIf="!complexForm.controls['leaderEmail'].valid && complexForm.controls['leaderEmail'].touched">{{EMAIL_ERROR}}</div>
+                <div class="error-input" *ngIf="!complexForm.controls['leaderEmail'].valid && complexForm.controls['leaderEmail'].touched">{{'EMAIL_ERROR'|translate}}</div>
             </div>
             <div class="input-field col s3">
-                <button class="btn waves-effect waves-light col offset-s5 " name="action" type="submit" [disabled]="!complexForm.valid">Add alliance
+                <button class="btn waves-effect waves-light col offset-s3 edit" name="action" type="submit" [disabled]="!complexForm.valid">
+                    <i class="material-icons">add</i>
                 </button>
             </div>
         </div>

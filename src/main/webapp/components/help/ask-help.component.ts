@@ -14,7 +14,8 @@ import {User} from "../user/user";
 
 @Component({
     selector: 'ask-help',
-    templateUrl: 'components/help/askHelp.html'
+    templateUrl: 'components/help/askHelp.html',
+    styleUrls: ['components/help/help.css']
 })
 
 export class HelpComponent implements OnInit{

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 
-import 'node_modules/stompjs/lib/stomp.min.js';
+import 'js/stomp.min.js';
 import {HelpService} from "./help.service";
 import {Alliance} from "../../alliance/alliance";
 

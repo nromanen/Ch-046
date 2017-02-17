@@ -3,6 +3,8 @@ package ua.cv.tim.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ua.cv.tim.dto.AllianceDTO;
 import ua.cv.tim.dto.AttackDTO;
 import ua.cv.tim.dto.PlayerDTO;
-import ua.cv.tim.model.Alliance;
 import ua.cv.tim.model.Player;
 import ua.cv.tim.model.User;
 import ua.cv.tim.service.AttackService;
@@ -26,6 +27,7 @@ import ua.cv.tim.service.VillageService;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by rmochetc on 08.01.2017.
@@ -43,13 +45,16 @@ public class HelpController {
     private UserService userService;
 
     @Autowired
-    PlayerService playerService;
+    private PlayerService playerService;
 
     @Autowired
-    AttackService attackService;
+    private AttackService attackService;
 
     @Autowired
-    VillageService villageService;
+    private VillageService villageService;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @RequestMapping(value = "/user/helpInit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AllianceDTO> getAllianceByPlayer() {
@@ -63,10 +68,8 @@ public class HelpController {
         AllianceDTO allianceDto = new AllianceDTO();
         allianceDto.setName(player.getAlliance().getName());
         allianceDto.setAllianceUuid(player.getAlliance().getUuid());
-        Alliance alliance = player.getAlliance();
 
         logger.info("path: /user/helpInit/ return AllianceDTO: name: {}, id: {}", allianceDto.getName(), allianceDto.getAllianceUuid());
-
         return new ResponseEntity<>(allianceDto, HttpStatus.OK);
     }
 
@@ -93,21 +96,21 @@ public class HelpController {
 
         if(new Date().after(new Date(attack.getAttackTime()))){
             logger.info("Date of attack can't be in the past: {}", attack.getAttackTime());
-            throw new IllegalArgumentException("Date of attack can't be in the past!");
+            Locale locale = LocaleContextHolder.getLocale();
+            String errorMessage =  messageSource.getMessage("helpController.attackTime", null, locale);
+            throw new IllegalArgumentException(errorMessage);
         }
-
         attack.setPlayerId(id);
         logger.info("add new ask help. Attack: {}", attack);
-        System.out.println(attack);
-
         attackService.addAttack(attack);
-
         return new ResponseEntity<>(attack, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/allAttack", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     public ResponseEntity<List<AttackDTO>> allActiveAttack() {
-        logger.info("All active attack RequestMethod.GET");
-        return new ResponseEntity<>(attackService.getActive(), HttpStatus.OK);
+        List<AttackDTO> activeAttack = attackService.getActive();
+
+        logger.info("All active attack {}", activeAttack);
+        return new ResponseEntity<>(activeAttack, HttpStatus.OK);
     }
 }

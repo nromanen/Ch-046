@@ -38,7 +38,7 @@ public class Scheduler {
     @Scheduled(cron = "0 * * * * *")
     public void clearTempFolder() throws ParseException, JsonProcessingException {
         List<Attack> attacks = attackService.getNotActive();
-        if (attacks.size() != 0) {
+        if (!attacks.isEmpty()) {
             saveAttacks(attacks);
             attackService.deleteOldAttack();
         }

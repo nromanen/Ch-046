@@ -11,14 +11,14 @@ import {CookieService} from "angular2-cookie/services/cookies.service";
 })
 
 export class AppComponent {
-constructor(private translate: TranslateService,cookieService:CookieService){
-    if (cookieService.get('locale-cookie')!=null) {
-        translate.use(cookieService.get('locale-cookie'));
+    constructor(private translate: TranslateService,cookieService:CookieService){
+        if (cookieService.get('locale-cookie')!=null) {
+            translate.use(cookieService.get('locale-cookie'));
 
-    }else{
-        translate.use(window.navigator.language);
-        console.log(window.navigator.language);
+        }else{
+            translate.use(window.navigator.language);
+            console.log(window.navigator.language);
+        }
+
     }
-
-}
 }

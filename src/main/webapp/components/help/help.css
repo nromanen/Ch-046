@@ -1,0 +1,10 @@
+button {
+    width: 90px;
+}
+th, td {
+    margin: 15px 0;
+}
+
+.timer{
+    color: red;
+}

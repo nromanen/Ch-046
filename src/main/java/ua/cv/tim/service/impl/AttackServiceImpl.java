@@ -27,33 +27,33 @@ import java.util.List;
 @Transactional
 public class AttackServiceImpl implements AttackService {
 
+
     @Autowired
-    AttackDao attackDao;
+    private AttackDao attackDao;
 
     private static final Logger logger = LoggerFactory.getLogger(AttackServiceImpl.class);
 
     @Autowired
-    VillageService villageService;
+    private VillageService villageService;
 
     @Autowired
-    PlayerService playerService;
+    private PlayerService playerService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Override
     public List<Attack> getNotActive() {
-        return attackDao.getNotActive();
+        List<Attack> notActiveAttacks = attackDao.getNotActive();
+        logger.info("Not active Attacks {}", notActiveAttacks);
+        return notActiveAttacks;
     }
 
     @Override
     public void addAttack(AttackDTO attack) {
         Attack newAttack = new Attack();
-
         logger.info("Add new Attack {}", attack);
-
         Date date = new Date(attack.getAttackTime());
-
         newAttack.setAttackTime(date);
         newAttack.setEnemy(attack.getEnemy());
         newAttack.setOwner(playerService.getById(attack.getPlayerId()));
@@ -68,15 +68,24 @@ public class AttackServiceImpl implements AttackService {
 
     @Override
     public List<AttackDTO> getActive() {
-
-        List<AttackDTO> activeAttacks = new ArrayList<>();
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUserByUsername(principal.getUsername());
-
         List<Attack> attacks = attackDao.getActive();
+        List<AttackDTO> activeAttacks = getAttacksDTO(attacks, user.getPlayer().getAlliance().getName() );
 
+        return activeAttacks;
+    }
+
+    @Override
+    public void deleteOldAttack() {
+        attackDao.deleteOldAttack();
+    }
+
+    private List<AttackDTO> getAttacksDTO(List<Attack> attacks, String allianceName) {
+
+        List<AttackDTO> result = new ArrayList<>();
         for (Attack attack : attacks) {
-            if (attack.getOwner().getAlliance().getName().equals(user.getPlayer().getAlliance().getName())) {
+            if (attack.getOwner().getAlliance().getName().equals(allianceName)) {
                 AttackDTO attackDTO = new AttackDTO();
                 attackDTO.setUuid(attack.getUuid());
                 attackDTO.setEnemy(attack.getEnemy());
@@ -85,16 +94,9 @@ public class AttackServiceImpl implements AttackService {
                 attackDTO.setPlayerName(attack.getOwner().getUser().getLogin());
                 attackDTO.setVillageId(attack.getVillage().getUuid());
                 attackDTO.setVillageName(attack.getVillage().getName() + "[" + attack.getVillage().getxCoord() + " , " + attack.getVillage().getyCoord() + "]");
-                activeAttacks.add(attackDTO);
+                result.add(attackDTO);
             }
         }
-
-        System.out.println("GET ALL: " + activeAttacks);
-        return activeAttacks;
-    }
-
-    @Override
-    public void deleteOldAttack() {
-        attackDao.deleteOldAttack();
+        return result;
     }
 }

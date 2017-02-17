@@ -1,6 +1,5 @@
 package ua.cv.tim.dao.hibernate;
 
-import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ua.cv.tim.dao.AbstractCrudDao;
@@ -18,17 +17,14 @@ public class AttackArchiveDaoImpl extends AbstractCrudDao<AttackArchive> impleme
 
     @Override
     public List<AttackArchive> getAll() {
-        Session session = getCurrentSession();
-        Query query = session.createQuery("select aa from AttackArchive aa");
-
-        return (List<AttackArchive>) query.list();
+        Query<AttackArchive> query = getCurrentSession().createQuery("select aa from AttackArchive aa");
+        return query.list();
     }
 
     @Override
     public AttackArchive getById(String id) {
-        Session session = getCurrentSession();
-        Query query = session.createQuery("select aa from AttackArchive aa where aa.uuid=:uuid");
+        Query<AttackArchive> query = getCurrentSession().createQuery("select aa from AttackArchive aa where aa.uuid=:uuid");
         query.setParameter("uuid", id);
-        return (AttackArchive) query.uniqueResult();
+        return query.uniqueResult();
     }
 }

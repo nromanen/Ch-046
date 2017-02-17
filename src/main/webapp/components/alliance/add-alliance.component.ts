@@ -16,10 +16,6 @@ export class AllianceForm{
     ALLIANCE_NAME = /^[a-z]{3,9}$/;
     USER_LOGIN = /^[a-z1-9]{3,9}$/;
 
-    EMAIL_ERROR = "Enter correct email, please!";
-    NAME_ERROR = "Enter from 3 to 10 letters";
-    LOGIN_ERROR = "Enter from 3 to 10 letters";
-
     complexForm : FormGroup;
 
     constructor(private fb: FormBuilder){

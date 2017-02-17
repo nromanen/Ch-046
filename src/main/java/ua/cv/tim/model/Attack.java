@@ -65,4 +65,28 @@ public class Attack extends UuidEntity implements Serializable {
         sb.append('}');
         return sb.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Attack attack = (Attack) o;
+
+        if (owner != null ? !owner.equals(attack.owner) : attack.owner != null) return false;
+        if (village != null ? !village.equals(attack.village) : attack.village != null) return false;
+        if (enemy != null ? !enemy.equals(attack.enemy) : attack.enemy != null) return false;
+        return attackTime != null ? attackTime.equals(attack.attackTime) : attack.attackTime == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (owner != null ? owner.hashCode() : 0);
+        result = 31 * result + (village != null ? village.hashCode() : 0);
+        result = 31 * result + (enemy != null ? enemy.hashCode() : 0);
+        result = 31 * result + (attackTime != null ? attackTime.hashCode() : 0);
+        return result;
+    }
 }
