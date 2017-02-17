@@ -16,8 +16,6 @@
         <button (click)="showAddForm()" class="btn waves-effect waves-light">{{'Add'|translate}}</button>
     </div>
 </div>
-<add-vill-form [player]="player" *ngIf="showAddVillageForm" (wasSubmitted)="hideAddForm($event)"
-                   (successMessage)="showSuccessMessage($event)" (errorMessage)="showErrorMessage($event)"></add-vill-form>
 <div class="row">
     <div *ngIf="successMessage!=null||errorMessage!=null" class="col s4 offset-s4 ">
         <div  [ngClass]="{'card':true, 'green':successMessage!=null, 'red':errorMessage!=null, 'lighten-5':true}">
@@ -27,3 +25,6 @@
         </div>
     </div>
 </div>
+<add-vill-form [player]="player" *ngIf="showAddVillageForm" (wasSubmitted)="hideAddForm($event)"
+                   (successMessage)="showSuccessMessage($event)" (errorMessage)="showErrorMessage($event)"></add-vill-form>
+
