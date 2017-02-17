@@ -15,7 +15,7 @@ PostgreSQL
 git clone https://github.com/nromanen/Ch-046.git
 ```
 Create DB named "travian",
-Check if the username, password and port for DB in src/main/resources/hibernate.properties are correct
+Check if the username, password and port for DB in src/main/resources/hibernate.properties are correct.
 Restore DB travian using file src/main/resources/travian_dump.sql
 
 ## Run Application
@@ -27,7 +27,7 @@ gradle runApp
 ```
 After instalation node_modules and compile TypeScript's files to JavaScript (it can take several minutes) application will be run on
 ```
-locachost:8080/travian
+localhost:8080/travian
 ```
 ## Create war file
 
