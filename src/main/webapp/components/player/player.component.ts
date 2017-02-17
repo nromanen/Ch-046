@@ -18,7 +18,7 @@ export class PlayerComponent implements OnInit {
     successMessage;
     errorMessage;
 
-    constructor(private playerService: PlayerService,translate: TranslateService) {
+    constructor(private playerService: PlayerService,private translate: TranslateService) {
 
     }
 
@@ -49,12 +49,22 @@ export class PlayerComponent implements OnInit {
 
     showSuccessMessage(event:string){
         this.errorMessage=null;
-        this.successMessage=event;
+        this.translate.get(event).subscribe(
+            res=>{
+                this.successMessage=res;
+            }
+        );
+
     }
 
     showErrorMessage(event:string){
         this.successMessage=null;
-          this.errorMessage=event;
+        this.translate.get(event).subscribe(
+            res=>{
+                this.errorMessage=res;
+            }
+        );
+
     }
 }
 
